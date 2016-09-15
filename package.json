@@ -2,12 +2,6 @@
 	"name": "phase",
 	"version": "0.1.0",
 	"author": "Christian Kaisermann <christian@kaisermann.me>",
-	"contributors": [
-		{
-			"name": "Ben Word",
-			"email": "ben@benword.com"
-		}
-	],
 	"homepage": "https://github.com/kaisermann/phase",
 	"private": false,
 	"repository": {

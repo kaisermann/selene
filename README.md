@@ -14,8 +14,8 @@ With Phase you can:
 
 ## Installation
 
-1. git clone git@github.com:kaisermann/phase.git
-2. npm install (it will also execute bower install)
+1. '**git clone git@github.com:kaisermann/phase.git**'
+2. '**npm install**' (it will also execute bower install)
 3. Run at least '**gulp build**' before running' **gulp watch**'
 
 ## Documentation
@@ -24,12 +24,11 @@ With Phase you can:
 
 Please refer to the following files:
 
+#### Assets configurations
 * assets/config.json
 * assets/styles/config/*.styl
 
-#### Gulp
-
-##### Tasks
+#### Gulp Tasks
 
 * '**gulp**' / '**gulp build**' #Build all assets
 * '**gulp scripts**' #Build everything on the scripts directory
@@ -39,7 +38,7 @@ Please refer to the following files:
 * '**gulp clean**' #Deletes the distribution directory
 * '**gulp watch**' #Starts watching the asset files
 
-##### Parameters
+#### Gulp Parameters
 
 You can also pass the following parameters
 
