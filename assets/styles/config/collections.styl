@@ -1,0 +1,38 @@
+/* Colors */
+
+colors = {
+	"pink": #850047,
+	"purple": #93648D,
+	"green": #7BC8A4,
+	"blue": #4CC3D9,
+	"yellow": #FFC65D,
+	"red": #F16745,
+	"brown": #664F36,
+	"white": whitesmoke,
+	"gray": #404040,
+	"black": #242629,
+}
+
+// Light, dark, saturated and desaturated colors. From index [0] to [8]
+for colorName, hex in colors
+	colors['lighten-'+colorName] = ()
+	colors['darken-'+colorName] = ()
+	colors['desaturate-'+colorName] = ()
+	colors['saturate-'+colorName] = ()
+	for i in (1..9)
+		push(colors['lighten-'+colorName], lighten(hex, unit(i * 10, '%')))
+		push(colors['darken-'+colorName], darken(hex, unit(i * 10, '%')))
+		push(colors['desaturate-'+colorName], desaturate(hex, unit(i * 10, '%')))
+		push(colors['saturate-'+colorName], saturate(hex, unit(i * 10, '%')))
+
+/* Fonts */
+
+fonts = {
+
+}
+
+/* Margins */
+
+margins = {
+
+}

@@ -1,0 +1,31 @@
+{
+	"config": {
+		"prefixes": [
+			"last 2 versions",
+			"android 4",
+			"opera 12"
+		],
+		"devUrl": "localhost/"
+	},
+	"paths": {
+		"source": "assets/",
+		"dist": "dist/"
+	},
+	"dependencies": {
+		"main.js": {
+			"main": true,
+			"files": ["scripts/wrapper.js"],
+			"vendor": ["assets/scripts/vendor/*.js"],
+			"bower": []
+		},
+		"main.css": {
+			"main": true,
+			"files": ["styles/wrapper.styl"],
+			"vendor": [
+				"assets/styles/vendor/reset.css",
+				"assets/styles/vendor/*.css"
+			],
+			"bower": []
+		}
+	}
+}

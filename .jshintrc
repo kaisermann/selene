@@ -1,0 +1,22 @@
+{
+	"bitwise": true,
+	"browser": true,
+	"curly": false,
+	"eqeqeq": true,
+	"eqnull": true,
+	"esnext": true,
+	"immed": true,
+	"jquery": true,
+	"latedef": true,
+	"newcap": true,
+	"noarg": true,
+	"node": true,
+	"strict": false,
+	"globals": {
+		"$": false,
+		"Cash": false,
+		"Zepto": false,
+		"Events": false,
+		"Utils": false
+	}
+}
