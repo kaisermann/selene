@@ -20,7 +20,6 @@ var _ = {
 	, manifest: require('asset-builder')('./assets/config.json')
 	, wiredep: require('wiredep').stream
 	, preprocess: require('gulp-preprocess')
-	, print: require('gulp-print')
 	, util: require('gulp-util')
 	, del: require('del')
 	, cmq: require('gulp-combine-mq')
