@@ -1,5 +1,0 @@
-let Utils;
-
-Utils = {
-
-};

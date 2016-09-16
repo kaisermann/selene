@@ -26,6 +26,8 @@ import stylus from 'gulp-stylus';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
+import browserify from 'browserify';
+import transform from 'vinyl-transform';
 
 let argv = args(process.argv.slice(2))
 	, manifest = assetBuilder('./assets/config.json')
@@ -59,23 +61,22 @@ let cssTasks = (filename) =>
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
 		.pipe(() => gulpif('*.styl', stylus()))
 		.pipe(concat, filename)
-		.pipe(autoprefixer, { browsers: config.prefixes })
+		.pipe(autoprefixer, { browsers: config.supportedBrowsers })
 		.pipe(cmq, { beautify: CLIOpts.assetdebug })
 		.pipe(() => gulpif(!CLIOpts.assetdebug, cssnano()))
 		.pipe(() => gulpif(CLIOpts.isProduction, rev()))
-		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))()
-		.on('error', onError);
+		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))();
 
 let jsTasks = (filename) =>
 	lazypipe()
 		.pipe(preprocess)
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
 		.pipe(babel, { presets: ['es2015'] })
+		.pipe(browserify,filename).bundle()
 		.pipe(concat, filename)
-		.pipe(() => gulpif(!CLIOpts.assetdebug, uglify()))
+		//.pipe(() => gulpif(!CLIOpts.assetdebug, uglify()))
 		.pipe(() => gulpif(CLIOpts.isProduction, rev()))
-		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))()
-		.on('error', onError);
+		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))();
 
 let writeToManifest = (directory) =>
 	lazypipe()
@@ -96,52 +97,53 @@ gulp.task('wiredep', (done) => {
 		.pipe(changed(paths.source + 'styles', {
 			hasChanged: changed.compareSha1Digest
 		}))
-		.pipe(gulp.dest(paths.source + 'styles'))
+		.pipe(gulp.dest(paths.source + 'styles'));
 	done();
 });
 
 gulp.task('jshint', (done) => {
-	gulp.src(['bower.json', 'gulpfile.js']
+	gulp.src(['bower.json', 'gulpfile.*.js']
 		.concat(project.js))
 		.pipe(jshint({ "laxcomma": true }))
 		.pipe(jshint.reporter('jshint-stylish'))
 		.pipe(jshint.reporter('fail'))
+		.on('error', onError);
 	done();
 });
 
 gulp.task('stats', () => gulp.src('./dist/styles/**.css').pipe(cssstats()));
 
-gulp.task('styles', gulp.series('wiredep', (done) => {
+gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 	let merged = merge();
-	let stream;
-	manifest.forEachDependency('css', (dep) => {
-		if (!stream)
-			stream = gulp.src(dep.globs);
-		else
-			stream.pipe(gulp.src(dep.globs), { passthrough: true })
-
-		stream.pipe(cssTasks(dep.name));
-	});
-
-	stream.pipe(writeToManifest('styles'));
+	manifest.forEachDependency('css', (dep) =>
+		merged.add(gulp.src(dep.globs)
+			.pipe(cssTasks(dep.name))
+			.on('error', onError)
+		)
+	);
+	merged.pipe(writeToManifest('styles'));
 	done();
 }));
 
-gulp.task('scripts', gulp.series('jshint', () => {
+gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
 	let merged = merge();
-	manifest.forEachDependency('js', (dep) => {
+
+	manifest.forEachDependency('js', (dep) =>
 		merged.add(gulp.src(dep.globs)
 			.pipe(jsTasks(dep.name))
-		);
-	});
-	return merged.pipe(writeToManifest('scripts'));
+			.on('error', onError)
+		)
+	);
+
+	merged.pipe(writeToManifest('scripts'));
+	done();
 }));
 
 gulp.task('fonts', (done) => {
 	gulp.src(globs.fonts)
 		.pipe(flatten())
 		.pipe(gulp.dest(paths.dist + 'fonts'))
-		.pipe(browserSync.stream())
+		.pipe(browserSync.stream());
 	done();
 });
 
@@ -153,14 +155,14 @@ gulp.task('images', (done) => {
 			, svgoPlugins: [{ removeUnknownsAndDefaults: false }, { cleanupIDs: false }]
 		}))
 		.pipe(gulp.dest(paths.dist + 'images'))
-		.pipe(browserSync.stream())
+		.pipe(browserSync.stream());
 	done();
 });
 
 gulp.task('misc', (done) => {
 	gulp.src(globs.misc)
 		.pipe(gulp.dest(paths.dist + 'misc'))
-		.pipe(browserSync.stream())
+		.pipe(browserSync.stream());
 	done();
 });
 
@@ -168,19 +170,20 @@ gulp.task('watch', (done) => {
 	if (CLIOpts.sync) {
 		browserSync.init({
 			files: ['{lib,templates}/**/*.{php,html}', '*.{php,html}']
-			, proxy: config.devUrl
+			, proxy: config.browserSync.devUrl
 			, snippetOptions: {
-				whitelist: ['/wp-admin/admin-ajax.php'],
-				blacklist: ['/wp-admin/**']
+				whitelist: config.browserSync.whitelist,
+				blacklist: config.browserSync.blacklist
 			}
 		});
 	}
-	gulp.watch([paths.source + 'styles/**/*'], ['styles']);
-	gulp.watch([paths.source + 'scripts/**/*'], ['jshint', 'scripts']);
-	gulp.watch([paths.source + 'fonts/**/*'], ['fonts']);
-	gulp.watch([paths.source + 'images/**/*'], ['images']);
-	gulp.watch([paths.source + 'misc/**/*'], ['misc']);
-	gulp.watch(['bower.json', 'assets/config.json'], ['build']);
+
+	gulp.watch([paths.source + 'styles/**/*'], gulp.series('styles'));
+	gulp.watch([paths.source + 'scripts/**/*'], gulp.series('jshint', 'scripts'));
+	gulp.watch([paths.source + 'fonts/**/*'], gulp.series('fonts'));
+	gulp.watch([paths.source + 'images/**/*'], gulp.series('images'));
+	gulp.watch([paths.source + 'misc/**/*'], gulp.series('misc'));
+	gulp.watch(['bower.json', 'assets/config.json'], gulp.series('build'));
 	done();
 });
 
