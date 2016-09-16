@@ -88,18 +88,46 @@ let writeToManifest = (directory) =>
 		.pipe(gulp.dest, paths.dist)();
 
 /* Tasks */
-gulp.task('stats', () => gulp.src('./dist/styles/**.css').pipe(cssstats()));
+gulp.task('clean', (done) => del([paths.dist], done));
 
-gulp.task('styles', ['wiredep'], () => {
-	let merged = merge();
-	manifest.forEachDependency('css', (dep) => {
-		merged.add(gulp.src(dep.globs)
-			.pipe(cssTasks(dep.name)));
-	});
-	return merged.pipe(writeToManifest('styles'));
+gulp.task('wiredep', (done) => {
+	gulp.src(project.css)
+		.pipe(wiredep())
+		.pipe(changed(paths.source + 'styles', {
+			hasChanged: changed.compareSha1Digest
+		}))
+		.pipe(gulp.dest(paths.source + 'styles'))
+	done();
 });
 
-gulp.task('scripts', ['jshint'], () => {
+gulp.task('jshint', (done) => {
+	gulp.src(['bower.json', 'gulpfile.js']
+		.concat(project.js))
+		.pipe(jshint({ "laxcomma": true }))
+		.pipe(jshint.reporter('jshint-stylish'))
+		.pipe(jshint.reporter('fail'))
+	done();
+});
+
+gulp.task('stats', () => gulp.src('./dist/styles/**.css').pipe(cssstats()));
+
+gulp.task('styles', gulp.series('wiredep', (done) => {
+	let merged = merge();
+	let stream;
+	manifest.forEachDependency('css', (dep) => {
+		if (!stream)
+			stream = gulp.src(dep.globs);
+		else
+			stream.pipe(gulp.src(dep.globs), { passthrough: true })
+
+		stream.pipe(cssTasks(dep.name));
+	});
+
+	stream.pipe(writeToManifest('styles'));
+	done();
+}));
+
+gulp.task('scripts', gulp.series('jshint', () => {
 	let merged = merge();
 	manifest.forEachDependency('js', (dep) => {
 		merged.add(gulp.src(dep.globs)
@@ -107,16 +135,17 @@ gulp.task('scripts', ['jshint'], () => {
 		);
 	});
 	return merged.pipe(writeToManifest('scripts'));
-});
+}));
 
-gulp.task('fonts', () =>
+gulp.task('fonts', (done) => {
 	gulp.src(globs.fonts)
 		.pipe(flatten())
 		.pipe(gulp.dest(paths.dist + 'fonts'))
 		.pipe(browserSync.stream())
-);
+	done();
+});
 
-gulp.task('images', () =>
+gulp.task('images', (done) => {
 	gulp.src(globs.images)
 		.pipe(imagemin({
 			progressive: true
@@ -125,25 +154,17 @@ gulp.task('images', () =>
 		}))
 		.pipe(gulp.dest(paths.dist + 'images'))
 		.pipe(browserSync.stream())
-);
+	done();
+});
 
-gulp.task('misc', () =>
+gulp.task('misc', (done) => {
 	gulp.src(globs.misc)
 		.pipe(gulp.dest(paths.dist + 'misc'))
 		.pipe(browserSync.stream())
-);
+	done();
+});
 
-gulp.task('jshint', () =>
-	gulp.src(['bower.json', 'gulpfile.js']
-		.concat(project.js))
-		.pipe(jshint({ "laxcomma": true }))
-		.pipe(jshint.reporter('jshint-stylish'))
-		.pipe(jshint.reporter('fail'))
-);
-
-gulp.task('clean', del.bind(null, [paths.dist]));
-
-gulp.task('watch', () => {
+gulp.task('watch', (done) => {
 	if (CLIOpts.sync) {
 		browserSync.init({
 			files: ['{lib,templates}/**/*.{php,html}', '*.{php,html}']
@@ -160,19 +181,9 @@ gulp.task('watch', () => {
 	gulp.watch([paths.source + 'images/**/*'], ['images']);
 	gulp.watch([paths.source + 'misc/**/*'], ['misc']);
 	gulp.watch(['bower.json', 'assets/config.json'], ['build']);
+	done();
 });
 
-gulp.task('build', ['clean'], (callback) =>
-	runSequence('styles', 'scripts', ['fonts', 'images', 'misc'], callback)
-);
-
-gulp.task('wiredep', () =>
-	gulp.src(project.css)
-		.pipe(wiredep())
-		.pipe(changed(paths.source + 'styles', {
-			hasChanged: changed.compareSha1Digest
-		}))
-		.pipe(gulp.dest(paths.source + 'styles'))
-);
-
-gulp.task('default', () => gulp.start('build'));
+gulp.task('compile', gulp.parallel('styles', 'scripts', 'fonts', 'images', 'misc'));
+gulp.task('build', gulp.series('clean', 'compile'));
+gulp.task('default', gulp.series('build'));
