@@ -30,22 +30,23 @@ Please refer to the following files:
 
 #### Gulp Tasks
 
-* '**gulp**' / '**gulp build**' #Build all assets
-* '**gulp scripts**' #Build everything on the scripts directory
-* '**gulp styles**' #Build everything on the styles directory
-* '**gulp fonts**' #Build everything on the fonts directory
-* '**gulp images**' #Build everything on the images directory
-* '**gulp clean**' #Deletes the distribution directory
-* '**gulp watch**' #Starts watching the asset files
+* '**gulp**' / '**gulp build**' Build all assets
+* '**gulp scripts**' Build everything on the scripts directory
+* '**gulp styles**' Build everything on the styles directory
+* '**gulp fonts**' Build everything on the fonts directory
+* '**gulp images**' Build everything on the images directory
+* '**gulp clean**' Deletes the distribution directory
+* '**gulp watch**' Starts watching the asset files
+* '**gulp cssstats**' Displays on the console some stats about your cssstats
 
 #### Gulp Parameters
 
 You can also pass the following parameters
 
-* '**--sync**' # Starts browserSync. Use only with '**gulp watch**'.
-* '**--map**' # Generates .map files
-* '**-d**' # Asset debug mode. It won't minify the files.
-* '**-p**' # Production mode. File names will be appended with a hash of its content for cache-busting.
+* '**--sync**' Starts browserSync. Use only with '**gulp watch**'.
+* '**--map**' Generates .map files
+* '**-d**' Asset debug mode. It won't minify the files.
+* '**-p**' Production mode. File names will be appended with a hash of its content for cache-busting.
 
 ### External
 * [Sage documentation](https://github.com/roots/sage/) (recommended)

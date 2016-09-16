@@ -1,4 +1,3 @@
-// Globals
 var gulp = require('gulp');
 var _ = {
 	argv: require('minimist')(process.argv.slice(2))
@@ -29,19 +28,18 @@ var _ = {
 	, babel: require('gulp-babel')
 };
 
-var paths = _.manifest.paths
+var paths = _.manifest.config.paths
 	, config = _.manifest.config || {}
 	, globs = _.manifest.globs
 	, project = _.manifest.getProjectGlobs();
 
-globs.misc = ['assets/misc/**/*'];
-
 var revManifest = paths.dist + 'assets.json';
 
-// CLI options
+globs.misc = ['assets/misc/**/*'];
+
 var CLIOpts = {
-	maps: _.argv.maps, // Disable source maps when `--production`
-	isProduction: _.argv.production || _.argv.p,
+	maps: _.argv.maps,			// Disable source maps when `--production`
+	isProduction: _.argv.production || _.argv.p, // Enables Prodution mode and hashes assets names
 	assetdebug: _.argv.d,		// Do not minify assets when '-d'
 	sync: _.argv.sync			// Start BroswerSync when '--sync'
 };
@@ -63,7 +61,7 @@ var cssTasks = function (filename) {
 			return _.gulpif('*.styl', _.stylus());
 		})
 		.pipe(_.concat, filename)
-		.pipe(_.autoprefixer, { browsers: config.prefixes })
+		.pipe(_.autoprefixer, { browsers: config.browsers })
 		.pipe(_.cmq, { beautify: CLIOpts.assetdebug })
 		.pipe(function () {
 			return _.gulpif(!CLIOpts.assetdebug, _.cssnano());
@@ -111,7 +109,7 @@ var writeToManifest = function (directory) {
 };
 
 /* Tasks */
-gulp.task('stats', function () {
+gulp.task('cssstats', function () {
 	return gulp.src('./dist/styles/**.css')
 		.pipe(_.cssstats());
 });
@@ -137,31 +135,6 @@ gulp.task('scripts', ['jshint'], function () {
 	return merged.pipe(writeToManifest('scripts'));
 });
 
-gulp.task('fonts', function () {
-	return gulp.src(globs.fonts)
-		.pipe(_.flatten())
-		.pipe(gulp.dest(paths.dist + 'fonts'))
-		.pipe(_.browserSync.stream());
-});
-
-gulp.task('images', function () {
-	return gulp.src(globs.images)
-		.pipe(_.imagemin(
-			{
-				progressive: true,
-				interlaced: true,
-				svgoPlugins: [{ removeUnknownsAndDefaults: false }, { cleanupIDs: false }]
-			}))
-		.pipe(gulp.dest(paths.dist + 'images'))
-		.pipe(_.browserSync.stream());
-});
-
-gulp.task('misc', function () {
-	return gulp.src(globs.misc)
-		.pipe(gulp.dest(paths.dist + 'misc'))
-		.pipe(_.browserSync.stream());
-});
-
 gulp.task('jshint', function () {
 	return gulp.src(['bower.json', 'gulpfile.js']
 		.concat(project.js))
@@ -170,20 +143,34 @@ gulp.task('jshint', function () {
 		.pipe(_.jshint.reporter('fail'));
 });
 
-gulp.task('clean', _.del.bind(null, [paths.dist]));
+gulp.task('images', function () {
+	return gulp.src(globs.images)
+		.pipe(_.imagemin({
+			progressive: true,
+			interlaced: true,
+			svgoPlugins: [{ removeUnknownsAndDefaults: false }, { cleanupIDs: false }]
+		}))
+		.pipe(gulp.dest(paths.dist + 'images'))
+		.pipe(_.browserSync.stream());
+});
+
+gulp.task('fonts', function () {
+	return gulp.src(globs.fonts)
+		.pipe(_.flatten())
+		.pipe(gulp.dest(paths.dist + 'fonts'))
+		.pipe(_.browserSync.stream());
+});
 
 gulp.task('watch', function () {
 	if (CLIOpts.sync) {
-		_.browserSync.init(
-			{
-				files: ['{lib,templates}/**/*.{php,html}', '*.{php,html}'],
-				proxy: config.devUrl,
-				snippetOptions:
-				{
-					whitelist: ['/wp-admin/admin-ajax.php'],
-					blacklist: ['/wp-admin/**']
-				}
-			});
+		_.browserSync.init({
+			files: ['{lib,src,templates}/**/*.{php,html}', '*.{php,html}'],
+			proxy: config.devUrl,
+			snippetOptions: {
+				whitelist: ['/wp-admin/admin-ajax.php'],
+				blacklist: ['/wp-admin/**']
+			}
+		});
 	}
 	gulp.watch([paths.source + 'styles/**/*'], ['styles']);
 	gulp.watch([paths.source + 'scripts/**/*'], ['jshint', 'scripts']);
@@ -193,6 +180,15 @@ gulp.task('watch', function () {
 	gulp.watch(['bower.json', 'assets/config.json'], ['build']);
 });
 
+gulp.task('wiredep', function () {
+	return gulp.src(project.css)
+		.pipe(_.wiredep())
+		.pipe(_.changed(paths.source + 'styles', {
+			hasChanged: _.changed.compareSha1Digest
+		}))
+		.pipe(gulp.dest(paths.source + 'styles'));
+});
+
 gulp.task('build', ['clean'], function (callback) {
 	_.runSequence('styles',
 		'scripts',
@@ -200,14 +196,12 @@ gulp.task('build', ['clean'], function (callback) {
 		callback);
 });
 
-gulp.task('wiredep', function () {
-	return gulp.src(project.css)
-		.pipe(_.wiredep())
-		.pipe(_.changed(paths.source + 'styles',
-			{
-				hasChanged: _.changed.compareSha1Digest
-			}))
-		.pipe(gulp.dest(paths.source + 'styles'));
+gulp.task('misc', function () {
+	return gulp.src(globs.misc)
+		.pipe(gulp.dest(paths.dist + 'misc'))
+		.pipe(_.browserSync.stream());
 });
+
+gulp.task('clean', _.del.bind(null, [paths.dist]));
 
 gulp.task('default', function () { gulp.start('build'); });
