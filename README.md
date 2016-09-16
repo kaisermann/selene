@@ -47,7 +47,7 @@ You can also pass the following parameters
 
 ### External
 * [Sage documentation](https://github.com/roots/sage/) (recommended)
-	* Sage 9 uses webpack, please refer to the **8.\*.\*** documentation.
+	* Sage 9 uses webpack, please refer to the **8.\*.*** documentation.
 * [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
 * [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
 
