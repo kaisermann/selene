@@ -1,8 +1,7 @@
-# PHASE
+# Phase
 
-A gulp-automated front-end workflow based on the (awesome) [Sage starter theme](https://github.com/roots/sage).
-<br>
-<br>
+> A gulp-automated front-end workflow based on the (awesome) [Sage starter theme](https://github.com/roots/sage) with some personal modifications :)
+
 With Phase you can:
 * Write CSS with Stylus
 	* Build your website's grid with the RolleiFLEX declarative (or not) grid framework.
@@ -22,9 +21,7 @@ With Phase you can:
 
 ### Phase
 
-Please refer to the following files:
-
-#### Assets configurations
+#### Generated assets configurations
 * assets/config.json
 * assets/styles/config/*.styl
 
