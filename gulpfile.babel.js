@@ -3,7 +3,7 @@
 import args from 'minimist';
 import assetBuilder from 'asset-builder';
 import autoprefixer from 'gulp-autoprefixer';
-import babel from 'gulp-babel';
+import browserify from 'browserify';
 import browserSyncLib from 'browser-sync';
 import changed from 'gulp-changed';
 import cmq from 'gulp-combine-mq';
@@ -18,77 +18,84 @@ import imagemin from 'gulp-imagemin';
 import jshint from 'gulp-jshint';
 import lazypipe from 'lazypipe';
 import merge from 'merge-stream';
-import preprocess from 'gulp-preprocess';
+import print from 'gulp-print';
 import rev from 'gulp-rev';
-import runSequence from 'run-sequence';
 import sourcemaps from 'gulp-sourcemaps';
 import stylus from 'gulp-stylus';
+import through2 from 'through2';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
-import browserify from 'browserify';
-import transform from 'vinyl-transform';
 
-let argv = args(process.argv.slice(2))
+const argv = args(process.argv.slice(2))
 	, manifest = assetBuilder('./assets/config.json')
 	, browserSync = browserSyncLib.create()
 	, wiredep = wiredepLib.stream;
 
-let paths = manifest.paths
+const paths = manifest.paths
 	, config = manifest.config || {}
 	, globs = Object.assign({ misc: ['assets/misc/**/*'] }, manifest.globs)
 	, project = manifest.getProjectGlobs()
 	, revManifest = paths.dist + 'assets.json';
 
 // CLI parameters
-let CLIOpts = {
+const CLIOpts = {
 	maps: argv.maps 							// Disable source maps when `--production`
-	, isProduction: argv.production || argv.p 	// Production mode, appends hash of file's content to its name
-	, assetdebug: argv.d						// Do not minify assets when '-d'
+	, production: argv.production || argv.p 	// Production mode, appends hash of file's content to its name
+	, debug: argv.d								// Do not minify assets when '-d'
 	, sync: argv.sync							// Start BroswerSync when '--sync'
 };
 
-// Error handler
-let onError = function (err) {
-	util.beep();
-	console.log(err);
-	this.emit('end');
-};
-
-// Path to the compiled assets manifest in the dist directory
-let cssTasks = (filename) =>
+// .css Middle-task
+const cssTasks = (filename) =>
 	lazypipe()
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
 		.pipe(() => gulpif('*.styl', stylus()))
 		.pipe(concat, filename)
 		.pipe(autoprefixer, { browsers: config.supportedBrowsers })
-		.pipe(cmq, { beautify: CLIOpts.assetdebug })
-		.pipe(() => gulpif(!CLIOpts.assetdebug, cssnano()))
-		.pipe(() => gulpif(CLIOpts.isProduction, rev()))
-		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))();
+		.pipe(cmq, { beautify: CLIOpts.debug })
+		.pipe(() => gulpif(!CLIOpts.debug, cssnano()))
+		.pipe(() => gulpif(CLIOpts.production, rev()))
+		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.', {
+			sourceRoot: 'assets/styles/'
+		})))
+		();
 
-let jsTasks = (filename) =>
+// .js Middle-task
+const jsTasks = (filename) =>
 	lazypipe()
-		.pipe(preprocess)
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
-		.pipe(babel, { presets: ['es2015'] })
-		.pipe(browserify,filename).bundle()
+		.pipe(through2.obj, (file, enc, next) =>
+			browserify(file.path, { debug: false })
+				.transform('babelify', { presets: ["es2015"], sourceMaps: false })
+				.bundle(function (err, res) {
+					if (err)
+						return next(err);
+					file.contents = res;
+					next(null, file);
+				})
+		)
 		.pipe(concat, filename)
-		//.pipe(() => gulpif(!CLIOpts.assetdebug, uglify()))
-		.pipe(() => gulpif(CLIOpts.isProduction, rev()))
-		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))();
+		.pipe(() => gulpif(!CLIOpts.debug, uglify()))
+		.pipe(() => gulpif(CLIOpts.production, rev()))
+		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.', {
+			sourceRoot: 'assets/scripts/'
+		})))
+		();
 
-let writeToManifest = (directory) =>
+// Writes files to manifest/destination directory
+const writeToManifest = (directory) =>
 	lazypipe()
 		.pipe(gulp.dest, paths.dist + directory)
 		.pipe(browserSync.stream, { match: '**/*.{js,css}' })
 		.pipe(rev.manifest, revManifest, {
-			base: paths.dist
+			  base: paths.dist
 			, merge: true
 		})
-		.pipe(gulp.dest, paths.dist)();
+		.pipe(gulp.dest, paths.dist)
+		();
 
-/* Tasks */
+// Tasks
 gulp.task('clean', (done) => del([paths.dist], done));
 
 gulp.task('wiredep', (done) => {
@@ -106,19 +113,22 @@ gulp.task('jshint', (done) => {
 		.concat(project.js))
 		.pipe(jshint({ "laxcomma": true }))
 		.pipe(jshint.reporter('jshint-stylish'))
-		.pipe(jshint.reporter('fail'))
-		.on('error', onError);
+		.pipe(gulpif(CLIOpts.production, jshint.reporter('fail')));
 	done();
 });
 
 gulp.task('stats', () => gulp.src('./dist/styles/**.css').pipe(cssstats()));
 
 gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
-	let merged = merge();
+	const merged = merge();
 	manifest.forEachDependency('css', (dep) =>
 		merged.add(gulp.src(dep.globs)
 			.pipe(cssTasks(dep.name))
-			.on('error', onError)
+			.on('error', function (err) {
+				util.beep();
+				console.error(err.message);
+				this.emit('end');
+			})
 		)
 	);
 	merged.pipe(writeToManifest('styles'));
@@ -126,15 +136,20 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 }));
 
 gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
-	let merged = merge();
+	const merged = merge();
 
 	manifest.forEachDependency('js', (dep) =>
 		merged.add(gulp.src(dep.globs)
 			.pipe(jsTasks(dep.name))
-			.on('error', onError)
+			.on('error', function (err) {
+				util.beep();
+				if (CLIOpts.production)
+					return;
+				console.error(err.message);
+				this.emit('end');
+			})
 		)
 	);
-
 	merged.pipe(writeToManifest('scripts'));
 	done();
 }));
@@ -179,7 +194,7 @@ gulp.task('watch', (done) => {
 	}
 
 	gulp.watch([paths.source + 'styles/**/*'], gulp.series('styles'));
-	gulp.watch([paths.source + 'scripts/**/*'], gulp.series('jshint', 'scripts'));
+	gulp.watch([paths.source + 'scripts/**/*'], gulp.series('scripts'));
 	gulp.watch([paths.source + 'fonts/**/*'], gulp.series('fonts'));
 	gulp.watch([paths.source + 'images/**/*'], gulp.series('images'));
 	gulp.watch([paths.source + 'misc/**/*'], gulp.series('misc'));

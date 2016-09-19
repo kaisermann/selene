@@ -11,6 +11,11 @@ With Phase you can:
 * Have your [bower](https://bower.io/) packages automatically included in your assets
 	* Check the **config.json** on the **assets/** directory
 
+## Requirements
+
+1. [Node](https://nodejs.org/en/download/)
+2. [Gulp CLI & Gulp 4](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/)
+
 ## Installation
 
 1. '**git clone git@github.com:kaisermann/phase.git**'
@@ -41,7 +46,7 @@ With Phase you can:
 You can also pass the following parameters
 
 * '**--sync**' Starts browserSync. Use only with '**gulp watch**'.
-* '**--map**' Generates .map files
+* '**--maps**' Generates .map files
 * '**-d**' Asset debug mode. It won't minify the files.
 * '**-p**' Production mode. File names will be appended with a hash of its content for cache-busting.
 

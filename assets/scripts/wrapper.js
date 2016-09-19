@@ -1,20 +1,24 @@
 'use strict';
 
 import Router from './util/router';
-import common from './Routes/common';
+import common from './routes/common';
 
 (function ($) {
-	let w = window, d = document, PAGE_PARAMS;
-
-	const routes = {
+	// Modify the '_routes' object to include or remove other routes
+	const _routes = {
 		common
 	};
 
-	if (d.readyState === "interactive" || d.readyState === "complete")
-		new Router(routes).loadEvents();
+	// Normally, you won't need to modify anything below this line.
+	// Useful short aliases
+	const _win = window, _doc = document, _body = document.body;
+	const _router = new Router(_routes).loadClasses();
+
+	if (_doc.readyState === "interactive" || _doc.readyState === "complete")
+		_router.loadEvents();
 	else
-		d.addEventListener("DOMContentLoaded", function loadListener() {
-			d.removeEventListener("DOMContentLoaded", loadListener, false);
-			new Router(routes).loadEvents();
+		_doc.addEventListener("DOMContentLoaded", function loadListener() {
+			_doc.removeEventListener("DOMContentLoaded", loadListener, false);
+			_router.loadEvents();
 		}, false);
 })(window.jQuery || window.Zepto || window.Cash || undefined);

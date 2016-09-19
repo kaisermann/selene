@@ -1,7 +1,8 @@
 export default {
 	init() {
-		console.log('KOE');
+		// Runs on every page
 	},
 	finalize() {
+		// Runs at the end of all route-specific code
 	},
 };
