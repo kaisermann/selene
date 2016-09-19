@@ -27,19 +27,19 @@ import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
 
-let argv = args(process.argv.slice(2))
+const argv = args(process.argv.slice(2))
 	, manifest = assetBuilder('./assets/config.json')
 	, browserSync = browserSyncLib.create()
 	, wiredep = wiredepLib.stream;
 
-let paths = manifest.paths
+const paths = manifest.paths
 	, config = manifest.config || {}
 	, globs = Object.assign({ misc: ['assets/misc/**/*'] }, manifest.globs)
 	, project = manifest.getProjectGlobs()
 	, revManifest = paths.dist + 'assets.json';
 
 // CLI parameters
-let CLIOpts = {
+const CLIOpts = {
 	maps: argv.maps 							// Disable source maps when `--production`
 	, isProduction: argv.production || argv.p 	// Production mode, appends hash of file's content to its name
 	, assetdebug: argv.d						// Do not minify assets when '-d'
@@ -47,14 +47,14 @@ let CLIOpts = {
 };
 
 // Error handler
-let onError = function (err) {
+const onError = function (err) {
 	util.beep();
 	console.log(err);
 	this.emit('end');
 };
 
 // Path to the compiled assets manifest in the dist directory
-let cssTasks = (filename) =>
+const cssTasks = (filename) =>
 	lazypipe()
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
 		.pipe(() => gulpif('*.styl', stylus()))
@@ -66,7 +66,7 @@ let cssTasks = (filename) =>
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))()
 		.on('error', onError);
 
-let jsTasks = (filename) =>
+const jsTasks = (filename) =>
 	lazypipe()
 		.pipe(preprocess)
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
@@ -77,7 +77,7 @@ let jsTasks = (filename) =>
 		.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.')))()
 		.on('error', onError);
 
-let writeToManifest = (directory) =>
+const writeToManifest = (directory) =>
 	lazypipe()
 		.pipe(gulp.dest, paths.dist + directory)
 		.pipe(browserSync.stream, { match: '**/*.{js,css}' })
@@ -91,7 +91,7 @@ let writeToManifest = (directory) =>
 gulp.task('stats', () => gulp.src('./dist/styles/**.css').pipe(cssstats()));
 
 gulp.task('styles', ['wiredep'], () => {
-	let merged = merge();
+	const merged = merge();
 	manifest.forEachDependency('css', (dep) => {
 		merged.add(gulp.src(dep.globs)
 			.pipe(cssTasks(dep.name)));
@@ -100,7 +100,7 @@ gulp.task('styles', ['wiredep'], () => {
 });
 
 gulp.task('scripts', ['jshint'], () => {
-	let merged = merge();
+	const merged = merge();
 	manifest.forEachDependency('js', (dep) => {
 		merged.add(gulp.src(dep.globs)
 			.pipe(jsTasks(dep.name))
