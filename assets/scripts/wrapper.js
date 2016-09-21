@@ -14,6 +14,8 @@ import common from './routes/common';
 	const _win = window, _doc = document, _body = document.body;
 	const _router = new Router(_routes).loadClasses();
 
+	console.log('oie');
+
 	if (_doc.readyState === "interactive" || _doc.readyState === "complete")
 		_router.loadEvents();
 	else

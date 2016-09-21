@@ -1,51 +1,88 @@
 {
 	"config": {
+		/* asset-builder: mandatory parameters */
 		"paths": {
+			/* Don't forget the trailing '/' */
 			"source": "assets/",
-			"dist": "dist/"
+			"dist": "dist/",
+			"bowerDirectory": "bower_components/",
+			"bowerJson": "bower.json"
 		},
+		/* File-type-name (scripts, styles...) must match its related task-name and asset-type-name */
+		"fileTypes": {
+			"fonts": "*.{eot,otf,svg,ttc,ttf,woff,woff2}",
+			"scripts": "*.js",
+			"styles": "*.css",
+			"images": "*.{jpg,png,gif}"
+		},
+		/* phase: mandatory parameters */
 		"supportedBrowsers": [
 			"last 2 versions",
 			"android 4",
 			"opera 12"
 		],
 		"browserSync": {
-			"devUrl": "localhost/phase",
+			"files": [
+				"{lib,templates}/**/*.{php,html}",
+				"*.{php,html}"
+			],
 			"whitelist": [],
-			"blacklist": []
-		}
-	},
-	"dependencies": {
-		"main.js": {
-			"main": true,
-			"files": [
-				"scripts/wrapper.js"
-			],
-			"vendor": [
-				"assets/scripts/vendor/*.js"
-			],
-			"bower": []
+			"blacklist": [],
+			"devUrl": "localhost/phase"
 		},
-		"main.css": {
-			"main": true,
-			"files": [
-				"styles/wrapper.styl"
-			],
-			"vendor": [
-				"assets/styles/vendor/reset.css",
-				"assets/styles/vendor/*.css"
-			],
-			"bower": []
+		/* phase: optional parameters */
+		/*
+		 * Simple tasks are automatically created independent tasks that mainly move files
+		 * without any complicated logic.
+		 * It's possible to assign a helper in the middle of the task stream by setting
+		 * it in the taskHelpers object inside your gulpfile (see taskHelpers.images).
+		 */
+		"simpleTasks": [
+			"fonts",
+			"images"
+		]
+	},
+	/* asset-builder: mandatory distribution asset dictionary */
+	"assets": {
+		/* Asset-type-name (scripts, styles...) must match its related task-name and file-type-name */
+		"scripts": {
+			"main.js": {
+				"main": true,
+				"files": [
+					"scripts/wrapper.js"
+				],
+				"vendor": [
+					"assets/scripts/vendor/*.js"
+				],
+				"bower": []
+			}
+		},
+		"styles": {
+			"main.css": {
+				"main": true,
+				"files": [
+					"styles/wrapper.styl"
+				],
+				"vendor": [
+					"assets/styles/vendor/reset.css",
+					"assets/styles/vendor/*.css"
+				],
+				"bower": []
+			}
 		},
 		"fonts": {
-			"files": [
-				"fonts/**/*"
-			]
+			"/": {
+				"files": [
+					"fonts/**/*"
+				]
+			}
 		},
 		"images": {
-			"files": [
-				"images/**/*"
-			]
+			"/": {
+				"files": [
+					"images/**/*"
+				]
+			}
 		}
 	}
 }
