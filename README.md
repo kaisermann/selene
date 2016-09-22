@@ -24,7 +24,7 @@ With Phase you can:
 
 ## Documentation
 
-### Phase
+### Phase (old and incomplete)
 
 #### Generated assets configurations
 * assets/config.json
@@ -55,6 +55,11 @@ You can also pass the following parameters
 	* Sage 9 uses webpack, please refer to the **8.\*.*** documentation.
 * [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
 * [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
+
+## TO-DO
+
+* Rewrite README
+* Write documentation about **phase.json**
 
 ## Credits and Inspirations
 
