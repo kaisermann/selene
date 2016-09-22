@@ -19,6 +19,7 @@ import imagemin from 'gulp-imagemin';
 import jshint from 'gulp-jshint';
 import lazypipe from 'lazypipe';
 import merge from 'merge-stream';
+import path from 'path';
 import print from 'gulp-print';
 import rev from 'gulp-rev';
 import sourcemaps from 'gulp-sourcemaps';
@@ -28,26 +29,37 @@ import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
 
-const argv = args(process.argv.slice(2))
-	, manifest = assetBuilder('./assets/config.json')
+// CLI parameters
+const argv = args(process.argv.slice(2));
+
+const manifest = assetBuilder('./phase.json')
 	, browserSync = browserSyncLib.create()
 	, wiredep = wiredepLib.stream;
 
 const paths = manifest.config.paths
+	, resources = manifest.resources
 	, config = manifest.config || {}
-	, globs = manifest.globs
 	, project = manifest.getProjectGlobs()
-	, revManifest = paths.dist + 'assets.json';
+	, revManifest = path.join(paths.dist, 'assets.json');
 
-const compileTaskList = Object.keys(manifest.assets);
+/**
+ * List of task names that should run in parallel during the building of assets.
+ * By default, it assumes that your tasks are composed by your resource types defined on 'phase.json'.
+ */
+const compileTaskList = Object.keys(resources);
 
-// CLI parameters
 const CLIOpts = {
-	maps: argv.maps 							// Disable source maps when `--production`
+	maps: argv.maps 							// Enables sourcemaps creation when '--maps'
 	, production: argv.production || argv.p 	// Production mode, appends hash of file's content to its name
 	, debug: argv.d								// Do not minify assets when '-d'
 	, sync: argv.sync							// Start BroswerSync when '--sync'
 };
+
+/**
+ * Task helpers are used to modify a stream in the middle of a task.
+ * It allows customization of the stream for automatically created simple tasks
+ * (phase.json -> resource -> simpleTask:true).
+ */
 
 const taskHelpers = {
 	styles: filename => {
@@ -60,7 +72,7 @@ const taskHelpers = {
 			.pipe(() => gulpif(!CLIOpts.debug, cssnano()))
 			.pipe(() => gulpif(CLIOpts.production, rev()))
 			.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.', {
-				sourceRoot: paths.source + 'styles/'
+				sourceRoot: path.join(paths.source, resources.styles.directory)
 			})))
 			();
 	},
@@ -81,7 +93,7 @@ const taskHelpers = {
 			.pipe(() => gulpif(!CLIOpts.debug, uglify()))
 			.pipe(() => gulpif(CLIOpts.production, rev()))
 			.pipe(() => gulpif(CLIOpts.maps, sourcemaps.write('.', {
-				sourceRoot: paths.source + 'scripts/'
+				sourceRoot: path.join(paths.source, resources.scripts.directory)
 			})))
 			();
 	},
@@ -90,37 +102,37 @@ const taskHelpers = {
 			.pipe(imagemin, {
 				progressive: true
 				, interlaced: true
-				, svgoPlugins: [{ removeUnknownsAndDefaults: false }, { cleanupIDs: false }]
+				, svgoPlugins: [{ removeUnknownsAndDefaults: true }, { cleanupIDs: false }]
 			})
-			();
-	},
-	writeToManifest: directory => {
-		return lazypipe()
-			.pipe(gulp.dest, paths.dist + directory + '/')
-			.pipe(browserSync.stream, { match: '**/*.{js,css}' })
-			.pipe(rev.manifest, revManifest, {
-				base: paths.dist
-				, merge: true
-			})
-			.pipe(gulp.dest, paths.dist)
 			();
 	}
 };
 
-// Tasks
+const writeToManifest = directory => {
+	return lazypipe()
+		.pipe(gulp.dest, path.join(paths.dist, directory))
+		.pipe(browserSync.stream, { match: '**/*.{js,css}' })
+		.pipe(rev.manifest, revManifest, {
+			base: paths.dist
+			, merge: true
+		})
+		.pipe(gulp.dest, paths.dist)
+		();
+};
+
+/* Tasks */
 gulp.task('wiredep', (done) => {
 	gulp.src(project.styles)
 		.pipe(wiredep())
-		.pipe(changed(paths.source + 'styles/', {
+		.pipe(changed(path.join(paths.source, 'styles/'), {
 			hasChanged: changed.compareSha1Digest
 		}))
-		.pipe(gulp.dest(paths.source + 'styles/'));
+		.pipe(gulp.dest(path.join(paths.source, 'styles/')));
 	done();
 });
 
 gulp.task('jshint', (done) => {
 	gulp.src(['bower.json', 'gulpfile.*.js'].concat(project.scripts), { since: gulp.lastRun('jshint') })
-		.pipe(print())
 		.pipe(jshint({ "laxcomma": true }))
 		.pipe(jshint.reporter('jshint-stylish'))
 		.pipe(gulpif(CLIOpts.production, jshint.reporter('fail')));
@@ -133,7 +145,7 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 	manifest.forEachAsset('styles', (asset) => {
 		return merged.add(gulp.src(asset.globs, { since: cache.lastMtime('styles') })
 			.pipe(cache('styles'))
-			.pipe(taskHelpers.styles(asset.name))
+			.pipe(taskHelpers.styles(asset.output))
 			.on('error', function (err) {
 				util.beep();
 				console.error(err.message);
@@ -141,7 +153,7 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 			})
 		);
 	});
-	merged.pipe(taskHelpers.writeToManifest('styles'));
+	merged.pipe(writeToManifest(resources.styles.directory));
 	done();
 }));
 
@@ -151,7 +163,7 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
 	manifest.forEachAsset('scripts', (asset) => {
 		return merged.add(gulp.src(asset.globs, { since: cache.lastMtime('scripts') })
 			.pipe(cache('scripts'))
-			.pipe(taskHelpers.scripts(asset.name))
+			.pipe(taskHelpers.scripts(asset.output))
 			.on('error', function (err) {
 				util.beep();
 				if (CLIOpts.production)
@@ -160,28 +172,29 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
 				this.emit('end');
 			})
 		);
-	}
-	);
-	merged.pipe(taskHelpers.writeToManifest('scripts'));
+	});
+
+	merged.pipe(writeToManifest(resources.scripts.directory));
 	done();
 }));
 
-/* Creates the 'simple tasks' defined in manifest.config.simpleTasks */
-for (let i = 0, len = config.simpleTasks.length; i < len; i++) {
-	const taskName = config.simpleTasks[i];
-	gulp.task(taskName, (function () {
-		const currentTaskName = taskName
-			, currentTaskOpts = config.simpleTasks[currentTaskName];
+/* Automatically creates the 'simple tasks' defined in manifest.resources.TYPE.simpleTask = true|false */
+for (let resourceType in resources) {
+	if (!resources[resourceType].simpleTask)
+		continue;
+
+	gulp.task(resourceType, (function () {
+		const resourceInfo = resources[resourceType];
 
 		return function (done) {
-			manifest.forEachAsset(currentTaskName, (asset) => {
+			manifest.forEachAsset(resourceType, (asset) => {
 				gulp.src(asset.globs)
-					.pipe((!!taskHelpers[currentTaskName]) ? // Has helper?
-						taskHelpers[currentTaskName](asset.name) // Yes!
+					.pipe((!!taskHelpers[resourceType]) ? // Has helper?
+						taskHelpers[resourceType](asset.output) // Yes!
 						:
 						util.noop() // Noop(e)!
 					)
-					.pipe(gulp.dest(paths.dist + taskName + '/'))
+					.pipe(gulp.dest(path.join(paths.dist, resourceInfo.directory, asset.output)))
 					.pipe(browserSync.stream());
 				done();
 			});
@@ -201,19 +214,18 @@ gulp.task('watch', (done) => {
 		});
 	}
 
-	// Watch based on file-types
+	/* Watch based on resource-type-names */
 	for (let i = 0, len = compileTaskList.length; i < len; i++) {
-		const taskName = compileTaskList[i];
-		gulp
-			.watch([paths.source + taskName + '/**/*'], gulp.series(taskName))
-			.on('change', cache.update(taskName));
+		const resourceType = compileTaskList[i];
+		gulp.watch([path.join(paths.source, resources[resourceType].directory, '/**/*')], gulp.series(resourceType))
+			.on('change', cache.update(resourceType));
 	}
 	gulp.watch(['bower.json', 'assets/config.json'], gulp.series('build'));
 
 	done();
 });
 
-gulp.task('stats', () => gulp.src('./dist/styles/**.css').pipe(cssstats()));
+gulp.task('stats', () => gulp.src(path.join(paths.dist, resources.styles.directory, './**.css')).pipe(cssstats()));
 
 gulp.task('compile', gulp.parallel(compileTaskList));
 

@@ -1,0 +1,86 @@
+{
+	"config": {
+		/* Don't forget the trailing '/' for directories */
+		"paths": {
+			"source": "assets/",
+			"dist": "dist/",
+			"bowerDirectory": "bower_components/",
+			"bowerJson": "bower.json"
+		},
+		/* phase: optional parameters */
+		"supportedBrowsers": [
+			"last 2 versions",
+			"android 4",
+			"opera 12"
+		],
+		"browserSync": {
+			"files": [
+				"{lib,templates}/**/*.{php,html}",
+				"*.{php,html}"
+			],
+			"whitelist": [],
+			"blacklist": [],
+			"devUrl": "localhost/phase"
+		}
+	},
+	"resources": {
+		"scripts": {
+			"pattern": "*.js",
+			"directory": "scripts",
+			"assets": {
+				"main.js": {
+					"files": "scripts/wrapper.js",
+					"vendor": [
+						"assets/scripts/vendor/*.js"
+					],
+					"bower": []
+				}
+			}
+		},
+		"styles": {
+			"pattern": "*.css",
+			"directory": "styles",
+			"assets": {
+				"main.css": {
+					"files": "styles/wrapper.styl",
+					"vendor": [
+						"assets/styles/vendor/reset.css",
+						"assets/styles/vendor/*.css"
+					],
+					"bower": []
+				}
+			}
+		},
+		"fonts": {
+			"pattern": "*.{eot,otf,svg,ttc,ttf,woff,woff2}",
+			"directory": "fonts",
+			/**
+			 * Simple tasks are automatically created independent tasks that mainly move files
+			 * without any complicated logic.
+			 * It's possible to assign a helper in the middle of the task stream by creating
+			 * a method with the same name as the resource-type-name in the taskHelpers object
+			 * inside your gulpfile (see taskHelpers.images).
+			 */
+			"simpleTask": true,
+			"assets": {
+				"/": {
+					"files": [
+						"fonts/**/*"
+					]
+				}
+			}
+		},
+		"images": {
+			"pattern": "*.{jpg,png,gif}",
+			"directory": "images",
+			"simpleTask": true,
+			"assets": {
+				"/": {
+					"files": [
+						"images/**/*"
+					]
+				}
+			}
+		}
+	}
+}
