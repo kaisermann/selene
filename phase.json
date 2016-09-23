@@ -1,13 +1,12 @@
 {
 	"config": {
-		/* Don't forget the trailing '/' for directories */
 		"paths": {
+	  	/* Don't forget the trailing '/' for directories */
 			"source": "assets/",
 			"dist": "dist/",
 			"bowerDirectory": "bower_components/",
 			"bowerJson": "bower.json"
 		},
-		/* phase: optional parameters */
 		"supportedBrowsers": [
 			"last 2 versions",
 			"android 4",
