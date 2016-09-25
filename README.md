@@ -9,7 +9,7 @@ With Phase you can:
 * Write JS with Babel (ES2015)
 * See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
 * Have your [bower](https://bower.io/) packages automatically included in your assets
-	* Check the **config.json** on the **assets/** directory
+	* Check the **phase.json** on the **root** directory
 
 ## Requirements
 
@@ -27,19 +27,19 @@ With Phase you can:
 ### Phase (old and incomplete)
 
 #### Generated assets configurations
-* assets/config.json
+* ./phase.json
 * assets/styles/config/*.styl
 
 #### Gulp Tasks
 
-* '**gulp**' / '**gulp build**' Build all assets
+* ''**gulp**' / '**gulp build**' Build all assets
 * '**gulp scripts**' Build everything on the scripts directory
 * '**gulp styles**' Build everything on the styles directory
 * '**gulp fonts**' Build everything on the fonts directory
 * '**gulp images**' Build everything on the images directory
 * '**gulp clean**' Deletes the distribution directory
 * '**gulp watch**' Starts watching the asset files
-* '**gulp cssstats**' Displays on the console some stats about your cssstats
+* '**gulp css-stats**' Displays on the console some stats about your cssstats
 
 #### Gulp Parameters
 

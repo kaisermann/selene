@@ -1,7 +1,7 @@
 {
 	"config": {
 		"paths": {
-	  	/* Don't forget the trailing '/' for directories */
+			/* Don't forget the trailing '/' for directories */
 			"source": "assets/",
 			"dist": "dist/",
 			"bowerDirectory": "bower_components/",

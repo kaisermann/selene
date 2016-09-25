@@ -1,9 +1,8 @@
 export default {
-	init() {
-		// Runs on every page
-		console.log('oie2222');
-	},
-	finalize() {
-		// Runs at the end of all route-specific code
-	},
+  init() {
+    // Runs on every page
+  },
+  finalize() {
+    // Runs at the end of all route-specific code
+  },
 };
