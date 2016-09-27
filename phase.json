@@ -6,18 +6,12 @@
       "bowerDirectory": "bower_components/",
       "bowerJson": "bower.json"
     },
-    "supportedBrowsers": [
-      "last 2 versions",
-      "android 4",
-      "opera 12"
-    ],
+    "supportedBrowsers": ["last 2 versions", "opera 12", "IE 10"],
     "browserSync": {
       "files": [
         "{lib,templates}/**/*.{php,html}",
         "*.{php,html}"
       ],
-      "whitelist": [],
-      "blacklist": [],
       "devUrl": "localhost/phase"
     }
   },
@@ -28,9 +22,7 @@
       "assets": {
         "main.js": {
           "files": "scripts/wrapper.js",
-          "vendor": [
-            "assets/scripts/vendor/*.js"
-          ],
+          "vendor": ["assets/scripts/vendor/*.js"],
           "bower": []
         }
       }
@@ -56,9 +48,7 @@
     "simpleTask": true,
     "assets": {
       "/": {
-        "files": [
-          "fonts/**/*"
-        ]
+        "files": "fonts/**/*"
       }
     }
   },
@@ -68,9 +58,7 @@
     "simpleTask": true,
     "assets": {
       "/": {
-        "files": [
-          "images/**/*"
-        ]
+        "files": "images/**/*"
       }
     }
   }

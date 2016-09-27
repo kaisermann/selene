@@ -4,15 +4,14 @@
 
 With Phase you can:
 * Write CSS with:
-  * Stylus
-	  * Build your website's grid with the RolleiFLEX declarative (or not) grid framework. (stylus)
-	  * Use simplified media queries with rupture (stylus)
+  * Stylus (recommended)
+    * Build your website's grid with the RolleiFLEX declarative (or not) grid framework. (stylus)
+    * Use simplified media queries with rupture (stylus)
   * SCSS
 * Write JS with Babel (ES2015)
 * See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
 * Have your [bower](https://bower.io/) packages automatically included in your assets
-	* Check the **phase.json** on the **root** directory
-
+  * Check the **phase.json** on the **root** directory
 
 ## Requirements
 
@@ -34,15 +33,33 @@ With Phase you can:
 ##### [General manifest specification](https://github.com/kaisermann/asset-builder/blob/master/manifest.md)
 
 ##### Phase specific manifest documentation:
-The `config` object MUST have a `supportedBrowsers` **object** attribute defined by an array of browsers, which will be used to autoprefix a project's CSS. See [Browserslist](https://github.com/ai/browserslist#queries) docs for available names and queries.
 
+The `config.paths` object MAY have a `revisionManifest` `string` attribute that defines the revision manifest's file name on production distributions. See [Browserslist](https://github.com/ai/browserslist#queries) docs for available names and queries.
+
+Defaults to:
+```json
+{
+  "config": {
+    "paths": {
+      // src, dist, bowerJson, bowerDirectory...
+      "revisionManifest": "assets.json"
+    }
+  }
+}
+```
+
+* * *
+
+The `config` object MAY have a `supportedBrowsers` **object** attribute defined by an array of browsers, which will be used to autoprefix a project's CSS. See [Browserslist](https://github.com/ai/browserslist#queries) docs for available names and queries.
+
+Defaults to:
 ```json
 {
   "config": {
     "supportedBrowsers": [
       "last 2 versions",
-      "android 4",
-      "opera 12"
+      "opera 12",
+      "IE 10"
     ]
   }
 }
@@ -50,7 +67,7 @@ The `config` object MUST have a `supportedBrowsers` **object** attribute defined
 
 * * *
 
-The `config` object MUST have a `browserSync` **object** if it's planned to use browsersync.
+The `config` object MUST have a `browserSync` **object** if it's planned to use browserSync.
 
 ```json
 {
@@ -68,15 +85,15 @@ The `config` object MUST have a `browserSync` **object** if it's planned to use 
 }
 ```
 
-`files` is an **array** or a **string** of files to be watched by browserSync. **Do not** watch your asset files via browserSync as they are already being watched by `gulp.watch`.
+`files` is an **optional** **array** or a `string` of files to be watched by browserSync. **Do not** watch your asset files via browserSync as they are already being watched by `gulp.watch`. Defaults to `[]`.
 
-`whitelist` and `blacklist` are an **array** or a **string** of supposed watched files allowed/not allowed to be watched.
+`whitelist` and `blacklist` are each one an **optional** **array** or a `string` of supposed watched files allowed/not allowed to be watched. Defaults to `[]`.
 
-`devUrl` is a **string** that specifies your projects development proxy url.
+`devUrl` is a **mandatory** `string` that specifies your projects development proxy url.
 
  * * *
 
-Each resource type MAY have a `directory` **String** attribute, defining where the assets are inside `config.paths.src`and where the built ones will be inside `config.paths.dist`. If not specified, the resource type name will be used.
+Each resource type MAY have a **directory** `string` attribute, defining where the assets are inside `config.paths.src`and where the built ones will be inside `config.paths.dist`. If not specified, the resource type name will be used.
 
 Custom resource type directory name example:
 
@@ -87,7 +104,7 @@ Custom resource type directory name example:
       "pattern": "*.js",
       "directory": "js",
       "assets": {
-        "main.js": {  
+        "main.js": {
           "files": "js/wrapper.js"
         }
       }

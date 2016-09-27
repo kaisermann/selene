@@ -1,14 +1,14 @@
 /* size(width, height) */
 size(w, h = w)
-	width w
-	height h
+  width w
+  height h
 
 /* rem(px [,base-font-size]), em(px [,base-font-size]) */
 rem(px, base = phase.baseFontSize)
-	return unit(px / base, "rem")
+  return unit(px / base, "rem")
 
 em(px, base = phase.baseFontSize)
-	return unit(px / base, "em")
+  return unit(px / base, "em")
 
 /* Mixin shortcuts */
 max = to-width

@@ -1,20 +1,20 @@
 {
-	"bitwise": false,
-	"browser": true,
-	"curly": false,
-	"eqeqeq": true,
-	"eqnull": false,
-	"esnext": true,
-	"immed": true,
-	"jquery": true,
-	"latedef": true,
-	"newcap": true,
-	"noarg": true,
-	"node": true,
-	"strict": true,
-	"globals": {
-		"$": false,
-		"Cash": false,
-		"Zepto": false
-	}
+  "bitwise": false,
+  "browser": true,
+  "curly": false,
+  "eqeqeq": true,
+  "eqnull": false,
+  "esnext": true,
+  "immed": true,
+  "jquery": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "node": true,
+  "strict": true,
+  "globals": {
+    "$": false,
+    "Cash": false,
+    "Zepto": false
+  }
 }

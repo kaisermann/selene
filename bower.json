@@ -1,26 +1,20 @@
 {
   "name": "phase",
   "homepage": "https://github.com/kaisermann/phase",
-  "authors": [
-	"Christian Kaisermann <christian@kaisermann.me>"
-  ],
+  "authors": ["Christian Kaisermann <christian@kaisermann.me>"],
   "license": "MIT",
   "private": false,
   "dependencies": {
-	"rupture-by-jenius": "^0.6.1",
-	"rolleiflex": "^0.2.2"
+    "rupture-by-jenius": "^0.6.1",
+    "rolleiflex": "^0.2.2"
   },
   "devDependencies": {},
   "overrides": {
-	"rupture-by-jenius": {
-	  "main": "rupture/index.styl"
-	},
-	"rolleiflex": {
-	  "main": "src/wrapper.styl"
-	},
-	"": {
-	  "dependencies": {},
-	  "main": ""
-	}
+    "rupture-by-jenius": {
+      "main": "rupture/index.styl"
+    },
+    "rolleiflex": {
+      "main": "src/wrapper.styl"
+    }
   }
 }
