@@ -6,8 +6,7 @@ import autoprefixer from 'gulp-autoprefixer';
 import browserSyncLib from 'browser-sync';
 import browserify from 'browserify';
 import cache from 'gulp-memory-cache';
-import intercept from 'gulp-intercept';
-import clip from 'gulp-clip-empty-files';
+import clipEmptyFiles from 'gulp-clip-empty-files';
 import cmq from 'gulp-combine-mq';
 import concat from 'gulp-concat';
 import changed from 'gulp-changed';
@@ -159,13 +158,14 @@ gulp.task('wiredep', (done) => {
   gulp.src(phase.projectGlobs.styles, {
       base: './'
     })
-    .pipe(clip()) // Clips empty files (wiredep issue #219)
+    .pipe(clipEmptyFiles()) // Clips empty files (wiredep issue #219)
     .pipe(wiredep())
     .pipe(changed('./', {
       hasChanged: changed.compareSha1Digest
     }))
-    .pipe(gulp.dest('.'));
-  done();
+    .pipe(gulp.dest('.'))
+		// Signals 'done' only when files are done being written
+    .on('end', done).on('error', done);
 });
 
 gulp.task('jshint', (done) => {
