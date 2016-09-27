@@ -3,7 +3,7 @@
 import Router from './util/router';
 import common from './routes/common';
 
-(function ($) {
+(function ($, undefined) {
   // Modify the '_routes' object to include or remove other routes
   const _routes = {
     common
@@ -24,4 +24,4 @@ import common from './routes/common';
       _doc.removeEventListener("DOMContentLoaded", loadListener, false);
       _router.loadEvents();
     }, false);
-})(window.jQuery || window.Zepto || window.Cash || undefined);
+})(window.jQuery || window.Zepto || window.Cash);

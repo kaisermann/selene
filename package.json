@@ -17,7 +17,7 @@
     "npm": ">=2.1.5"
   },
   "devDependencies": {
-    "asset-builder": "git+ssh://git@github.com/kaisermann/asset-builder.git#v1.2.0-alpha.4",
+    "asset-builder": "github:kaisermann/asset-builder#v1.2.0-alpha.4",
     "babel-core": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
     "babelify": "^7.3.0",
@@ -28,6 +28,8 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-changed": "^1.3.2",
+    "gulp-changed-in-place": "^2.0.3",
+    "gulp-clip-empty-files": "^0.1.2",
     "gulp-combine-mq": "^0.4.0",
     "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.1.2",
@@ -40,6 +42,7 @@
     "gulp-print": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-rev": "^7.1.2",
+    "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-stylestats": "^2.0.1",
     "gulp-stylus": "^2.5.0",
