@@ -36,6 +36,7 @@
     "gulp-flatten": "^0.3.1",
     "gulp-if": "^2.0.1",
     "gulp-imagemin": "^3.0.3",
+    "gulp-intercept": "^0.1.0",
     "gulp-jshint": "^2.0.1",
     "gulp-memory-cache": "^0.3.0",
     "gulp-plumber": "^1.1.0",

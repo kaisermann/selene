@@ -12,6 +12,7 @@ import cmq from 'gulp-combine-mq';
 import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
 import cssstats from 'gulp-stylestats';
+import intercept from 'gulp-intercept';
 import del from 'del';
 import flatten from 'gulp-flatten';
 import gulp from 'gulp';
@@ -72,6 +73,11 @@ const taskHelpers = {
       .pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
       .pipe(() => gulpif('*.styl', stylus()))
       .pipe(() => gulpif('*.{scss,sass}', sass()))
+      .pipe(intercept, function (file) {
+        console.log('FILE: ' + file.path);
+        console.log('OLD CONTENT: ' + file.contents.toString());
+        return file;
+      })
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
         browsers: config.supportedBrowsers
