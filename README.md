@@ -41,7 +41,6 @@ Defaults to:
 {
   "config": {
     "paths": {
-      // src, dist, bowerJson, bowerDirectory...
       "revisionManifest": "assets.json"
     }
   }
