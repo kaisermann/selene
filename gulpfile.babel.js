@@ -3,26 +3,28 @@
 import args from 'minimist';
 import assetBuilder from 'asset-builder';
 import autoprefixer from 'gulp-autoprefixer';
-import browserify from 'browserify';
 import browserSyncLib from 'browser-sync';
+import browserify from 'browserify';
 import cache from 'gulp-memory-cache';
-import changed from 'gulp-changed';
+import changedInPlace from 'gulp-changed-in-place';
+import clip from 'gulp-clip-empty-files';
 import cmq from 'gulp-combine-mq';
 import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
 import cssstats from 'gulp-stylestats';
 import del from 'del';
+import flatten from 'gulp-flatten';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
-import plumber from 'gulp-plumber';
 import imagemin from 'gulp-imagemin';
-import flatten from 'gulp-flatten';
 import jshint from 'gulp-jshint';
 import lazypipe from 'lazypipe';
 import merge from 'merge-stream';
 import path from 'path';
+import plumber from 'gulp-plumber';
 import print from 'gulp-print';
 import rev from 'gulp-rev';
+import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import stylus from 'gulp-stylus';
 import through2 from 'through2';
@@ -40,8 +42,9 @@ const manifest = assetBuilder('./phase.json'),
 const paths = manifest.config.paths,
   resources = manifest.resources,
   config = manifest.config || {},
-  project = manifest.getProjectGlobs(),
+  projectGlobs = manifest.getProjectGlobs(),
   revManifest = path.join(paths.dist, 'assets.json');
+
 /**
  * List of task names that should run in parallel during the building of assets.
  * By default, it assumes that your tasks are composed by your resource types defined on 'phase.json'.
@@ -55,6 +58,8 @@ const CLIOpts = {
   sync: argv.sync // Start BroswerSync when '--sync'
 };
 
+let isWatching = false;
+
 /**
  * Task helpers are used to modify a stream in the middle of a task.
  * It allows customization of the stream for automatically created simple tasks
@@ -66,6 +71,7 @@ const taskHelpers = {
     return lazypipe()
       .pipe(() => gulpif(CLIOpts.maps, sourcemaps.init()))
       .pipe(() => gulpif('*.styl', stylus()))
+      .pipe(() => gulpif('*.{scss,sass}', sass()))
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
         browsers: config.supportedBrowsers
@@ -143,17 +149,20 @@ const writeToManifest = (directory) => {
 
 /* Tasks */
 gulp.task('wiredep', (done) => {
-  gulp.src(project.styles)
-    .pipe(wiredep())
-    .pipe(changed(path.join(paths.source, 'styles/'), {
-      hasChanged: changed.compareSha1Digest
+  gulp.src(projectGlobs.styles, {
+      base: './'
+    })
+    .pipe(changedInPlace({
+      firstPass: !isWatching
     }))
-    .pipe(gulp.dest(path.join(paths.source, 'styles/')));
+    .pipe(clip()) // Clips empty files (wiredep issue #219)
+    .pipe(wiredep())
+    .pipe(gulp.dest('.'));
   done();
 });
 
 gulp.task('jshint', (done) => {
-  gulp.src(['bower.json', 'gulpfile.*.js'].concat(project.scripts), {
+  gulp.src(['bower.json', 'gulpfile.*.js'].concat(projectGlobs.scripts), {
       since: gulp.lastRun('jshint')
     })
     .pipe(jshint({
@@ -173,7 +182,7 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
       })
       .pipe(plumber())
       .pipe(cache('styles'))
-      .pipe(taskHelpers.styles(asset.output))
+      .pipe(taskHelpers.styles(asset.outputName))
     );
   });
   merged.pipe(writeToManifest(resources.styles.directory));
@@ -189,7 +198,7 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
       })
       .pipe(plumber())
       .pipe(cache('scripts'))
-      .pipe(taskHelpers.scripts(asset.output))
+      .pipe(taskHelpers.scripts(asset.outputName))
     );
   });
 
@@ -204,11 +213,11 @@ const simpleTaskHelper = (resourceType, resourceInfo) => {
       gulp.src(asset.globs)
         .pipe(plumber())
         .pipe((!!taskHelpers[resourceType]) ? // Has helper?
-          taskHelpers[resourceType](asset.output) // Yes!
+          taskHelpers[resourceType](asset.outputName) // Yes!
           :
           util.noop() // Noop(e)!
         )
-        .pipe(gulp.dest(path.join(paths.dist, resourceInfo.directory, asset.output)))
+        .pipe(gulp.dest(path.join(paths.dist, resourceInfo.directory, asset.outputName)))
         .pipe(browserSync.stream({
           match: '**/' + resourceInfo.pattern
         }));
@@ -224,6 +233,7 @@ for(let resourceType in resources) {
 }
 
 gulp.task('watch', (done) => {
+  isWatching = true;
   if(!!config.browserSync && CLIOpts.sync) {
     browserSync.init({
       files: config.browserSync.files,

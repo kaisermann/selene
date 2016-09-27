@@ -23,7 +23,7 @@ With Phase you can:
 
 1. `git clone git@github.com:kaisermann/phase.git`
 2. `npm install` (it will also execute bower install)
-3. Run at least `gulp build` before running' `gulp watch`
+3. Run at least `gulp build` before running `gulp watch`
 
 ## Documentation
 
@@ -60,12 +60,8 @@ The `config` object MUST have a `browserSync` **object** if it's planned to use 
         "{lib,templates}/**/*.{php,html}",
         "*.{php,html}"
       ],
-      "whitelist": [
-
-      ],
-      "blacklist": [
-
-      ],
+      "whitelist": [],
+      "blacklist": [],
       "devUrl":"localhost/phase"
     }
   }
@@ -132,8 +128,7 @@ You can also pass the following parameters to gulp
 * `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
 ### External
-* [Sage documentation](https://github.com/roots/sage/) (recommended)
-	* Sage 9 uses webpack, please refer to the **8.\*.*** documentation.
+* [Sage documentation](https://github.com/roots/sage/) (Sage 9 uses webpack, please refer to the **8.\*.*** documentation.)
 * [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
 * [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
 
