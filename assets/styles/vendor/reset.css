@@ -1,4 +1,6 @@
-*,*:before,*:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
@@ -6,12 +8,14 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
+
 body {
   margin: 0;
   font: 16px/1 sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
+
 h1,
 h2,
 h3,
@@ -20,15 +24,16 @@ p,
 blockquote,
 figure,
 ol,
-ul
-{
+ul {
   margin: 0;
   padding: 0;
 }
+
 main,
 li {
   display: block;
 }
+
 h1,
 h2,
 h3,
@@ -37,23 +42,27 @@ h5,
 h6 {
   font-size: inherit;
 }
-strong { font-weight: bold; }
+
+strong {
+  font-weight: bold;
+}
+
 a,
 button {
   color: inherit;
   transition: .3s all ease;
 }
+
 a {
   text-decoration: none;
 }
 
 input,
 textarea,
-button
-{
+button {
   margin: 0;
   border-radius: 0;
-  -webkit-appearance:none;
+  -webkit-appearance: none;
 }
 
 button {
@@ -65,13 +74,16 @@ button {
   background: none;
   cursor: pointer;
 }
+
 ::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
+
 :focus {
   outline: 0;
 }
+
 img {
   max-width: 100%;
   height: auto;
