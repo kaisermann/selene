@@ -164,7 +164,7 @@ gulp.task('wiredep', (done) => {
       hasChanged: changed.compareSha1Digest
     }))
     .pipe(gulp.dest('.'))
-		// Signals 'done' only when files are done being written
+    // Signals 'done' only when files are done being written
     .on('end', done).on('error', done);
 });
 
@@ -185,10 +185,10 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 
   phase.forEachAsset('styles', (asset) => {
     return merged.add(gulp.src(asset.globs, {
-        since: cache.lastMtime('styles')
+        since: cache.lastMtime('styles-' + asset.outputName)
       })
       .pipe(plumber())
-      .pipe(cache('styles'))
+      .pipe(cache('styles-' + asset.outputName))
       .pipe(taskHelpers.styles(asset.outputName))
     );
   });
@@ -201,10 +201,10 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
 
   phase.forEachAsset('scripts', (asset) => {
     return merged.add(gulp.src(asset.globs, {
-        since: cache.lastMtime('scripts')
+        since: cache.lastMtime('scripts-' + asset.outputName)
       })
       .pipe(plumber())
-      .pipe(cache('scripts'))
+      .pipe(cache('scripts-' + asset.outputName))
       .pipe(taskHelpers.scripts(asset.outputName))
     );
   });
@@ -213,7 +213,7 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
   done();
 }));
 
-/* Automatically creates the 'simple tasks' defined in manifest.resources.TYPE.simpleTask = true|false */
+// Automatically creates the 'simple tasks' defined in manifest.resources.TYPE.simpleTask = true|false
 const simpleTaskHelper = (resourceType, resourceInfo) => {
   return function (done) {
     phase.forEachAsset(resourceType, (asset) => {
@@ -240,6 +240,14 @@ for(const resourceType in phase.resources) {
   }
 }
 
+const updateResourceCache = function (resourceType) {
+  return function () {
+    phase.forEachAsset(resourceType, (asset) => {
+      cache.update(resourceType + '-' + asset.outputName);
+    });
+  };
+};
+
 gulp.task('watch', (done) => {
   if(!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
@@ -252,7 +260,7 @@ gulp.task('watch', (done) => {
     });
   }
 
-  /* Watch based on resource-type-names */
+  // Watch based on resource-type-names
   for(const resourceType in phase.resources) {
     const resourceInfo = phase.resources[resourceType];
 
@@ -263,7 +271,7 @@ gulp.task('watch', (done) => {
 
     // If watching scripts & styles we must update the resource cache
     if(['styles', 'scripts'].indexOf(resourceType) >= 0) {
-      watchInstance.on('change', cache.update(resourceType));
+      watchInstance.on('change', updateResourceCache(resourceType));
     }
   }
   gulp.watch(['bower.json', 'phase.json'], gulp.series('build'));
