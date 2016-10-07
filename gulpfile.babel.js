@@ -214,41 +214,43 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
 }));
 
 // Automatically creates the 'simple tasks' defined in manifest.resources.TYPE.simpleTask = true|false
-const simpleTaskHelper = (resourceType, resourceInfo) => {
-  return function (done) {
-    phase.forEachAsset(resourceType, (asset) => {
-      gulp.src(asset.globs)
-        .pipe(plumber())
-        .pipe((!!taskHelpers[resourceType]) ? // Has helper?
-          taskHelpers[resourceType](asset.outputName) // Yes!
-          :
-          util.noop() // Noop(e)!
-        )
-        .pipe(gulp.dest(path.join(phase.config.paths.dist, resourceInfo.directory, asset.outputName)))
-        .pipe(browserSync.stream({
-          match: '**/' + resourceInfo.pattern
-        }));
-    });
-    done();
+(() => {
+  const simpleTaskHelper = (resourceType, resourceInfo) => {
+    return function (done) {
+      phase.forEachAsset(resourceType, (asset) => {
+        gulp.src(asset.globs)
+          .pipe(plumber())
+          .pipe((!!taskHelpers[resourceType]) ? // Has helper?
+            taskHelpers[resourceType](asset.outputName) // Yes!
+            :
+            util.noop() // Noop(e)!
+          )
+          .pipe(gulp.dest(path.join(phase.config.paths.dist, resourceInfo.directory, asset.outputName)))
+          .pipe(browserSync.stream({
+            match: '**/' + resourceInfo.pattern
+          }));
+      });
+      done();
+    };
   };
-};
 
-for(const resourceType in phase.resources) {
-  const resourceInfo = phase.resources[resourceType];
-  if(!!resourceInfo.simpleTask) {
-    gulp.task(resourceType, simpleTaskHelper(resourceType, resourceInfo));
+  for(const resourceType in phase.resources) {
+    const resourceInfo = phase.resources[resourceType];
+    if(!!resourceInfo.simpleTask) {
+      gulp.task(resourceType, simpleTaskHelper(resourceType, resourceInfo));
+    }
   }
-}
-
-const updateResourceCache = function (resourceType) {
-  return function () {
-    phase.forEachAsset(resourceType, (asset) => {
-      cache.update(resourceType + '-' + asset.outputName);
-    });
-  };
-};
+})();
 
 gulp.task('watch', (done) => {
+  const updateResourceCache = (resourceType) => {
+    return() => {
+      phase.forEachAsset(resourceType, (asset) => {
+        cache.update(resourceType + '-' + asset.outputName);
+      });
+    };
+  };
+
   if(!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
       files: phase.config.browserSync.files,
