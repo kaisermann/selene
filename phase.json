@@ -32,7 +32,7 @@
       "directory": "styles",
       "assets": {
         "main.css": {
-          "files": ["styles/styl/wrapper.styl", "styles/scss/wrapper.scss"],
+          "files": "styles/styl/wrapper.styl",
           "vendor": [
             "assets/styles/vendor/reset.css",
             "assets/styles/vendor/*.css"
