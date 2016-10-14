@@ -1,53 +1,59 @@
-// size(width, height)
-size(w, h = w)
-  width w
-  height h
-
-// rem(px [,base-font-size]), em(px [,base-font-size])
-rem(px, base = phase.baseFontSize)
-  return unit(px / base, "rem")
-
-em(px, base = phase.baseFontSize)
-  return unit(px / base, "em")
-
 // Mixin shortcuts
 max = to-width
 min = from-width
+
+// size(width, height)
+size($width, $height = $width, $cache = true)
+  if($cache)
+    +cache('w' + $width)
+      width: $width
+    +cache('h' + $height)
+      height: $height
+  else
+    width: $width
+    height: $height
+
+// rem(px [,base-font-size]), em(px [,base-font-size])
+rem($px, $base = phase.baseFontSize)
+  return unit($px / $base, "rem")
+
+em($px, $base = phase.baseFontSize)
+  return unit($px / $base, "em")
 
 // CSS Triangles, by jackbrewer
 // https://github.com/jackbrewer/stylus-mixins/blob/master/lib/stylus-mixins/triangle.styl
 triangle($point = 'up', $size = 1em, $color = #777)
   if $size is a 'unit' && $color is a 'color'
     if $point == 'up'
-      _triangle-borders({top: '', right: transparent, bottom: solid, left: transparent}, $size, $color)
+      __triangle-borders({top: '', right: transparent, bottom: solid, left: transparent}, $size, $color)
     else if $point == 'right'
-      _triangle-borders({top: transparent, right: '', bottom: transparent, left: solid}, $size, $color)
+      __triangle-borders({top: transparent, right: '', bottom: transparent, left: solid}, $size, $color)
     else if $point == 'down'
-      _triangle-borders({top: solid, right: transparent, bottom: '', left: transparent}, $size, $color)
+      __triangle-borders({top: solid, right: transparent, bottom: '', left: transparent}, $size, $color)
     else if $point == 'left'
-      _triangle-borders({top: transparent, right: solid, bottom: transparent, left: ''}, $size, $color)
-    else if $point == 'up-left'
+      __triangle-borders({top: transparent, right: solid, bottom: transparent, left: ''}, $size, $color)
+    else if $point == 'up left'
       $size = ($size / 2)
-      _triangle-borders({top: solid, right: transparent, bottom: transparent, left: solid}, $size, $color)
-    else if $point == 'up-right'
+      __triangle-borders({top: solid, right: transparent, bottom: transparent, left: solid}, $size, $color)
+    else if $point == 'up right'
       $size = ($size / 2)
-      _triangle-borders({top: solid, right: solid, bottom: transparent, left: transparent}, $size, $color)
-    else if $point == 'down-right'
+      __triangle-borders({top: solid, right: solid, bottom: transparent, left: transparent}, $size, $color)
+    else if $point == 'down right'
       $size = ($size / 2)
-      _triangle-borders({top: transparent, right: solid, bottom: solid, left: transparent}, $size, $color)
-    else if $point == 'down-left'
+      __triangle-borders({top: transparent, right: solid, bottom: solid, left: transparent}, $size, $color)
+    else if $point == 'down left'
       $size = ($size / 2)
-      _triangle-borders({top: transparent, right: transparent, bottom: solid, left: solid}, $size, $color)
+      __triangle-borders({top: transparent, right: transparent, bottom: solid, left: solid}, $size, $color)
 
 // This mixin should not be called directly
-_triangle-borders($sides, $size, $color)
-  width 0
-  height 0
+__triangle-borders($sides, $size, $color)
+  width: 0
+  height: 0
   for $side, $style in $sides
-    if $style == solid
-      border-{$side} $size solid $color
-    else if $style == transparent
-      border-{$side} $size solid transparent
+    if ($style == solid)
+      border-{$side}: $size solid $color
+    else if ($style == transparent)
+      border-{$side}: $size solid transparent
 
 // Font-face mixin, by jackbrewer
 // https://github.com/jackbrewer/stylus-mixins/blob/master/lib/stylus-mixins/triangle.styl
@@ -58,8 +64,8 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
   $url = $url + 'url("' + $file-path + '.ttf") format("truetype"), '
   $url = $url + 'url("' + $file-path + '.svg#svg' + replace(' ', '', $font-name) + '") format("svg")'
   @font-face
-    font-family $font-name
-    src unquote($url-fallback)
-    src unquote($url)
-    font-weight unquote($weight)
-    font-style unquote($style)
+    font-family: $font-name
+    src: unquote($url-fallback)
+    src: unquote($url)
+    font-weight: unquote($weight)
+    font-style: unquote($style)

@@ -11,14 +11,14 @@ rolleiflex.breakpoints.lg.container   = phase.siteWidth
 rolleiflex.use.em                     = true
 rolleiflex.build.declarative          = true
 
-bp = rolleiflex.breakpoints
+__bps = rolleiflex.breakpoints
 rupture.base-font-size                = phase.baseFontSize
-rupture.scale                         = 0 (bp.sm.breakpoint) (bp.md.breakpoint) (bp.lg.breakpoint)
-rupture.scale-names                   = keys(bp)
+rupture.scale                         = 0 (__bps.sm.breakpoint) (__bps.md.breakpoint) (__bps.lg.breakpoint)
+rupture.scale-names                   = keys(__bps)
 rupture.anti-overlap                  = true
 rupture.enable-em-breakpoints         = false
-rupture.mobile-cutoff                 = bp.sm.breakpoint
-rupture.tablet-cutoff                 = bp.md.breakpoint
-rupture.desktop-cutoff                = bp.md.breakpoint
-rupture.hd-cutoff                     = bp.lg.breakpoint
+rupture.mobile-cutoff                 = __bps.sm.breakpoint
+rupture.tablet-cutoff                 = __bps.md.breakpoint
+rupture.desktop-cutoff                = __bps.md.breakpoint
+rupture.hd-cutoff                     = __bps.lg.breakpoint
 /* End Bower overrides */

@@ -6,9 +6,10 @@ export default class Router {
     this.classes = [];
   }
 
-  fire(route, fn = 'init', args) {
-    if(route !== '' && this.routes[route] && typeof this.routes[route][fn] === 'function')
+  fire(route, fn = 'init', args = undefined) {
+    if(route !== '' && this.routes[route] && typeof this.routes[route][fn] === 'function') {
       this.routes[route][fn](args);
+    }
     return this;
   }
 

@@ -17,11 +17,9 @@ import common from './routes/common';
     _body = document.body,
     _router = new Router(_routes).loadClasses();
 
-  if(_doc.readyState === "interactive" || _doc.readyState === "complete")
+  if(_doc.readyState !== 'loading') {
     _router.loadEvents();
-  else
-    _doc.addEventListener("DOMContentLoaded", function loadListener() {
-      _doc.removeEventListener("DOMContentLoaded", loadListener, false);
-      _router.loadEvents();
-    }, false);
+  } else {
+    _doc.addEventListener('DOMContentLoaded', () => _router.loadEvents(), false);
+  }
 })(window.jQuery || window.Zepto || window.Cash);

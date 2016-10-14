@@ -6,7 +6,7 @@
   "private": false,
   "dependencies": {
     "rupture-by-jenius": "^0.6.1",
-    "rolleiflex": "^0.2.2"
+    "rolleiflex": "~0.3.0"
   },
   "devDependencies": {},
   "overrides": {
@@ -16,5 +16,8 @@
     "rolleiflex": {
       "main": "src/wrapper.styl"
     }
+  },
+  "resolutions": {
+    "rolleiflex": "~0.3.0"
   }
 }
