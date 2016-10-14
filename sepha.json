@@ -6,13 +6,13 @@
       "bowerDirectory": "bower_components/",
       "bowerJson": "bower.json"
     },
-    "supportedBrowsers": ["last 2 versions", "opera 12", "IE 10"],
+    "supportedBrowsers": ["last 2 versions", "opera 12", "IE 10", "Safari >= 8"],
     "browserSync": {
       "files": [
         "{lib,templates}/**/*.{php,html}",
         "*.{php,html}"
       ],
-      "devUrl": "localhost/phase"
+      "devUrl": "localhost:8888/chris"
     }
   },
   "resources": {
@@ -40,7 +40,7 @@
           "bower": []
         },
         "editor-style.css": {
-          "files": "styles/styl/wordpress/editor-style.styl"
+          "files": "styles/styl/wordpress/editor.styl"
         },
         "admin.css": {
           "files": "styles/styl/wordpress/admin.styl"

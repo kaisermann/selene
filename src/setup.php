@@ -43,16 +43,16 @@ function action__after_setup_theme()
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('automatic-feed-links');
-    add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat']);
-    add_theme_support('woocommerce');
+    //add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat']);
+    //add_theme_support('woocommerce');
 
     add_post_type_support('page', 'excerpt');
 
     add_editor_style(asset_path('styles/editor-style.css'));
 
     register_nav_menus([
-            'main_nav' => __('Main Navigation', 'sepha'),
-        ]);
+        'main_nav' => __('Main Navigation', 'sepha'),
+    ]);
 }
 
 function action__wp_enqueue_scripts()
