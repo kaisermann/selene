@@ -2,14 +2,15 @@
 // endbower
 
 @import "config/setup";
+@import "config/mixins";
 @import "config/collections";
 @import "config/fonts";
-@import "config/mixins";
 
 @import "common/global";
 @import "layouts/grid";
 @import "components/buttons";
 @import "components/forms";
+@import "components/wp-classes";
 @import "partials/header";
 @import "partials/sidebar";
 @import "partials/footer";

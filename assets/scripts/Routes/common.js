@@ -1,3 +1,5 @@
+'use strict';
+
 export default {
   init() {
     // Runs on every page

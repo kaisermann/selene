@@ -34,7 +34,7 @@ import wiredepLib from 'wiredep';
 import _ from 'lodash';
 
 // Path to the main manifest file.
-const mainManifestPath = './phase.json';
+const mainManifestPath = './sepha.json';
 const phase = assetBuilder(mainManifestPath);
 
 const argv = args(process.argv.slice(2));
@@ -63,8 +63,8 @@ phase.params = {
 
 /**
  * Task helpers are used to modify a stream in the middle of a task.
- * It allows customization of the stream for automatically created simple tasks
- * (phase.json -> resource -> simpleTask:true).
+ * It allows customization of the stream for automatically created dynamic tasks
+ * (phase.json -> resource -> dynamicTask:true).
  */
 
 const taskHelpers = {
@@ -213,9 +213,9 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
   done();
 }));
 
-// Automatically creates the 'simple tasks' defined in manifest.resources.TYPE.simpleTask = true|false
+// Automatically creates the dynamic tasks defined in manifest.resources.TYPE.dynamicTask = true|false
 (() => {
-  const simpleTaskHelper = (resourceType, resourceInfo) => {
+  const dynamicTaskHelper = (resourceType, resourceInfo) => {
     return function (done) {
       phase.forEachAsset(resourceType, (asset) => {
         gulp.src(asset.globs)
@@ -236,8 +236,8 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
 
   for(const resourceType in phase.resources) {
     const resourceInfo = phase.resources[resourceType];
-    if(!!resourceInfo.simpleTask) {
-      gulp.task(resourceType, simpleTaskHelper(resourceType, resourceInfo));
+    if(!!resourceInfo.dynamicTask) {
+      gulp.task(resourceType, dynamicTaskHelper(resourceType, resourceInfo));
     }
   }
 })();

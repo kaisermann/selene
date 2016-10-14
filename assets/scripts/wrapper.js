@@ -10,6 +10,7 @@ import common from './routes/common';
   };
 
   // Normally, you won't need to modify anything below this line.
+
   // Useful short aliases
   const
     _win = window,

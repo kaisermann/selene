@@ -25,11 +25,10 @@ export default class Router {
   loadEvents() {
     this.fire('common');
 
-    this.classes
-      .forEach((className) => {
-        this.fire(className);
-        this.fire(className, 'finalize');
-      });
+    this.classes.forEach((className) => {
+      this.fire(className);
+      this.fire(className, 'finalize');
+    });
 
     this.fire('common', 'finalize');
     return this;

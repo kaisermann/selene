@@ -1,12 +1,12 @@
 {
-  "name": "phase",
-  "version": "0.3.0-alpha.2",
+  "name": "sepha",
+  "version": "0.0.1",
   "author": "Christian Kaisermann <christian@kaisermann.me>",
-  "homepage": "https://github.com/kaisermann/phase",
+  "homepage": "https://github.com/kaisermann/sepha",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git@github.com:kaisermann/phase.git"
+    "url": "git@github.com:kaisermann/sepha.git"
   },
   "license": "(MIT)",
   "scripts": {
