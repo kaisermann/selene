@@ -48,7 +48,7 @@ function action__after_setup_theme()
 
     add_post_type_support('page', 'excerpt');
 
-    add_editor_style(asset_path('styles/editor-style.css'));
+    add_editor_style(asset_path('styles/editor.css'));
 
     register_nav_menus([
         'main_nav' => __('Main Navigation', 'sepha'),

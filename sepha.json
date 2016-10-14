@@ -39,7 +39,7 @@
           ],
           "bower": []
         },
-        "editor-style.css": {
+        "editor.css": {
           "files": "styles/styl/wordpress/editor.styl"
         },
         "admin.css": {
