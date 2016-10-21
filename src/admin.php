@@ -14,7 +14,8 @@ remove_action('admin_print_scripts', 'print_emoji_detection_script');
 // Filters
 
 // Action methods
-function action__admin_enqueue_scripts() {
+function action__admin_enqueue_scripts()
+{
     wp_enqueue_style('sepha/admin.css', asset_path('styles/admin.css'), false, null);
 }
 

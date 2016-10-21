@@ -50,9 +50,11 @@ function action__after_setup_theme()
 
     add_editor_style(asset_path('styles/editor.css'));
 
-    register_nav_menus([
+    register_nav_menus(
+        [
         'main_nav' => __('Main Navigation', 'sepha'),
-    ]);
+        ]
+    );
 }
 
 function action__wp_enqueue_scripts()
@@ -82,15 +84,19 @@ function action__widgets_init()
          'after_title' => '</h3>',
         ];
 
-    register_sidebar([
+    register_sidebar(
+        [
          'name' => __('Main', 'sepha'),
          'id' => 'sidebar-main',
-        ] + $config);
+        ] + $config
+    );
 
-    register_sidebar([
+    register_sidebar(
+        [
          'name' => __('Footer', 'sepha'),
          'id' => 'sidebar-footer',
-        ] + $config);
+        ] + $config
+    );
 }
 
 function action__wp_footer()
