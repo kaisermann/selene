@@ -50,8 +50,7 @@ function action__after_setup_theme()
 
     add_editor_style(asset_path('styles/editor.css'));
 
-    register_nav_menus(
-        [
+    register_nav_menus([
         'main_nav' => __('Main Navigation', 'sepha'),
         ]
     );
