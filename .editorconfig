@@ -10,3 +10,10 @@ insert_final_newline = auto
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.{php,html}]
+indent_style = tab
+indent_size = 4
+
+[*.txt]
+end_of_line = crlf
