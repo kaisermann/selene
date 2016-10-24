@@ -1,24 +1,24 @@
 'use strict';
 
-import Router from './util/router';
-import common from './routes/common';
+import Router from './Util/router';
+import common from './Events/common';
 
 (function ($, undefined) {
-  // Modify the '_routes' object to include or remove other routes
-  const _routes = {
+  // Modify the '_events' object to include or remove other routes
+  const _events = {
     common
   };
 
   // Normally, you won't need to modify anything below this line.
-
   // Useful short aliases
   const
     _win = window,
     _doc = document,
     _body = document.body,
-    _router = new Router(_routes).loadClasses();
+    _router = new Router(_events).loadClasses();
 
-  if(_doc.readyState !== 'loading') {
+  if(document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)) {
     _router.loadEvents();
   } else {
     _doc.addEventListener('DOMContentLoaded', () => _router.loadEvents(), false);
