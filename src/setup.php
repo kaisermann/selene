@@ -7,7 +7,6 @@ add_action('init', __NAMESPACE__.'\action__init', 0, 2);
 add_action('after_setup_theme', __NAMESPACE__.'\action__after_setup_theme');
 add_action('wp_enqueue_scripts', __NAMESPACE__.'\action__wp_enqueue_scripts');
 add_action('widgets_init', __NAMESPACE__.'\action__widgets_init');
-add_action('wp_footer', __NAMESPACE__.'\action__wp_footer');
 
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'feed_links_extra', 3);
@@ -72,6 +71,11 @@ function action__wp_enqueue_scripts()
 
     wp_enqueue_style('sepha/main.css', asset_path('styles/main.css'), false, null);
     wp_enqueue_script('sepha/main.js', asset_path('scripts/main.js'), ['jquery'], null, true);
+	
+    wp_localize_script('sepha/main.js', 'appMeta', [
+	  	'homeUrl' => get_bloginfo( 'url' ),
+	  	'ajaxUrl' => admin_url( 'admin-ajax.php' )
+  	]);
 }
 
 function action__widgets_init()
@@ -96,11 +100,6 @@ function action__widgets_init()
          'id' => 'sidebar-footer',
         ] + $config
     );
-}
-
-function action__wp_footer()
-{
-    echo "<script>var ajaxUrl = '".admin_url('admin-ajax.php')."'</script>";
 }
 
 // Helpers
