@@ -1,14 +1,14 @@
 import camelCase from './camelCase';
 
 export default class Router {
-  constructor(routes) {
-    this.routes = routes;
+  constructor(events) {
+    this.events = events;
     this.classes = [];
   }
 
   fire(route, fn = 'init', args = undefined) {
-    if(route !== '' && this.routes[route] && typeof this.routes[route][fn] === 'function') {
-      this.routes[route][fn](args);
+    if (route !== '' && this.events[route] && typeof this.events[route][fn] === 'function') {
+      this.events[route][fn](args);
     }
     return this;
   }
