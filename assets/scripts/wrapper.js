@@ -10,7 +10,6 @@ import common from './Events/common';
   };
 
   // Usually, you won't need to modify anything below this line.
-  // Useful short aliases
   const router = new Router(events).loadClasses();
 
   if (document.readyState === 'complete' ||
