@@ -32,7 +32,7 @@ import wiredepLib from 'wiredep';
 import _ from 'lodash';
 
 // Path to the main manifest file.
-const mainManifestPath = './phase.json';
+const mainManifestPath = './sepha.json';
 const phase = assetBuilder(mainManifestPath);
 
 const argv = args(process.argv.slice(2));
