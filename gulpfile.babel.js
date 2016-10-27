@@ -62,7 +62,7 @@ phase.params = {
 /**
  * Task helpers are used to modify a stream in the middle of a task.
  * It allows customization of the stream for automatically created simple tasks
- * (phase.json -> resource -> simpleTask:true).
+ * (phase.json -> resource -> dynamicTask:true).
  */
 
 const taskHelpers = {
@@ -209,9 +209,9 @@ gulp.task('scripts', gulp.series('jslinter', function scriptMerger(done) {
 }));
 
 // Automatically creates the 'simple tasks' defined
-// in manifest.resources.TYPE.simpleTask = true|false
+// in manifest.resources.TYPE.dynamicTask = true|false
 (() => {
-  const simpleTaskHelper = function (resourceType, resourceInfo) {
+  const dynamicTaskHelper = function (resourceType, resourceInfo) {
     return function (done) {
       phase.forEachAsset(resourceType, (asset) => {
         gulp.src(asset.globs)
@@ -233,8 +233,8 @@ gulp.task('scripts', gulp.series('jslinter', function scriptMerger(done) {
 
   for (const resourceType of Object.keys(phase.resources)) {
     const resourceInfo = phase.resources[resourceType];
-    if (resourceInfo.simpleTask) {
-      gulp.task(resourceType, simpleTaskHelper(resourceType, resourceInfo));
+    if (resourceInfo.dynamicTask) {
+      gulp.task(resourceType, dynamicTaskHelper(resourceType, resourceInfo));
     }
   }
 })();

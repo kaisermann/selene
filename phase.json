@@ -44,7 +44,7 @@
     "fonts": {
       "pattern": "*.{eot,otf,svg,ttc,ttf,woff,woff2}",
       "directory": "fonts",
-      "simpleTask": true,
+      "dynamicTask": true,
       "assets": {
         "/": {
           "files": "fonts/**/*"
@@ -54,7 +54,7 @@
     "images": {
       "pattern": "*.{jpg,png,gif}",
       "directory": "images",
-      "simpleTask": true,
+      "dynamicTask": true,
       "assets": {
         "/": {
           "files": "images/**/*"

@@ -114,7 +114,7 @@ Custom resource type directory name example:
 
 * * *
 
-Each resource type MAY have a `simpleTask` **boolean** attribute. If assigned to **true** it is automatically created an independent gulp task that mainly move files without any complicated logic. It's also possible to insert a helper in the middle of the task stream by creating a method with the same name as the `resource type name` in the taskHelpers object inside your gulpfile (see `taskHelpers.images`).
+Each resource type MAY have a `dynamicTask` **boolean** attribute. If assigned to **true** it is automatically created an independent gulp task that mainly move files without any complicated logic. It's also possible to insert a helper in the middle of the task stream by creating a method with the same name as the `resource type name` in the taskHelpers object inside your gulpfile (see `taskHelpers.images`).
 
 * * *
 
