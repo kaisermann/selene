@@ -5,43 +5,39 @@ namespace Roots\Sage;
 use Roots\Sage\Template\Partial;
 use Roots\Sage\Template\WrapperInterface;
 
-class Template
-{
-    /** @var Template[] */
-    public static $instances = [];
+class Template {
 
-    /** @var WrapperInterface */
-    protected $wrapper;
+	/** @var Template[] */
+	public static $instances = [];
 
-    public function __construct(WrapperInterface $wrapper)
-    {
-        $this->wrapper = $wrapper;
-        self::$instances[$wrapper->slug()] = $this;
-    }
+	/** @var WrapperInterface */
+	protected $wrapper;
 
-    /**
-     * @return string Layout (FQPN of, e.g., `base-page.php`, `base.php`)
-     */
-    public function layout()
-    {
-        return $this->wrapper->wrap();
-    }
+	public function __construct( WrapperInterface $wrapper ) {
+		$this->wrapper = $wrapper;
+		self::$instances[ $wrapper->slug() ] = $this;
+	}
 
-    /**
-     * @return string Main template (FQPN of, e.g., `page.php`, `single.php`, `singular.php`)
-     */
-    public function main()
-    {
-        return $this->wrapper->unwrap();
-    }
+	/**
+	 * @return string Layout (FQPN of, e.g., `base-page.php`, `base.php`)
+	 */
+	public function layout() {
+		return $this->wrapper->wrap();
+	}
 
-    /**
-     * @param string $template Delimited template path
-     *
-     * @return string Partial template (FQPN of, e.g., `content.php`, `page-header.php`
-     */
-    public function partial($template)
-    {
-        return (new Partial($template, $this->main()))->path();
-    }
+	/**
+	 * @return string Main template (FQPN of, e.g., `page.php`, `single.php`, `singular.php`)
+	 */
+	public function main() {
+		return $this->wrapper->unwrap();
+	}
+
+	/**
+	 * @param string $template Delimited template path
+	 *
+	 * @return string Partial template (FQPN of, e.g., `content.php`, `page-header.php`
+	 */
+	public function partial( $template ) {
+		return (new Partial( $template, $this->main() ))->path();
+	}
 }

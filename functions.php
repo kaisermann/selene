@@ -16,25 +16,33 @@ $includes = [
 ];
 
 // Do not edit anything below this line unless you know what you're doing :)
-add_filter('stylesheet', function ($stylesheet) {
-    return dirname($stylesheet);
-});
-
-add_action('after_switch_theme', function () {
-    $stylesheet = get_option('stylesheet');
-    if (basename($stylesheet) !== 'templates') {
-        update_option('stylesheet', $stylesheet.'/templates');
+add_filter(
+    'stylesheet', function ($stylesheet) {
+        return dirname($stylesheet);
     }
-});
+);
 
-add_action('customize_render_section', function ($section) {
-    if ($section->type === 'themes') {
-        $section->title = wp_get_theme(basename(__DIR__))->display('Name');
+add_action(
+    'after_switch_theme', function () {
+        $stylesheet = get_option('stylesheet');
+        if (basename($stylesheet) !== 'templates') {
+            update_option('stylesheet', $stylesheet.'/templates');
+        }
     }
-}, 10, 2);
+);
 
-array_walk($includes, function ($file) {
-    if (!locate_template($file, true, true)) {
-        trigger_error(sprintf(__('Error locating %s for inclusion', 'sage'), $file), E_USER_ERROR);
+add_action(
+    'customize_render_section', function ($section) {
+        if ($section->type === 'themes') {
+            $section->title = wp_get_theme(basename(__DIR__))->display('Name');
+        }
+    }, 10, 2
+);
+
+array_walk(
+    $includes, function ($file) {
+        if (!locate_template($file, true, true)) {
+            trigger_error(sprintf(__('Error locating %s for inclusion', 'sage'), $file), E_USER_ERROR);
+        }
     }
-});
+);

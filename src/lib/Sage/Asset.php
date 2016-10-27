@@ -9,33 +9,30 @@ use Roots\Sage\Assets\ManifestInterface;
  *
  * @author QWp6t
  */
-class Asset
-{
-    public static $dist = '/dist';
+class Asset {
 
-    /** @var ManifestInterface Currently used manifest */
-    protected $manifest;
+	public static $dist = '/dist';
 
-    protected $asset;
+	/** @var ManifestInterface Currently used manifest */
+	protected $manifest;
 
-    protected $dir;
+	protected $asset;
 
-    public function __construct($file, ManifestInterface $manifest = null)
-    {
-        $this->manifest = $manifest;
-        $this->asset = basename($file);
-        $this->dir = dirname($file) != '.' ? dirname($file) : '';
-    }
+	protected $dir;
 
-    public function __toString()
-    {
-        return $this->getUri();
-    }
+	public function __construct( $file, ManifestInterface $manifest = null ) {
+		$this->manifest = $manifest;
+		$this->asset = basename( $file );
+		$this->dir = dirname( $file ) != '.' ? dirname( $file ) : '';
+	}
 
-    public function getUri()
-    {
-        $file = ($this->manifest ? $this->manifest->get($this->asset) : $this->asset);
+	public function __toString() {
+		return $this->getUri();
+	}
 
-        return get_template_directory_uri().self::$dist.'/'.$this->dir.'/'.$file;
-    }
+	public function getUri() {
+		$file = ($this->manifest ? $this->manifest->get( $this->asset ) : $this->asset);
+
+		return get_template_directory_uri() . self::$dist . '/' . $this->dir . '/' . $file;
+	}
 }

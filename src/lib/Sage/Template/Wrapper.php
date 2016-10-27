@@ -7,61 +7,56 @@ namespace Roots\Sage\Template;
  *
  * @author QWp6t
  */
-class Wrapper implements WrapperInterface
-{
-    /** @var string Wrapper slug */
-    protected $slug;
+class Wrapper implements WrapperInterface {
 
-    /** @var string Template file that is being wrapped */
-    protected $template = '';
+	/** @var string Wrapper slug */
+	protected $slug;
 
-    /** @var string[] Array of template wrappers; e.g., `base-singular.php`, `base-page.php`, `base.php` */
-    protected $wrapper = [];
+	/** @var string Template file that is being wrapped */
+	protected $template = '';
 
-    /**
-     * Wrapper constructor.
-     *
-     * @param string $template Template file, as from Template Hierarchy; e.g., `page.php`, `single.php`, `singular.php`
-     * @param string $base     Wrapper's base template, this is what will wrap around $template
-     */
-    public function __construct($template, $base = 'layouts/base.php')
-    {
-        $this->slug = sanitize_title(basename($base, '.php'));
-        $this->wrapper = [$base];
-        $this->template = $template;
-        $str = substr($base, 0, -4);
-        array_unshift($this->wrapper, sprintf($str.'-%s.php', basename($template, '.php')));
-    }
+	/** @var string[] Array of template wrappers; e.g., `base-singular.php`, `base-page.php`, `base.php` */
+	protected $wrapper = [];
 
-    /**
-     * @return string
-     *
-     * @see getTemplate
-     */
-    public function __toString()
-    {
-        return $this->unwrap();
-    }
+	/**
+	 * Wrapper constructor.
+	 *
+	 * @param string $template Template file, as from Template Hierarchy; e.g., `page.php`, `single.php`, `singular.php`
+	 * @param string $base     Wrapper's base template, this is what will wrap around $template
+	 */
+	public function __construct( $template, $base = 'layouts/base.php' ) {
+		$this->slug = sanitize_title( basename( $base, '.php' ) );
+		$this->wrapper = [ $base ];
+		$this->template = $template;
+		$str = substr( $base, 0, -4 );
+		array_unshift( $this->wrapper, sprintf( $str . '-%s.php', basename( $template, '.php' ) ) );
+	}
 
-    /** {@inheritdoc} */
-    public function wrap()
-    {
-        $wrappers = apply_filters('sage/wrap_'.$this->slug, $this->wrapper) ?: $this->wrapper;
+	/**
+	 * @return string
+	 *
+	 * @see getTemplate
+	 */
+	public function __toString() {
+		return $this->unwrap();
+	}
 
-        return locate_template($wrappers);
-    }
+	/** {@inheritdoc} */
+	public function wrap() {
+		$wrappers = apply_filters( 'sage/wrap_' . $this->slug, $this->wrapper ) ?: $this->wrapper;
 
-    /** {@inheritdoc} */
-    public function slug()
-    {
-        return $this->slug;
-    }
+		return locate_template( $wrappers );
+	}
 
-    /** {@inheritdoc} */
-    public function unwrap()
-    {
-        $template = apply_filters('sage/unwrap_'.$this->slug, $this->template) ?: $this->template;
+	/** {@inheritdoc} */
+	public function slug() {
+		return $this->slug;
+	}
 
-        return locate_template($template) ?: $template;
-    }
+	/** {@inheritdoc} */
+	public function unwrap() {
+		$template = apply_filters( 'sage/unwrap_' . $this->slug, $this->template ) ?: $this->template;
+
+		return locate_template( $template ) ?: $template;
+	}
 }

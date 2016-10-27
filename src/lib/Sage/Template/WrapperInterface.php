@@ -7,22 +7,22 @@ namespace Roots\Sage\Template;
  *
  * @author QWp6t
  */
-interface WrapperInterface
-{
-    /**
-     * Get wrapper template file.
-     *
-     * @return string Wrapper template (FQPN of, e.g., `base-page.php`, `base.php`)
-     */
-    public function wrap();
+interface WrapperInterface {
 
-    /**
-     * @return string Wrapped template (FQPN of, e.g., `page.php`, `single.php`, `singular.php`)
-     */
-    public function unwrap();
+	/**
+	 * Get wrapper template file.
+	 *
+	 * @return string Wrapper template (FQPN of, e.g., `base-page.php`, `base.php`)
+	 */
+	public function wrap();
 
-    /**
-     * @return string Slug of the WrapperInterface; e.g., `base`
-     */
-    public function slug();
+	/**
+	 * @return string Wrapped template (FQPN of, e.g., `page.php`, `single.php`, `singular.php`)
+	 */
+	public function unwrap();
+
+	/**
+	 * @return string Slug of the WrapperInterface; e.g., `base`
+	 */
+	public function slug();
 }

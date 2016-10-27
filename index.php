@@ -1,7 +1,6 @@
 <?php
-if (defined('ABSPATH')) 
-{
-    update_option('template', get_option('template') . '/templates');
+if ( defined( 'ABSPATH' ) ) {
+	update_option( 'template', get_option( 'template' ) . '/templates' );
 }
 
-die("Kind Regards,\nChris");
+die( "Kind Regards,\nChris" );
