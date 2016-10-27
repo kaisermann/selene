@@ -5,8 +5,8 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "rupture-by-jenius": "^0.6.1",
-    "rolleiflex": "~1.0.0-alpha.1"
+    "rolleiflex": "~1.0.0-alpha.2",
+    "rupture-by-jenius": "^0.6.1"
   },
   "devDependencies": {},
   "overrides": {
@@ -16,8 +16,5 @@
     "rolleiflex": {
       "main": "src/wrapper.styl"
     }
-  },
-  "resolutions": {
-    "rolleiflex": "~1.0.0-alpha.1"
   }
 }

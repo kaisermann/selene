@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint prefer-arrow-callback: "off" */
 import args from 'minimist';
 import assetBuilder from 'asset-builder';
 import autoprefixer from 'gulp-autoprefixer';
@@ -17,12 +16,11 @@ import flatten from 'gulp-flatten';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import imagemin from 'gulp-imagemin';
-import jshint from 'gulp-jshint';
+import eslint from 'gulp-eslint';
 import lazypipe from 'lazypipe';
 import merge from 'merge-stream';
 import path from 'path';
 import plumber from 'gulp-plumber';
-import print from 'gulp-print';
 import rev from 'gulp-rev';
 import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
@@ -34,7 +32,7 @@ import wiredepLib from 'wiredep';
 import _ from 'lodash';
 
 // Path to the main manifest file.
-const mainManifestPath = './sepha.json';
+const mainManifestPath = './phase.json';
 const phase = assetBuilder(mainManifestPath);
 
 const argv = args(process.argv.slice(2));
@@ -43,14 +41,14 @@ const browserSync = browserSyncLib.create();
 // Sets configuration default values if needed
 phase.config = _.merge({
   paths: {
-    revisionManifest: "assets.json"
+    revisionManifest: 'assets.json',
   },
-  supportedBrowsers: ["last 2 versions", "opera 12", "IE 10"],
+  supportedBrowsers: ['last 2 versions', 'opera 12', 'IE 10'],
   browserSync: {
     files: [],
     whitelist: [],
     blacklist: [],
-  }
+  },
 }, phase.config);
 
 phase.projectGlobs = phase.getProjectGlobs();
@@ -58,96 +56,94 @@ phase.params = {
   maps: argv.maps, // Enables sourcemaps creation when '--maps'
   production: argv.p, // Production mode, appends hash of file's content to its name
   debug: argv.d, // Do not minify assets when '-d'
-  sync: argv.sync // Start BroswerSync when '--sync'
+  sync: argv.sync, // Start BroswerSync when '--sync'
 };
 
 /**
  * Task helpers are used to modify a stream in the middle of a task.
- * It allows customization of the stream for automatically created dynamic tasks
+ * It allows customization of the stream for automatically created simple tasks
  * (phase.json -> resource -> dynamicTask:true).
  */
 
 const taskHelpers = {
-  styles: (outputName) => {
+  styles(outputName) {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       .pipe(() => gulpif('*.styl', stylus()))
       .pipe(() => gulpif('*.{scss,sass}', sass({
         outputStyle: 'expanded',
-        precision: 8
+        precision: 8,
       })))
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
-        browsers: phase.config.supportedBrowsers
+        browsers: phase.config.supportedBrowsers,
       })
       .pipe(cmq)
       .pipe(() => gulpif(!phase.params.debug, cssnano({
-        safe: false
+        safe: true,
       })))
       .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
-        sourceRoot: path.join(phase.config.paths.source, phase.resources.styles.directory)
-      })))
-      ();
+        sourceRoot: path.join(phase.config.paths.source, phase.resources.styles.directory),
+      })))();
   },
-  scripts: (outputName) => {
+  scripts(outputName) {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
-      .pipe(through2.obj, (file, enc, next) => {
+      .pipe(through2.obj, function (file, enc, next) {
         return browserify(file.path, {
-            debug: false
+            debug: false,
           })
           .transform('babelify', {
-            presets: ["es2015"],
-            sourceMaps: false
+            presets: ['es2015'],
+            sourceMaps: false,
           })
-          .bundle(function (err, res) {
-            if(err)
+          .bundle((err, res) => {
+            const tmpFile = file;
+            if (err) {
               return next(err);
-            file.contents = res;
-            next(null, file);
+            }
+            tmpFile.contents = res;
+            next(null, tmpFile);
+            return true;
           });
       })
       .pipe(concat, outputName)
       .pipe(() => gulpif(!phase.params.debug, uglify()))
       .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
-        sourceRoot: path.join(phase.config.paths.source, phase.resources.scripts.directory)
-      })))
-      ();
+        sourceRoot: path.join(phase.config.paths.source, phase.resources.scripts.directory),
+      })))();
   },
-  fonts: (outputName) => {
+  fonts() {
     return lazypipe()
-      .pipe(flatten)
-      ();
+      .pipe(flatten)();
   },
-  images: (outputName) => {
+  images() {
     return lazypipe()
       .pipe(imagemin, {
         progressive: true,
         interlaced: true,
         svgoPlugins: [{
-          removeUnknownsAndDefaults: true
+          removeUnknownsAndDefaults: true,
         }, {
-          cleanupIDs: false
-        }]
-      })
-      ();
-  }
+          cleanupIDs: false,
+        }],
+      })();
+  },
 };
 
-const writeToManifest = (directory) => {
+const writeToManifest = function (directory) {
   return lazypipe()
     .pipe(gulp.dest, path.join(phase.config.paths.dist, directory))
     .pipe(browserSync.stream, {
-      match: '**/*.{js,css}'
+      match: '**/*.{js,css}',
     })
     .pipe(rev.manifest, path.join(phase.config.paths.dist, phase.config.paths.revisionManifest), {
       base: phase.config.paths.dist,
-      merge: true
+      merge: true,
     })
-    .pipe(gulp.dest, phase.config.paths.dist)
-    ();
+    .pipe(gulp.dest, phase.config.paths.dist)();
 };
 
 
@@ -156,39 +152,38 @@ gulp.task('wiredep', (done) => {
   const wiredep = wiredepLib.stream;
 
   gulp.src(phase.projectGlobs.styles, {
-      base: './'
+      base: './',
     })
     .pipe(clipEmptyFiles()) // Clips empty files (wiredep issue #219)
     .pipe(wiredep())
     .pipe(changed('./', {
-      hasChanged: changed.compareSha1Digest
+      hasChanged: changed.compareSha1Digest,
     }))
     .pipe(gulp.dest('.'))
     // Signals 'done' only when files are done being written
-    .on('end', done).on('error', done);
+    .on('end', done)
+    .on('error', done);
 });
 
-gulp.task('jshint', (done) => {
-  gulp.src(['bower.json', 'gulpfile.*.js'].concat(phase.projectGlobs.scripts), {
-      since: gulp.lastRun('jshint')
+gulp.task('jslinter', (done) => {
+  gulp.src(['gulpfile.*.js'].concat(phase.projectGlobs.scripts), {
+      since: gulp.lastRun('jslinter'),
     })
-    .pipe(jshint({
-      "laxcomma": true
-    }))
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(gulpif(phase.params.production, jshint.reporter('fail')));
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(gulpif(phase.params.production, eslint.failAfterError()));
   done();
 });
 
 gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
   const merged = merge();
 
-  phase.forEachAsset('styles', (asset) => {
+  phase.forEachAsset('styles', function (asset) {
     return merged.add(gulp.src(asset.globs, {
-        since: cache.lastMtime('styles-' + asset.outputName)
+        since: cache.lastMtime(`styles-${asset.outputName}`),
       })
       .pipe(plumber())
-      .pipe(cache('styles-' + asset.outputName))
+      .pipe(cache(`styles-${asset.outputName}`))
       .pipe(taskHelpers.styles(asset.outputName))
     );
   });
@@ -196,15 +191,15 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
   done();
 }));
 
-gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
+gulp.task('scripts', gulp.series('jslinter', function scriptMerger(done) {
   const merged = merge();
 
-  phase.forEachAsset('scripts', (asset) => {
+  phase.forEachAsset('scripts', function (asset) {
     return merged.add(gulp.src(asset.globs, {
-        since: cache.lastMtime('scripts-' + asset.outputName)
+        since: cache.lastMtime(`scripts-${asset.outputName}`),
       })
       .pipe(plumber())
-      .pipe(cache('scripts-' + asset.outputName))
+      .pipe(cache(`scripts-${asset.outputName}`))
       .pipe(taskHelpers.scripts(asset.outputName))
     );
   });
@@ -213,57 +208,59 @@ gulp.task('scripts', gulp.series('jshint', function scriptMerger(done) {
   done();
 }));
 
-// Automatically creates the dynamic tasks defined in manifest.resources.TYPE.dynamicTask = true|false
+// Automatically creates the 'simple tasks' defined
+// in manifest.resources.TYPE.dynamicTask = true|false
 (() => {
-  const dynamicTaskHelper = (resourceType, resourceInfo) => {
+  const dynamicTaskHelper = function (resourceType, resourceInfo) {
     return function (done) {
       phase.forEachAsset(resourceType, (asset) => {
         gulp.src(asset.globs)
           .pipe(plumber())
-          .pipe((!!taskHelpers[resourceType]) ? // Has helper?
+          .pipe((taskHelpers[resourceType]) ? // Has helper?
             taskHelpers[resourceType](asset.outputName) // Yes!
             :
             util.noop() // Noop(e)!
           )
-          .pipe(gulp.dest(path.join(phase.config.paths.dist, resourceInfo.directory, asset.outputName)))
+          .pipe(gulp.dest(path.join(phase.config.paths.dist,
+            resourceInfo.directory, asset.outputName)))
           .pipe(browserSync.stream({
-            match: '**/' + resourceInfo.pattern
+            match: `**/${resourceInfo.pattern}`,
           }));
       });
       done();
     };
   };
 
-  for(const resourceType in phase.resources) {
+  for (const resourceType of Object.keys(phase.resources)) {
     const resourceInfo = phase.resources[resourceType];
-    if(!!resourceInfo.dynamicTask) {
+    if (resourceInfo.dynamicTask) {
       gulp.task(resourceType, dynamicTaskHelper(resourceType, resourceInfo));
     }
   }
 })();
 
-gulp.task('watch', (done) => {
-  const updateResourceCache = (resourceType) => {
-    return() => {
+gulp.task('watch', function (done) {
+  const updateResourceCache = function (resourceType) {
+    return function () {
       phase.forEachAsset(resourceType, (asset) => {
-        cache.update(resourceType + '-' + asset.outputName);
+        cache.update(`${resourceType}-${asset.outputName}`);
       });
     };
   };
 
-  if(!!phase.config.browserSync && phase.params.sync) {
+  if (!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
       files: phase.config.browserSync.files,
       proxy: phase.config.browserSync.devUrl,
       snippetOptions: {
         whitelist: phase.config.browserSync.whitelist,
-        blacklist: phase.config.browserSync.blacklist
-      }
+        blacklist: phase.config.browserSync.blacklist,
+      },
     });
   }
 
   // Watch based on resource-type-names
-  for(const resourceType in phase.resources) {
+  for (const resourceType of Object.keys(phase.resources)) {
     const resourceInfo = phase.resources[resourceType];
 
     const watchInstance = gulp.watch(
@@ -272,7 +269,7 @@ gulp.task('watch', (done) => {
     );
 
     // If watching scripts & styles we must update the resource cache
-    if(['styles', 'scripts'].indexOf(resourceType) >= 0) {
+    if (['styles', 'scripts'].indexOf(resourceType) >= 0) {
       watchInstance.on('change', updateResourceCache(resourceType));
     }
   }
@@ -283,7 +280,7 @@ gulp.task('watch', (done) => {
 
 gulp.task('css-stats', () => gulp.src(path.join(phase.config.paths.dist, phase.resources.styles.directory, './**.css')).pipe(cssstats()));
 
-gulp.task('clean', (done) => del([phase.config.paths.dist], done));
+gulp.task('clean', done => del([phase.config.paths.dist], done));
 
 gulp.task('compile', gulp.parallel(Object.keys(phase.resources)));
 

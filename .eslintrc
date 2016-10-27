@@ -1,0 +1,23 @@
+{
+  "root": true,
+  "extends": "airbnb",
+  "globals": {
+    "wp": true,
+    "cash": true,
+    "zepto": true
+  },
+  "env": {
+    "amd": true,
+    "browser": true,
+    "jquery": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "func-names": "off",
+    "indent": "off",
+    "import/no-extraneous-dependencies": "off",
+    "prefer-arrow-callback": "warn",
+    "no-unused-vars": "warn",
+  }
+}

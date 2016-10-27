@@ -1,11 +1,8 @@
-'use strict';
-
 export default {
   init() {
-    // Runs on every page
-    console.log('oi');
+    // Runs on every page
   },
   finalize() {
-    // Runs at the end of all event-specific code
+    // Runs at the end of all route-specific code
   },
 };
