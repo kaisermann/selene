@@ -80,13 +80,12 @@ const taskHelpers = {
       })
       .pipe(cmq)
       .pipe(() => gulpif(!phase.params.debug, cssnano({
-        safe: false,
+        safe: true,
       })))
       .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
         sourceRoot: path.join(phase.config.paths.source, phase.resources.styles.directory),
-      })))
-      ();
+      })))();
   },
   scripts(outputName) {
     return lazypipe()
@@ -100,11 +99,13 @@ const taskHelpers = {
             sourceMaps: false,
           })
           .bundle((err, res) => {
+            const tmpFile = file;
             if (err) {
               return next(err);
             }
-            file.contents = res;
-            next(null, file);
+            tmpFile.contents = res;
+            next(null, tmpFile);
+            return true;
           });
       })
       .pipe(concat, outputName)
@@ -112,13 +113,11 @@ const taskHelpers = {
       .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
         sourceRoot: path.join(phase.config.paths.source, phase.resources.scripts.directory),
-      })))
-      ();
+      })))();
   },
   fonts() {
     return lazypipe()
-      .pipe(flatten)
-      ();
+      .pipe(flatten)();
   },
   images() {
     return lazypipe()
@@ -130,8 +129,7 @@ const taskHelpers = {
         }, {
           cleanupIDs: false,
         }],
-      })
-      ();
+      })();
   },
 };
 
@@ -145,8 +143,7 @@ const writeToManifest = function (directory) {
       base: phase.config.paths.dist,
       merge: true,
     })
-    .pipe(gulp.dest, phase.config.paths.dist)
-    ();
+    .pipe(gulp.dest, phase.config.paths.dist)();
 };
 
 
@@ -197,7 +194,7 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 gulp.task('scripts', gulp.series('jslinter', function scriptMerger(done) {
   const merged = merge();
 
-  phase.forEachAsset('scripts', (asset) => {
+  phase.forEachAsset('scripts', function (asset) {
     return merged.add(gulp.src(asset.globs, {
         since: cache.lastMtime(`scripts-${asset.outputName}`),
       })
@@ -234,12 +231,10 @@ gulp.task('scripts', gulp.series('jslinter', function scriptMerger(done) {
     };
   };
 
-  for (const resourceType in phase.resources) {
-    if ({}.hasOwnProperty.call(phase.resources, resourceType)) {
-      const resourceInfo = phase.resources[resourceType];
-      if (resourceInfo.simpleTask) {
-        gulp.task(resourceType, simpleTaskHelper(resourceType, resourceInfo));
-      }
+  for (const resourceType of Object.keys(phase.resources)) {
+    const resourceInfo = phase.resources[resourceType];
+    if (resourceInfo.simpleTask) {
+      gulp.task(resourceType, simpleTaskHelper(resourceType, resourceInfo));
     }
   }
 })();
@@ -265,19 +260,17 @@ gulp.task('watch', function (done) {
   }
 
   // Watch based on resource-type-names
-  for (const resourceType in phase.resources) {
-    if ({}.hasOwnProperty.call(phase.resources, resourceType)) {
-      const resourceInfo = phase.resources[resourceType];
+  for (const resourceType of Object.keys(phase.resources)) {
+    const resourceInfo = phase.resources[resourceType];
 
-      const watchInstance = gulp.watch(
-        [path.join(phase.config.paths.source, resourceInfo.directory, '/**/*')],
-        gulp.series(resourceType)
-      );
+    const watchInstance = gulp.watch(
+      [path.join(phase.config.paths.source, resourceInfo.directory, '/**/*')],
+      gulp.series(resourceType)
+    );
 
-      // If watching scripts & styles we must update the resource cache
-      if (['styles', 'scripts'].indexOf(resourceType) >= 0) {
-        watchInstance.on('change', updateResourceCache(resourceType));
-      }
+    // If watching scripts & styles we must update the resource cache
+    if (['styles', 'scripts'].indexOf(resourceType) >= 0) {
+      watchInstance.on('change', updateResourceCache(resourceType));
     }
   }
   gulp.watch(['bower.json', 'phase.json'], gulp.series('build'));
