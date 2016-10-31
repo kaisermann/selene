@@ -89,7 +89,6 @@ const taskHelpers = {
   },
   scripts(outputName) {
     return lazypipe()
-      .pipe(preprocess)
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       .pipe(babel, {
         presets: ['es2015'],
@@ -141,7 +140,7 @@ const lintJS = function () {
     .pipe(() => jshint.reporter('jshint-stylish'))
     .pipe(() => gulpif(phase.params.production, jshint.reporter('fail')))
     ();
-}
+};
 
 /* Tasks */
 gulp.task('wiredep', (done) => {
