@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "rolleiflex": "~1.0.0-alpha.2",
+    "rolleiflex": "^1.0.0-alpha.2",
     "rupture-by-jenius": "^0.6.1"
   },
   "devDependencies": {},

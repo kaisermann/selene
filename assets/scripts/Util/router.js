@@ -1,6 +1,4 @@
-import camelCase from './camelCase';
-
-export default class Router {
+class Router {
   constructor(events) {
     this.events = events;
     this.classes = [];
