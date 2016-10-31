@@ -1,8 +1,9 @@
 (function ($) {
+  'use strict';
   // @include ./util/camelCase.js
   // @include ./util/router.js
   // @include ./events/common.js
-
+  
   // Modify the 'events' object to include or remove other routes
   const events = {
     common,
