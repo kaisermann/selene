@@ -89,6 +89,7 @@ const taskHelpers = {
   },
   scripts(outputName) {
     return lazypipe()
+      .pipe(preprocess)
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       .pipe(babel, {
         presets: ['es2015'],
@@ -132,15 +133,19 @@ const writeToManifest = function (directory) {
     .pipe(gulp.dest, phase.config.paths.dist)();
 };
 
-const lintJS = function () {
-  return lazypipe()
-    .pipe(jshint, {
-      "laxcomma": true
+gulp.task('jsLinter', (done) => {
+  gulp.src(['gulpfile.*.js'].concat(phase.projectGlobs.scripts), {
+      since: gulp.lastRun('jsLinter'),
     })
-    .pipe(() => jshint.reporter('jshint-stylish'))
-    .pipe(() => gulpif(phase.params.production, jshint.reporter('fail')))
-    ();
-};
+    .pipe(preprocess())
+    .pipe(jshint({
+      "laxcomma": true
+    }))
+    .pipe(jshint.reporter('jshint-stylish'))
+    .on('end', done)
+    .on('error', done)
+    .pipe(gulpif(phase.params.production, jshint.reporter('fail')));
+});
 
 /* Tasks */
 gulp.task('wiredep', (done) => {
@@ -174,14 +179,12 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
     .on('error', done);
 }));
 
-gulp.task('scripts', function scriptMerger(done) {
+gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
   const merged = merge();
 
   phase.forEachAsset('scripts', function (asset) {
     return merged.add(gulp.src(asset.globs)
       .pipe(plumber())
-      .pipe(preprocess())
-      .pipe(lintJS())
       .pipe(taskHelpers.scripts(asset.outputName))
     );
   });
@@ -189,7 +192,7 @@ gulp.task('scripts', function scriptMerger(done) {
   merged.pipe(writeToManifest(phase.resources.scripts.directory))
     .on('end', done)
     .on('error', done);
-});
+}));
 
 // Automatically creates the 'simple tasks' defined
 // in manifest.resources.TYPE.dynamicTask = true|false
