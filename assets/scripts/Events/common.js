@@ -1,4 +1,4 @@
-export default {
+const common = {
   init() {
     // Runs on every page
   },
