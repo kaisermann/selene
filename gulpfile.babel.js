@@ -22,13 +22,11 @@ import merge from 'merge-stream';
 import path from 'path';
 import plumber from 'gulp-plumber';
 import rev from 'gulp-rev';
-import sourcemaps from 'gulp-sourcemaps';
 import stylus from 'gulp-stylus';
 import through2 from 'through2';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
-import print from 'gulp-print';
 
 // Path to the main manifest file.
 const mainManifestPath = './phase.json';
@@ -53,7 +51,6 @@ phase.config = _.merge({
 phase.projectGlobs = phase.getProjectGlobs();
 phase.params = {
   debug: argv.d, // Do not minify assets when '-d'
-  maps: !argv.p, // Enables sourcemaps creation when not '-p'
   production: argv.p, // Production mode, appends hash of file's content to its name
   sync: argv.sync, // Start BroswerSync when '--sync'
 };
@@ -67,7 +64,6 @@ phase.params = {
 const taskHelpers = {
   styles(outputName) {
     return lazypipe()
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       .pipe(() => gulpif('*.styl', stylus()))
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
@@ -78,13 +74,10 @@ const taskHelpers = {
         safe: true,
       })))
       .pipe(() => gulpif(phase.params.production, rev()))
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
-        sourceRoot: path.join(phase.config.paths.source, phase.resources.styles.directory),
-      })))();
+      ();
   },
   scripts(outputName) {
     return lazypipe()
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       // Only pipes our main code (not bower's) to browserify
       .pipe(() => gulpif((file) => {
         return phase.projectGlobs.scripts.some(e => file.path.endsWith(e));
@@ -109,9 +102,7 @@ const taskHelpers = {
       .pipe(concat, outputName)
       .pipe(() => gulpif(!phase.params.debug, uglify()))
       .pipe(() => gulpif(phase.params.production, rev()))
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
-        sourceRoot: path.join(phase.config.paths.source, phase.resources.scripts.directory),
-      })))();
+      ();
   },
   fonts() {
     return lazypipe()
@@ -168,7 +159,7 @@ gulp.task('wiredep', (done) => {
   const wiredep = wiredepLib.stream;
 
   gulp.src(phase.projectGlobs.styles, {
-      base: './',
+      base: 'styles',
     })
     .pipe(clipEmptyFiles()) // Clips empty files (wiredep issue #219)
     .pipe(wiredep())
