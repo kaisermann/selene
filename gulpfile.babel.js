@@ -157,17 +157,16 @@ gulp.task('jsLinter', (done) => {
 /* Tasks */
 gulp.task('wiredep', (done) => {
   const wiredep = wiredepLib.stream;
+  const stylesDir = path.join(phase.config.paths.source, phase.resources.styles.directory);
 
-  gulp.src(phase.projectGlobs.styles, {
-      base: 'styles',
-    })
+  return gulp.src(phase.projectGlobs.styles)
     .pipe(clipEmptyFiles()) // Clips empty files (wiredep issue #219)
     .pipe(wiredep())
-    .pipe(changed('./', {
+    .pipe(changed(stylesDir, {
       hasChanged: changed.compareSha1Digest,
     }))
-    .pipe(gulp.dest('.'))
-    // Signals 'done' only when files are done being written
+    .pipe(gulp.dest(stylesDir))
+    // Signals 'done' only when fiFles are done being written
     .on('end', done)
     .on('error', done);
 });
@@ -176,7 +175,9 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
   const merged = merge();
 
   phase.forEachAsset('styles', (asset) => {
-    return merged.add(gulp.src(asset.globs)
+    return merged.add(gulp.src(asset.globs, {
+        base: phase.resources.styles.directory,
+      })
       .pipe(plumber({
         errorHandler: onError
       }))
@@ -192,7 +193,9 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
   const merged = merge();
 
   phase.forEachAsset('scripts', (asset) => {
-    return merged.add(gulp.src(asset.globs)
+    return merged.add(gulp.src(asset.globs, {
+        base: phase.resources.scripts.directory,
+      })
       .pipe(plumber({
         errorHandler: onError
       }))
