@@ -1,15 +1,13 @@
-'use strict';
-
+import _ from 'lodash';
 import args from 'minimist';
 import assetBuilder from 'asset-builder';
 import autoprefixer from 'gulp-autoprefixer';
+import browserify from 'browserify';
 import browserSyncLib from 'browser-sync';
-import preprocess from 'gulp-preprocess';
-import babel from 'gulp-babel';
+import changed from 'gulp-changed';
 import clipEmptyFiles from 'gulp-clip-empty-files';
 import cmq from 'gulp-combine-mq';
 import concat from 'gulp-concat';
-import changed from 'gulp-changed';
 import cssnano from 'gulp-cssnano';
 import cssstats from 'gulp-stylestats';
 import del from 'del';
@@ -26,10 +24,10 @@ import rev from 'gulp-rev';
 import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import stylus from 'gulp-stylus';
+import through2 from 'through2';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
-import _ from 'lodash';
 
 // Path to the main manifest file.
 const mainManifestPath = './phase.json';
@@ -89,12 +87,28 @@ const taskHelpers = {
   },
   scripts(outputName) {
     return lazypipe()
-      .pipe(preprocess)
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
-      .pipe(babel, {
-        presets: ['es2015'],
-        compact: false
-      })
+      .pipe(() => gulpif(function (file) {
+        // Only pipes our main code (not bower's) to browserify
+        return file.path.endsWith(phase.projectGlobs.scripts);
+      }, through2.obj(function (file, enc, next) {
+        return browserify(file.path, {
+            debug: false,
+          })
+          .transform('babelify', {
+            presets: ['es2015'],
+            sourceMaps: false,
+            compact: false
+          })
+          .bundle((err, res) => {
+            const tmpFile = file;
+            if (err) {
+              return next(err);
+            }
+            tmpFile.contents = res;
+            return next(null, tmpFile);
+          });
+      })))
       .pipe(concat, outputName)
       .pipe(() => gulpif(!phase.params.debug, uglify()))
       .pipe(() => gulpif(phase.params.production, rev()))
@@ -120,6 +134,12 @@ const taskHelpers = {
   },
 };
 
+const onError = function (err) {
+  util.beep();
+  util.log(err.message);
+  this.emit('end');
+};
+
 const writeToManifest = function (directory) {
   return lazypipe()
     .pipe(gulp.dest, path.join(phase.config.paths.dist, directory))
@@ -137,7 +157,6 @@ gulp.task('jsLinter', (done) => {
   gulp.src(['gulpfile.*.js'].concat(phase.projectGlobs.scripts), {
       since: gulp.lastRun('jsLinter'),
     })
-    .pipe(preprocess())
     .pipe(jshint({
       "laxcomma": true
     }))
@@ -170,7 +189,9 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 
   phase.forEachAsset('styles', function (asset) {
     return merged.add(gulp.src(asset.globs)
-      .pipe(plumber())
+      .pipe(plumber({
+        errorHandler: onError
+      }))
       .pipe(taskHelpers.styles(asset.outputName))
     );
   });
@@ -184,7 +205,9 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
 
   phase.forEachAsset('scripts', function (asset) {
     return merged.add(gulp.src(asset.globs)
-      .pipe(plumber())
+      .pipe(plumber({
+        errorHandler: onError
+      }))
       .pipe(taskHelpers.scripts(asset.outputName))
     );
   });
@@ -202,7 +225,9 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
       let counter = 0;
       phase.forEachAsset(resourceType, (asset) => {
         gulp.src(asset.globs)
-          .pipe(plumber())
+          .pipe(plumber({
+            errorHandler: onError
+          }))
           .pipe((taskHelpers[resourceType]) ? // Has helper?
             taskHelpers[resourceType](asset.outputName) // Yes!
             :
@@ -252,8 +277,9 @@ gulp.task('watch', function (done) {
   for (const resourceType of Object.keys(phase.resources)) {
     const resourceInfo = phase.resources[resourceType];
 
-    const watchInstance = gulp.watch(
-      [path.join(phase.config.paths.source, resourceInfo.directory, '/**/*')],
+    gulp.watch([
+        path.join(phase.config.paths.source, resourceInfo.directory, '/**/*')
+      ],
       gulp.series(resourceType)
     );
   }
