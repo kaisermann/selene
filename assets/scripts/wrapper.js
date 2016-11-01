@@ -1,6 +1,6 @@
 /* jshint unused: false */
 
-import Router from './util/router.js';
+import Router from './utils/router.js';
 import common from './events/common.js';
 
 (function ($) {

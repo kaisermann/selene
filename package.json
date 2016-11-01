@@ -51,6 +51,7 @@
     "lodash": "^4.16.2",
     "merge-stream": "^1.0.0",
     "minimist": "^1.2.0",
+    "stream-exhaust": "^1.0.1",
     "through2": "^2.0.1",
     "traverse": "^0.6.6",
     "wiredep": "^4.0.0"

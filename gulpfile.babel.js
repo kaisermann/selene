@@ -11,6 +11,7 @@ import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
 import cssstats from 'gulp-stylestats';
 import del from 'del';
+import exhaust from 'stream-exhaust';
 import flatten from 'gulp-flatten';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
@@ -51,9 +52,9 @@ phase.config = _.merge({
 
 phase.projectGlobs = phase.getProjectGlobs();
 phase.params = {
-  maps: argv.maps, // Enables sourcemaps creation when '--maps'
-  production: argv.p, // Production mode, appends hash of file's content to its name
   debug: argv.d, // Do not minify assets when '-d'
+  maps: argv.d, // Enables sourcemaps creation when '-d'
+  production: argv.p, // Production mode, appends hash of file's content to its name
   sync: argv.sync, // Start BroswerSync when '--sync'
 };
 
@@ -88,10 +89,10 @@ const taskHelpers = {
   scripts(outputName) {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
-      .pipe(() => gulpif(function (file) {
-        // Only pipes our main code (not bower's) to browserify
+      // Only pipes our main code (not bower's) to browserify
+      .pipe(() => gulpif((file) => {
         return file.path.endsWith(phase.projectGlobs.scripts);
-      }, through2.obj(function (file, enc, next) {
+      }, through2.obj((file, enc, next) => {
         return browserify(file.path, {
             debug: false,
           })
@@ -140,7 +141,7 @@ const onError = function (err) {
   this.emit('end');
 };
 
-const writeToManifest = function (directory) {
+const writeToManifest = (directory) => {
   return lazypipe()
     .pipe(gulp.dest, path.join(phase.config.paths.dist, directory))
     .pipe(browserSync.stream, {
@@ -187,7 +188,7 @@ gulp.task('wiredep', (done) => {
 gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
   const merged = merge();
 
-  phase.forEachAsset('styles', function (asset) {
+  phase.forEachAsset('styles', (asset) => {
     return merged.add(gulp.src(asset.globs)
       .pipe(plumber({
         errorHandler: onError
@@ -203,7 +204,7 @@ gulp.task('styles', gulp.series('wiredep', function cssMerger(done) {
 gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
   const merged = merge();
 
-  phase.forEachAsset('scripts', function (asset) {
+  phase.forEachAsset('scripts', (asset) => {
     return merged.add(gulp.src(asset.globs)
       .pipe(plumber({
         errorHandler: onError
@@ -220,21 +221,21 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
 // Automatically creates the 'simple tasks' defined
 // in manifest.resources.TYPE.dynamicTask = true|false
 (() => {
-  const dynamicTaskHelper = function (resourceType, resourceInfo) {
-    return function (done) {
+  const dynamicTaskHelper = (resourceType, resourceInfo) => {
+    return (done) => {
       let counter = 0;
       phase.forEachAsset(resourceType, (asset) => {
-        gulp.src(asset.globs)
-          .pipe(plumber({
-            errorHandler: onError
-          }))
-          .pipe((taskHelpers[resourceType]) ? // Has helper?
-            taskHelpers[resourceType](asset.outputName) // Yes!
-            :
-            util.noop() // Noop(e)!
+        exhaust(gulp.src(asset.globs)
+            .pipe(plumber({
+              errorHandler: onError
+            }))
+            .pipe(gulpif(taskHelpers[resourceType], taskHelpers[resourceType](asset.outputName)))
+            .pipe(gulp.dest(path.join(phase.config.paths.dist,
+              resourceInfo.directory, asset.outputName)))
+            .pipe(browserSync.stream({
+              match: `**/${resourceInfo.pattern}`,
+            }))
           )
-          .pipe(gulp.dest(path.join(phase.config.paths.dist,
-            resourceInfo.directory, asset.outputName)))
           .on('end', () => {
             if (++counter === phase.projectGlobs[resourceType].length) {
               done();
@@ -244,10 +245,7 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
             if (++counter === phase.projectGlobs[resourceType].length) {
               done();
             }
-          })
-          .pipe(browserSync.stream({
-            match: `**/${resourceInfo.pattern}`,
-          }));
+          });
       });
     };
   };
