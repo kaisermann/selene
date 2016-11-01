@@ -22,7 +22,6 @@
       "assets": {
         "main.js": {
           "files": "scripts/wrapper.js",
-          "vendor": ["assets/scripts/vendor/*.js"],
           "bower": []
         }
       }
@@ -32,11 +31,7 @@
       "directory": "styles",
       "assets": {
         "main.css": {
-          "files": "styles/styl/wrapper.styl",
-          "vendor": [
-            "assets/styles/vendor/reset.css",
-            "assets/styles/vendor/*.css"
-          ],
+          "files": "styles/wrapper.styl",
           "bower": []
         },
         "editor.css": {
