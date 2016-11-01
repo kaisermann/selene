@@ -12,7 +12,7 @@
         "{lib,templates}/**/*.{php,html}",
         "*.{php,html}"
       ],
-      "devUrl": "localhost:8888/chris"
+      "devUrl": "localhost:8888/project"
     }
   },
   "resources": {
@@ -22,6 +22,7 @@
       "assets": {
         "main.js": {
           "files": "scripts/wrapper.js",
+          "vendor": ["assets/scripts/vendor/*.js"],
           "bower": []
         }
       }
@@ -32,6 +33,10 @@
       "assets": {
         "main.css": {
           "files": "styles/wrapper.styl",
+          "vendor": [
+            "assets/styles/vendor/reset.css",
+            "assets/styles/vendor/*.css"
+          ],
           "bower": []
         },
         "editor.css": {
