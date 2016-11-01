@@ -22,13 +22,13 @@ import merge from 'merge-stream';
 import path from 'path';
 import plumber from 'gulp-plumber';
 import rev from 'gulp-rev';
-import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import stylus from 'gulp-stylus';
 import through2 from 'through2';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
+import print from 'gulp-print';
 
 // Path to the main manifest file.
 const mainManifestPath = './phase.json';
@@ -53,7 +53,7 @@ phase.config = _.merge({
 phase.projectGlobs = phase.getProjectGlobs();
 phase.params = {
   debug: argv.d, // Do not minify assets when '-d'
-  maps: argv.d, // Enables sourcemaps creation when '-d'
+  maps: !argv.p, // Enables sourcemaps creation when not '-p'
   production: argv.p, // Production mode, appends hash of file's content to its name
   sync: argv.sync, // Start BroswerSync when '--sync'
 };
@@ -69,10 +69,6 @@ const taskHelpers = {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       .pipe(() => gulpif('*.styl', stylus()))
-      .pipe(() => gulpif('*.{scss,sass}', sass({
-        outputStyle: 'expanded',
-        precision: 8,
-      })))
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
         browsers: phase.config.supportedBrowsers,
@@ -91,7 +87,7 @@ const taskHelpers = {
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       // Only pipes our main code (not bower's) to browserify
       .pipe(() => gulpif((file) => {
-        return file.path.endsWith(phase.projectGlobs.scripts);
+        return phase.projectGlobs.scripts.some(e => file.path.endsWith(e));
       }, through2.obj((file, enc, next) => {
         return browserify(file.path, {
             debug: false,
