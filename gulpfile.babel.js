@@ -6,13 +6,13 @@ import browserify from 'browserify';
 import browserSyncLib from 'browser-sync';
 import changed from 'gulp-changed';
 import clipEmptyFiles from 'gulp-clip-empty-files';
-import cmq from 'gulp-combine-mq';
 import concat from 'gulp-concat';
-import cssnano from 'gulp-cssnano';
+import cleanCSS from 'gulp-clean-css';
 import cssstats from 'gulp-stylestats';
 import del from 'del';
 import exhaust from 'stream-exhaust';
 import flatten from 'gulp-flatten';
+import sourcemaps from 'gulp-sourcemaps';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
 import imagemin from 'gulp-imagemin';
@@ -51,6 +51,7 @@ phase.config = _.merge({
 phase.projectGlobs = phase.getProjectGlobs();
 phase.params = {
   debug: argv.d, // Do not minify assets when '-d'
+  maps: !argv.p, // Create sourcemaps when not in production mode
   production: argv.p, // Production mode, appends hash of file's content to its name
   sync: argv.sync, // Start BroswerSync when '--sync'
 };
@@ -64,20 +65,27 @@ phase.params = {
 const taskHelpers = {
   styles(outputName) {
     return lazypipe()
+      .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       .pipe(() => gulpif('*.styl', stylus()))
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
         browsers: phase.config.supportedBrowsers,
       })
-      .pipe(cmq)
-      .pipe(() => gulpif(!phase.params.debug, cssnano({
-        safe: true,
-      })))
+      .pipe(cleanCSS, {
+        keepBreaks: phase.params.debug,
+        keepSpecialComments: phase.params.debug ? '*' : 0,
+        roundingPrecision: 6,
+        sourcemap: true,
+      })
       .pipe(() => gulpif(phase.params.production, rev()))
+      .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
+        sourceRoot: path.join(phase.config.paths.source, phase.resources.styles.directory),
+      })))
       ();
   },
   scripts(outputName) {
     return lazypipe()
+      .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       // Only pipes our main code (not bower's) to browserify
       .pipe(() => gulpif((file) => {
         return phase.projectGlobs.scripts.some(e => file.path.endsWith(e));
@@ -87,7 +95,7 @@ const taskHelpers = {
           })
           .transform('babelify', {
             presets: ['es2015'],
-            sourceMaps: false,
+            sourceMaps: phase.params.map,
             compact: false
           })
           .bundle((err, res) => {
@@ -102,6 +110,9 @@ const taskHelpers = {
       .pipe(concat, outputName)
       .pipe(() => gulpif(!phase.params.debug, uglify()))
       .pipe(() => gulpif(phase.params.production, rev()))
+      .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
+        sourceRoot: path.join(phase.config.paths.source, phase.resources.scripts.directory),
+      })))
       ();
   },
   fonts() {
