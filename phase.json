@@ -32,7 +32,11 @@
       "assets": {
         "main.css": {
           "files": "styles/wrapper.styl",
-          "bower": []
+          "bower": [],
+          "vendor": [
+            "assets/styles/vendor/reset.css",
+            "assets/styles/vendor/*.css"
+          ]
         }
       }
     },

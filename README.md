@@ -3,11 +3,9 @@
 > A gulp-automated front-end workflow based on the (awesome) [Sage starter theme](https://github.com/roots/sage) with some personal modifications :)
 
 With Phase you can:
-* Write CSS with:
-  * Stylus (recommended)
-    * Build your website's grid with the RolleiFLEX declarative (or not) grid framework. (stylus)
+* Write CSS with Stylus
+    * Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
     * Use simplified media queries with rupture (stylus)
-  * SCSS
 * Write JS with Babel (ES2015)
 * See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
 * Have your [bower](https://bower.io/) packages automatically included in your assets
@@ -139,7 +137,6 @@ Each resource type MAY have a `dynamicTask` **boolean** attribute. If assigned t
 You can also pass the following parameters to gulp
 
 * `--sync` Starts browserSync. Use only with `gulp watch`
-* `--maps` Generates .map files
 * `-d` Asset debug mode. It won't minify the files
 * `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
