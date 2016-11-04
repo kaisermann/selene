@@ -12,18 +12,6 @@ colors = {
   black: #242629
 }
 
-// Light, dark, saturated and desaturated colors. From index [0] to [8]
-for colorName, hex in colors
-	colors['lighten-'+colorName] = ()
-	colors['darken-'+colorName] = ()
-	colors['desaturate-'+colorName] = ()
-	colors['saturate-'+colorName] = ()
-	for i in (1..9)
-		push(colors['lighten-'+colorName], lighten(hex, unit(i * 10, '%')))
-		push(colors['darken-'+colorName], darken(hex, unit(i * 10, '%')))
-		push(colors['desaturate-'+colorName], desaturate(hex, unit(i * 10, '%')))
-		push(colors['saturate-'+colorName], saturate(hex, unit(i * 10, '%')))
-    
 // Fonts
 fonts = {
 
