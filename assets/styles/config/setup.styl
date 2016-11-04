@@ -3,21 +3,3 @@ phase = {
   baseFontSize: 16px,     // Website's default font-size
   siteWidth: 1170px       // Website's container largest width
 }
-
-/* Bower overrides */
-rolleiflex.baseFontSize               = phase.baseFontSize
-rolleiflex.autoBorderBox              = false
-rolleiflex.breakpoints.lg.container   = phase.siteWidth
-rolleiflex.use.em                     = true
-
-__bps = rolleiflex.breakpoints
-rupture.base-font-size                = phase.baseFontSize
-rupture.scale                         = 0 (__bps.sm.breakpoint) (__bps.md.breakpoint) (__bps.lg.breakpoint)
-rupture.scale-names                   = keys(__bps)
-rupture.anti-overlap                  = true
-rupture.enable-em-breakpoints         = false
-rupture.mobile-cutoff                 = __bps.sm.breakpoint
-rupture.tablet-cutoff                 = __bps.md.breakpoint
-rupture.desktop-cutoff                = __bps.md.breakpoint
-rupture.hd-cutoff                     = __bps.lg.breakpoint
-/* End Bower overrides */

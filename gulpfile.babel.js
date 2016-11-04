@@ -167,17 +167,16 @@ gulp.task('jsLinter', (done) => {
 
 /* Tasks */
 gulp.task('wiredep', (done) => {
-  const wiredep = wiredepLib.stream;
-  const stylesDir = path.join(phase.config.paths.source, phase.resources.styles.directory);
-
-  return gulp.src(phase.projectGlobs.styles)
+  return gulp.src(phase.projectGlobs.styles, {
+      base: './',
+    })
     .pipe(clipEmptyFiles()) // Clips empty files (wiredep issue #219)
-    .pipe(wiredep())
-    .pipe(changed(stylesDir, {
+    .pipe(wiredepLib.stream())
+    .pipe(changed('./', {
       hasChanged: changed.compareSha1Digest,
     }))
-    .pipe(gulp.dest(stylesDir))
-    // Signals 'done' only when fiFles are done being written
+    .pipe(gulp.dest('.'))
+    // Signals 'done' only when files are done being written
     .on('end', done)
     .on('error', done);
 });
