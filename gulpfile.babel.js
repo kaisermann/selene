@@ -56,6 +56,11 @@ phase.params = {
   sync: argv.sync, // Start BroswerSync when '--sync'
 };
 
+const distToAssetPath = path.relative(
+  path.join(phase.config.paths.dist, 'any'),
+  phase.config.paths.source
+);
+
 /**
  * Task helpers are used to modify a stream in the middle of a task.
  * It allows customization of the stream for automatically created simple tasks
@@ -79,7 +84,7 @@ const taskHelpers = {
       })
       .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
-        sourceRoot: path.join(phase.config.paths.source, phase.resources.styles.directory),
+        sourceRoot: distToAssetPath,
       })))
       ();
   },
@@ -111,7 +116,7 @@ const taskHelpers = {
       .pipe(() => gulpif(!phase.params.debug, uglify()))
       .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
-        sourceRoot: path.join(phase.config.paths.source, phase.resources.scripts.directory),
+        sourceRoot: distToAssetPath,
       })))
       ();
   },
