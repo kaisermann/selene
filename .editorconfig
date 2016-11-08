@@ -8,12 +8,16 @@ charset = utf-8
 trim_trailing_whitespace = auto
 insert_final_newline = auto
 
-[*.md]
-trim_trailing_whitespace = false
-
 [*.{php,html}]
 indent_style = tab
-indent_size = 4
+indent_size = 2
+
+[*.styl]
+indent_style = tab
+indent_size = 2
 
 [*.txt]
 end_of_line = crlf
+
+[*.md]
+trim_trailing_whitespace = false

@@ -27,6 +27,8 @@ import through2 from 'through2';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
+import bubleify from 'bubleify';
+import rollupify from 'rollupify';
 
 // Path to the main manifest file.
 const mainManifestPath = './phase.json';
@@ -98,11 +100,13 @@ const taskHelpers = {
         return browserify(file.path, {
             debug: false,
           })
-          .transform('babelify', {
-            presets: ['es2015'],
-            sourceMaps: phase.params.map,
-            compact: false
+          .transform(bubleify, {
+            transforms: {
+              modules: false,
+              dangerousForOf: true,
+            }
           })
+          .transform(rollupify)
           .bundle((err, res) => {
             const tmpFile = file;
             if (err) {
