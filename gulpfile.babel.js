@@ -2,13 +2,11 @@ import _ from 'lodash';
 import args from 'minimist';
 import assetBuilder from 'asset-builder';
 import autoprefixer from 'gulp-autoprefixer';
-import browserify from 'browserify';
 import browserSyncLib from 'browser-sync';
 import changed from 'gulp-changed';
 import clipEmptyFiles from 'gulp-clip-empty-files';
 import concat from 'gulp-concat';
 import cleanCSS from 'gulp-clean-css';
-import cssstats from 'gulp-stylestats';
 import del from 'del';
 import exhaust from 'stream-exhaust';
 import flatten from 'gulp-flatten';
@@ -23,19 +21,18 @@ import path from 'path';
 import plumber from 'gulp-plumber';
 import rev from 'gulp-rev';
 import stylus from 'gulp-stylus';
-import through2 from 'through2';
 import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import wiredepLib from 'wiredep';
-import bubleify from 'bubleify';
-import rollupify from 'rollupify';
+import rollup from 'gulp-better-rollup';
+import buble from 'rollup-plugin-buble';
+
+const argv = args(process.argv.slice(2));
+const browserSync = browserSyncLib.create();
 
 // Path to the main manifest file.
 const mainManifestPath = './phase.json';
 const phase = assetBuilder(mainManifestPath);
-
-const argv = args(process.argv.slice(2));
-const browserSync = browserSyncLib.create();
 
 // Sets configuration default values if needed
 phase.config = _.merge({
@@ -96,25 +93,10 @@ const taskHelpers = {
       // Only pipes our main code (not bower's) to browserify
       .pipe(() => gulpif((file) => {
         return phase.projectGlobs.scripts.some(e => file.path.endsWith(e));
-      }, through2.obj((file, enc, next) => {
-        return browserify(file.path, {
-            debug: false,
-          })
-          .transform(bubleify, {
-            transforms: {
-              modules: false,
-              dangerousForOf: true,
-            }
-          })
-          .transform(rollupify)
-          .bundle((err, res) => {
-            const tmpFile = file;
-            if (err) {
-              return next(err);
-            }
-            tmpFile.contents = res;
-            return next(null, tmpFile);
-          });
+      }, rollup({
+        plugins: [buble()]
+      }, {
+        format: 'iife',
       })))
       .pipe(concat, outputName)
       .pipe(() => gulpif(!phase.params.debug, uglify()))
@@ -294,8 +276,6 @@ gulp.task('watch', function (done) {
 
   done();
 });
-
-gulp.task('css-stats', () => gulp.src(path.join(phase.config.paths.dist, phase.resources.styles.directory, './**.css')).pipe(cssstats()));
 
 gulp.task('clean', done => del([phase.config.paths.dist], done));
 

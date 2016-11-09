@@ -6,7 +6,7 @@ With Phase you can:
 * Write CSS with Stylus
     * Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
     * Use simplified media queries with rupture (stylus)
-* Write JS with Babel (ES2015)
+* Write ES2015 Javascript
 * See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
 * Have your [bower](https://bower.io/) packages automatically included in your assets
   * Check the **phase.json** on the **root** directory
@@ -123,14 +123,13 @@ Each resource type MAY have a `dynamicTask` **boolean** attribute. If assigned t
 #### Gulp Tasks
 
 * `gulp` / `gulp build` Erases distribution directory and builds all assets
-* `gulp compile` Same as `gulp build`without deleting distribution directory
+* `gulp compile` Same as `gulp build` without deleting distribution directory
 * `gulp scripts` Build everything on the scripts directory
 * `gulp styles` Build everything on the styles directory
 * `gulp fonts` Build everything on the fonts directory
 * `gulp images` Build everything on the images directory
 * `gulp clean` Deletes the distribution directory
 * `gulp watch` Starts watching the asset files
-* `gulp css-stats` Displays on the console some stats about your cssstats
 
 #### Gulp Parameters
 
