@@ -2,9 +2,7 @@
   "config": {
     "paths": {
       "source": "assets/",
-      "dist": "dist/",
-      "bowerDirectory": "bower_components/",
-      "bowerJson": "bower.json"
+      "dist": "dist/"
     },
     "supportedBrowsers": ["last 2 versions", "opera 12", "IE 10", "Safari >= 8"],
     "browserSync": {
@@ -23,7 +21,7 @@
         "main.js": {
           "files": "scripts/wrapper.js",
           "vendor": ["assets/scripts/vendor/*.js"],
-          "bower": []
+          "npm": []
         }
       }
     },
@@ -37,7 +35,7 @@
             "assets/styles/vendor/reset.css",
             "assets/styles/vendor/*.css"
           ],
-          "bower": []
+          "npm": []
         },
         "editor.css": {
           "files": "styles/styl/wordpress/editor.styl"
