@@ -46,7 +46,7 @@ acorn@^3.0.4, acorn@^3.1.0, acorn@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
 
-acorn@4.X:
+acorn@^4.0.1, acorn@4.X:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.3.tgz#1a3e850b428e73ba6b09d1cc527f5aaad4d03ef1"
 
@@ -168,14 +168,17 @@ assert-plus@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
 
-"asset-builder@github:kaisermann/asset-builder#v1.2.0-alpha.4":
-  version "1.2.0-alpha.4"
-  resolved "https://codeload.github.com/kaisermann/asset-builder/tar.gz/cd70428468be9a7841560e92ba32707762b5dca9"
+asset-orchestrator:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/asset-orchestrator/-/asset-orchestrator-1.2.1.tgz#2d9d689aac3be53790c62cf82c958452655ce87c"
   dependencies:
+    bootstrap "^3.3.7"
     lodash "^4.16.1"
     main-bower-files "^2.4.0"
+    main-npm-files "^1.1.0"
     minimatch "^3.0.3"
     object-path "^0.11.2"
+    rolleiflex "^1.0.0-alpha.3"
     strip-json-comments "^2.0.1"
     traverse "^0.6.6"
 
@@ -781,19 +784,9 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bower-config@^1.3.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/bower-config/-/bower-config-1.4.0.tgz#16c38c1135f8071c19f25938d61b0d8cbf18d3f1"
-  dependencies:
-    graceful-fs "^4.1.3"
-    mout "^1.0.0"
-    optimist "^0.6.1"
-    osenv "^0.1.3"
-    untildify "^2.1.0"
-
-bower@^1.7.9:
-  version "1.7.9"
-  resolved "https://registry.yarnpkg.com/bower/-/bower-1.7.9.tgz#b7296c2393e0d75edaa6ca39648132dd255812b0"
+bootstrap@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
 
 brace-expansion@^1.0.0:
   version "1.1.6"
@@ -809,6 +802,12 @@ braces@^1.8.2:
     expand-range "^1.8.1"
     preserve "^0.2.0"
     repeat-element "^1.1.2"
+
+browser-resolve@^1.11.0:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/browser-resolve/-/browser-resolve-1.11.2.tgz#8ff09b0a2c421718a1051c260b32e48f442938ce"
+  dependencies:
+    resolve "1.1.7"
 
 browser-sync-client@^2.3.3:
   version "2.4.3"
@@ -868,7 +867,7 @@ bs-recipes@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/bs-recipes/-/bs-recipes-1.2.3.tgz#0e4d17bb1cff92ef6c36608b8487d9a07571ac54"
 
-buble, buble@^0.14.0:
+buble@^0.14.0:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/buble/-/buble-0.14.2.tgz#5e2ffd5469693068731d77c9c98909aee61e5e6f"
   dependencies:
@@ -879,13 +878,6 @@ buble, buble@^0.14.0:
     magic-string "^0.14.0"
     minimist "^1.2.0"
     os-homedir "^1.0.1"
-
-bubleify:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/bubleify/-/bubleify-0.6.0.tgz#2beb881479ee2e893e6c6177fa1ec691d9ac2ec0"
-  dependencies:
-    buble "^0.14.0"
-    object-assign "^4.0.1"
 
 buffer-crc32@~0.2.3:
   version "0.2.5"
@@ -910,7 +902,7 @@ bufferstreams@1.0.1:
   dependencies:
     readable-stream "^1.0.33"
 
-builtin-modules@^1.0.0:
+builtin-modules@^1.0.0, builtin-modules@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
 
@@ -2105,7 +2097,7 @@ got@^5.0.0:
     unzip-response "^1.0.0"
     url-parse-lax "^1.0.0"
 
-graceful-fs@^4.0.0, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
+graceful-fs@^4.0.0, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.9.tgz#baacba37d19d11f9d146d3578bc99958c3787e29"
 
@@ -2134,13 +2126,6 @@ gulp-better-rollup:
     gulp-util "^3.0.7"
     rollup "^0.36.0"
     vinyl-sourcemaps-apply "^0.2.1"
-
-gulp-changed@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/gulp-changed/-/gulp-changed-1.3.2.tgz#9efc8d325f9805cc7668fdf4e7d60d4b1410f2cf"
-  dependencies:
-    gulp-util "^3.0.0"
-    through2 "^2.0.0"
 
 gulp-clean-css:
   version "2.0.13"
@@ -2175,12 +2160,6 @@ gulp-cli@^1.0.0:
     v8flags "^2.0.9"
     wreck "^6.3.0"
     yargs "^3.28.0"
-
-gulp-clip-empty-files@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/gulp-clip-empty-files/-/gulp-clip-empty-files-0.1.2.tgz#bee9804e253bbda55cfbc126e8dbae6433edccc8"
-  dependencies:
-    through2 "~2.0.1"
 
 gulp-concat@^2.6.0:
   version "2.6.0"
@@ -3227,11 +3206,11 @@ lodash@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.1, lodash@^4.6.1:
+lodash@^4.12.0, lodash@^4.13.1, lodash@^4.14.0:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
 
-lodash@^4.16.6, lodash@^4.2.0:
+lodash@^4.16.1, lodash@^4.16.6, lodash@^4.2.0, lodash@^4.6.1:
   version "4.16.6"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.6.tgz#d22c9ac660288f3843e16ba7d2b5d06cca27d777"
 
@@ -3303,6 +3282,12 @@ magic-string@^0.14.0:
   dependencies:
     vlq "^0.2.1"
 
+magic-string@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.16.0.tgz#970ebb0da7193301285fb1aa650f39bdd81eb45a"
+  dependencies:
+    vlq "^0.2.1"
+
 main-bower-files@^2.4.0:
   version "2.13.1"
   resolved "https://registry.yarnpkg.com/main-bower-files/-/main-bower-files-2.13.1.tgz#7e1bc5c498352ccecd5df087f13d5f31bc057d3e"
@@ -3314,6 +3299,14 @@ main-bower-files@^2.4.0:
     path-exists "^1.0.0"
     strip-json-comments "^1.0.2"
     vinyl-fs "^2.4.3"
+
+main-npm-files@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/main-npm-files/-/main-npm-files-1.1.0.tgz#8b243d8456bb6cd7ccd1e2006e12b8020c75506a"
+  dependencies:
+    glob "^7.0.3"
+    lodash "^4.6.1"
+    minimatch "^3.0.0"
 
 make-error-cause@^1.1.1:
   version "1.2.2"
@@ -3413,10 +3406,6 @@ minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
-minimist@~0.0.1:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
-
 minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
@@ -3434,10 +3423,6 @@ mkdirp@0.3.0:
 modify-filename@^1.0.0, modify-filename@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/modify-filename/-/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
-
-mout@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/mout/-/mout-1.0.0.tgz#9bdf1d4af57d66d47cb353a6335a3281098e1501"
 
 ms@0.7.1:
   version "0.7.1"
@@ -3619,13 +3604,6 @@ opn@4.0.2:
   dependencies:
     object-assign "^4.0.1"
     pinkie-promise "^2.0.0"
-
-optimist@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/optimist/-/optimist-0.6.1.tgz#da3ea74686fa21a19a111c326e90eb15a0196686"
-  dependencies:
-    minimist "~0.0.1"
-    wordwrap "~0.0.2"
 
 options@>=0.0.5:
   version "0.0.6"
@@ -3834,10 +3812,6 @@ process-nextick-args@~1.0.6:
 promise.pipe@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/promise.pipe/-/promise.pipe-3.0.0.tgz#b8f729867f54353996e6d8e86f3bbd56882e32a6"
-
-propprop@^0.3.0:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/propprop/-/propprop-0.3.1.tgz#a049a3568b896440067d15d8ec9f33735e570178"
 
 pseudomap@^1.0.1:
   version "1.0.2"
@@ -4117,7 +4091,7 @@ resolve-url@~0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/resolve-url/-/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
 
-resolve@^1.1.6, resolve@^1.1.7, resolve@~1.1.6:
+resolve@^1.1.6, resolve@^1.1.7, resolve@~1.1.6, resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
@@ -4150,6 +4124,10 @@ rimraf@^2.2.6, rimraf@^2.2.8, rimraf@^2.5.4, rimraf@~2.5.1, rimraf@~2.5.4, rimra
   dependencies:
     glob "^7.0.5"
 
+rolleiflex, rolleiflex@^1.0.0-alpha.3:
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/rolleiflex/-/rolleiflex-1.0.0-alpha.3.tgz#ec7caa8346b47f100154b5712b60076b73b93dc7"
+
 rollup-plugin-buble:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-buble/-/rollup-plugin-buble-0.14.0.tgz#3726db55fef9b9cd37cebed559cbbd4b9b2e5bc6"
@@ -4157,7 +4135,25 @@ rollup-plugin-buble:
     buble "^0.14.0"
     rollup-pluginutils "^1.5.0"
 
-rollup-pluginutils@^1.5.0:
+rollup-plugin-commonjs:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-5.0.5.tgz#14f93d92cb70e6c31142914b83cd3e904be30c1f"
+  dependencies:
+    acorn "^4.0.1"
+    estree-walker "^0.2.1"
+    magic-string "^0.16.0"
+    resolve "^1.1.7"
+    rollup-pluginutils "^1.5.1"
+
+rollup-plugin-node-resolve:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-2.0.0.tgz#07e0ae94ac002a3ea36e8f33ca121d9f836b1309"
+  dependencies:
+    browser-resolve "^1.11.0"
+    builtin-modules "^1.1.0"
+    resolve "^1.1.6"
+
+rollup-pluginutils@^1.5.0, rollup-pluginutils@^1.5.1:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-1.5.2.tgz#1e156e778f94b7255bfa1b3d0178be8f5c552408"
   dependencies:
@@ -4169,6 +4165,10 @@ rollup@^0.36.0:
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.36.3.tgz#c89ac479828924ff8f69c1d44541cb4ea2fc11fc"
   dependencies:
     source-map-support "^0.4.0"
+
+rupture:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/rupture/-/rupture-0.6.2.tgz#ef4eee91711ff7af64e37f544cfc60a5c08319d3"
 
 rx@4.1.0:
   version "4.1.0"
@@ -4667,7 +4667,7 @@ through2@^0.6.0, through2@^0.6.1, through2@^0.6.3, through2@~0.6.1:
     readable-stream ">=1.0.33-1 <1.1.0-0"
     xtend ">=4.0.0 <4.1.0-0"
 
-through2@^2, through2@^2.0.0, through2@^2.0.1, through2@~2.0.0, through2@~2.0.1, through2@2.X:
+through2@^2, through2@^2.0.0, through2@^2.0.1, through2@~2.0.0, through2@2.X:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.1.tgz#384e75314d49f32de12eebb8136b8eb6b5d59da9"
   dependencies:
@@ -4811,12 +4811,6 @@ unique-stream@^2.0.2:
 unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
-
-untildify@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/untildify/-/untildify-2.1.0.tgz#17eb2807987f76952e9c0485fc311d06a826a2e0"
-  dependencies:
-    os-homedir "^1.0.0"
 
 unzip-response@^1.0.0:
   version "1.0.1"
@@ -5003,29 +4997,6 @@ window-size@^0.2.0:
 window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
-
-wiredep-cli@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/wiredep-cli/-/wiredep-cli-0.1.0.tgz#64272bfca29461fbd07443158b1e056526f6c739"
-  dependencies:
-    chalk "^1.1.1"
-    minimist "^1.1.0"
-    wiredep "*"
-
-wiredep@*, wiredep@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/wiredep/-/wiredep-4.0.0.tgz#ee9548a9504dfe7e85401a435dbed2c9b4ea2e44"
-  dependencies:
-    bower-config "^1.3.0"
-    glob "^7.0.3"
-    lodash "^4.6.1"
-    propprop "^0.3.0"
-    through2 "^2.0.1"
-    wiredep-cli "^0.1.0"
-
-wordwrap@~0.0.2:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-0.0.3.tgz#a3d5da6cd5c0bc0008d37234bbaf1bed63059107"
 
 wordwrap@0.0.2:
   version "0.0.2"

@@ -12,7 +12,7 @@ insert_final_newline = auto
 indent_style = tab
 indent_size = 2
 
-[*.styl]
+[*.{styl,css,scss,sass,less}]
 indent_style = tab
 indent_size = 2
 
