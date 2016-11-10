@@ -8,7 +8,7 @@ With Phase you can:
     * Use simplified media queries with rupture (stylus)
 * Write ES2015 Javascript
 * See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
-* Have your [bower](https://bower.io/) packages automatically included in your assets
+* Have your [bower](https://bower.io/) or npm packages automatically included in your assets
   * Check the **phase.json** on the **root** directory
 
 ## Requirements
@@ -19,7 +19,7 @@ With Phase you can:
 ## Installation
 
 1. `git clone git@github.com:kaisermann/phase.git`
-2. `npm install` (it will also execute bower install)
+2. `npm install`
 3. Run at least `gulp build` before running `gulp watch`
 
 ## Documentation
