@@ -3,33 +3,33 @@ rolleiflex.baseFontSize       = phase.baseFontSize
 rolleiflex.autoBorderBox      = false
 rolleiflex.use.em             = true
 rolleiflex.breakpoints = {
-  "xs": {
-    "breakpoint": 0,
-  },
-  "sm": {
-    "breakpoint": 767px,
-    "container": 740px
-  },
-  "md": {
-    "breakpoint": 991px,
-    "container": 960px
-  },
-  "lg": {
-    "breakpoint": 1200px,
-    "container": 1170px
-  }
+	"xs": {
+		"breakpoint": 0,
+	},
+	"sm": {
+		"breakpoint": 767px,
+		"container": 740px
+	},
+	"md": {
+		"breakpoint": 991px,
+		"container": 960px
+	},
+	"lg": {
+		"breakpoint": 1200px,
+		"container": 1170px
+	}
 }
 
 __bps = rolleiflex.breakpoints
 rupture = merge(rupture, {
-  "base-font-size":          phase.baseFontSize
-  "scale":                   0 (__bps.sm.breakpoint) (__bps.md.breakpoint) (__bps.lg.breakpoint)
-  "scale-names":             keys(__bps)
-  "anti-overlap":            true
-  "enable-em-breakpoints":   false
-  "mobile-cutoff":           __bps.sm.breakpoint
-  "tablet-cutoff":           __bps.md.breakpoint
-  "desktop-cutoff":          __bps.md.breakpoint
-  "hd-cutoff":               __bps.lg.breakpoint
+	"base-font-size":          phase.baseFontSize
+	"scale":                   0 (__bps.sm.breakpoint) (__bps.md.breakpoint) (__bps.lg.breakpoint)
+	"scale-names":             keys(__bps)
+	"anti-overlap":            true
+	"enable-em-breakpoints":   false
+	"mobile-cutoff":           __bps.sm.breakpoint
+	"tablet-cutoff":           __bps.md.breakpoint
+	"desktop-cutoff":          __bps.md.breakpoint
+	"hd-cutoff":               __bps.lg.breakpoint
 })
 /* End Bower overrides */
