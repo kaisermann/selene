@@ -38,10 +38,10 @@
           "npm": []
         },
         "editor.css": {
-          "files": "styles/styl/wordpress/editor.styl"
+          "files": "styles/wordpress/editor.styl"
         },
         "admin.css": {
-          "files": "styles/styl/wordpress/admin.styl"
+          "files": "styles/wordpress/admin.styl"
         }
       }
     },
