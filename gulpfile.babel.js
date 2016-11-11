@@ -82,7 +82,9 @@ const taskHelpers = {
   styles(outputName) {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
-      .pipe(() => gulpif('*.styl', stylus()))
+      .pipe(() => gulpif('*.styl', stylus({
+        include: './'
+      })))
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
         browsers: phase.config.supportedBrowsers,
