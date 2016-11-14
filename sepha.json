@@ -56,7 +56,7 @@
       }
     },
     "images": {
-      "pattern": "*.{jpg,png,gif}",
+      "pattern": "*.{jpg,png,gif,svg}",
       "directory": "images",
       "dynamicTask": true,
       "assets": {

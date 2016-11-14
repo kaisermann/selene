@@ -83,7 +83,8 @@ const taskHelpers = {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       .pipe(() => gulpif('*.styl', stylus({
-        include: './'
+        'include': './',
+        'include css': true
       })))
       .pipe(concat, outputName)
       .pipe(autoprefixer, {
