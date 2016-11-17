@@ -17,22 +17,16 @@ $includes = [
 ];
 
 // Do not edit anything below this line unless you know what you're doing :)
-add_filter('stylesheet', function ( $stylesheet ) {
+add_filter('template', function ( $stylesheet ) {
 	return dirname( $stylesheet );
 });
 
 add_action('after_switch_theme', function () {
-	$stylesheet = get_option( 'stylesheet' );
+	$stylesheet = get_option( 'template' );
 	if ( basename( $stylesheet ) !== 'templates' ) {
-		update_option( 'stylesheet', $stylesheet . '/templates' );
+		update_option( 'template', $stylesheet . '/templates' );
 	}
 });
-
-add_action('customize_render_section', function ( $section ) {
-	if ( $section->type === 'themes' ) {
-		$section->title = wp_get_theme( basename( __DIR__ ) )->display( 'Name' );
-	}
-}, 10, 2);
 
 array_walk($includes, function ( $file ) {
 	if ( ! locate_template( $file, true, true ) ) {
