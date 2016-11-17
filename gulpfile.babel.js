@@ -110,7 +110,11 @@ const taskHelpers = {
         return phase.projectGlobs.scripts.some(e => file.path.endsWith(e));
       }, rollup({
         plugins: [
-          buble(),
+          buble({
+            transforms: {
+              dangerousForOf: true
+            }
+          }),
           nodeResolve({
             module: true,
             jsnext: true,
