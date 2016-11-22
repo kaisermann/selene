@@ -1,10 +1,8 @@
 import _ from 'lodash';
 import minimist from 'minimist';
 import assetOrchestrator from 'asset-orchestrator';
-import autoprefixer from 'gulp-autoprefixer';
 import browserSyncLib from 'browser-sync';
 import concat from 'gulp-concat';
-import cleanCSS from 'gulp-clean-css';
 import del from 'del';
 import exhaust from 'stream-exhaust';
 import flatten from 'gulp-flatten';
@@ -25,6 +23,10 @@ import rollup from 'gulp-better-rollup';
 import buble from 'rollup-plugin-buble';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import postCSS from 'gulp-postcss';
+import cssmqpacker from 'css-mqpacker';
+import cssnano from 'cssnano';
+import autoprefixer from 'autoprefixer';
 
 const argv = minimist(process.argv.slice(2));
 const browserSync = browserSyncLib.create();
@@ -87,14 +89,17 @@ const taskHelpers = {
         'include css': true
       })))
       .pipe(concat, outputName)
-      .pipe(autoprefixer, {
-        browsers: phase.config.supportedBrowsers,
-      })
-      .pipe(cleanCSS, {
-        keepBreaks: phase.params.debug,
-        keepSpecialComments: phase.params.debug ? '*' : 0,
-        roundingPrecision: 6,
-        sourcemap: true,
+      .pipe(postCSS, [
+        autoprefixer({
+          browsers: phase.config.supportedBrowsers
+        }),
+        cssmqpacker(),
+        cssnano({
+          core: !phase.params.debug,
+          discardComments: !phase.params.debug
+        }),
+      ], {
+        map: true
       })
       .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
