@@ -9,9 +9,19 @@
       "files": [
         "{src,templates}/**/*.{php,html}",
         "*.{php,html}"
+<<<<<<< Updated upstream
       ]
     },
     "devUrl": "localhost/project"
+||||||| merged common ancestors
+      ],
+      "devUrl": "localhost:8888/project"
+    }
+=======
+      ]
+    },
+    "devUrl": "localhost:8888/chris"
+>>>>>>> Stashed changes
   },
   "resources": {
     "scripts": {

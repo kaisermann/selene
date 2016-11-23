@@ -65,6 +65,16 @@ function filter__template_redirect() {
 		wp_redirect( home_url( '/' . $search_base . '/' . urlencode( get_query_var( 's' ) ) ) );
 		exit();
 	}
+
+	if ( WP_ENV === 'development' && isset( $_GET['show_sitemap'] ) ) {
+		$the_query = new \WP_Query( [ 'post_type' => 'any', 'posts_per_page' => '-1', 'post_status' => 'publish' ] );
+		$urls = [];
+		while ( $the_query->have_posts() ) {
+			  $the_query->the_post();
+			  $urls[] = get_permalink();
+		}
+		die( json_encode( $urls ) );
+	}
 }
 
 function filter__get_search_form() {

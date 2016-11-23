@@ -1,3 +1,9 @@
+import {
+  readFileSync
+} from 'fs';
+import {
+  execSync
+} from 'child_process';
 import _ from 'lodash';
 import minimist from 'minimist';
 import assetOrchestrator from 'asset-orchestrator';
@@ -27,6 +33,8 @@ import postCSS from 'gulp-postcss';
 import cssmqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
+import uncss from 'gulp-uncss';
+import size from 'gulp-size';
 
 const argv = minimist(process.argv.slice(2));
 const browserSync = browserSyncLib.create();
@@ -172,6 +180,7 @@ const writeToManifest = (directory) => {
     .pipe(gulp.dest, phase.config.paths.dist)();
 };
 
+/* Tasks */
 gulp.task('jsLinter', (done) => {
   const scriptsDir = getResourceDir('source', 'scripts');
   return gulp.src([
@@ -186,7 +195,35 @@ gulp.task('jsLinter', (done) => {
     .on('error', done);
 });
 
-/* Tasks */
+gulp.task('uncss', () => {
+  const stylesDir = getResourceDir('dist', 'styles');
+  const sizeOpts = {
+    showFiles: true,
+    showTotal: false
+  };
+  execSync(`curl -L --silent --output sitemap.json '${phase.config.devUrl}?show_sitemap'`);
+  return gulp.src(`${stylesDir}/**/*.css`)
+    .pipe(size(sizeOpts))
+    .pipe(uncss({
+      html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
+      ignore: [
+        /expanded/,
+        /js/,
+        /wp-/,
+        /align/,
+        /admin-bar/
+      ],
+      ignoreSheets: [/fonts.googleapis/],
+    }))
+    .pipe(size(sizeOpts))
+    .pipe(size(Object.assign(sizeOpts, {
+      gzip: true,
+    })))
+    .pipe(gulp.dest(stylesDir))
+    .on('end', () => execSync('rm -rf sitemap.json'))
+    .on('error', () => execSync('rm -rf sitemap.json'));
+});
+
 gulp.task('styles', function cssMerger(done) {
   const merged = merge();
 
@@ -268,7 +305,7 @@ gulp.task('watch', function (done) {
   if (!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
       files: phase.config.browserSync.files,
-      proxy: phase.config.browserSync.devUrl,
+      proxy: phase.config.devUrl,
       snippetOptions: {
         whitelist: phase.config.browserSync.whitelist,
         blacklist: phase.config.browserSync.blacklist,
