@@ -268,7 +268,7 @@ gulp.task('watch', function (done) {
   if (!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
       files: phase.config.browserSync.files,
-      proxy: phase.config.browserSync.devUrl,
+      proxy: phase.config.devUrl,
       snippetOptions: {
         whitelist: phase.config.browserSync.whitelist,
         blacklist: phase.config.browserSync.blacklist,
