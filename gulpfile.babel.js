@@ -201,7 +201,9 @@ gulp.task('uncss', () => {
     showFiles: true,
     showTotal: false
   };
+  
   execSync(`curl -L --silent --output sitemap.json '${phase.config.devUrl}?show_sitemap'`);
+  
   return gulp.src(`${stylesDir}/**/*.css`)
     .pipe(size(sizeOpts))
     .pipe(uncss({
