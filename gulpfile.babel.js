@@ -1,3 +1,18 @@
+import {
+  readFileSync,
+  accessSync
+} from 'fs';
+
+import {
+  join as j,
+  relative as relativePath,
+  extname as extensionName
+} from 'path';
+
+import {
+  parse as parseUrl
+} from 'url';
+
 import _ from 'lodash';
 import minimist from 'minimist';
 import assetOrchestrator from 'asset-orchestrator';
@@ -13,7 +28,6 @@ import imagemin from 'gulp-imagemin';
 import jshint from 'gulp-jshint';
 import lazypipe from 'lazypipe';
 import merge from 'merge-stream';
-import path from 'path';
 import plumber from 'gulp-plumber';
 import rev from 'gulp-rev';
 import stylus from 'gulp-stylus';
@@ -27,7 +41,10 @@ import postCSS from 'gulp-postcss';
 import cssmqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
+import uncss from 'gulp-uncss';
+import size from 'gulp-size';
 
+let isWatching = false;
 const argv = minimist(process.argv.slice(2));
 const browserSync = browserSyncLib.create();
 
@@ -56,11 +73,19 @@ phase.params = {
   sync: argv.sync, // Start BroswerSync when '--sync'
 };
 
-const j = path.join;
 const onError = function (err) {
   util.beep();
   util.log(err.message);
   this.emit('end');
+};
+
+const pathExists = function (path) {
+  try {
+    accessSync(path);
+    return true;
+  } catch (e) {
+    return false;
+  }
 };
 
 const getResourceDir = (folder, type, ...appendix) => {
@@ -69,7 +94,7 @@ const getResourceDir = (folder, type, ...appendix) => {
     ...appendix);
 };
 
-const distToAssetPath = path.relative(
+const distToAssetPath = relativePath(
   getResourceDir('dist', 'any'),
   phase.config.paths.source
 );
@@ -77,10 +102,39 @@ const distToAssetPath = path.relative(
 /**
  * Task helpers are used to modify a stream in the middle of a task.
  * It allows customization of the stream for automatically created simple tasks
- * (phase.json -> resource -> dynamicTask:true).
+ * (sepha.json -> resource -> dynamicTask:true).
  */
 
 const taskHelpers = {
+  unCSS() {
+    if (!pathExists('./sitemap.json')) {
+      return lazypipe().pipe(util.noop)();
+    }
+
+    return lazypipe()
+      .pipe(size, {
+        showFiles: true,
+        showTotal: false,
+        title: 'Before unCSS:',
+      })
+      .pipe(uncss, {
+        html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
+        ignore: [
+          /expanded/,
+          /js/,
+          /wp-/,
+          /align/,
+          /admin-bar/
+        ],
+        ignoreSheets: [/fonts.googleapis/],
+      })
+      .pipe(size, {
+        showFiles: true,
+        showTotal: false,
+        title: 'After unCSS:',
+      })
+      ();
+  },
   styles(outputName) {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
@@ -101,7 +155,6 @@ const taskHelpers = {
       ], {
         map: true
       })
-      .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
         sourceRoot: distToAssetPath,
       })))
@@ -135,7 +188,6 @@ const taskHelpers = {
       })))
       .pipe(concat, outputName)
       .pipe(() => gulpif(!phase.params.debug, uglify()))
-      .pipe(() => gulpif(phase.params.production, rev()))
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
         sourceRoot: distToAssetPath,
       })))
@@ -172,6 +224,7 @@ const writeToManifest = (directory) => {
     .pipe(gulp.dest, phase.config.paths.dist)();
 };
 
+/* Tasks */
 gulp.task('jsLinter', (done) => {
   const scriptsDir = getResourceDir('source', 'scripts');
   return gulp.src([
@@ -186,7 +239,13 @@ gulp.task('jsLinter', (done) => {
     .on('error', done);
 });
 
-/* Tasks */
+gulp.task('uncss', () => {
+  const stylesDir = getResourceDir('dist', 'styles');
+  return gulp.src(`${stylesDir}/**/*.css`)
+    .pipe(taskHelpers.unCSS())
+    .pipe(gulp.dest(stylesDir));
+});
+
 gulp.task('styles', function cssMerger(done) {
   const merged = merge();
 
@@ -198,8 +257,16 @@ gulp.task('styles', function cssMerger(done) {
         errorHandler: onError
       }))
       .pipe(taskHelpers.styles(asset.outputName))
+      .pipe(gulpif(
+        (file) => (!isWatching &&
+          !phase.params.debug &&
+          extensionName(parseUrl(file.path).pathname).indexOf('.css') !== -1),
+        taskHelpers.unCSS()
+      ))
+      .pipe(gulpif(phase.params.production, rev()))
     );
   });
+
   merged.pipe(writeToManifest(phase.resources.styles.directory))
     .on('end', done)
     .on('error', done);
@@ -216,6 +283,7 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
         errorHandler: onError
       }))
       .pipe(taskHelpers.scripts(asset.outputName))
+      .pipe(gulpif(phase.params.production, rev()))
     );
   });
 
@@ -265,6 +333,8 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
 
 gulp.task('watch', function (done) {
 
+  isWatching = true;
+
   if (!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
       files: phase.config.browserSync.files,
@@ -284,7 +354,7 @@ gulp.task('watch', function (done) {
       gulp.series(resourceType)
     );
   }
-  gulp.watch(['bower.json', 'phase.json'], gulp.series('build'));
+  gulp.watch(['bower.json', 'sepha.json'], gulp.series('build'));
 
   done();
 });
