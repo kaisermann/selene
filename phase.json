@@ -9,9 +9,9 @@
       "files": [
         "{src,templates}/**/*.{php,html}",
         "*.{php,html}"
-      ],
-      "devUrl": "localhost/phase"
-    }
+      ]
+    },
+    "devUrl": "localhost/phase"
   },
   "resources": {
     "scripts": {
