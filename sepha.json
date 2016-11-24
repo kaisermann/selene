@@ -37,13 +37,8 @@
             "assets/styles/vendor/reset.css",
             "assets/styles/vendor/*.css"
           ],
-          "npm": []
-        },
-        "editor.css": {
-          "files": "styles/wordpress/editor.styl"
-        },
-        "admin.css": {
-          "files": "styles/wordpress/admin.styl"
+          "npm": [],
+          "uncss": true
         }
       }
     },
