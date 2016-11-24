@@ -35,7 +35,8 @@
             "assets/styles/vendor/reset.css",
             "assets/styles/vendor/*.css"
           ],
-          "npm": []
+          "npm": [],
+          "uncss": true
         }
       }
     },
