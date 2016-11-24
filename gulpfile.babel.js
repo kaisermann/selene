@@ -43,7 +43,6 @@ import autoprefixer from 'autoprefixer';
 import uncss from 'gulp-uncss';
 import size from 'gulp-size';
 
-let isWatching = false;
 const argv = minimist(process.argv.slice(2));
 const browserSync = browserSyncLib.create();
 
@@ -349,8 +348,6 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
 })();
 
 gulp.task('watch', function (done) {
-
-  isWatching = true;
 
   if (!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
