@@ -112,6 +112,31 @@ Custom resource type directory name example:
 
 * * *
 
+Each resource CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss` task will search the file for unused selectors based on a `sitemap.json` file. The `sitemap.json` must be composed by an array of your projects pages urls.
+
+```json
+{
+  "resources": {
+    "styles": {
+      "pattern": "*.css",
+      "directory": "styles",
+      "assets": {
+        "main.css": {
+          "uncss": true,
+          "files": "styles/wrapper.styl"
+        },
+        "admin.css": {
+          "files": "styles/admin.styl"
+        }
+      }
+    }
+  }
+}
+```
+
+
+* * *
+
 Each resource type MAY have a `dynamicTask` **boolean** attribute. If assigned to **true** it is automatically created an independent gulp task that mainly move files without any complicated logic. It's also possible to insert a helper in the middle of the task stream by creating a method with the same name as the `resource type name` in the taskHelpers object inside your gulpfile (see `taskHelpers.images`).
 
 * * *
@@ -130,6 +155,7 @@ Each resource type MAY have a `dynamicTask` **boolean** attribute. If assigned t
 * `gulp images` Build everything on the images directory
 * `gulp clean` Deletes the distribution directory
 * `gulp watch` Starts watching the asset files
+* `gulp uncss` Reads a `sitemap.json` file and removes unused selectors
 
 #### Gulp Parameters
 

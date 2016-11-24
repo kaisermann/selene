@@ -5,13 +5,12 @@ import {
 
 import {
   join as j,
-  relative as relativePath,
-  extname as extensionName
+  relative as relativePath
 } from 'path';
 
 import {
-  parse as parseUrl
-} from 'url';
+  execSync
+} from 'child_process';
 
 import _ from 'lodash';
 import minimist from 'minimist';
@@ -44,12 +43,11 @@ import autoprefixer from 'autoprefixer';
 import uncss from 'gulp-uncss';
 import size from 'gulp-size';
 
-let isWatching = false;
 const argv = minimist(process.argv.slice(2));
 const browserSync = browserSyncLib.create();
 
 // Path to the main manifest file.
-const mainManifestPath = './phase.json';
+const mainManifestPath = './sepha.json';
 const phase = assetOrchestrator(mainManifestPath);
 
 // Sets configuration default values if needed
@@ -99,6 +97,19 @@ const distToAssetPath = relativePath(
   phase.config.paths.source
 );
 
+const writeToManifest = (directory) => {
+  return lazypipe()
+    .pipe(gulp.dest, getResourceDir('dist', directory))
+    .pipe(browserSync.stream, {
+      match: '**/*.{js,css}',
+    })
+    .pipe(rev.manifest, getResourceDir('dist', phase.config.paths.revisionManifest), {
+      base: phase.config.paths.dist,
+      merge: true,
+    })
+    .pipe(gulp.dest, phase.config.paths.dist)();
+};
+
 /**
  * Task helpers are used to modify a stream in the middle of a task.
  * It allows customization of the stream for automatically created simple tasks
@@ -106,35 +117,6 @@ const distToAssetPath = relativePath(
  */
 
 const taskHelpers = {
-  unCSS() {
-    if (!pathExists('./sitemap.json')) {
-      return lazypipe().pipe(util.noop)();
-    }
-
-    return lazypipe()
-      .pipe(size, {
-        showFiles: true,
-        showTotal: false,
-        title: 'Before unCSS:',
-      })
-      .pipe(uncss, {
-        html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
-        ignore: [
-          /expanded/,
-          /js/,
-          /wp-/,
-          /align/,
-          /admin-bar/
-        ],
-        ignoreSheets: [/fonts.googleapis/],
-      })
-      .pipe(size, {
-        showFiles: true,
-        showTotal: false,
-        title: 'After unCSS:',
-      })
-      ();
-  },
   styles(outputName) {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
@@ -153,7 +135,7 @@ const taskHelpers = {
           discardComments: !phase.params.debug
         }),
       ], {
-        map: true
+        map: phase.params.maps
       })
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
         sourceRoot: distToAssetPath,
@@ -211,19 +193,6 @@ const taskHelpers = {
   },
 };
 
-const writeToManifest = (directory) => {
-  return lazypipe()
-    .pipe(gulp.dest, getResourceDir('dist', directory))
-    .pipe(browserSync.stream, {
-      match: '**/*.{js,css}',
-    })
-    .pipe(rev.manifest, getResourceDir('dist', phase.config.paths.revisionManifest), {
-      base: phase.config.paths.dist,
-      merge: true,
-    })
-    .pipe(gulp.dest, phase.config.paths.dist)();
-};
-
 /* Tasks */
 gulp.task('jsLinter', (done) => {
   const scriptsDir = getResourceDir('source', 'scripts');
@@ -241,9 +210,62 @@ gulp.task('jsLinter', (done) => {
 
 gulp.task('uncss', () => {
   const stylesDir = getResourceDir('dist', 'styles');
-  return gulp.src(`${stylesDir}/**/*.css`)
-    .pipe(taskHelpers.unCSS())
-    .pipe(gulp.dest(stylesDir));
+  const revManifestDir = getResourceDir('dist', phase.config.paths.revisionManifest);
+
+  if (!pathExists(stylesDir)) {
+    throw ('Styles distribution directory not found.');
+  }
+
+  execSync(`curl -L --silent --output sitemap.json '${phase.config.devUrl}?show_sitemap'`);
+
+  if (!pathExists('./sitemap.json')) {
+    throw ('Couldn\'t find the \'sitemap.json\'');
+  }
+
+  // Let's get all assets with uncss:true
+  const assetsObj = Object.keys(phase.resources.styles.assets).reduce((acc, assetName) => {
+    if (phase.resources.styles.assets[assetName].uncss) {
+      acc[assetName] = assetName;
+    }
+    return acc;
+  }, {});
+
+  // Does the revision manifest exists?
+  if (pathExists(revManifestDir)) {
+    // Yes! Let's override the files name
+    const revManifest = JSON.parse(readFileSync(revManifestDir, 'utf-8'));
+    Object.keys(revManifest).some(item => {
+      if (assetsObj[item]) {
+        assetsObj[item] = revManifest[item];
+      }
+    });
+  }
+
+  return gulp.src(Object.keys(assetsObj).map(
+      key => j(stylesDir, assetsObj[key])
+    ), {
+      base: './',
+    })
+    .pipe(plumber({
+      errorHandler: onError
+    }))
+    .pipe(size({
+      showFiles: true,
+      showTotal: false,
+      title: 'Before unCSS:',
+    }))
+    .pipe(uncss({
+      html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
+      uncssrc: '.uncssrc'
+    }))
+    .pipe(size({
+      showFiles: true,
+      showTotal: false,
+      title: 'After unCSS:',
+    }))
+    .on('end', () => execSync('rm -rf sitemap.json'))
+    .on('error', () => execSync('rm -rf sitemap.json'))
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('styles', function cssMerger(done) {
@@ -257,12 +279,6 @@ gulp.task('styles', function cssMerger(done) {
         errorHandler: onError
       }))
       .pipe(taskHelpers.styles(asset.outputName))
-      .pipe(gulpif(
-        (file) => (!isWatching &&
-          !phase.params.debug &&
-          extensionName(parseUrl(file.path).pathname).indexOf('.css') !== -1),
-        taskHelpers.unCSS()
-      ))
       .pipe(gulpif(phase.params.production, rev()))
     );
   });
@@ -332,8 +348,6 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger(done) {
 })();
 
 gulp.task('watch', function (done) {
-
-  isWatching = true;
 
   if (!!phase.config.browserSync && phase.params.sync) {
     browserSync.init({
