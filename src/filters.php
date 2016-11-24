@@ -13,6 +13,7 @@ add_filter( 'template_redirect', __NAMESPACE__ . '\filter__template_redirect' );
 add_filter( 'get_search_form', __NAMESPACE__ . '\filter__get_search_form' );
 // Default jpg quality
 add_filter( 'jpeg_quality', __NAMESPACE__ . '\filter__jpeg_quality' );
+add_filter( 'upload_mimes', __NAMESPACE__ . '\filter__upload_mimes' );
 // Removes WP version from feeds
 add_filter( 'the_generator', __NAMESPACE__ . '\filter__the_generator' );
 // Removes the protocol (http(s)) from asset's url
@@ -93,6 +94,11 @@ function filter__get_search_form() {
 
 function filter__jpeg_quality() {
 	return 100;
+}
+
+function filter__upload_mimes( $mimes ) {
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
 }
 
 function filter__the_generator() {
