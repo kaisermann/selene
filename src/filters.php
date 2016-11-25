@@ -77,6 +77,9 @@ function filter__template_redirect() {
 		if ( strcmp( $blogUrl, $homeUrl ) !== 0 ) {
 			$urls[] = $blogUrl;
 		}
+		
+		$urls[] = $homeUrl.'/404';
+		
 		while ( $the_query->have_posts() ) {
 			  $the_query->the_post();
 			  $urls[] = get_permalink();
