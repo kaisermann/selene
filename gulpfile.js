@@ -25,14 +25,14 @@ const stylus = require('gulp-stylus');
 const uglify = require('gulp-uglify');
 const util = require('gulp-util');
 const rollup = require('gulp-better-rollup');
-const buble = require('rollup-plugin-buble');
-const nodeResolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
+const rollupBuble = require('rollup-plugin-buble');
+const rollupNodeResolve = require('rollup-plugin-node-resolve');
+const rollupCommonjs = require('rollup-plugin-commonjs');
 const postCSS = require('gulp-postcss');
-const cssmqpacker = require('css-mqpacker');
-const cssnano = require('cssnano');
-const autoprefixer = require('autoprefixer');
-const uncss = require('gulp-uncss');
+const CSSmqpacker = require('css-mqpacker');
+const CSSnano = require('cssnano');
+const CSSautoprefixer = require('autoprefixer');
+const unCSS = require('gulp-uncss');
 const size = require('gulp-size');
 
 const argv = minimist(process.argv.slice(2));
@@ -118,11 +118,11 @@ const taskHelpers = {
       })))
       .pipe(concat, outputName)
       .pipe(postCSS, [
-        autoprefixer({
+        CSSautoprefixer({
           browsers: phase.config.supportedBrowsers
         }),
-        cssmqpacker(),
-        cssnano({
+        CSSmqpacker(),
+        CSSnano({
           core: !phase.params.debug,
           discardComments: !phase.params.debug
         }),
@@ -142,12 +142,12 @@ const taskHelpers = {
         return phase.projectGlobs.scripts.some(e => file.path.endsWith(e));
       }, rollup({
         plugins: [
-          buble({
+          rollupBuble({
             transforms: {
               dangerousForOf: true
             }
           }),
-          nodeResolve({
+          rollupNodeResolve({
             module: true,
             jsnext: true,
             main: true,
@@ -155,7 +155,7 @@ const taskHelpers = {
             extensions: ['.js'],
             preferBuiltins: true
           }),
-          commonjs()
+          rollupCommonjs()
         ]
       }, {
         format: 'iife',
@@ -246,7 +246,7 @@ gulp.task('uncss', () => {
       showTotal: false,
       title: 'Before unCSS:',
     }))
-    .pipe(uncss({
+    .pipe(unCSS({
       html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
       uncssrc: '.uncssrc'
     }))
