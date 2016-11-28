@@ -1,53 +1,45 @@
-import {
-  readFileSync,
-  accessSync
-} from 'fs';
+const readFileSync = require('fs').readFileSync;
+const accessSync = require('fs').accessSync;
+const j = require('path').join;
+const relativePath = require('path').relative;
+const execSync = require('child_process').execSync;
 
-import {
-  join as j,
-  relative as relativePath
-} from 'path';
-
-import {
-  execSync
-} from 'child_process';
-
-import _ from 'lodash';
-import minimist from 'minimist';
-import assetOrchestrator from 'asset-orchestrator';
-import browserSyncLib from 'browser-sync';
-import concat from 'gulp-concat';
-import del from 'del';
-import exhaust from 'stream-exhaust';
-import flatten from 'gulp-flatten';
-import sourcemaps from 'gulp-sourcemaps';
-import gulp from 'gulp';
-import gulpif from 'gulp-if';
-import imagemin from 'gulp-imagemin';
-import jshint from 'gulp-jshint';
-import lazypipe from 'lazypipe';
-import merge from 'merge-stream';
-import plumber from 'gulp-plumber';
-import rev from 'gulp-rev';
-import stylus from 'gulp-stylus';
-import uglify from 'gulp-uglify';
-import util from 'gulp-util';
-import rollup from 'gulp-better-rollup';
-import buble from 'rollup-plugin-buble';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import postCSS from 'gulp-postcss';
-import cssmqpacker from 'css-mqpacker';
-import cssnano from 'cssnano';
-import autoprefixer from 'autoprefixer';
-import uncss from 'gulp-uncss';
-import size from 'gulp-size';
+const _ = require('lodash');
+const minimist = require('minimist');
+const assetOrchestrator = require('asset-orchestrator');
+const browserSyncLib = require('browser-sync');
+const concat = require('gulp-concat');
+const del = require('del');
+const exhaust = require('stream-exhaust');
+const flatten = require('gulp-flatten');
+const sourcemaps = require('gulp-sourcemaps');
+const gulp = require('gulp');
+const gulpif = require('gulp-if');
+const imagemin = require('gulp-imagemin');
+const jshint = require('gulp-jshint');
+const lazypipe = require('lazypipe');
+const merge = require('merge-stream');
+const plumber = require('gulp-plumber');
+const rev = require('gulp-rev');
+const stylus = require('gulp-stylus');
+const uglify = require('gulp-uglify');
+const util = require('gulp-util');
+const rollup = require('gulp-better-rollup');
+const buble = require('rollup-plugin-buble');
+const nodeResolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
+const postCSS = require('gulp-postcss');
+const cssmqpacker = require('css-mqpacker');
+const cssnano = require('cssnano');
+const autoprefixer = require('autoprefixer');
+const uncss = require('gulp-uncss');
+const size = require('gulp-size');
 
 const argv = minimist(process.argv.slice(2));
 const browserSync = browserSyncLib.create();
 
 // Path to the main manifest file.
-const mainManifestPath = './sepha.json';
+const mainManifestPath = './phase.json';
 const phase = assetOrchestrator(mainManifestPath);
 
 // Sets configuration default values if needed
