@@ -12,6 +12,7 @@ remove_action( 'admin_print_styles', 'print_emoji_styles' );
 remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 
 // Filters
+add_filter( 'login_headerurl', __NAMESPACE__ . '\filter__login_headerurl' );
 
 // Action methods
 function action__admin_enqueue_scripts() {
@@ -27,3 +28,6 @@ function action__admin_init() {
 }
 
 // Filter methods
+function filter__login_headerurl() {
+    return home_url();
+}
