@@ -39,6 +39,12 @@
           ],
           "npm": [],
           "uncss": true
+        },
+        "editor.css": {
+          "files": "styles/wordpress/editor.styl"
+        },
+        "admin.css": {
+          "files": "styles/wordpress/admin.styl"
         }
       }
     },
