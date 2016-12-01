@@ -15,7 +15,7 @@
     "npm": ">=2.1.5"
   },
   "devDependencies": {
-    "asset-orchestrator": "^1.2.2",
+    "asset-orchestrator": "^1.2.4",
     "autoprefixer": "^6.5.3",
     "browser-sync": "^2.17.6",
     "css-mqpacker": "^5.0.1",
