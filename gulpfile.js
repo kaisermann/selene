@@ -2,7 +2,6 @@ const readFileSync = require('fs').readFileSync;
 const accessSync = require('fs').accessSync;
 const j = require('path').join;
 const relativePath = require('path').relative;
-const execSync = require('child_process').execSync;
 
 const _ = require('lodash');
 const minimist = require('minimist');
@@ -208,8 +207,6 @@ gulp.task('uncss', () => {
     throw ('Styles distribution directory not found.');
   }
 
-  execSync(`curl -L --silent --output sitemap.json '${phase.config.devUrl}?show_sitemap'`);
-
   if (!pathExists('./sitemap.json')) {
     throw ('Couldn\'t find the \'sitemap.json\'');
   }
@@ -255,8 +252,6 @@ gulp.task('uncss', () => {
       showTotal: false,
       title: 'After unCSS:',
     }))
-    .on('end', () => execSync('rm -rf sitemap.json'))
-    .on('error', () => execSync('rm -rf sitemap.json'))
     .pipe(gulp.dest('./'));
 });
 
