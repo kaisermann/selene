@@ -4141,9 +4141,9 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
-rolleiflex@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/rolleiflex/-/rolleiflex-1.0.0.tgz#a27fa29baedef5a6fbc8ad0da39b9c5116665c95"
+rolleiflex@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/rolleiflex/-/rolleiflex-1.1.0.tgz#2a9a31452e323e17d0dfb4aaabed6d734a38a4af"
 
 rollup-plugin-buble@^0.14.0:
   version "0.14.0"

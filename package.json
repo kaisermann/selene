@@ -48,7 +48,7 @@
     "stream-exhaust": "^1.0.1"
   },
   "dependencies": {
-    "rolleiflex": "^1.0.0",
+    "rolleiflex": "^1.1.0",
     "rupture": "^0.6.2"
   },
   "overrides": {
