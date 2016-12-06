@@ -3,7 +3,7 @@
 import Router from './utils/router.js';
 import common from './events/common.js';
 
-(function ($) {
+($ => {
   // Modify the 'events' object to include or remove other routes
   const events = {
     common,
@@ -18,4 +18,4 @@ import common from './events/common.js';
   } else {
     document.addEventListener('DOMContentLoaded', () => router.loadEvents(), false);
   }
-}(window.jQuery || window.Zepto || window.Cash));
+})(window.jQuery || window.Zepto || window.Cash);
