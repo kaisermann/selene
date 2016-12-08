@@ -5,9 +5,9 @@ namespace App;
 use Roots\Sage\Template;
 use Roots\Sage\Template\Wrapper;
 
-// Sage: filter to display or hide the sidebar
 add_filter( 'template_include', __NAMESPACE__ . '\filter__template_include', 109 );
-add_filter( 'sage/display_sidebar', __NAMESPACE__ . '\filter__display_sidebar' );
+// Sage: filter to display or hide the sidebar
+//add_filter( 'sage/display_sidebar', __NAMESPACE__ . '\filter__display_sidebar' );
 add_filter( 'body_class', __NAMESPACE__ . '\filter__body_class' );
 add_filter( 'template_redirect', __NAMESPACE__ . '\filter__template_redirect' );
 add_filter( 'get_search_form', __NAMESPACE__ . '\filter__get_search_form' );
@@ -29,15 +29,6 @@ function filter__template_include( $main ) {
 	}
 
 	return (new Template( new Wrapper( $main ) ))->layout();
-}
-
-// Modify this method's result to show or hide the sidebar
-function filter__display_sidebar( $display ) {
-	// The sidebar will NOT be displayed if ANY of the following return true
-	return $display ? ! in_array(true, [
-		is_404(),
-		is_front_page(),
-	]) : $display;
 }
 
 function filter__body_class( $classes ) {
