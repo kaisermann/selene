@@ -3,16 +3,16 @@
 namespace App;
 
 // Actions
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\action__admin_enqueue_scripts' );
-add_action( 'login_enqueue_scripts', __NAMESPACE__ . '\action__admin_enqueue_scripts' );
-add_action( 'admin_init', __NAMESPACE__ . '\action__admin_init' );
+add_action( 'admin_enqueue_scripts', 'App\\action__admin_enqueue_scripts' );
+add_action( 'login_enqueue_scripts', 'App\\action__admin_enqueue_scripts' );
+add_action( 'admin_init', 'App\\action__admin_init' );
 
 remove_action( 'welcome_panel', 'wp_welcome_panel' );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
 remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 
 // Filters
-add_filter( 'login_headerurl', __NAMESPACE__ . '\filter__login_headerurl' );
+add_filter( 'login_headerurl', 'App\\filter__login_headerurl' );
 
 // Action methods
 function action__admin_enqueue_scripts() {
@@ -29,5 +29,5 @@ function action__admin_init() {
 
 // Filter methods
 function filter__login_headerurl() {
-    return home_url();
+	return home_url();
 }

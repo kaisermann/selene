@@ -1,11 +1,14 @@
 <?php
 namespace App;
 
+use Roots\Sage\Assets\JsonManifest;
+use Roots\Sage\Template\BladeProvider;
+
 // Actions
-add_action( 'init', __NAMESPACE__ . '\action__init', 0, 2 );
-add_action( 'after_setup_theme', __NAMESPACE__ . '\action__after_setup_theme' );
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\action__wp_enqueue_scripts' );
-add_action( 'widgets_init', __NAMESPACE__ . '\action__widgets_init' );
+add_action( 'init', 'App\\action__init', 0, 2 );
+add_action( 'after_setup_theme', 'App\\action__after_setup_theme' );
+add_action( 'wp_enqueue_scripts', 'App\\action__wp_enqueue_scripts' );
+add_action( 'widgets_init', 'App\\action__widgets_init' );
 
 remove_action( 'wp_head', 'rsd_link' );
 remove_action( 'wp_head', 'feed_links_extra', 3 );
@@ -20,6 +23,34 @@ remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
 remove_action( 'wp_head', 'wp_generator' );
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+/**
+ * Add JsonManifest to Sage container
+ */
+sage()->singleton('sage.assets', function () {
+	return new JsonManifest(
+		get_stylesheet_directory() . '/dist/assets.json',
+		get_stylesheet_directory_uri() . '/dist'
+	);
+});
+
+/**
+ * Add Blade to Sage container
+ */
+sage()->singleton('sage.blade', function () {
+	$cachePath = wp_upload_dir()['basedir'] . '/cache/compiled';
+	if ( ! file_exists( $cachePath ) ) {
+		wp_mkdir_p( $cachePath );
+	}
+	return new BladeProvider( TEMPLATEPATH, $cachePath, sage() );
+});
+
+/**
+ * Create @asset() Blade directive
+ */
+sage( 'blade' )->compiler()->directive('asset', function ( $asset ) {
+	return '<?php echo App\\asset_path(\'' . trim( $asset, '\'"' ) . '\'); ?>';
+});
 
 function action__init() {
 
@@ -58,10 +89,6 @@ function action__wp_enqueue_scripts() {
 		wp_deregister_script( 'jquery' );
 		wp_register_script( 'jquery', ('https://code.jquery.com/jquery-3.1.1.min.js'), false, '3.1.1', true );
 		wp_enqueue_script( 'jquery' );
-	}
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
 	}
 
 	wp_enqueue_style( 'sepha/main.css', asset_path( 'styles/main.css' ), false, null );

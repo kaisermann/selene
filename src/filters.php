@@ -2,33 +2,59 @@
 
 namespace App;
 
-use Roots\Sage\Template;
-use Roots\Sage\Template\Wrapper;
-
-add_filter( 'template_include', __NAMESPACE__ . '\filter__template_include', 109 );
+//add_filter('locate_template', 'App\\template_path');
 // Sage: filter to display or hide the sidebar
 //add_filter( 'sage/display_sidebar', __NAMESPACE__ . '\filter__display_sidebar' );
-add_filter( 'body_class', __NAMESPACE__ . '\filter__body_class' );
-add_filter( 'template_redirect', __NAMESPACE__ . '\filter__template_redirect' );
-add_filter( 'get_search_form', __NAMESPACE__ . '\filter__get_search_form' );
+add_filter( 'body_class', 'App\\filter__body_class' );
+add_filter( 'template_redirect', 'App\\filter__template_redirect' );
+add_filter( 'template_include', 'App\\filter__template_include', 10000 );
+add_filter( 'get_search_form', 'App\\filter__get_search_form' );
+add_filter( 'comments_template', 'App\\template_path' );
 // Default jpg quality
-add_filter( 'jpeg_quality', __NAMESPACE__ . '\filter__jpeg_quality' );
-add_filter( 'upload_mimes', __NAMESPACE__ . '\filter__upload_mimes' );
+add_filter( 'jpeg_quality', 'App\\filter__jpeg_quality' );
+add_filter( 'upload_mimes', 'App\\filter__upload_mimes' );
 // Removes WP version from feeds
-add_filter( 'the_generator', __NAMESPACE__ . '\filter__the_generator' );
+add_filter( 'the_generator', 'App\\filter__the_generator' );
 // Removes the protocol (http(s)) from asset's url
 // Based on 'https://github.com/ryanjbonnell/Protocol-Relative-Theme-Assets by Ryan J. Bonnell'
-add_filter( 'style_loader_src', __NAMESPACE__ . '\filter__style_loader_src', 10, 2 );
-add_filter( 'script_loader_src', __NAMESPACE__ . '\filter__script_loader_src', 10, 2 );
-add_filter( 'template_directory_uri', __NAMESPACE__ . '\filter__template_directory_uri', 10, 3 );
-add_filter( 'stylesheet_directory_uri', __NAMESPACE__ . '\filter__stylesheet_directory_uri', 10, 3 );
+add_filter( 'style_loader_src', 'App\\filter__style_loader_src', 10, 2 );
+add_filter( 'script_loader_src', 'App\\filter__script_loader_src', 10, 2 );
+add_filter( 'template_directory_uri', 'App\\filter__template_directory_uri', 10, 3 );
+add_filter( 'stylesheet_directory_uri', 'App\\filter__stylesheet_directory_uri', 10, 3 );
 
-function filter__template_include( $main ) {
-	if ( ! is_string( $main ) && ! (is_object( $main ) && method_exists( $main, '__toString' )) ) {
-		return $main;
-	}
+/**
+ * Template Hierarchy should search for .blade.php files
+ */
+array_map(function ( $tag ) {
+	add_filter("{$tag}_template_hierarchy", function ( $templates ) {
+		return array_merge( str_replace( '.php', '.blade.php', $templates ), $templates );
+	});
+}, [
+	'index',
+	'404',
+	'archive',
+	'author',
+	'category',
+	'tag',
+	'taxonomy',
+	'date',
+	'home',
+	'front_page',
+	'page',
+	'paged',
+	'search',
+	'single',
+	'singular',
+	'attachment',
+]);
 
-	return (new Template( new Wrapper( $main ) ))->layout();
+/**
+ * Render page using Blade
+ */
+function filter__template_include( $template ) {
+	echo template( $template );
+	// Return a blank file to make WordPress happy
+	return get_template_directory() . '/index.php';
 }
 
 function filter__body_class( $classes ) {
@@ -68,9 +94,9 @@ function filter__template_redirect() {
 		if ( strcmp( $blogUrl, $homeUrl ) !== 0 ) {
 			$urls[] = $blogUrl;
 		}
-		
-		$urls[] = $homeUrl.'/404';
-		
+
+		$urls[] = $homeUrl . '/404';
+
 		while ( $the_query->have_posts() ) {
 			  $the_query->the_post();
 			  $urls[] = get_permalink();
@@ -81,7 +107,7 @@ function filter__template_redirect() {
 
 function filter__get_search_form() {
 	$form = '';
-	locate_template( '/templates/partials/searchform.php', true, false );
+	locate_template( '/templates/partials/searchform.blade.php', true, false );
 
 	return $form;
 }

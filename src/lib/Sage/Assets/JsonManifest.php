@@ -1,33 +1,32 @@
 <?php
-
 namespace Roots\Sage\Assets;
-
 /**
- * Class JsonManifest.
- *
+ * Class JsonManifest
+ * @package Roots\Sage
  * @author QWp6t
  */
 class JsonManifest implements ManifestInterface {
 
 	/** @var array */
-	protected $manifest = [];
-
+	public $manifest;
+	/** @var string */
+	public $dist;
 	/**
-	 * JsonManifest constructor.
+	 * JsonManifest constructor
 	 *
 	 * @param string $manifestPath Local filesystem path to JSON-encoded manifest
+	 * @param string $distUri Remote URI to assets root
 	 */
-	public function __construct( $manifestPath ) {
+	public function __construct( $manifestPath, $distUri ) {
 		$this->manifest = file_exists( $manifestPath ) ? json_decode( file_get_contents( $manifestPath ), true ) : [];
+		$this->dist = $distUri;
 	}
-
-	/** {@inheritdoc} */
-	public function get( $file ) {
-		return isset( $this->manifest[ $file ] ) ? $this->manifest[ $file ] : $file;
+	/** @inheritdoc */
+	public function get( $asset ) {
+		return isset( $this->manifest[ $asset ] ) ? $this->manifest[ $asset ] : $asset;
 	}
-
-	/** {@inheritdoc} */
-	public function getAll() {
-		return $this->manifest;
+	/** @inheritdoc */
+	public function getUri( $asset ) {
+		return "{$this->dist}/{$this->get($asset)}";
 	}
 }

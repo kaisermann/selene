@@ -1,22 +1,9 @@
 <?php
 
-$includes = [
-	'src/lib/Sage/Assets/ManifestInterface.php',
-	'src/lib/Sage/Assets/JsonManifest.php',
-	'src/lib/Sage/Template/WrapperInterface.php',
-	'src/lib/Sage/Template/Partial.php',
-	'src/lib/Sage/Template/Wrapper.php',
-	'src/lib/Sage/Asset.php',
-	'src/lib/Sage/Template.php',
-	'src/lib/BEM/MenuWalker.php',
-	'src/helpers.php',
-	'src/setup.php',
-	'src/admin.php',
-	'src/filters.php',
-	'src/ajax.php',
-];
+if ( file_exists( $composer = __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once $composer;
+}
 
-// Do not edit anything below this line unless you know what you're doing :)
 add_filter('template', function ( $stylesheet ) {
 	return dirname( $stylesheet );
 });
@@ -28,8 +15,15 @@ add_action('after_switch_theme', function () {
 	}
 });
 
+$includes = [
+	'src/helpers.php',
+	'src/setup.php',
+	'src/filters.php',
+	'src/admin.php',
+	'src/ajax.php',
+];
 array_walk($includes, function ( $file ) {
 	if ( ! locate_template( $file, true, true ) ) {
-		trigger_error( sprintf( __( 'Error locating %s for inclusion', 'sage' ), $file ), E_USER_ERROR );
+		trigger_error( sprintf( __( 'Error locating %s for inclusion', 'sepha' ), $file ), E_USER_ERROR );
 	}
 });
