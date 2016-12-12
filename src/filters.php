@@ -25,9 +25,12 @@ add_filter( 'stylesheet_directory_uri', 'App\\filter__stylesheet_directory_uri',
 /**
  * Template Hierarchy should search for .blade.php files
  */
-array_map(function ( $tag ) {
-	add_filter("{$tag}_template_hierarchy", function ( $templates ) {
-		return array_merge( str_replace( '.php', '.blade.php', $templates ), $templates );
+array_map(function ( $type ) {
+	add_filter("{$type}_template_hierarchy", function ( $templates ) {
+		return call_user_func_array('array_merge', array_map(function ( $template ) {
+			$normalizedTemplate = str_replace( '.', '/', sage( 'blade' )->normalizeViewPath( $template ) );
+			return [ "{$normalizedTemplate}.blade.php", "{$normalizedTemplate}.php" ];
+		}, $templates));
 	});
 }, [
 	'index',
@@ -52,7 +55,7 @@ array_map(function ( $tag ) {
  * Render page using Blade
  */
 function filter__template_include( $template ) {
-	echo template( $template );
+	echo template($template, apply_filters('sage/template_data', []));
 	// Return a blank file to make WordPress happy
 	return get_template_directory() . '/index.php';
 }
