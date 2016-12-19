@@ -2,11 +2,13 @@
 namespace App;
 
 use Roots\Sage\Assets\JsonManifest;
+use Roots\Sage\Template\Blade;
 use Roots\Sage\Template\BladeProvider;
 
 // Actions
 add_action( 'init', 'App\\action__init', 0, 2 );
-add_action( 'after_setup_theme', 'App\\action__after_setup_theme' );
+add_action( 'after_setup_theme', 'App\\action__sage_setup', 100 );
+add_action( 'after_setup_theme', 'App\\action__after_setup_theme', 100 );
 add_action( 'wp_enqueue_scripts', 'App\\action__wp_enqueue_scripts' );
 add_action( 'widgets_init', 'App\\action__widgets_init' );
 
@@ -25,32 +27,47 @@ remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
 
 /**
- * Add JsonManifest to Sage container
+ * Setup Sage options
  */
-sage()->singleton('sage.assets', function () {
-	return new JsonManifest(
-		get_stylesheet_directory() . '/dist/assets.json',
-		get_stylesheet_directory_uri() . '/dist'
-	);
-});
-
-/**
- * Add Blade to Sage container
- */
-sage()->singleton('sage.blade', function () {
-	$cachePath = wp_upload_dir()['basedir'] . '/cache/compiled';
-	if ( ! file_exists( $cachePath ) ) {
-		wp_mkdir_p( $cachePath );
-	}
-	return new BladeProvider( TEMPLATEPATH, $cachePath, sage() );
-});
-
-/**
- * Create @asset() Blade directive
- */
-sage( 'blade' )->compiler()->directive('asset', function ( $asset ) {
-	return '<?php echo App\\asset_path(\'' . trim( $asset, '\'"' ) . '\'); ?>';
-});
+function action__sage_setup() {
+	/**
+	 * Sage config
+	 */
+	sage()->bindIf('config', function () {
+		return [
+			'view.paths'      => [ TEMPLATEPATH, STYLESHEETPATH ],
+			'view.compiled'   => wp_upload_dir()['basedir'] . '/cache/compiled',
+			'view.namespaces' => [ 'App' => WP_CONTENT_DIR ],
+			'assets.manifest' => get_stylesheet_directory() . '/dist/assets.json',
+			'assets.uri'      => get_stylesheet_directory_uri() . '/dist',
+		];
+	});
+	/**
+	 * Add JsonManifest to Sage container
+	 */
+	sage()->singleton('sage.assets', function ( $app ) {
+		$config = $app['config'];
+		return new JsonManifest( $config['assets.manifest'], $config['assets.uri'] );
+	});
+	/**
+	 * Add Blade to Sage container
+	 */
+	sage()->singleton('sage.blade', function ( $app ) {
+		$config = $app['config'];
+		$cachePath = $config['view.compiled'];
+		if ( ! file_exists( $cachePath ) ) {
+			wp_mkdir_p( $cachePath );
+		}
+		(new BladeProvider( $app ))->register();
+		return new Blade( $app['view'], $app );
+	});
+	/**
+	 * Create @asset() Blade directive
+	 */
+	sage( 'blade' )->compiler()->directive('asset', function ( $asset ) {
+		return '<?= App\\asset_path(\'' . trim( $asset, '\'"' ) . '\'); ?>';
+	});
+}
 
 function action__init() {
 
@@ -99,6 +116,7 @@ function action__wp_enqueue_scripts() {
 	  	'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 	]);
 }
+
 function action__widgets_init() {
 	$config = [
 		 'before_widget' => '<section class="widget %1$s %2$s">',

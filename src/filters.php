@@ -7,7 +7,7 @@ namespace App;
 //add_filter( 'sage/display_sidebar', __NAMESPACE__ . '\filter__display_sidebar' );
 add_filter( 'body_class', 'App\\filter__body_class' );
 add_filter( 'template_redirect', 'App\\filter__template_redirect' );
-add_filter( 'template_include', 'App\\filter__template_include', 10000 );
+add_filter( 'template_include', 'App\\filter__template_include', PHP_INT_MAX );
 add_filter( 'get_search_form', 'App\\filter__get_search_form' );
 add_filter( 'comments_template', 'App\\template_path' );
 // Default jpg quality
@@ -28,7 +28,7 @@ add_filter( 'stylesheet_directory_uri', 'App\\filter__stylesheet_directory_uri',
 array_map(function ( $type ) {
 	add_filter("{$type}_template_hierarchy", function ( $templates ) {
 		return call_user_func_array('array_merge', array_map(function ( $template ) {
-			$normalizedTemplate = str_replace( '.', '/', sage( 'blade' )->normalizeViewPath( $template ) );
+			$normalizedTemplate = preg_replace( '%(\.blade)?(\.php)?$%', '', $template );
 			return [ "{$normalizedTemplate}.blade.php", "{$normalizedTemplate}.php" ];
 		}, $templates));
 	});
@@ -42,7 +42,7 @@ array_map(function ( $type ) {
 	'taxonomy',
 	'date',
 	'home',
-	'front_page',
+	'frontpage',
 	'page',
 	'paged',
 	'search',
@@ -55,7 +55,10 @@ array_map(function ( $type ) {
  * Render page using Blade
  */
 function filter__template_include( $template ) {
-	echo template($template, apply_filters('sage/template_data', []));
+	$data = array_reduce(get_body_class(), function ( $data, $class ) use ( $template ) {
+	    return apply_filters( "sage/template/{$class}/data", $data, $template );
+	}, []);
+	echo template( $template, $data );
 	// Return a blank file to make WordPress happy
 	return get_template_directory() . '/index.php';
 }
