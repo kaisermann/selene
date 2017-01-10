@@ -24,6 +24,9 @@
           "files": "scripts/wrapper.js",
           "vendor": ["assets/scripts/vendor/*.js"],
           "npm": []
+        },
+        "customizer.js": {
+          "files": "scripts/customizer.js"
         }
       }
     },

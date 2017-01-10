@@ -1,10 +1,13 @@
 <?php
+
 namespace Roots\Sage\Template;
+
 use Illuminate\Contracts\Container\Container as ContainerContract;
 use Illuminate\Contracts\View\Factory as FactoryContract;
 use Illuminate\View\Engines\CompilerEngine;
 use Illuminate\View\Engines\EngineInterface;
 use Illuminate\View\ViewFinderInterface;
+
 /**
  * Class BladeProvider
  * @method \Illuminate\View\View file($file, $data = [], $mergeData = [])
@@ -14,11 +17,13 @@ class Blade
 {
     /** @var ContainerContract */
     protected $app;
+
     public function __construct(FactoryContract $env, ContainerContract $app)
     {
         $this->env = $env;
         $this->app = $app;
     }
+
     /**
      * Get the compiler
      *
@@ -32,6 +37,7 @@ class Blade
         }
         return $engineResolver->resolve('blade')->getCompiler();
     }
+
     /**
      * @param string $view
      * @param array  $data
@@ -44,6 +50,7 @@ class Blade
         $filesystem = $this->app['files'];
         return $this->{$filesystem->exists($view) ? 'file' : 'make'}($view, $data, $mergeData)->render();
     }
+
     /**
      * @param string $file
      * @param array  $data
@@ -55,10 +62,12 @@ class Blade
         $rendered = $this->file($file, $data, $mergeData);
         /** @var EngineInterface $engine */
         $engine = $rendered->getEngine();
+
         if (!($engine instanceof CompilerEngine)) {
             // Using PhpEngine, so just return the file
             return $file;
         }
+
         $compiler = $engine->getCompiler();
         $compiledPath = $compiler->getCompiledPath($rendered->getPath());
         if ($compiler->isExpired($compiledPath)) {
@@ -66,6 +75,7 @@ class Blade
         }
         return $compiledPath;
     }
+
     /**
      * @param string $file
      * @return string
@@ -74,13 +84,17 @@ class Blade
     {
         // Convert `\` to `/`
         $view = str_replace('\\', '/', $file);
+
         // Add namespace to path if necessary
         $view = $this->applyNamespaceToPath($view);
+
         // Remove unnecessary parts of the path
         $view = str_replace(array_merge($this->app['config']['view.paths'], ['.blade.php', '.php']), '', $view);
+
         // Remove superfluous and leading slashes
         return ltrim(preg_replace('%//+%', '/', $view), '/');
     }
+
     /**
      * Convert path to view namespace
      * @param string $path
@@ -100,6 +114,7 @@ class Blade
         }, $path);
         return preg_replace("%{$delimiter}[\\/]*%", $delimiter, $view);
     }
+
     /**
      * Pass any method to the view Factory instance.
      *

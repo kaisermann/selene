@@ -1,10 +1,13 @@
 <?php
+
 namespace Roots\Sage\Template;
+
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Container\Container as ContainerContract;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\ViewServiceProvider;
+
 /**
  * Class BladeProvider
  */
@@ -13,15 +16,18 @@ class BladeProvider extends ViewServiceProvider
     /**
      * @param ContainerContract $container
      * @param array             $config
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function __construct(ContainerContract $container = null, $config = [])
     {
         /** @noinspection PhpParamsInspection */
-        parent::__construct($container ?: new Container);
+        parent::__construct($container ?: Container::getInstance());
+
         $this->app->bindIf('config', function () use ($config) {
             return $config;
         }, true);
     }
+
     /**
      * Bind required instances for the service provider.
      */
@@ -34,38 +40,39 @@ class BladeProvider extends ViewServiceProvider
         $this->registerFactory();
         return $this;
     }
+
     /**
      * Register Filesystem
      */
     public function registerFilesystem()
     {
-        $this->app->bindIf('files', function () {
-            return new Filesystem;
-        }, true);
+        $this->app->bindIf('files', Filesystem::class, true);
         return $this;
     }
+
     /**
      * Register the events dispatcher
      */
     public function registerEvents()
     {
-        $this->app->bindIf('events', function () {
-            return new Dispatcher;
-        }, true);
+        $this->app->bindIf('events', Dispatcher::class, true);
         return $this;
     }
+
     /** @inheritdoc */
     public function registerEngineResolver()
     {
         parent::registerEngineResolver();
         return $this;
     }
+
     /** @inheritdoc */
     public function registerFactory()
     {
         parent::registerFactory();
         return $this;
     }
+
     /**
      * Register the view finder implementation.
      */

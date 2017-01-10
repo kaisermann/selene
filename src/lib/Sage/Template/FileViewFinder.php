@@ -1,8 +1,11 @@
 <?php
+
 namespace Roots\Sage\Template;
+
 class FileViewFinder extends \Illuminate\View\FileViewFinder
 {
     const FALLBACK_PARTS_DELIMITER = '-';
+
     /**
      * Get an array of possible view files from a single file name.
      *
@@ -19,6 +22,7 @@ class FileViewFinder extends \Illuminate\View\FileViewFinder
         rsort($templates);
         return $this->getPossibleViewFilesFromTemplates($templates);
     }
+
     /**
      * Get an array of possible view files from an array of templates
      *

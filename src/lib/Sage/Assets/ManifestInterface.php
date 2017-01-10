@@ -1,5 +1,7 @@
 <?php
+
 namespace Roots\Sage\Assets;
+
 /**
  * Interface ManifestInterface
  * @package Roots\Sage
@@ -16,6 +18,7 @@ interface ManifestInterface
      * @return string
      */
     public function get($asset);
+
     /**
      * Get the cache-busted URI
      *

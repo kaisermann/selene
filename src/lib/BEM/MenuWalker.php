@@ -51,8 +51,10 @@ class MenuWalker extends \Walker_Nav_Menu {
 	*/
 	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
-		$this->prepare_el_classes( $item, $args, $depth );
-		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes = empty( $item->classes ) ? [] : (array) $item->classes;
+		$classes = array_merge($classes, $this->prepare_el_classes( $item, $args, $depth ));
+		//$classes[] = 'menu-item';
+		$classes[] = 'menu-item-' . $item->ID;
 
 		/**
 	 * Filter the CSS class(es) applied to a menu item's list item element.
@@ -64,8 +66,8 @@ class MenuWalker extends \Walker_Nav_Menu {
 	 */
 		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
 		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
-
-		$output .= $indent . '<li' . $class_names . '>';
+		
+		$output .= $indent . '<li id="menu-item-'.$item->ID.'" ' . $class_names . '>';
 		$atts = array();
 		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
 		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
@@ -163,6 +165,6 @@ class MenuWalker extends \Walker_Nav_Menu {
 			$classes[] = '-child';
 		}
 
-		$item->classes = $classes;
+		return $classes;
 	}
 }

@@ -1,7 +1,10 @@
 <?php
+
 namespace App;
 
+use Illuminate\Contracts\Container\Container as ContainerContract;
 use Roots\Sage\Assets\JsonManifest;
+use Roots\Sage\Config;
 use Roots\Sage\Template\Blade;
 use Roots\Sage\Template\BladeProvider;
 
@@ -9,8 +12,9 @@ use Roots\Sage\Template\BladeProvider;
 add_action( 'init', 'App\\action__init', 0, 2 );
 add_action( 'after_setup_theme', 'App\\action__sage_setup', 100 );
 add_action( 'after_setup_theme', 'App\\action__after_setup_theme', 100 );
-add_action( 'wp_enqueue_scripts', 'App\\action__wp_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'App\\action__wp_enqueue_scripts', 100 );
 add_action( 'widgets_init', 'App\\action__widgets_init' );
+add_action( 'the_post', 'App\\action__the_post' );
 
 remove_action( 'wp_head', 'rsd_link' );
 remove_action( 'wp_head', 'feed_links_extra', 3 );
@@ -33,34 +37,44 @@ function action__sage_setup() {
 	/**
 	 * Sage config
 	 */
-	sage()->bindIf('config', function () {
-		return [
-			'view.paths'      => [ TEMPLATEPATH, STYLESHEETPATH ],
-			'view.compiled'   => wp_upload_dir()['basedir'] . '/cache/compiled',
-			'view.namespaces' => [ 'App' => WP_CONTENT_DIR ],
-			'assets.manifest' => get_stylesheet_directory() . '/dist/assets.json',
-			'assets.uri'      => get_stylesheet_directory_uri() . '/dist',
-		];
-	});
+	$paths = [
+		'dir.stylesheet' => get_stylesheet_directory(),
+		'dir.template'   => get_template_directory(),
+		'dir.upload'     => wp_upload_dir()['basedir'],
+		'uri.stylesheet' => get_stylesheet_directory_uri(),
+		'uri.template'   => get_template_directory_uri(),
+	];
+	$viewPaths = collect( preg_replace( '%[\/]?(templates)?[\/.]*?$%', '', [ STYLESHEETPATH, TEMPLATEPATH ] ) )
+		->flatMap(function ( $path ) {
+			return [ "{$path}/templates", $path ];
+		})->unique()->toArray();
+	config([
+		'assets.manifest' => "{$paths['dir.stylesheet']}/dist/assets.json",
+		'assets.uri'      => "{$paths['uri.stylesheet']}/dist",
+		'view.compiled'   => "{$paths['dir.upload']}/cache/compiled",
+		'view.namespaces' => [ 'App' => WP_CONTENT_DIR ],
+		'view.paths'      => $viewPaths,
+	] + $paths);
+
 	/**
 	 * Add JsonManifest to Sage container
 	 */
-	sage()->singleton('sage.assets', function ( $app ) {
-		$config = $app['config'];
-		return new JsonManifest( $config['assets.manifest'], $config['assets.uri'] );
+	sage()->singleton('sage.assets', function () {
+		return new JsonManifest( config( 'assets.manifest' ), config( 'assets.uri' ) );
 	});
+
 	/**
 	 * Add Blade to Sage container
 	 */
-	sage()->singleton('sage.blade', function ( $app ) {
-		$config = $app['config'];
-		$cachePath = $config['view.compiled'];
+	sage()->singleton('sage.blade', function ( ContainerContract $app ) {
+		$cachePath = config( 'view.compiled' );
 		if ( ! file_exists( $cachePath ) ) {
 			wp_mkdir_p( $cachePath );
 		}
 		(new BladeProvider( $app ))->register();
 		return new Blade( $app['view'], $app );
 	});
+
 	/**
 	 * Create @asset() Blade directive
 	 */
@@ -87,6 +101,7 @@ function action__after_setup_theme() {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'automatic-feed-links' );
+	add_theme_support( 'customize-selective-refresh-widgets' );
 	//add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat']);
 	//add_theme_support('woocommerce');
 
@@ -95,9 +110,8 @@ function action__after_setup_theme() {
 	add_editor_style( asset_path( 'styles/editor.css' ) );
 
 	register_nav_menus([
-		'main_nav' => __( 'Main Navigation', 'sepha' ),
-		]
-	);
+		'primary_navigation' => __( 'Primary Navigation', 'sepha' ),
+	]);
 }
 function action__wp_enqueue_scripts() {
 	global $post;
@@ -137,6 +151,11 @@ function action__widgets_init() {
 		] + $config
 	);
 }
+
+function action__the_post( $post ) {
+	sage( 'blade' )->share( 'post', $post );
+}
+
 // Helpers
 function add_image_sizes() {
 }
@@ -146,3 +165,8 @@ function add_post_types() {
 
 function add_taxonomies() {
 }
+
+/**
+ * Init config
+ */
+sage()->bindIf( 'config', Config::class, true );

@@ -2,7 +2,7 @@
 
 @section('content')
 	@while(have_posts())
-		@php the_post() @endphp
+		@php(the_post())
 		<article @php(post_class())>
 			<header>
 				<h1 class="entry__title">{{ get_the_title() }}</h1>

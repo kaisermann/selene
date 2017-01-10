@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4855c44e14b47421b20cede250d7f8b7",
-    "content-hash": "e363f61f8b1785194e6b644098f863ca",
+    "hash": "d98178a977c263ab535f43901e9b14dd",
+    "content-hash": "50f25d093572c0558c11fb9498cb6603",
     "packages": [
         {
             "name": "composer/installers",
@@ -180,6 +180,51 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "illuminate/config",
+            "version": "v5.3.23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/config.git",
+                "reference": "96bb98f6ffbc1e185d3384cf04062f280b35d3c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/config/zipball/96bb98f6ffbc1e185d3384cf04062f280b35d3c1",
+                "reference": "96bb98f6ffbc1e185d3384cf04062f280b35d3c1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.3.*",
+                "illuminate/filesystem": "5.3.*",
+                "illuminate/support": "5.3.*",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Config package.",
+            "homepage": "https://laravel.com",
+            "time": "2016-10-17 13:37:58"
         },
         {
             "name": "illuminate/container",
@@ -671,16 +716,16 @@
     "packages-dev": [
         {
             "name": "pdepend/pdepend",
-            "version": "2.3.2",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "8d7ab8fe8c1f9de5056bb7ea2c0852f4ddd44f90"
+                "reference": "64ba7e6d0507729e2bb482cf20cd12c4d96d99bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/8d7ab8fe8c1f9de5056bb7ea2c0852f4ddd44f90",
-                "reference": "8d7ab8fe8c1f9de5056bb7ea2c0852f4ddd44f90",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/64ba7e6d0507729e2bb482cf20cd12c4d96d99bc",
+                "reference": "64ba7e6d0507729e2bb482cf20cd12c4d96d99bc",
                 "shasum": ""
             },
             "require": {
@@ -707,7 +752,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2016-11-23 20:25:02"
+            "time": "2017-01-10 13:45:16"
         },
         {
             "name": "phpmd/phpmd",
