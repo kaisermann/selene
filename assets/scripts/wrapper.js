@@ -1,6 +1,6 @@
-/* jshint unused: false */
+/* eslint no-unused-vars: 0 */
 
-import Router from './utils/router.js';
+import Router from './utils/Router.js';
 import common from './events/common.js';
 
 ($ => {
