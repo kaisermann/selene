@@ -10,13 +10,6 @@
 				'menu_class' => 'nav header__menu',
 				'container' => false,
 			]) !!}
-			{!! wp_nav_menu([
-				'theme_location' => 'primary_navigation',
-				'menu_class' => 'nav',
-				'block' => 'header__menu',
-				'menu_class' => 'nav header__menu',
-				'container' => false,
-			]) !!}
 		@endif
 	</nav>
 </header>
