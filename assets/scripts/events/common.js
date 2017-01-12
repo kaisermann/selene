@@ -1,8 +1,8 @@
 export default {
   init() {
-    // Runs on every page
+    // JavaScript to be fired on all pages
   },
   finalize() {
-    // Runs at the end of all route-specific code
+    // JavaScript to be fired on all pages, after page specific JS is fired
   },
 };
