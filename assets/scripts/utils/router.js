@@ -1,5 +1,15 @@
+/* ========================================================================
+ * DOM-based Routing
+ * Based on http://goo.gl/EUTi53 by Paul Irish
+ *
+ * Only fires on body classes that match. If a body class contains a dash,
+ * replace the dash with an underscore when adding it to the object below.
+ * ======================================================================== */
+
 import camelCase from './camelCase';
 
+// The routing fires all common scripts, followed by the page specific scripts.
+// Add additional events for more control over timing e.g. a finalize event
 export default class Router {
   constructor(events) {
     this.events = events;
@@ -23,13 +33,16 @@ export default class Router {
   }
 
   loadEvents() {
+    // Fire common init JS
     this.fire('common');
 
+    // Fire page-specific init JS, and then finalize JS
     this.classes.forEach((className) => {
       this.fire(className);
       this.fire(className, 'finalize');
     });
 
+    // Fire common finalize JS
     this.fire('common', 'finalize');
     return this;
   }
