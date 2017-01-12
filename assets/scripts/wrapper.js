@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: 0 */
 
-import Router from './utils/router.js';
+import Router from './utils/Router.js';
 import common from './events/common.js';
 
 ($ => {
@@ -10,7 +10,7 @@ import common from './events/common.js';
   };
 
   // Usually, you won't need to modify anything below this line.
-  const router = new Router(events).loadClasses();
+  const router = new Router(events);
 
   if (document.readyState === 'complete' ||
     (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
