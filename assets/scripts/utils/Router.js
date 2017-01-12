@@ -23,18 +23,15 @@ export default class Router {
     return this;
   }
 
-  loadClasses() {
+  loadEvents() {
+    // Fire common init JS
+    this.fire('common');
+
     this.classes = document.body.className
       .toLowerCase()
       .replace(/-/g, '_')
       .split(/\s+/)
       .map(camelCase);
-    return this;
-  }
-
-  loadEvents() {
-    // Fire common init JS
-    this.fire('common');
 
     // Fire page-specific init JS, and then finalize JS
     this.classes.forEach((className) => {
