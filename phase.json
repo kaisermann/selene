@@ -4,7 +4,7 @@
       "source": "assets/",
       "dist": "dist/"
     },
-    "supportedBrowsers": ["last 2 versions", "opera 12", "IE 10", "Safari >= 8"],
+    "supportedBrowsers": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
     "browserSync": {
       "files": [
         "{src,templates}/**/*.{php,html}",

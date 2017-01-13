@@ -23,6 +23,7 @@
   },
   "plugins": [
     "import",
+    "compat"
   ],
   "settings": {
     "import/core-modules": [],
@@ -32,6 +33,7 @@
     ]
   },
   "rules": {
+    // Stock
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",
@@ -40,6 +42,8 @@
       "functions": "ignore"
     }],
     "no-console": "off",
-    "semi": "error"
+    "semi": "error",
+    // Compat plugin
+    "compat/compat": 2
   }
 }
