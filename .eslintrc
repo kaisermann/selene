@@ -33,7 +33,6 @@
     ]
   },
   "rules": {
-    // Stock
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",
@@ -43,7 +42,6 @@
     }],
     "no-console": "off",
     "semi": "error",
-    // Compat plugin
     "compat/compat": 2
   }
 }
