@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": "eslint:recommended",
+  "extends": "standard",
   "globals": {
     "wp": true
   },
@@ -41,7 +41,6 @@
       "functions": "ignore"
     }],
     "no-console": "off",
-    "semi": "error",
     "compat/compat": 2
   }
 }
