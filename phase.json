@@ -11,7 +11,7 @@
         "*.{php,html}"
       ]
     },
-    "devUrl": "localhost/phase"
+    "devUrl": "localhost/web/root"
   },
   "resources": {
     "scripts": {
