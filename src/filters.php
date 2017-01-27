@@ -116,7 +116,7 @@ function filter__template_redirect() {
 
 function filter__get_search_form() {
 	$form = '';
-	locate_template( '/templates/partials/searchform.blade.php', true, false );
+	echo template(get_stylesheet_directory() . '/templates/partials/searchform.blade.php', [] );
 
 	return $form;
 }
