@@ -13,7 +13,7 @@
         "*.{php,html}"
       ]
     },
-    "devUrl": "localhost:8888/chris"
+    "devUrl": "localhost/web/root"
   },
   "resources": {
     "scripts": {
