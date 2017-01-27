@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": "eslint:recommended",
+  "extends": "standard",
   "globals": {
     "wp": true
   },
@@ -23,6 +23,7 @@
   },
   "plugins": [
     "import",
+    "compat"
   ],
   "settings": {
     "import/core-modules": [],
@@ -40,6 +41,6 @@
       "functions": "ignore"
     }],
     "no-console": "off",
-    "semi": "error"
+    "compat/compat": 2
   }
 }
