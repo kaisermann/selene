@@ -6,3 +6,4 @@ npm-debug.log
 index.html
 vendor/
 !assets/**/vendor/
+yarn-error.log
