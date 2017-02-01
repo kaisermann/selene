@@ -150,9 +150,7 @@ const taskHelpers = {
           core: !phase.params.debug,
           discardComments: !phase.params.debug,
         }),
-      ], {
-        map: phase.params.maps,
-      })
+      ])
       .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
         sourceRoot: distToAssetPath,
       })))
