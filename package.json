@@ -22,8 +22,8 @@
   ],
   "devDependencies": {
     "asset-orchestrator": "^1.2.8",
-    "autoprefixer": "^6.7.0",
-    "browser-sync": "^2.18.6",
+    "autoprefixer": "^6.7.2",
+    "browser-sync": "^2.18.7",
     "css-mqpacker": "^5.0.1",
     "cssnano": "^3.10.0",
     "del": "^2.2.2",
