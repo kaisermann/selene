@@ -118,8 +118,7 @@ function action__wp_enqueue_scripts() {
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
-		wp_register_script( 'jquery', ('https://code.jquery.com/jquery-3.1.1.min.js'), false, '3.1.1', true );
-		wp_enqueue_script( 'jquery' );
+		wp_register_script( 'jquery', 'https://code.jquery.com/jquery-3.1.1.min.js', false, '3.1.1', true );
 	}
 
 	wp_enqueue_style( 'sepha/main.css', asset_path( 'styles/main.css' ), false, null );
