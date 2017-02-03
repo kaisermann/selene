@@ -123,7 +123,7 @@ function action__wp_enqueue_scripts() {
 	}
 
 	wp_enqueue_style( 'sepha/main.css', asset_path( 'styles/main.css' ), false, null );
-	wp_enqueue_script( 'sepha/main.js', asset_path( 'scripts/main.js' ), [ 'jquery' ], null, true );
+	wp_enqueue_script( 'sepha/main.js#defer', asset_path( 'scripts/main.js' ), [], null, true );
 
 	wp_localize_script('sepha/main.js', 'appMeta', [
 	  	'homeUrl' => get_bloginfo( 'url' ),

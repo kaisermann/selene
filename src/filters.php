@@ -1,14 +1,17 @@
 <?php
 
 namespace App;
-
-add_filter( 'template_redirect', 'App\\filter__template_redirect' );
-add_filter( 'body_class', 'App\\filter__body_class' );
+// Beginning of Sage filters
 add_filter( 'template_include', 'App\\filter__template_include', PHP_INT_MAX );
-add_filter( 'get_search_form', 'App\\filter__get_search_form' );
 add_filter( 'comments_template', 'App\\template_path' );
+add_filter( 'body_class', 'App\\filter__body_class' );
+// Beginning of Sepha filters
+add_filter( 'script_loader_tag', 'App\\filter__script_loader_tag' , 10, 2 );
+add_filter( 'template_redirect', 'App\\filter__template_redirect' );
+add_filter( 'get_search_form', 'App\\filter__get_search_form' );
 // Default jpg quality
 add_filter( 'jpeg_quality', 'App\\filter__jpeg_quality' );
+// Allows svg to be uploaded as media
 add_filter( 'upload_mimes', 'App\\filter__upload_mimes' );
 // Removes WP version from feeds
 add_filter( 'the_generator', 'App\\filter__the_generator' );
@@ -56,29 +59,36 @@ array_map(function ( $type ) {
  * Render page using Blade
  */
 function filter__template_include( $template ) {
-    $data = array_reduce(get_body_class(), function ($data, $class) use ($template) {
-        return apply_filters("sage/template/{$class}/data", $data, $template);
-    }, []);
-    echo template($template, $data);
+	$data = array_reduce(get_body_class(), function ( $data, $class ) use ( $template ) {
+		return apply_filters( "sage/template/{$class}/data", $data, $template );
+	}, []);
+	echo template( $template, $data );
 
-    // Return a blank file to make WordPress happy
-    return get_theme_file_path('index.php');
+	// Return a blank file to make WordPress happy
+	return get_theme_file_path( 'index.php' );
 }
 
-function filter__body_class (array $classes) {
-    // Add page slug if it doesn't exist
-    if (is_single() || is_page() && !is_front_page()) {
-        if (!in_array(basename(get_permalink()), $classes)) {
-            $classes[] = basename(get_permalink());
-        }
-    }
+function filter__body_class( array $classes ) {
+	// Add page slug if it doesn't exist
+	if ( is_single() || is_page() && ! is_front_page() ) {
+		if ( ! in_array( basename( get_permalink() ), $classes ) ) {
+			$classes[] = basename( get_permalink() );
+		}
+	}
 
-    // Add class if sidebar is active
-    if (display_sidebar()) {
-        $classes[] = 'sidebar-primary';
-    }
+	// Add class if sidebar is active
+	if ( display_sidebar() ) {
+		$classes[] = 'sidebar-primary';
+	}
 
-    return $classes;
+	return $classes;
+}
+
+function filter__script_loader_tag($tag, $handle) {
+	if ( strpos($handle, '#defer') !== false) {
+		return str_replace( 'src', 'defer="defer" src', $tag );
+	}
+	return $tag;
 }
 
 function filter__template_redirect() {
@@ -116,7 +126,7 @@ function filter__template_redirect() {
 
 function filter__get_search_form() {
 	$form = '';
-	echo template(get_stylesheet_directory() . '/templates/partials/searchform.blade.php', [] );
+	echo template( get_stylesheet_directory() . '/templates/partials/searchform.blade.php', [] );
 
 	return $form;
 }
