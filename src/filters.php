@@ -6,7 +6,6 @@ add_filter( 'template_include', 'App\\filter__template_include', PHP_INT_MAX );
 add_filter( 'comments_template', 'App\\template_path' );
 add_filter( 'body_class', 'App\\filter__body_class' );
 // Beginning of Sepha filters
-add_filter( 'script_loader_tag', 'App\\filter__script_loader_tag' , 10, 2 );
 add_filter( 'template_redirect', 'App\\filter__template_redirect' );
 add_filter( 'get_search_form', 'App\\filter__get_search_form' );
 // Default jpg quality
@@ -15,12 +14,17 @@ add_filter( 'jpeg_quality', 'App\\filter__jpeg_quality' );
 add_filter( 'upload_mimes', 'App\\filter__upload_mimes' );
 // Removes WP version from feeds
 add_filter( 'the_generator', 'App\\filter__the_generator' );
+// Defer scripts
+add_filter( 'script_loader_tag', 'App\\filter__defer_scripts' , 10, 2 );
+// Asset versioning
+add_filter( 'style_loader_src', 'App\\filter__parse_asset_version' );
+add_filter( 'script_loader_src', 'App\\filter__parse_asset_version' );
 // Removes the protocol (http(s)) from asset's url
 // Based on 'https://github.com/ryanjbonnell/Protocol-Relative-Theme-Assets by Ryan J. Bonnell'
-add_filter( 'style_loader_src', 'App\\filter__style_loader_src', 10, 2 );
-add_filter( 'script_loader_src', 'App\\filter__script_loader_src', 10, 2 );
-add_filter( 'template_directory_uri', 'App\\filter__template_directory_uri', 10, 3 );
-add_filter( 'stylesheet_directory_uri', 'App\\filter__stylesheet_directory_uri', 10, 3 );
+add_filter( 'style_loader_src', 'App\\filter__url_protocol', 10, 2 );
+add_filter( 'script_loader_src', 'App\\filter__url_protocol', 10, 2 );
+add_filter( 'template_directory_uri', 'App\\filter__url_protocol', 10, 3 );
+add_filter( 'stylesheet_directory_uri', 'App\\filter__url_protocol', 10, 3 );
 
 /**
  * Template Hierarchy should search for .blade.php files
@@ -69,6 +73,7 @@ function filter__template_include( $template ) {
 }
 
 function filter__body_class( array $classes ) {
+	$classes[] = 'global';
 	// Add page slug if it doesn't exist
 	if ( is_single() || is_page() && ! is_front_page() ) {
 		if ( ! in_array( basename( get_permalink() ), $classes ) ) {
@@ -84,8 +89,8 @@ function filter__body_class( array $classes ) {
 	return $classes;
 }
 
-function filter__script_loader_tag($tag, $handle) {
-	if ( strpos($handle, '#defer') !== false) {
+function filter__defer_scripts( $tag, $handle ) {
+	if ( strpos( $handle, '#defer' ) !== false ) {
 		return str_replace( 'src', 'defer="defer" src', $tag );
 	}
 	return $tag;
@@ -144,23 +149,14 @@ function filter__the_generator() {
 	return '';
 }
 
-function filter__style_loader_src( $src ) {
-	return getUrlWithRelativeProtocol( $src );
+function filter__parse_asset_version( $src ) {
+	if(WP_DEBUG) {
+		$src = remove_query_arg( 'ver', $src );
+		$src = add_query_arg ( 'ver', rand(), $src );
+	}
+	return $src;
 }
 
-function filter__script_loader_src( $src ) {
-	return getUrlWithRelativeProtocol( $src );
-}
-
-function filter__template_directory_uri( $template_dir_uri ) {
-	return getUrlWithRelativeProtocol( $template_dir_uri );
-}
-
-function filter__stylesheet_directory_uri( $stylesheet_dir_uri ) {
-	return getUrlWithRelativeProtocol( $stylesheet_dir_uri );
-}
-
-// Helpers
-function getUrlWithRelativeProtocol( $url ) {
+function filter__url_protocol( $url ) {
 	return preg_replace( '(https?://)', '//', $url );
 }
