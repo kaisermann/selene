@@ -10,31 +10,44 @@
  * @param string $subtitle
  * @param string $title
  */
-$sage_error = function ($message, $subtitle = '', $title = '') {
-    $title = $title ?: __('Sage &rsaquo; Error', 'sepha');
-    $footer = '<a href="https://roots.io/sage/docs/">roots.io/sage/docs/</a>';
-    $message = "<h1>{$title}<br><small>{$subtitle}</small></h1><p>{$message}</p><p>{$footer}</p>";
-    wp_die($message, $title);
+$sage_error = function ( $message, $subtitle = '', $title = '' ) {
+	$title = $title ?: __( 'Sage &rsaquo; Error', 'sepha' );
+	$footer = '<a href="https://roots.io/sage/docs/">roots.io/sage/docs/</a>';
+	$message = "<h1>{$title}<br><small>{$subtitle}</small></h1><p>{$message}</p><p>{$footer}</p>";
+	wp_die( $message, $title );
 };
 
 /**
  * Ensure compatible version of PHP is used
  */
-if (version_compare('5.6.4', phpversion(), '>=')) {
-    $sage_error(__('You must be using PHP 5.6.4 or greater.', 'sepha'), __('Invalid PHP version', 'sepha'));
+if ( version_compare( '5.6.4', phpversion(), '>=' ) ) {
+	$sage_error(__( 'You must be using PHP 5.6.4 or greater.', 'sepha' ), __( 'Invalid PHP version', 'sepha' ));
 }
 
 /**
  * Ensure dependencies are loaded
  */
-if (!class_exists('Roots\\Sage\\Container')) {
-    if (!file_exists($composer = __DIR__.'/vendor/autoload.php')) {
-        $sage_error(
-            __('You must run <code>composer install</code> from the Sage directory.', 'sage'),
-            __('Autoloader not found.', 'sage')
-        );
-    }
-    require_once $composer;
+if ( ! class_exists( 'Roots\\Sage\\Container' ) ) {
+	if ( ! file_exists( $composer = __DIR__ . '/vendor/autoload.php' ) ) {
+		$sage_error(
+			__( 'You must run <code>composer install</code> from the Sage directory.', 'sage' ),
+			__( 'Autoloader not found.', 'sage' )
+		);
+	}
+	require_once $composer;
+}
+
+/**
+ * Includes an array of php files
+ */
+function includeArrayOfFiles( $includeArray, $path ) {
+	global $sage_error;
+	array_map(function ( $file ) use ( $sage_error, $path ) {
+		$file = "{$path}/{$file}.php";
+		if ( ! locate_template( $file, true, true ) ) {
+			$sage_error(sprintf( __( 'Error locating <code>%s</code> for inclusion.', 'sepha' ), $file ), 'File not found');
+		}
+	}, $includeArray);
 }
 
 /**
@@ -43,12 +56,15 @@ if (!class_exists('Roots\\Sage\\Container')) {
  * The mapped array determines the code library included in your theme.
  * Add or remove files to the array as needed. Supports child theme overrides.
  */
-array_map(function ($file) use ($sage_error) {
-    $file = "src/{$file}.php";
-    if (!locate_template($file, true, true)) {
-        $sage_error(sprintf(__('Error locating <code>%s</code> for inclusion.', 'sepha'), $file), 'File not found');
-    }
-}, ['helpers', 'setup', 'filters', 'admin', 'ajax']);
+includeArrayOfFiles([
+	'helpers',
+	'setup',
+	'filters',
+	'admin',
+	'directives',
+	'controllers',
+	'ajax',
+], 'src');
 
 /**
  * Here's what's happening with these hooks:
@@ -67,14 +83,14 @@ array_map(function ($file) use ($sage_error) {
  * ├── STYLESHEETPATH         -> /srv/www/example.com/current/web/app/themes/sage
  * └── TEMPLATEPATH           -> /srv/www/example.com/current/web/app/themes/sage/templates
  */
-if (is_customize_preview() && isset($_GET['theme'])) {
-    $sage_error(__('Theme must be activated prior to using the customizer.', 'sepha'));
+if ( is_customize_preview() && isset( $_GET['theme'] ) ) {
+	$sage_error(__( 'Theme must be activated prior to using the customizer.', 'sepha' ));
 }
-add_filter('template', function ($stylesheet) {
-    return dirname($stylesheet);
+add_filter('template', function ( $stylesheet ) {
+	return dirname( $stylesheet );
 });
-if (basename($stylesheet = get_option('template')) !== 'templates') {
-    update_option('template', "{$stylesheet}/templates");
-    wp_redirect($_SERVER['REQUEST_URI']);
-    exit();
+if ( basename( $stylesheet = get_option( 'template' ) ) !== 'templates' ) {
+	update_option( 'template', "{$stylesheet}/templates" );
+	wp_redirect( $_SERVER['REQUEST_URI'] );
+	exit();
 }
