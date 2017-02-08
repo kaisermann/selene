@@ -3,7 +3,7 @@
 namespace App;
 
 registerController('global', function( $data, $template ) {
-	return [
+	return $data + [
 		'current_template' => basename( $template ,'.blade.php' ),
 		'primary_nav_args' => [
 			'theme_location' => 'primary_navigation',

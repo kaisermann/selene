@@ -74,13 +74,6 @@ function action__sage_setup() {
 		(new BladeProvider( $app ))->register();
 		return new Blade( $app['view'], $app );
 	});
-
-	/**
-	 * Create @asset() Blade directive
-	 */
-	sage( 'blade' )->compiler()->directive('asset', function ( $asset ) {
-		return '<?= App\\asset_path(\'' . trim( $asset, '\'"' ) . '\'); ?>';
-	});
 }
 
 function action__init() {

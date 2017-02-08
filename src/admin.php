@@ -37,7 +37,6 @@ function action__customize_register( \WP_Customize_Manager $wp_customize ) {
  */
 function action__customize_preview_init() {
 	wp_enqueue_script( 'sepha/customizer.js', asset_path( 'scripts/customizer.js' ), [ 'customize-preview' ], null, true );
-	//var_dump('christian', asset_path( 'scripts/customizer.js' ));
 };
 
 function action__admin_enqueue_scripts() {
