@@ -16,8 +16,6 @@ remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 // Filters
 add_filter( 'login_headerurl', 'App\\filter__login_headerurl' );
 
-// Action methods
-
 /**
  * Theme customizer
  */
