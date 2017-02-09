@@ -49,7 +49,6 @@ function action__admin_init() {
 	remove_meta_box( 'dashboard_recent_drafts', 'dashboard', 'side' );
 }
 
-// Filter methods
 function filter__login_headerurl() {
 	return home_url();
 }
