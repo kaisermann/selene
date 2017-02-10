@@ -1663,7 +1663,7 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
-fancy-log@^1.1.0:
+fancy-log@^1.1.0, fancy-log@^1.2.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/fancy-log/-/fancy-log-1.3.0.tgz#45be17d02bb9917d60ccffd4995c999e6c8c9948"
   dependencies:
@@ -1750,7 +1750,7 @@ find-versions@^1.0.0:
     meow "^3.5.0"
     semver-regex "^1.0.0"
 
-findup-sync@^0.4.2:
+findup-sync@^0.4.0, findup-sync@^0.4.2:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/findup-sync/-/findup-sync-0.4.3.tgz#40043929e7bc60adf0b7f4827c4c6e75a0deca12"
   dependencies:
@@ -2187,6 +2187,18 @@ gulp-imagemin@^3.1.1:
     imagemin-optipng "^5.1.0"
     imagemin-svgo "^5.1.0"
 
+gulp-load-plugins@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/gulp-load-plugins/-/gulp-load-plugins-1.5.0.tgz#4c419f7e5764d9a0e33061bab9618f81b73d4171"
+  dependencies:
+    array-unique "^0.2.1"
+    fancy-log "^1.2.0"
+    findup-sync "^0.4.0"
+    gulplog "^1.0.0"
+    has-gulplog "^0.1.0"
+    micromatch "^2.3.8"
+    resolve "^1.1.7"
+
 gulp-match@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/gulp-match/-/gulp-match-1.0.3.tgz#91c7c0d7f29becd6606d57d80a7f8776a87aba8e"
@@ -2209,14 +2221,7 @@ gulp-postcss@^6.3.0:
     postcss-load-config "^1.1.0"
     vinyl-sourcemaps-apply "^0.2.1"
 
-gulp-print@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/gulp-print/-/gulp-print-2.0.1.tgz#1acee58eac8af2d3c4ad3329dbe465758393c414"
-  dependencies:
-    gulp-util "^3.0.6"
-    map-stream "~0.0.6"
-
-gulp-rename@^1.2.0, gulp-rename@^1.2.2:
+gulp-rename@^1.2.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
 
@@ -3391,10 +3396,6 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
 
-map-stream@~0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.0.6.tgz#d2ef4eb811a28644c7a8989985c69c2fdd496827"
-
 matchdep@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/matchdep/-/matchdep-1.0.1.tgz#a57a33804491fbae208aba8f68380437abc2dca5"
@@ -3429,7 +3430,7 @@ merge-stream@^1.0.0, merge-stream@^1.0.1:
   dependencies:
     readable-stream "^2.0.1"
 
-micromatch@2.3.11, micromatch@^2.1.5, micromatch@^2.3.7:
+micromatch@2.3.11, micromatch@^2.1.5, micromatch@^2.3.7, micromatch@^2.3.8:
   version "2.3.11"
   resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
   dependencies:
