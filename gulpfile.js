@@ -1,7 +1,6 @@
 const { readFileSync } = require('fs')
 const { accessSync } = require('fs')
-const { join: j } = require('path')
-const { relative: relativePath } = require('path')
+const { relative: relativePath, join } = require('path')
 const minimist = require('minimist')
 const assetOrchestrator = require('asset-orchestrator')
 const browserSyncLib = require('browser-sync')
@@ -103,7 +102,7 @@ const pathExists = function (path) {
 }
 
 const getResourceDir = (folder, type, ...appendix) => {
-  return j(phase.config.paths[folder],
+  return join(phase.config.paths[folder],
     phase.resources[type] ? phase.resources[type].directory : type,
     ...appendix)
 }
@@ -157,8 +156,8 @@ const taskHelpers = {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       // Only pipes our main code to rollup/bublé
-      .pipe(() => gulpif((file) => {
-        return phase.projectGlobs.scripts.some(e => file.path.endsWith(e))
+      .pipe(() => gulpif(file => {
+        return phase.projectGlobs.scripts.some(e => file.path.endsWith(e) && file.path.indexOf('!') !== 0)
       }, rollup({
         plugins: [
           rollupBuble({
@@ -208,8 +207,8 @@ gulp.task('linter', (done) => {
   const scriptsDir = getResourceDir('source', 'scripts')
   return gulp.src([
     'gulpfile.*.js',
-    j(scriptsDir, '**/*'),
-    `!${j(scriptsDir, 'vendor/*')}`,
+    join(scriptsDir, '**/*'),
+    `!${join(scriptsDir, 'vendor/*')}`,
   ])
     .pipe(eslint())
     .pipe(eslint.format())
@@ -250,7 +249,7 @@ gulp.task('uncss', () => {
   }
 
   return gulp.src(Object.keys(assetsObj).map(
-      key => j(stylesDir, assetsObj[key])
+      key => join(stylesDir, assetsObj[key])
     ), {
       base: './',
     })
@@ -320,7 +319,7 @@ gulp.task('scripts', gulp.series('linter', function scriptMerger (done) {
   const dynamicTaskHelper = (resourceType, resourceInfo) => {
     return (done) => {
       let counter = 0
-      const limit = phase.projectGlobs[resourceType].length
+      const limit = Object.keys(resourceInfo.assets).length
       const internalDone = () => (++counter === limit) ? done() : 0
 
       phase.forEachAsset(resourceType, (asset) => {

@@ -55,7 +55,7 @@
       "directory": "images",
       "dynamicTask": true,
       "assets": {
-        "/png": {
+        "/": {
           "files": "images/**/*"
         }
       }
