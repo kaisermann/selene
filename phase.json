@@ -34,7 +34,7 @@
       "pattern": "*.{css,styl,scss,sass,less}",
       "directory": "styles",
       "assets": {
-        "main.css": {
+        "test/main.css": {
           "files": "styles/wrapper.styl",
           "vendor": [
             "assets/styles/vendor/reset.css",

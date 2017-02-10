@@ -1,9 +1,7 @@
-/* eslint no-unused-vars: 0 */
-
 import Router from './utils/Router.js'
 import common from './events/common.js'
 
-;($ => {
+($ => {
   // Modify the 'events' object to include or remove other routes
   const events = {
     common,

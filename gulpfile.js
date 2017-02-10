@@ -1,14 +1,12 @@
-const readFileSync = require('fs').readFileSync
-const accessSync = require('fs').accessSync
-const j = require('path').join
-const relativePath = require('path').relative
-const execSync = require('child_process').execSync
+const { readFileSync } = require('fs')
+const { accessSync } = require('fs')
+const { relative: relativePath, join } = require('path')
+const { execSync } = require('child_process')
 const minimist = require('minimist')
 const assetOrchestrator = require('asset-orchestrator')
 const browserSyncLib = require('browser-sync')
 const concat = require('gulp-concat')
 const del = require('del')
-const exhaust = require('stream-exhaust')
 const flatten = require('gulp-flatten')
 const sourcemaps = require('gulp-sourcemaps')
 const gulp = require('gulp')
@@ -105,7 +103,7 @@ const pathExists = function (path) {
 }
 
 const getResourceDir = (folder, type, ...appendix) => {
-  return j(phase.config.paths[folder],
+  return join(phase.config.paths[folder],
     phase.resources[type] ? phase.resources[type].directory : type,
     ...appendix)
 }
@@ -128,7 +126,7 @@ const writeToManifest = (directory) => {
 
 /**
  * Task helpers are used to modify a stream in the middle of a task.
- * It allows customization of the stream for automatically created simple tasks
+ * It allows customization of the stream for dynamic tasks
  * (sepha.json -> resource -> dynamicTask:true).
  */
 
@@ -159,8 +157,8 @@ const taskHelpers = {
     return lazypipe()
       .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
       // Only pipes our main code to rollup/bublé
-      .pipe(() => gulpif((file) => {
-        return phase.projectGlobs.scripts.some(e => file.path.endsWith(e))
+      .pipe(() => gulpif(file => {
+        return phase.projectGlobs.scripts.some(e => file.path.endsWith(e) && file.path.indexOf('!') !== 0)
       }, rollup({
         plugins: [
           rollupBuble({
@@ -206,12 +204,12 @@ const taskHelpers = {
 }
 
 /* Tasks */
-gulp.task('jsLinter', (done) => {
+gulp.task('linter', (done) => {
   const scriptsDir = getResourceDir('source', 'scripts')
   return gulp.src([
     'gulpfile.*.js',
-    j(scriptsDir, '**/*'),
-    `!${j(scriptsDir, 'vendor/*')}`,
+    join(scriptsDir, '**/*'),
+    `!${join(scriptsDir, 'vendor/*')}`,
   ])
     .pipe(eslint())
     .pipe(eslint.format())
@@ -254,7 +252,7 @@ gulp.task('uncss', () => {
   }
 
   return gulp.src(Object.keys(assetsObj).map(
-      key => j(stylesDir, assetsObj[key])
+      key => join(stylesDir, assetsObj[key])
     ), {
       base: './',
     })
@@ -300,7 +298,7 @@ gulp.task('styles', function cssMerger (done) {
     .on('error', done)
 })
 
-gulp.task('scripts', gulp.series('jsLinter', function scriptMerger (done) {
+gulp.task('scripts', gulp.series('linter', function scriptMerger (done) {
   const merged = merge()
 
   phase.forEachAsset('scripts', (asset) => {
@@ -320,14 +318,17 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger (done) {
     .on('error', done)
 }));
 
-// Automatically creates the 'simple tasks' defined
-// in manifest.resources.TYPE.dynamicTask = true|false
+// Automatically creates the 'dynamic tasks'
+// when manifest.resources.resourceName.dynamicTask = true
 (() => {
   const dynamicTaskHelper = (resourceType, resourceInfo) => {
     return (done) => {
       let counter = 0
+      const limit = Object.keys(resourceInfo.assets).length
+      const internalDone = () => (++counter === limit) ? done() : 0
+
       phase.forEachAsset(resourceType, (asset) => {
-        exhaust(gulp.src(asset.globs)
+        gulp.src(asset.globs)
             .pipe(plumber({
               errorHandler: onError,
             }))
@@ -336,17 +337,9 @@ gulp.task('scripts', gulp.series('jsLinter', function scriptMerger (done) {
             .pipe(browserSync.stream({
               match: `**/${resourceInfo.pattern}`,
             }))
-          )
-          .on('end', () => {
-            if (++counter === phase.projectGlobs[resourceType].length) {
-              done()
-            }
-          })
-          .on('error', () => {
-            if (++counter === phase.projectGlobs[resourceType].length) {
-              done()
-            }
-          })
+            .on('end', internalDone)
+            .on('error', internalDone)
+            .resume()
       })
     }
   }
