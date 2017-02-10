@@ -1,5 +1,4 @@
-const { accessSync } = require('fs')
-const { readFileSync } = require('fs')
+const { readFileSync, accessSync } = require('fs')
 const { relative: relativePath, join } = require('path')
 
 const assetOrchestrator = require('asset-orchestrator')
@@ -9,6 +8,7 @@ const gulp = require('gulp')
 const lazypipe = require('lazypipe')
 const merge = require('merge-stream')
 const minimist = require('minimist')
+const deepExtend = require('deep-extend')
 
 const postCSSPlugins = {
   autoprefixer: require('autoprefixer'),
@@ -17,41 +17,13 @@ const postCSSPlugins = {
 }
 
 const rollupPlugins = {
-  buble: require('rollup-plugin-buble'),
+  babel: require('rollup-plugin-babel'),
   commonjs: require('rollup-plugin-commonjs'),
   nodeResolve: require('rollup-plugin-node-resolve'),
 }
 
 const gulpLoadPlugins = require('gulp-load-plugins')
 const $ = gulpLoadPlugins()
-
-// deepExtend by https://gist.github.com/anvk/cf5630fab5cde626d42a
-const deepExtend = function (out) {
-  out = out || {}
-
-  for (let i = 1, len = arguments.length; i < len; ++i) {
-    const obj = arguments[i]
-
-    if (!obj) {
-      continue
-    }
-
-    for (const key in obj) {
-      if (!obj.hasOwnProperty(key)) {
-        continue
-      }
-
-      if (Object.prototype.toString.call(obj[key]) === '[object Object]') {
-        out[key] = deepExtend(out[key], obj[key])
-        continue
-      }
-
-      out[key] = obj[key]
-    }
-  }
-
-  return out
-}
 
 const argv = minimist(process.argv.slice(2))
 const browserSync = browserSyncLib.create()
@@ -155,11 +127,6 @@ const taskHelpers = {
         return phase.projectGlobs.scripts.some(e => file.path.endsWith(e) && file.path.indexOf('!') !== 0)
       }, $.betterRollup({
         plugins: [
-          rollupPlugins.buble({
-            transforms: {
-              dangerousForOf: true,
-            },
-          }),
           rollupPlugins.nodeResolve({
             module: true,
             jsnext: true,
@@ -169,6 +136,9 @@ const taskHelpers = {
             preferBuiltins: true,
           }),
           rollupPlugins.commonjs(),
+          rollupPlugins.babel({
+            plugins: ['babel-plugin-external-helpers'],
+          }),
         ],
       }, {
         format: 'iife',
