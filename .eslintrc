@@ -33,6 +33,7 @@
     ]
   },
   "rules": {
+    "no-new": "off",
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",

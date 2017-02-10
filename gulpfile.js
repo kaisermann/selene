@@ -1,63 +1,30 @@
-const { readFileSync } = require('fs')
-const { accessSync } = require('fs')
+const { readFileSync, accessSync } = require('fs')
 const { relative: relativePath, join } = require('path')
 const { execSync } = require('child_process')
-const minimist = require('minimist')
+
 const assetOrchestrator = require('asset-orchestrator')
 const browserSyncLib = require('browser-sync')
-const concat = require('gulp-concat')
 const del = require('del')
-const flatten = require('gulp-flatten')
-const sourcemaps = require('gulp-sourcemaps')
 const gulp = require('gulp')
-const gulpif = require('gulp-if')
-const imagemin = require('gulp-imagemin')
-const eslint = require('gulp-eslint')
 const lazypipe = require('lazypipe')
 const merge = require('merge-stream')
-const plumber = require('gulp-plumber')
-const rev = require('gulp-rev')
-const stylus = require('gulp-stylus')
-const uglify = require('gulp-uglify')
-const util = require('gulp-util')
-const rollup = require('gulp-better-rollup')
-const rollupBuble = require('rollup-plugin-buble')
-const rollupNodeResolve = require('rollup-plugin-node-resolve')
-const rollupCommonjs = require('rollup-plugin-commonjs')
-const postCSS = require('gulp-postcss')
-const CSSmqpacker = require('css-mqpacker')
-const CSSnano = require('cssnano')
-const CSSautoprefixer = require('autoprefixer')
-const unCSS = require('gulp-uncss')
-const size = require('gulp-size')
+const minimist = require('minimist')
+const deepExtend = require('deep-extend')
 
-// deepExtend by https://gist.github.com/anvk/cf5630fab5cde626d42a
-const deepExtend = function (out) {
-  out = out || {}
-
-  for (let i = 1, len = arguments.length; i < len; ++i) {
-    const obj = arguments[i]
-
-    if (!obj) {
-      continue
-    }
-
-    for (const key in obj) {
-      if (!obj.hasOwnProperty(key)) {
-        continue
-      }
-
-      if (Object.prototype.toString.call(obj[key]) === '[object Object]') {
-        out[key] = deepExtend(out[key], obj[key])
-        continue
-      }
-
-      out[key] = obj[key]
-    }
-  }
-
-  return out
+const postCSSPlugins = {
+  autoprefixer: require('autoprefixer'),
+  mqpacker: require('css-mqpacker'),
+  nano: require('cssnano'),
 }
+
+const rollupPlugins = {
+  babel: require('rollup-plugin-babel'),
+  commonjs: require('rollup-plugin-commonjs'),
+  nodeResolve: require('rollup-plugin-node-resolve'),
+}
+
+const gulpLoadPlugins = require('gulp-load-plugins')
+const $ = gulpLoadPlugins()
 
 const argv = minimist(process.argv.slice(2))
 const browserSync = browserSyncLib.create()
@@ -88,8 +55,8 @@ phase.params = {
 }
 
 const onError = function (err) {
-  util.beep()
-  util.log(err.message)
+  $.util.beep()
+  $.util.log(err.message)
   this.emit('end')
 }
 
@@ -117,7 +84,7 @@ const writeToManifest = (directory) => {
     .pipe(browserSync.stream, {
       match: '**/*.{js,css}',
     })
-    .pipe(rev.manifest, getResourceDir('dist', phase.config.paths.revisionManifest), {
+    .pipe($.rev.manifest, getResourceDir('dist', phase.config.paths.revisionManifest), {
       base: phase.config.paths.dist,
       merge: true,
     })
@@ -133,40 +100,35 @@ const writeToManifest = (directory) => {
 const taskHelpers = {
   styles (outputName) {
     return lazypipe()
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
-      .pipe(() => gulpif('*.styl', stylus({
+      .pipe(() => $.if(phase.params.maps, $.sourcemaps.init()))
+      .pipe(() => $.if('*.styl', $.stylus({
         'include': ['./', './node_modules/'],
         'include css': true,
       })))
-      .pipe(concat, outputName)
-      .pipe(postCSS, [
-        CSSautoprefixer({
+      .pipe($.concat, outputName)
+      .pipe($.postcss, [
+        postCSSPlugins.autoprefixer({
           browsers: phase.config.supportedBrowsers,
         }),
-        CSSmqpacker(),
-        CSSnano({
+        postCSSPlugins.mqpacker(),
+        postCSSPlugins.nano({
           core: !phase.params.debug,
           discardComments: !phase.params.debug,
         }),
       ])
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
+      .pipe(() => $.if(phase.params.maps, $.sourcemaps.write('.', {
         sourceRoot: distToAssetPath,
       })))()
   },
   scripts (outputName) {
     return lazypipe()
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.init()))
+      .pipe(() => $.if(phase.params.maps, $.sourcemaps.init()))
       // Only pipes our main code to rollup/bublé
-      .pipe(() => gulpif(file => {
+      .pipe(() => $.if(file => {
         return phase.projectGlobs.scripts.some(e => file.path.endsWith(e) && file.path.indexOf('!') !== 0)
-      }, rollup({
+      }, $.betterRollup({
         plugins: [
-          rollupBuble({
-            transforms: {
-              dangerousForOf: true,
-            },
-          }),
-          rollupNodeResolve({
+          rollupPlugins.nodeResolve({
             module: true,
             jsnext: true,
             main: true,
@@ -174,24 +136,27 @@ const taskHelpers = {
             extensions: ['.js'],
             preferBuiltins: true,
           }),
-          rollupCommonjs(),
+          rollupPlugins.commonjs(),
+          rollupPlugins.babel({
+            plugins: ['babel-plugin-external-helpers'],
+          }),
         ],
       }, {
         format: 'iife',
       })))
-      .pipe(concat, outputName)
-      .pipe(() => gulpif(!phase.params.debug, uglify()))
-      .pipe(() => gulpif(phase.params.maps, sourcemaps.write('.', {
+      .pipe($.concat, outputName)
+      .pipe(() => $.if(!phase.params.debug, $.uglify()))
+      .pipe(() => $.if(phase.params.maps, $.sourcemaps.write('.', {
         sourceRoot: distToAssetPath,
       })))()
   },
   fonts () {
     return lazypipe()
-      .pipe(flatten)()
+      .pipe($.flatten)()
   },
   images () {
     return lazypipe()
-      .pipe(imagemin, {
+      .pipe($.imagemin, {
         progressive: true,
         interlaced: true,
         svgoPlugins: [{
@@ -211,9 +176,9 @@ gulp.task('linter', (done) => {
     join(scriptsDir, '**/*'),
     `!${join(scriptsDir, 'vendor/*')}`,
   ])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(gulpif(phase.params.production, eslint.failAfterError()))
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+    .pipe($.if(phase.params.production, $.eslint.failAfterError()))
     .on('end', done)
     .on('error', done)
 })
@@ -260,19 +225,19 @@ gulp.task('uncss', () => {
     ), {
       base: './',
     })
-    .pipe(plumber({
+    .pipe($.plumber({
       errorHandler: onError,
     }))
-    .pipe(size({
+    .pipe($.size({
       showFiles: true,
       showTotal: false,
       title: 'Before unCSS:',
     }))
-    .pipe(unCSS({
+    .pipe($.uncss({
       html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
       uncssrc: '.uncssrc',
     }))
-    .pipe(size({
+    .pipe($.size({
       showFiles: true,
       showTotal: false,
       title: 'After unCSS:',
@@ -289,11 +254,11 @@ gulp.task('styles', function cssMerger (done) {
     return merged.add(gulp.src(asset.globs, {
       base: phase.resources.styles.directory,
     })
-      .pipe(plumber({
+      .pipe($.plumber({
         errorHandler: onError,
       }))
       .pipe(taskHelpers.styles(asset.outputName))
-      .pipe(gulpif(phase.params.production, rev()))
+      .pipe($.if(phase.params.production, $.rev()))
     )
   })
 
@@ -309,11 +274,11 @@ gulp.task('scripts', gulp.series('linter', function scriptMerger (done) {
     return merged.add(gulp.src(asset.globs, {
       base: phase.resources.scripts.directory,
     })
-      .pipe(plumber({
+      .pipe($.plumber({
         errorHandler: onError,
       }))
       .pipe(taskHelpers.scripts(asset.outputName))
-      .pipe(gulpif(phase.params.production, rev()))
+      .pipe($.if(phase.params.production, $.rev()))
     )
   })
 
@@ -333,10 +298,10 @@ gulp.task('scripts', gulp.series('linter', function scriptMerger (done) {
 
       phase.forEachAsset(resourceType, (asset) => {
         gulp.src(asset.globs)
-            .pipe(plumber({
+            .pipe($.plumber({
               errorHandler: onError,
             }))
-            .pipe(gulpif(taskHelpers[resourceType], taskHelpers[resourceType](asset.outputName)))
+            .pipe($.if(taskHelpers[resourceType], taskHelpers[resourceType](asset.outputName)))
             .pipe(gulp.dest(getResourceDir('dist', resourceInfo.directory, asset.outputName)))
             .pipe(browserSync.stream({
               match: `**/${resourceInfo.pattern}`,
