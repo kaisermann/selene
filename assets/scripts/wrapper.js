@@ -1,14 +1,14 @@
 import Router from './utils/Router.js'
-import common from './events/common.js'
+import common from './routes/common.js'
 
 ($ => {
   // Modify the 'events' object to include or remove other routes
-  const events = {
+  const routes = {
     common,
   }
 
   // Usually, you won't need to modify anything below this line.
-  const router = new Router(events)
+  const router = new Router(routes)
 
   if (document.readyState === 'complete' ||
     (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
