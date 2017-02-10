@@ -226,7 +226,11 @@ gulp.task('uncss', () => {
     throw new Error('Styles distribution directory not found.')
   }
 
-  execSync(`curl -L --silent --output sitemap.json '${phase.config.devUrl}?show_sitemap'`)
+  try {
+    execSync(`curl -L --silent --output sitemap.json '${phase.config.devUrl}?show_sitemap'`)
+  } catch (e) {
+    throw new Error('Couldn\'t download the sitemap.json')
+  }
 
   if (!pathExists('./sitemap.json')) {
     throw new Error('Couldn\'t find the \'sitemap.json\'')
