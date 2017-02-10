@@ -167,6 +167,14 @@ const taskHelpers = {
   },
 }
 
+const getTaskHelper = (resourceType, outputName) => {
+  if (typeof taskHelpers[resourceType] === 'function') {
+    return taskHelpers[resourceType](outputName)
+  } else {
+    return $.util.noop()
+  }
+}
+
 /* Tasks */
 gulp.task('linter', (done) => {
   const scriptsDir = getResourceDir('source', 'scripts')
@@ -248,7 +256,7 @@ gulp.task('styles', function cssMerger (done) {
       .pipe($.plumber({
         errorHandler: onError,
       }))
-      .pipe(taskHelpers.styles(asset.outputName))
+      .pipe(getTaskHelper('styles', asset.outputName))
       .pipe($.if(phase.params.production, $.rev()))
     )
   })
@@ -268,7 +276,7 @@ gulp.task('scripts', gulp.series('linter', function scriptMerger (done) {
       .pipe($.plumber({
         errorHandler: onError,
       }))
-      .pipe(taskHelpers.scripts(asset.outputName))
+      .pipe(getTaskHelper('scripts', asset.outputName))
       .pipe($.if(phase.params.production, $.rev()))
     )
   })
@@ -292,7 +300,7 @@ gulp.task('scripts', gulp.series('linter', function scriptMerger (done) {
             .pipe($.plumber({
               errorHandler: onError,
             }))
-            .pipe($.if(taskHelpers[resourceType], taskHelpers[resourceType](asset.outputName)))
+            .pipe(getTaskHelper(resourceType, asset.outputName))
             .pipe(gulp.dest(getResourceDir('dist', resourceInfo.directory, asset.outputName)))
             .pipe(browserSync.stream({
               match: `**/${resourceInfo.pattern}`,
@@ -328,7 +336,7 @@ gulp.task('watch', function (done) {
   for (const resourceType of Object.keys(phase.resources)) {
     const resourceInfo = phase.resources[resourceType]
 
-    gulp.watch([getResourceDir('source', resourceInfo.directory, '**/*')],
+    gulp.watch([getResourceDir('source', resourceInfo.directory, '**/', resourceInfo.pattern)],
       gulp.series(resourceType)
     )
   }

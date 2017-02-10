@@ -29,7 +29,7 @@
       "pattern": "*.{css,styl,scss,sass,less}",
       "directory": "styles",
       "assets": {
-        "test/main.css": {
+        "main.css": {
           "files": "styles/wrapper.styl",
           "vendor": [
             "assets/styles/vendor/reset.css",
@@ -45,7 +45,7 @@
       "directory": "fonts",
       "dynamicTask": true,
       "assets": {
-        "/": {
+        "./": {
           "files": "fonts/**/*"
         }
       }
@@ -55,7 +55,7 @@
       "directory": "images",
       "dynamicTask": true,
       "assets": {
-        "/": {
+        "./": {
           "files": "images/**/*"
         }
       }
