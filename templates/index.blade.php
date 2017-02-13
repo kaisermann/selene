@@ -3,7 +3,7 @@
 @section('content')
 	@if (!have_posts())
 		<div class="alert -warning">
-			{{ __('Sorry, no results were found.', 'sepha') }}
+			{{ __('Sorry, no results were found.', 'selene') }}
 		</div>
 		{!! get_search_form(false) !!}
 	@endif

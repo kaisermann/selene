@@ -11,7 +11,7 @@
 				@php(the_content())
 			</div>
 			<footer>
-				{!! wp_link_pages(['before' => '<nav class="page-nav"><p>' . __('Pages:', 'sepha'), 'after' => '</p></nav>']) !!}
+				{!! wp_link_pages(['before' => '<nav class="page-nav"><p>' . __('Pages:', 'selene'), 'after' => '</p></nav>']) !!}
 			</footer>
 			@php(comments_template('/templates/partials/comments.blade.php'))
 		</article>

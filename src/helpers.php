@@ -98,16 +98,16 @@ function title()
         if ($home = get_option('page_for_posts', true)) {
             return get_the_title($home);
         }
-        return __('Latest Posts', 'sepha');
+        return __('Latest Posts', 'selene');
     }
     if (is_archive()) {
         return get_the_archive_title();
     }
     if (is_search()) {
-        return sprintf(__('Search Results for %s', 'sepha'), get_search_query());
+        return sprintf(__('Search Results for %s', 'selene'), get_search_query());
     }
     if (is_404()) {
-        return __('Not Found', 'sepha');
+        return __('Not Found', 'selene');
     }
     return get_the_title();
 }

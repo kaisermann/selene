@@ -11,7 +11,7 @@
  * @param string $title
  */
 $sage_error = function ( $message, $subtitle = '', $title = '' ) {
-	$title = $title ?: __( 'Sage &rsaquo; Error', 'sepha' );
+	$title = $title ?: __( 'Sage &rsaquo; Error', 'selene' );
 	$footer = '<a href="https://roots.io/sage/docs/">roots.io/sage/docs/</a>';
 	$message = "<h1>{$title}<br><small>{$subtitle}</small></h1><p>{$message}</p><p>{$footer}</p>";
 	wp_die( $message, $title );
@@ -21,7 +21,7 @@ $sage_error = function ( $message, $subtitle = '', $title = '' ) {
  * Ensure compatible version of PHP is used
  */
 if ( version_compare( '5.6.4', phpversion(), '>=' ) ) {
-	$sage_error(__( 'You must be using PHP 5.6.4 or greater.', 'sepha' ), __( 'Invalid PHP version', 'sepha' ));
+	$sage_error(__( 'You must be using PHP 5.6.4 or greater.', 'selene' ), __( 'Invalid PHP version', 'selene' ));
 }
 
 /**
@@ -45,7 +45,7 @@ function includeArrayOfFiles( $includeArray, $path ) {
 	array_map(function ( $file ) use ( $sage_error, $path ) {
 		$file = "{$path}/{$file}.php";
 		if ( ! locate_template( $file, true, true ) ) {
-			$sage_error(sprintf( __( 'Error locating <code>%s</code> for inclusion.', 'sepha' ), $file ), 'File not found');
+			$sage_error(sprintf( __( 'Error locating <code>%s</code> for inclusion.', 'selene' ), $file ), 'File not found');
 		}
 	}, $includeArray);
 }
@@ -84,7 +84,7 @@ includeArrayOfFiles([
  * └── TEMPLATEPATH           -> /srv/www/example.com/current/web/app/themes/sage/templates
  */
 if ( is_customize_preview() && isset( $_GET['theme'] ) ) {
-	$sage_error(__( 'Theme must be activated prior to using the customizer.', 'sepha' ));
+	$sage_error(__( 'Theme must be activated prior to using the customizer.', 'selene' ));
 }
 add_filter('template', function ( $stylesheet ) {
 	return dirname( $stylesheet );

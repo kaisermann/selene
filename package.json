@@ -1,12 +1,12 @@
 {
-  "name": "sepha",
-  "version": "0.4.0",
+  "name": "selene",
+  "version": "1.0.0-alpha.1",
   "author": "Christian Kaisermann <christian@kaisermann.me>",
-  "homepage": "https://github.com/kaisermann/sepha",
+  "homepage": "https://github.com/kaisermann/selene",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git@github.com:kaisermann/sepha.git"
+    "url": "git@github.com:kaisermann/selene.git"
   },
   "license": "(MIT)",
   "scripts": {},
@@ -23,6 +23,7 @@
   "devDependencies": {
     "asset-orchestrator": "^1.2.9",
     "autoprefixer": "^6.7.2",
+    "babel-core": "^6.22.1",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-latest": "^6.22.0",
     "browser-sync": "^2.18.7",
@@ -45,6 +46,7 @@
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.3.0",
+    "gulp-print": "^2.0.1",
     "gulp-rev": "^7.1.2",
     "gulp-size": "^2.1.0",
     "gulp-sourcemaps": "^2.4.1",
@@ -55,12 +57,12 @@
     "lazypipe": "^1.0.1",
     "merge-stream": "^1.0.1",
     "minimist": "^1.2.0",
+    "require-directory": "^2.1.1",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^7.0.0",
     "rollup-plugin-node-resolve": "^2.0.0"
   },
   "dependencies": {
-    "flickity": "^2.0.5",
     "rolleiflex": "^1.1.0",
     "rupture": "^0.6.2"
   },

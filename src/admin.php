@@ -34,11 +34,11 @@ function action__customize_register( \WP_Customize_Manager $wp_customize ) {
  * Customizer JS
  */
 function action__customize_preview_init() {
-	wp_enqueue_script( 'sepha/customizer.js', asset_path( 'scripts/customizer.js' ), [ 'customize-preview' ], null, true );
+	wp_enqueue_script( 'selene/customizer.js', asset_path( 'scripts/customizer.js' ), [ 'customize-preview' ], null, true );
 };
 
 function action__admin_enqueue_scripts() {
-	wp_enqueue_style( 'sepha/admin.css', asset_path( 'styles/admin.css' ), false, null );
+	wp_enqueue_style( 'selene/admin.css', asset_path( 'styles/admin.css' ), false, null );
 }
 
 function action__admin_init() {

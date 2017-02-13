@@ -7,7 +7,7 @@ add_filter( 'template_include', 'App\\filter__template_include', PHP_INT_MAX );
 add_filter( 'comments_template', 'App\\template_path' );
 add_filter( 'body_class', 'App\\filter__body_class' );
 
-// Beginning of Sepha filters
+// Beginning of Selene filters
 // Pretty search and redirects
 add_filter( 'template_redirect', 'App\\filter__template_redirect' );
 add_filter( 'wpseo_json_ld_search_url', 'App\\filter__wpseo_json_ld_search_url' );
