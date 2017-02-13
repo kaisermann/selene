@@ -20,7 +20,7 @@ With crius you can:
 ## Installation
 
 1. `git clone git@github.com:kaisermann/crius.git`
-2. `npm install`
+2. `npm install` or `yarn`
 3. Run at least `gulp build` before running `gulp watch`
 
 ## Documentation
