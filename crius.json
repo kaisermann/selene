@@ -6,7 +6,8 @@
     },
     "supportedBrowsers": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
     "browserSync": {
-      "files": [
+      "mode": "server",
+      "watchFiles": [
         "{src,templates}/**/*.{php,html}",
         "*.{php,html}"
       ]
@@ -43,7 +44,6 @@
     "fonts": {
       "pattern": "*.{eot,otf,svg,ttc,ttf,woff,woff2}",
       "directory": "fonts",
-      "dynamicTask": true,
       "assets": {
         "./": {
           "files": "fonts/**/*"
@@ -53,7 +53,6 @@
     "images": {
       "pattern": "*.{jpg,png,gif,svg}",
       "directory": "images",
-      "dynamicTask": true,
       "assets": {
         "./": {
           "files": "images/**/*"

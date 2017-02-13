@@ -1,4 +1,4 @@
-rolleiflex.baseFontSize       = phase.baseFontSize;
+rolleiflex.baseFontSize       = crius.baseFontSize;
 rolleiflex.autoBorderBox      = false;
 rolleiflex.use.em             = true;
 rolleiflex.breakpoints = {
@@ -15,13 +15,13 @@ rolleiflex.breakpoints = {
 	},
 	"lg": {
 		"breakpoint": 1200px,
-		"container": phase.siteWidth
+		"container": crius.siteWidth
 	}
 };
 
 __bps = rolleiflex.breakpoints;
 rupture = merge(rupture, {
-	"base-font-size":          phase.baseFontSize,
+	"base-font-size":          crius.baseFontSize,
 	"scale":                   0 (__bps.sm.breakpoint) (__bps.md.breakpoint) (__bps.lg.breakpoint),
 	"scale-names":             keys(__bps),
 	"anti-overlap":            true,
