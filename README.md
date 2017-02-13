@@ -1,6 +1,6 @@
 # Selene
 
-Wordpress theme based on [Sage 9](https://github.com/roots/sage/) and [crius](https://github.com/kaisermann/crius) asset workflow ([modified Sage 8](https://github.com/roots/sage/tree/8.5.0)).
+> Wordpress theme based on [Sage 9](https://github.com/roots/sage/) and [Crius](https://github.com/kaisermann/crius).
 
 ## Informations
 
@@ -19,3 +19,6 @@ Default custom directives:
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query.
 
 Directives can be defined on `src/directives.php`.
+
+## External links
+* [Crius documentation](https://github.com/kaisermann/crius) (recommended)
