@@ -22,7 +22,7 @@ module.exports = {
     each: asset => {
       return lazypipe()
         .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
-        // Only pipes our main code to rollup/bublé
+        // Only pipes our main code to rollup/babel
         .pipe(() => gulpIf(file => {
           return projectGlobs.scripts.some(e => file.path.endsWith(e) && file.path.indexOf('!') !== 0)
         }, betterRollup({
