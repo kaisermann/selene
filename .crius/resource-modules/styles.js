@@ -24,9 +24,7 @@ module.exports = {
       })))
       .pipe(concat, asset.outputName)
       .pipe(postcss, [
-        postCSSautoprefixer({
-          browsers: crius.config.supportedBrowsers,
-        }),
+        postCSSautoprefixer(),
         postCSSmqpacker(),
         postCSSnano({
           core: !crius.params.debug,

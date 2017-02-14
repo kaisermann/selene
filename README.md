@@ -48,23 +48,6 @@ Defaults to:
 
 * * *
 
-The `config` object MAY have a `supportedBrowsers` **object** attribute defined by an array of browsers, which will be used to autoprefix a project's CSS. See [Browserslist](https://github.com/ai/browserslist#queries) docs for available names and queries.
-
-Defaults to:
-```json
-{
-  "config": {
-    "supportedBrowsers": [
-      "last 2 versions",
-      "opera 12",
-      "IE 10"
-    ]
-  }
-}
-```
-
-* * *
-
 The `config` object MUST have a `browserSync` **object** if it's planned to use browserSync.
 
 ```json
@@ -170,6 +153,12 @@ Each CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss`
   }
 }
 ```
+
+* * *
+
+### Supported browsers
+
+The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be configured by editing the `browserslist` array inside the `package.json`.
 
 * * *
 

@@ -21,7 +21,6 @@ crius.config = deepExtend({
       join(crius.config.paths.dist, 'any'), crius.config.paths.source
     ),
   },
-  supportedBrowsers: ['last 2 versions', 'opera 12', 'IE 11', 'Safari >= 8'],
   browserSync: {
     mode: 'proxy',
     watchFiles: [],
