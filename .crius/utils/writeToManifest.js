@@ -4,6 +4,7 @@ const rev = require('gulp-rev')
 const crius = require('../manifest.js')
 const getResourceDir = require('./getResourceDir.js')
 
+// Writes production asset to a json manifest
 module.exports = function writeToManifest () {
   return lazypipe()
     .pipe(rev.manifest, getResourceDir('dist', crius.config.paths.revisionManifest), {
