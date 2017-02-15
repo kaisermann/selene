@@ -1,9 +1,17 @@
 {
   "presets": [
-    ["latest", {
-      "es2015": {
-        "modules": "umd"
-      }
-    }]
+    ["es2017"],
+    ["es2015", {
+      "modules": false
+    }],
+  ],
+  "plugins": [
+    ["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }],
+    ["external-helpers"]
   ]
 }

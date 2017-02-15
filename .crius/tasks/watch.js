@@ -18,7 +18,7 @@ gulp.task('watch', done => {
 
     if (browserSyncMode === 'server') {
       browserSyncOptions.server = {
-        baseDir: ['dist'],
+        baseDir: ['./'],
         index: 'index.html',
       }
     } else {

@@ -6,7 +6,7 @@ With crius you can:
 * Write CSS with Stylus
     * Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
     * Use simplified media queries with rupture (stylus)
-* Write ES2017 Javascript
+* Write ES6 Javascript (with async/await support)
 * See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
 * Have your [bower](https://bower.io/) or npm packages automatically included in your assets
   * Check the **crius.json** on the **root** directory
