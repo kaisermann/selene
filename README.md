@@ -23,6 +23,11 @@ With crius you can:
 2. `npm install` or `yarn`
 3. Run at least `gulp build` before running `gulp watch`
 
+## Usage samples
+
+* [Selene](https://github.com/kaisermann/selene) - Wordpress theme based on [Sage](https://github.com/roots/sage) and Crius.
+* [Hyperion](https://github.com/kaisermann/hyperion) - A static web-app workflow based on Crius.
+
 ## Documentation
 
 #### [General manifest specification](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
