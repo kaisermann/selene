@@ -36,18 +36,7 @@ module.exports = {
               preferBuiltins: true,
             }),
             rollUpCommonjs(),
-            rollUpBabel({
-              babelrc: false,
-              presets: [
-                ['latest', {
-                  'es2015': {
-                    'modules': false,
-                  },
-                }],
-              ],
-              plugins: ['babel-plugin-external-helpers'],
-              externalHelpers: true,
-            }),
+            rollUpBabel(),
           ],
         }, {
           format: 'iife',

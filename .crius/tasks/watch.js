@@ -1,30 +1,36 @@
 const gulp = require('gulp')
+const util = require('gulp-util')
 
 const crius = require('../manifest')
 const getResourceDir = require('../utils/getResourceDir')
 
 gulp.task('watch', done => {
-  if (crius.config.browserSync && crius.params.sync && crius.browserSyncInstance) {
-    const browserSyncMode = crius.config.browserSync.mode || null
-    let browserSyncOptions = {
-      files: crius.config.browserSync.watchFiles,
-      notify: false,
-      port: 3000,
-      snippetOptions: {
-        whitelist: crius.config.browserSync.whitelist,
-        blacklist: crius.config.browserSync.blacklist,
-      },
-    }
+  const bsConf = crius.config.browserSync
 
-    if (browserSyncMode === 'server') {
-      browserSyncOptions.server = {
-        baseDir: ['dist'],
-        index: 'index.html',
+  if (crius.params.sync && crius.browserSyncInstance) {
+    if (bsConf) {
+      let browserSyncOptions = {
+        files: bsConf.watch,
+        notify: false,
+        port: 3000,
+        snippetOptions: {
+          whitelist: bsConf.whitelist,
+          blacklist: bsConf.blacklist,
+        },
       }
+
+      if (bsConf.mode === 'server') {
+        browserSyncOptions.server = {
+          baseDir: bsConf.baseDir,
+          index: bsConf.index,
+        }
+      } else {
+        browserSyncOptions.proxy = bsConf.devUrl
+      }
+      crius.browserSyncInstance.init(browserSyncOptions)
     } else {
-      browserSyncOptions.proxy = crius.config.devUrl
+      throw new util.PluginError('watch', util.colors.red('Passed "--sync" but no browser-sync configuration was found on "crius.json"'))
     }
-    crius.browserSyncInstance.init(browserSyncOptions)
   }
 
   // Watch based on resource-type-names
