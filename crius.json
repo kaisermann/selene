@@ -6,12 +6,12 @@
     },
     "browserSync": {
       "mode": "server",
-      "watchFiles": [
+      "watch": [
         "{src,templates}/**/*.{php,html}",
         "*.{php,html}"
-      ]
-    },
-    "devUrl": "localhost/web/root"
+      ],
+      "devUrl": "localhost/web/root"
+    }
   },
   "resources": {
     "scripts": {

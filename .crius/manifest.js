@@ -11,23 +11,33 @@ const mainManifestPath = './crius.json'
 // Loads the crius manifest
 const crius = assetOrchestrator(mainManifestPath)
 
+// Default path values
+crius.config.paths = deepExtend({
+  source: 'app/',
+  dist: 'dist/',
+}, crius.config.paths)
+
 // Default values for the `config` object
 crius.config = deepExtend({
   paths: {
-    source: 'app/',
-    dist: 'dist/',
     revisionManifest: 'assets.json',
     fromDistToSource: relative(
       join(crius.config.paths.dist, 'any'), crius.config.paths.source
     ),
   },
-  browserSync: {
+}, crius.config)
+
+// Default browserSync configuration
+if (crius.config.browserSync) {
+  crius.config.browserSync = deepExtend({
     mode: 'proxy',
+    index: 'index.html',
+    baseDir: crius.config.paths.dist,
     watchFiles: [],
     whitelist: [],
     blacklist: [],
-  },
-}, crius.config)
+  }, crius.config.browserSync)
+}
 
 // Default values for each 'resource' entry
 for (const resourceType of Object.keys(crius.resources)) {
