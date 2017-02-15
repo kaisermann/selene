@@ -1,4 +1,5 @@
 const { readFileSync } = require('fs')
+const { execSync } = require('child_process')
 const { join } = require('path')
 
 const gulp = require('gulp')
@@ -18,6 +19,8 @@ gulp.task('uncss', done => {
   if (!pathExists(stylesDir)) {
     throw new Error('Styles distribution directory not found.')
   }
+
+  execSync(`curl -L --silent --output sitemap.json '${crius.config.browserSync.devUrl}?show_sitemap'`)
 
   if (!pathExists('./sitemap.json')) {
     throw new Error('Couldn\'t find the \'sitemap.json\'')
