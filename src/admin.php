@@ -3,22 +3,32 @@
 namespace App;
 
 // Actions
-add_action( 'customize_register', 'App\\action__customize_register' );
-add_action( 'customize_preview_init', 'App\\action__customize_preview_init' );
-add_action( 'admin_enqueue_scripts', 'App\\action__admin_enqueue_scripts' );
-add_action( 'login_enqueue_scripts', 'App\\action__admin_enqueue_scripts' );
-add_action( 'admin_init', 'App\\action__admin_init' );
+// Customizer.js
+add_action( 'customize_register', 'App\action__customize_register' );
+add_action( 'customize_preview_init', 'App\action__customize_preview_init' );
+// Enqueues admin.css on login page and dashboard
+add_action( 'admin_enqueue_scripts', 'App\action__admin_enqueue_scripts' );
+add_action( 'login_enqueue_scripts', 'App\action__admin_enqueue_scripts' );
+// Removes default dashboard metaboxes
+add_action( 'admin_init', 'App\action__admin_init' );
+// Removes WP logo and comments menu from admin bar
+add_action( 'admin_bar_menu','App\action__remove_wp_logo', 100 );
 
 remove_action( 'welcome_panel', 'wp_welcome_panel' );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
 remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 
 // Filters
-add_filter( 'login_headerurl', 'App\\filter__login_headerurl' );
+// Sets login page logo redirecting to home url
+add_filter( 'login_headerurl', 'App\filter__login_headerurl' );
+// Moves yoast SEO (if available) metabox to a lower position
+add_filter( 'wpseo_metabox_prio', 'App\filter__wpseo_metabox_prio' );
+// Edits the admin left footer text
+// add_filter( 'admin_footer_text',  'App\filter__admin_footer_text', 11);
+// Edits the admin right footer text
+// add_filter( 'update_footer',  'App\filter__update_footer', 11, 1 );
 
-/**
- * Theme customizer
- */
+// Actions
 function action__customize_register( \WP_Customize_Manager $wp_customize ) {
 	// Add postMessage support
 	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
@@ -30,9 +40,6 @@ function action__customize_register( \WP_Customize_Manager $wp_customize ) {
 	]);
 }
 
-/**
- * Customizer JS
- */
 function action__customize_preview_init() {
 	wp_enqueue_script( 'selene/customizer.js', asset_path( 'scripts/customizer.js' ), [ 'customize-preview' ], null, true );
 };
@@ -49,6 +56,24 @@ function action__admin_init() {
 	remove_meta_box( 'dashboard_recent_drafts', 'dashboard', 'side' );
 }
 
+function action__remove_wp_logo( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'wp-logo' );
+	$wp_admin_bar->remove_menu( 'comments' );
+}
+
+// Filters
 function filter__login_headerurl() {
-	return home_url();
+	return get_home_url();
+}
+
+function filter__admin_footer_text() {
+	echo 'Admin Dashboard - <a href="https://wordpress.org/" target="_blank" rel="noopener noreferrer">Wordpress</a>';
+}
+
+function filter__update_footer( $wpVersion ) {
+	return '' . $wpVersion;
+}
+
+function filter__wpseo_metabox_prio() {
+	return 'low';
 }
