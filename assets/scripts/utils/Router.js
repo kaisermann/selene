@@ -23,7 +23,7 @@ export default class Router {
     return this
   }
 
-  loadEvents () {
+  loadRoutes () {
     // Fire common init JS
     this.fire('common')
 

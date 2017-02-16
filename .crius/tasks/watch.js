@@ -1,3 +1,4 @@
+const { join } = require('path')
 const gulp = require('gulp')
 const util = require('gulp-util')
 
@@ -21,7 +22,8 @@ gulp.task('watch', done => {
 
       if (bsConf.mode === 'server') {
         browserSyncOptions.server = {
-          baseDir: bsConf.baseDir,
+          // Resolves the path just for showing a complete path on the terminal
+          baseDir: join(process.cwd(), bsConf.baseDir),
           index: bsConf.index,
         }
       } else {

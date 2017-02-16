@@ -50,7 +50,7 @@ for (const resourceType of Object.keys(crius.resources)) {
 // Parses passed parameters
 crius.params = params
 
-// Creates a broswersync instance and a global pointer to it
+// Creates a broswersync instance
 if (crius.params.sync) {
   crius.browserSyncInstance = browserSyncLib.create()
 }
