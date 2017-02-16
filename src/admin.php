@@ -23,6 +23,8 @@ remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 add_filter( 'login_headerurl', 'App\filter__login_headerurl' );
 // Moves yoast SEO (if available) metabox to a lower position
 add_filter( 'wpseo_metabox_prio', 'App\filter__wpseo_metabox_prio' );
+// Removes the "help" section on top of admin pages
+add_filter( 'contextual_help', 'App\filter__contextual_help', 11, 3 );
 // Edits the admin left footer text
 // add_filter( 'admin_footer_text',  'App\filter__admin_footer_text', 11);
 // Edits the admin right footer text
@@ -39,7 +41,6 @@ function action__customize_register( \WP_Customize_Manager $wp_customize ) {
 		},
 	]);
 }
-
 function action__customize_preview_init() {
 	wp_enqueue_script( 'selene/customizer.js', asset_path( 'scripts/customizer.js' ), [ 'customize-preview' ], null, true );
 };
@@ -66,14 +67,19 @@ function filter__login_headerurl() {
 	return get_home_url();
 }
 
+function filter__wpseo_metabox_prio() {
+	return 'low';
+}
+
+function filter__contextual_help( $old_help, $screen_id, $screen ) {
+	$screen->remove_help_tabs();
+	return $old_help;
+}
+
 function filter__admin_footer_text() {
 	echo 'Admin Dashboard - <a href="https://wordpress.org/" target="_blank" rel="noopener noreferrer">Wordpress</a>';
 }
 
 function filter__update_footer( $wpVersion ) {
 	return '' . $wpVersion;
-}
-
-function filter__wpseo_metabox_prio() {
-	return 'low';
 }
