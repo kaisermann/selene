@@ -12,7 +12,7 @@ add_action( 'login_enqueue_scripts', 'App\action__admin_enqueue_scripts' );
 // Removes default dashboard metaboxes
 add_action( 'admin_init', 'App\action__admin_init' );
 // Removes WP logo and comments menu from admin bar
-add_action( 'admin_bar_menu','App\action__remove_wp_logo', 100 );
+add_action( 'admin_bar_menu','App\action__trim_adminbar', 100 );
 
 remove_action( 'welcome_panel', 'wp_welcome_panel' );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
@@ -57,8 +57,9 @@ function action__admin_init() {
 	remove_meta_box( 'dashboard_recent_drafts', 'dashboard', 'side' );
 }
 
-function action__remove_wp_logo( $wp_admin_bar ) {
+function action__trim_adminbar( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'wp-logo' );
+	$wp_admin_bar->remove_node( 'view-site' );
 	$wp_admin_bar->remove_menu( 'comments' );
 }
 
