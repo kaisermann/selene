@@ -3,32 +3,32 @@
 namespace App;
 
 // Beginning of Sage filters
-add_filter( 'template_include', 'App\\filter__template_include', PHP_INT_MAX );
-add_filter( 'comments_template', 'App\\template_path' );
-add_filter( 'body_class', 'App\\filter__body_class' );
+add_filter( 'template_include', 'App\filter__template_include', PHP_INT_MAX );
+add_filter( 'comments_template', 'App\template_path' );
+add_filter( 'body_class', 'App\filter__body_class' );
 
 // Beginning of Selene filters
 // Pretty search and redirects
-add_filter( 'template_redirect', 'App\\filter__template_redirect' );
-add_filter( 'wpseo_json_ld_search_url', 'App\\filter__wpseo_json_ld_search_url' );
-add_filter( 'get_search_form', 'App\\filter__get_search_form' );
+add_filter( 'template_redirect', 'App\filter__template_redirect' );
+add_filter( 'wpseo_json_ld_search_url', 'App\filter__wpseo_json_ld_search_url' );
+add_filter( 'get_search_form', 'App\filter__get_search_form' );
 // Default jpg quality
-add_filter( 'jpeg_quality', 'App\\filter__jpeg_quality' );
+add_filter( 'jpeg_quality', 'App\filter__jpeg_quality' );
 // Defer scripts
-add_filter( 'script_loader_tag', 'App\\filter__defer_scripts' , 10, 2 );
+add_filter( 'script_loader_tag', 'App\filter__defer_scripts' , 10, 2 );
 // Allows svg to be uploaded as media
-add_filter( 'upload_mimes', 'App\\filter__upload_mimes' );
+add_filter( 'upload_mimes', 'App\filter__upload_mimes' );
 // Wraps oembeds with 'embed'
-add_filter( 'embed_oembed_html', 'App\\filter__embed_oembed_html' );
+add_filter( 'embed_oembed_html', 'App\filter__embed_oembed_html' );
 // Asset versioning
-add_filter( 'style_loader_src', 'App\\filter__parse_asset_version' );
-add_filter( 'script_loader_src', 'App\\filter__parse_asset_version' );
+add_filter( 'style_loader_src', 'App\filter__parse_asset_version' );
+add_filter( 'script_loader_src', 'App\filter__parse_asset_version' );
 // Removes the protocol (http(s)) from asset's url
 // Based on 'https://github.com/ryanjbonnell/Protocol-Relative-Theme-Assets by Ryan J. Bonnell'
-add_filter( 'style_loader_src', 'App\\filter__url_protocol', 10, 2 );
-add_filter( 'script_loader_src', 'App\\filter__url_protocol', 10, 2 );
-add_filter( 'template_directory_uri', 'App\\filter__url_protocol', 10, 3 );
-add_filter( 'stylesheet_directory_uri', 'App\\filter__url_protocol', 10, 3 );
+add_filter( 'style_loader_src', 'App\filter__url_protocol', 10, 2 );
+add_filter( 'script_loader_src', 'App\filter__url_protocol', 10, 2 );
+add_filter( 'template_directory_uri', 'App\filter__url_protocol', 10, 3 );
+add_filter( 'stylesheet_directory_uri', 'App\filter__url_protocol', 10, 3 );
 // Removes WP version from RSS feeds
 add_filter( 'the_generator', '__return_false' );
 
