@@ -1,6 +1,6 @@
-# crius
+# Crius
 
-> A modular gulp front-end workflow originally based on the (awesome) [Sage starter theme](https://github.com/roots/sage).
+> A flexible and modular gulp front-end workflow originally based on the (awesome) [Sage starter theme](https://github.com/roots/sage).
 
 With crius you can:
 * Write CSS with Stylus
