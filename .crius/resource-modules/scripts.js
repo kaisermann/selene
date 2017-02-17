@@ -9,6 +9,7 @@ const rev = require('gulp-rev')
 const rollUpBabel = require('rollup-plugin-babel')
 const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
+const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
 
 const crius = require('../manifest')
 const writeToManifest = require('../utils/writeToManifest')
@@ -27,6 +28,9 @@ module.exports = {
           return projectGlobs.scripts.some(e => file.path.endsWith(e) && file.path.indexOf('!') !== 0)
         }, betterRollup({
           plugins: [
+            // Allow to import node builtin modules such as path, url, querystring, etc
+            rollUpNodebuiltins(),
+            // Allow to import modules from the `node_modules`
             rollUpNodeResolve({
               module: true,
               jsnext: true,
@@ -35,8 +39,12 @@ module.exports = {
               extensions: ['.js'],
               preferBuiltins: true,
             }),
+            // Transforms CommonJS modules into ES6 modules for RollUp
             rollUpCommonjs(),
-            rollUpBabel(),
+            // Transpiles the code, ignoring coniguration from the `node_modules`
+            rollUpBabel({
+              exclude: 'node_modules/**',
+            }),
           ],
         }, {
           format: 'iife',
