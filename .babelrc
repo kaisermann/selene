@@ -1,9 +1,10 @@
 {
   "presets": [
-    ["es2017"],
-    ["es2015", {
-      "modules": false
-    }],
+    ["latest", {
+      "es2015": {
+        "modules": false,
+      }
+    }]
   ],
   "plugins": [
     ["transform-runtime", {
