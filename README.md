@@ -204,6 +204,10 @@ You can also pass the following parameters to gulp:
 
 The available parameters can be extended at [`.crius/params.js`](https://github.com/kaisermann/crius/blob/master/.crius/params.js).
 
+## Observations
+
+* If you need polyfills for [`Object.assign()`, `Object.entries()`, `Promises`, etc](https://github.com/zloirock/core-js), set the [`"polyfill": false`](https://github.com/kaisermann/crius/blob/master/.babelrc#L12) to true inside the [`.babelrc`](https://github.com/kaisermann/crius/blob/master/.babelrc). 
+
 ## External links
 * [Asset Orchestrator documentation](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
 * [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
