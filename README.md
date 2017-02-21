@@ -206,9 +206,8 @@ You can also pass the following parameters to gulp:
 
 - `--sync` Starts browserSync. Use only with `gulp watch`
 - `--verbose` Verbose mode
-
   - If used with `watch`, it will display the assets sizes of the current resource being edited
-
+- `--maps` Allows sourcemaps to be created
 - `-d` Asset debug mode. It won't minify the files
 - `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 

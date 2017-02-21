@@ -8,7 +8,7 @@ module.exports = {
   // Do not minify assets when '-d'
   debug: isDebugging,
   // Create sourcemaps when not in production mode
-  maps: !isProduction,
+  maps: args.maps,
   // Production mode, appends hash of file's content to its name
   production: isProduction,
   // Start BroswerSync when '--sync'
