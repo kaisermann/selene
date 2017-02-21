@@ -13,6 +13,6 @@ module.exports = function (fileGlob = '') {
           .on('error', done)
           .resume()
   }
-  fn.displayName = 'size-report'
+  fn.displayName = 'sizereport'
   return fn
 }

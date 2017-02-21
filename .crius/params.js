@@ -1,8 +1,8 @@
 const minimist = require('minimist')
 const args = minimist(process.argv.slice(2))
 
-const isProduction = args.p || args.production
 const isDebugging = args.d || args.debug
+const isProduction = !isDebugging && (args.p || args.production)
 
 module.exports = {
   // Do not minify assets when '-d'
@@ -13,4 +13,6 @@ module.exports = {
   production: isProduction,
   // Start BroswerSync when '--sync'
   sync: args.sync,
+  // Verbose flag
+  verbose: args.verbose,
 }

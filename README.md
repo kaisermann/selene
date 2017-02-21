@@ -3,14 +3,19 @@
 > A flexible and modular gulp front-end workflow originally based on the (awesome) [Sage starter theme](https://github.com/roots/sage).
 
 With crius you can:
-* Write CSS with Stylus
-    * Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
-    * Use simplified media queries with rupture (stylus)
-* Write ES6 Javascript (with async/await support)
-* See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
-* Have your [bower](https://bower.io/) or npm packages automatically included in your assets
-  * Check the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) on the **root** directory
-* Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
+
+- Write CSS with Stylus
+
+  - Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
+  - Use simplified media queries with rupture (stylus)
+
+- Write ES6 Javascript (with async/await support)
+- See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
+- Have your [bower](https://bower.io/) or npm packages automatically included in your assets
+
+  - Check the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) on the **root** directory
+
+- Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
 
 ## Requirements
 
@@ -25,22 +30,22 @@ With crius you can:
 
 ## Usage samples
 
-* [Selene](https://github.com/kaisermann/selene) - Wordpress theme based on [Sage](https://github.com/roots/sage) and Crius.
-* [Hyperion](https://github.com/kaisermann/hyperion) - A static web-app workflow based on Crius.
+- [Selene](https://github.com/kaisermann/selene) - Wordpress theme based on [Sage](https://github.com/roots/sage) and Crius.
+- [Hyperion](https://github.com/kaisermann/hyperion) - A static web-app workflow based on Crius.
 
 ## Documentation
 
-#### [General manifest specification](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
+### [General manifest specification](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
 
 The attributes listed below are specific to `crius`. Therefore, it's highly recommended to read the overall manifest documentation first.
 
-#### The `config` object
+### The `config` object
 
 The [`config.paths`](https://github.com/kaisermann/crius/blob/master/crius.json#L3) object MAY have a `revisionManifest` **string** attribute that defines the revision manifest's file name on production distributions.
 
 Defaults to `"assets.json"`
 
-* * *
+--------------------------------------------------------------------------------
 
 The `config` object MUST have a `browserSync` **object** if it's planned to use browserSync.
 
@@ -69,26 +74,25 @@ The `config` object MUST have a `browserSync` **object** if it's planned to use 
 
 `mode` is a **optional** `string` that defines in which mode should browserSync be initialized.
 
-* In `server` mode, it creates a temporary server for your project.
+- In `server` mode, it creates a temporary server for your project.
 
-* In `proxy` mode (default), it just proxies the `devUrl` to an already existing server.  
+- In `proxy` mode (default), it just proxies the `devUrl` to an already existing server.
 
 With `mode: "proxy"`
 
-* `devUrl` is a **mandatory** `string` that specifies your projects development proxy url.  
+- `devUrl` is a **mandatory** `string` that specifies your projects development proxy url.
 
 With `mode: "server"`
 
-* `baseDir` is a **optional** `string` that defines the root directory for the browserSync server (defaults to the `dist` directory).
+- `baseDir` is a **optional** `string` that defines the root directory for the browserSync server (defaults to the `dist` directory).
 
-* `index` is a **optional** `string`that defines the entry file for the browserSync server (defaults to `index.html`)
+- `index` is a **optional** `string`that defines the entry file for the browserSync server (defaults to `index.html`)
 
-* * *
+--------------------------------------------------------------------------------
 
-#### The `resources` object
+### The `resources` object
 
-For a complete base description of the object, please see the
-[General manifest specification](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md).
+For a complete base description of the object, please see the [General manifest specification](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md).
 
 ```json
 {
@@ -106,18 +110,19 @@ For a complete base description of the object, please see the
 }
 ```
 
-* * *
+--------------------------------------------------------------------------------
 
 Each resource type MAY have a **directory** `string` attribute, defining where the assets are inside [`config.paths.src`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) and where the built ones will be inside [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5). If not specified, the resource type name will be used.
 
-* * *
+--------------------------------------------------------------------------------
 
-`crius  ` **automatically** creates a gulp task for each resource. All of a resource assets will be moved from the [`config.paths.source`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) to [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5) without you doing anything besides defining the resource in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json).
+`crius` **automatically** creates a gulp task for each resource. All of a resource assets will be moved from the [`config.paths.source`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) to [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5) without you doing anything besides defining the resource in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json).
 
 If a resource assets need any type of processing, a drop-in module can be created at [`.crius/resource-modules/${resourceName}.js`](https://github.com/kaisermann/crius/blob/master/.crius/resource-modules/) to modify the stream with a [lazypipe](https://github.com/OverZealous/lazypipe). The file name must match the resource name.
 
 Resource module format:
-```js
+
+```javascript
 const lazypipe = require('lazypipe')
 
 module.exports = {
@@ -139,7 +144,7 @@ module.exports = {
 
 You can see other real examples by looking at the [`.crius/resource-modules`](https://github.com/kaisermann/crius/blob/master/.crius/resource-modules/) directory.
 
-* * *
+--------------------------------------------------------------------------------
 
 Each CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss` task will search the file for unused selectors based on a `sitemap.json` file. The `sitemap.json` must be composed by an array of your projects pages urls.
 
@@ -163,30 +168,31 @@ Each CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss`
 }
 ```
 
-* * *
+--------------------------------------------------------------------------------
 
 ### Supported browsers
 
 The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be configured by editing the `browserslist` array inside the [`package.json`](https://github.com/kaisermann/crius/blob/master/package.json).
 
-* * *
+--------------------------------------------------------------------------------
 
 ### Gulp Tasks
 
 #### Out of the box tasks
 
-* `gulp` / `gulp build` Erases distribution directory and builds all assets
-* `gulp compile` Same as `gulp build` without deleting distribution directory
-* `gulp clean` Deletes the distribution directory
-* `gulp watch` Starts watching the asset files
-* `gulp uncss` Reads a `sitemap.json` file and removes unused selectors
+- `gulp` / `gulp build` Erases distribution directory and builds all assets
+- `gulp compile` Same as `gulp build` without deleting distribution directory
+- `gulp clean` Deletes the distribution directory
+- `gulp watch` Starts watching the asset files
+- `gulp uncss` Reads a `sitemap.json` file and removes unused selectors
+- `gulp sizereport` Displays the size and gzipped size of your project
 
 #### Out of the box resource tasks
 
-* `gulp scripts` Build everything on the scripts directory
-* `gulp styles` Build everything on the styles directory
-* `gulp fonts` Build everything on the fonts directory
-* `gulp images` Build everything on the images directory
+- `gulp scripts` Build everything on the scripts directory
+- `gulp styles` Build everything on the styles directory
+- `gulp fonts` Build everything on the fonts directory
+- `gulp images` Build everything on the images directory
 
 #### Creating new tasks
 
@@ -198,19 +204,28 @@ All tasks defined on the mentioned directory are imported BEFORE the resource ta
 
 You can also pass the following parameters to gulp:
 
-* `--sync` Starts browserSync. Use only with `gulp watch`
-* `-d` Asset debug mode. It won't minify the files
-* `-p` Production mode. File names will be appended with a hash of its content for cache-busting
+- `--sync` Starts browserSync. Use only with `gulp watch`
+- `--verbose` Verbose mode
+
+  - If used with `watch`, it will display the assets sizes of the current resource being edited
+
+- `-d` Asset debug mode. It won't minify the files
+- `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
 The available parameters can be extended at [`.crius/params.js`](https://github.com/kaisermann/crius/blob/master/.crius/params.js).
 
+## Observations
+
+- If you need polyfills for [`Object.assign()`, `Object.entries()`, `Promises`, etc](https://github.com/zloirock/core-js), set the [`"polyfill": false`](https://github.com/kaisermann/crius/blob/master/.babelrc#L12) to true inside the [`.babelrc`](https://github.com/kaisermann/crius/blob/master/.babelrc).
+
 ## External links
-* [Asset Orchestrator documentation](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
-* [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
-* [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
-* [Sage documentation](https://github.com/roots/sage/) (Sage 9 uses webpack, please refer to the **8.\*.*** documentation.)
+
+- [Asset Orchestrator documentation](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
+- [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
+- [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
+- [Sage documentation](https://github.com/roots/sage/) (Sage 9 uses webpack, please refer to the **8.*.*** documentation.)
 
 ## Credits and Inspirations
 
-* [Asset builder](https://github.com/austinpray/asset-builder)
-* [Sage Starter Theme](https://github.com/roots/sage/)
+- [Asset builder](https://github.com/austinpray/asset-builder)
+- [Sage Starter Theme](https://github.com/roots/sage/)
