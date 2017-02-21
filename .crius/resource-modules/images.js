@@ -5,15 +5,17 @@ module.exports = {
   pipelines: {
     each: asset => {
       return lazypipe()
-        .pipe(imagemin, {
-          progressive: true,
-          interlaced: true,
-          svgoPlugins: [{
-            removeUnknownsAndDefaults: true,
-          }, {
-            cleanupIDs: false,
-          }],
-        })
+        .pipe(imagemin, [
+          imagemin.jpegtran({ progressive: true }),
+          imagemin.gifsicle({ interlaced: true }),
+          imagemin.svgo({
+            plugins: [{
+              removeUnknownsAndDefaults: false,
+            }, {
+              cleanupIDs: false,
+            }],
+          }),
+        ])
     },
   },
 }
