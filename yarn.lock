@@ -1188,6 +1188,12 @@ cli-cursor@^1.0.1:
   dependencies:
     restore-cursor "^1.0.1"
 
+cli-table@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cli-table/-/cli-table-0.3.1.tgz#f53b05266a8b1a0b934b3d0821e6e2dc5914ae23"
+  dependencies:
+    colors "1.0.3"
+
 cli-width@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/cli-width/-/cli-width-2.1.0.tgz#b234ca209b29ef66fc518d9b98d5847b00edf00a"
@@ -1285,6 +1291,10 @@ colormin@^1.0.5:
     color "^0.11.0"
     css-color-names "0.0.4"
     has "^1.0.1"
+
+colors@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
 
 colors@~1.1.2:
   version "1.1.2"
@@ -2799,6 +2809,16 @@ gulp-size@^2.1.0:
     pretty-bytes "^3.0.1"
     stream-counter "^1.0.0"
     through2 "^2.0.0"
+
+gulp-sizereport@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/gulp-sizereport/-/gulp-sizereport-1.2.0.tgz#d8b7fa0f2365912521d16a387866857e6dcc4878"
+  dependencies:
+    cli-table "^0.3.1"
+    gulp-util "^3.0.7"
+    gzip-size "^3.0.0"
+    pretty-bytes "^3.0.1"
+    through2 "^2.0.1"
 
 gulp-sourcemaps@1.6.0:
   version "1.6.0"

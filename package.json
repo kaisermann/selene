@@ -47,6 +47,7 @@
     "gulp-postcss": "^6.3.0",
     "gulp-rev": "^7.1.2",
     "gulp-size": "^2.1.0",
+    "gulp-sizereport": "^1.2.0",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-stylus": "^2.6.0",
     "gulp-uglify": "^2.0.1",
