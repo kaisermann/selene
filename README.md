@@ -20,6 +20,10 @@ Default custom directives:
 
 Directives can be defined on [`src/directives.php`](https://github.com/kaisermann/selene/blob/master/src/directives.php).
 
+## Observations
+
+- If you need polyfills for [`Object.assign()`, `Object.entries()`, `Promises`, etc](https://github.com/zloirock/core-js), set the [`"polyfill": false`](https://github.com/kaisermann/selene/blob/master/.babelrc#L12) to true inside the [`.babelrc`](https://github.com/kaisermann/selene/blob/master/.babelrc).
+
 ## External links
 * [Crius documentation](https://github.com/kaisermann/crius)
 * [Sage 9 documentation](https://github.com/roots/docs/tree/sage-9/sage) (currently in progress)
