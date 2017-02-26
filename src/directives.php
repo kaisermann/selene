@@ -31,4 +31,13 @@ add_action( 'after_setup_theme', function() {
 	// Creates @endcustomquery Blade directive
 	$sageCompiler->directive( 'endcustomquery', $fnEndWhile );
 
+	// Create @dump($obj) Blade directive
+	$sageCompiler->directive('dump', function ( $obj ) {
+		return '<?php echo App\\dump(' . $obj . ', true); ?>';
+	});
+
+	// Create @console($obj) Blade directive
+	$sageCompiler->directive('console', function ( $obj ) {
+		return '<?php echo App\\dump(' . $obj . ', false); ?>';
+	});
 }, 100 );

@@ -113,7 +113,7 @@ function title()
 }
 
 
-function debug( $data, $phpPrint = false, $onlyLogged = true ) {
+function dump( $data, $phpPrint = false, $onlyLogged = true ) {
 	if ( ! $onlyLogged || is_user_logged_in() ) {
 		if ( $phpPrint ) {
 			echo '<pre style="white-space: pre-wrap;">';
