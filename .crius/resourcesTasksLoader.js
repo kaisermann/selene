@@ -9,6 +9,7 @@ const crius = require('./manifest')
 const getResourceDir = require('./utils/getResourceDir')
 const onError = require('./utils/onError')
 const isDir = require('./utils/isDir')
+const sizereport = require('./utils/sizereport')
 
 // Loads resource inner task modules
 const resourceModules = requireDir(module, './resource-modules')
@@ -71,8 +72,17 @@ for (const resourceType of Object.keys(crius.resources)) {
     }
     taskQueue.push(...depTasks)
   }
+
   // Pushes the resource task
   taskQueue.push(dynamicTaskHelper(resourceType, resourceInfo))
+
+  // When '--verbose' is set, are we doing a resource task or the watch task?
+  // If yes, let's append the sireReport task to the pipeline
+  if (crius.params.verbose) {
+    if (process.argv.includes(resourceType) || process.argv.includes('watch')) {
+      taskQueue.push(sizereport(resourceInfo.pattern))
+    }
+  }
 
   // If we have no dependency tasks, pass only the resource task and not a task series
   gulp.task(resourceType, taskQueue.length === 1 ? taskQueue[0] : gulp.series(taskQueue))

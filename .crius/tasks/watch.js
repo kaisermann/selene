@@ -4,7 +4,6 @@ const util = require('gulp-util')
 
 const crius = require('../manifest')
 const getResourceDir = require('../utils/getResourceDir')
-const sizereport = require('../utils/sizereport')
 
 gulp.task('watch', done => {
   const bsConf = crius.config.browserSync
@@ -39,11 +38,9 @@ gulp.task('watch', done => {
   // Watch based on resource-type-names
   for (const resourceType of Object.keys(crius.resources)) {
     const resourceInfo = crius.resources[resourceType]
-    const taskList = [resourceType]
-    if (crius.params.verbose) {
-      taskList.push(sizereport(resourceInfo.pattern))
-    }
-    gulp.watch([getResourceDir('source', resourceInfo.directory, '**/', resourceInfo.pattern)], gulp.series(taskList))
+    gulp.watch([getResourceDir('source', resourceInfo.directory, '**/', resourceInfo.pattern)],
+      gulp.series(resourceType)
+    )
   }
   done()
 })
