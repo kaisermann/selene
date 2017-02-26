@@ -3,13 +3,14 @@
     ["latest", {
       "es2015": {
         "modules": false,
+        "loose": true
       }
     }]
   ],
   "plugins": [
     ["transform-runtime", {
       "helpers": false,
-      "polyfill": false,
+      "polyfill": true,
       "regenerator": true,
       "moduleName": "babel-runtime"
     }],
