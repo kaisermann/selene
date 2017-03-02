@@ -54,7 +54,7 @@ The `config` object MUST have a `browserSync` **object** if it's planned to use 
   "config": {
     "browserSync": {
       "mode": "proxy",
-      "baseDir": "./dist",
+      "baseDir": "./",
       "index": "index.html",
       "devUrl":"localhost/crius",
       "watch": [
@@ -84,7 +84,7 @@ With `mode: "proxy"`
 
 With `mode: "server"`
 
-- `baseDir` is a **optional** `string` that defines the root directory for the browserSync server (defaults to the `dist` directory).
+- `baseDir` is a **optional** `string` that defines the root directory for the browserSync server (defaults to the gulpfile directory).
 
 - `index` is a **optional** `string`that defines the entry file for the browserSync server (defaults to `index.html`)
 

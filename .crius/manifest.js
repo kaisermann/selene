@@ -32,7 +32,7 @@ if (crius.config.browserSync) {
   crius.config.browserSync = deepExtend({
     mode: 'proxy',
     index: 'index.html',
-    baseDir: crius.config.paths.dist,
+    baseDir: './',
     watchFiles: [],
     whitelist: [],
     blacklist: [],

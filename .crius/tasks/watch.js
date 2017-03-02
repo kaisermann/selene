@@ -21,6 +21,7 @@ gulp.task('watch', done => {
       }
 
       if (bsConf.mode === 'server') {
+        console.log(join(process.cwd(), bsConf.baseDir))
         browserSyncOptions.server = {
           // Resolves the path just for showing a complete path on the terminal
           baseDir: join(process.cwd(), bsConf.baseDir),
