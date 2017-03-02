@@ -20,7 +20,8 @@ Selene prepends a `global` class to the `body`, creating a global controller tha
 
 #### Custom Blade Directives
 
-Default custom directives:
+* [Node.js](http://nodejs.org/) >= 6.9.x
+* [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
 
 * `@mainquery ... @endmainquery` - Loops through the main query.
 
