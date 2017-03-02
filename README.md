@@ -19,8 +19,8 @@ With crius you can:
 
 ## Requirements
 
-1. [Node](https://nodejs.org/en/download/)
-2. [Gulp CLI & Gulp 4](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/)
+* [Node.js](http://nodejs.org/) >= 6.9.x
+* [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
 
 ## Installation
 
