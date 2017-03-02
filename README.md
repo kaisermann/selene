@@ -4,6 +4,14 @@
 
 ## Informations
 
+### Requirements
+
+* [WordPress](https://wordpress.org/) >= 4.7
+* [PHP](http://php.net/manual/en/install.php) >= 5.6.4
+* [Composer](https://getcomposer.org/download/)
+* [Node.js](http://nodejs.org/) >= 6.9.x
+* [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
+
 #### Controllers
 
 You can use controllers to pass data to specific templates. A controller must be created inside the [`src/controllers/`](https://github.com/kaisermann/selene/blob/master/src/controllers/) directory and have its scope listed on the `$controllers` variable of [`src/controllers.php`](https://github.com/kaisermann/selene/blob/master/src/controllers.php). A controller scope is defined by each class name returned by `get_body_class`.
