@@ -10,7 +10,7 @@ add_action( 'after_setup_theme', function() {
 
 	// Create @asset() Blade directive
 	$sageCompiler->directive('asset', function ( $asset ) {
-		return '<?php echo App\\asset_path(\'' . trim( $asset, '\'"' ) . '\'); ?>';
+		return "<?php echo App\\asset_path({$asset}); ?>";
 	});
 
 	// Creates @posts Blade directive
