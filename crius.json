@@ -9,7 +9,7 @@
       "whitelist": ["wp-admin/admin-ajax.php"],
       "blacklist": ["wp-admin/**"],
       "watch": [
-        "{src,templates}/**/*.{php,html}",
+        "{src,views}/**/*.{php,html}",
         "*.{php,html}"
       ],
       "devUrl": "localhost/web/root"

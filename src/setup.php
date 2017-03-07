@@ -35,9 +35,9 @@ function action__sage_setup() {
 		'uri.stylesheet' => get_stylesheet_directory_uri(),
 		'uri.template'   => get_template_directory_uri(),
 	];
-	$viewPaths = collect( preg_replace( '%[\/]?(templates)?[\/.]*?$%', '', [ STYLESHEETPATH, TEMPLATEPATH ] ) )
+	$viewPaths = collect( preg_replace( '%[\/]?(views)?[\/.]*?$%', '', [ STYLESHEETPATH, TEMPLATEPATH ] ) )
 		->flatMap(function ( $path ) {
-			return [ "{$path}/templates", $path ];
+			return [ "{$path}/views", $path ];
 		})->unique()->toArray();
 	config([
 		'assets.manifest' => "{$paths['dir.stylesheet']}/dist/assets.json",

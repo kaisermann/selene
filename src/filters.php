@@ -39,7 +39,7 @@ array_map(function ( $type ) {
 	add_filter("{$type}_template_hierarchy", function ( $templates ) {
 		return call_user_func_array('array_merge', array_map(function ( $template ) {
 			$transforms = [
-				'%^/?(templates)?/?%' => config( 'sage.disable_option_hack' ) ? 'templates/' : '',
+				'%^/?(views)?/?%' => config( 'sage.disable_option_hack' ) ? 'views/' : '',
 				'%(\.blade)?(\.php)?$%' => '',
 			];
 			$normalizedTemplate = preg_replace( array_keys( $transforms ), array_values( $transforms ), $template );
@@ -79,18 +79,43 @@ function filter__template_include( $template ) {
 }
 
 function filter__body_class( array $classes ) {
+	
+	// String patterns to remove
+	$excludePatterns = [
+		'page-template-views.*',		// Removes page-template-views-$template
+		'page-id-.*',								// Removes page-id-$id
+		'no-customize-support', 		// Removes no-customize-support
+		'post-template.*',					// Removes post-template-$template
+		'postid.*',									// Removes postid$id
+		'single-format.*', 					// Removes single-format-$format
+		'category-\d*', 						// Removes category-$id
+		'tag-\d*', 									// Removes tag-$id,
+		'post-type-archive',				// Removes post-type-archive
+	];
+	
+	// Regex patterns to replace class names
+	$replacePatterns = [
+		'/page-template-template-(.*)-blade/' => 'template-$1', // Simplifies template classes
+		'/page-template(.*)/' => 'template$1',
+		'/post-type-archive-(.*)/' => 'archive-$1' // Simplifies custom-post-type-archive
+	];
+	
+	// Adds 'global' class to the body
 	array_unshift( $classes, 'global' );
-	// Add page slug if it doesn't exist
-	if ( is_single() || is_page() && ! is_front_page() ) {
-		if ( ! in_array( basename( get_permalink() ), $classes ) ) {
-			$classes[] = basename( get_permalink() );
-		}
-	}
+	 // Add post/page slug if not present
+  if (is_single() || is_page() && !is_front_page()) {
+    if (!in_array(basename(get_permalink()), $classes)) {
+      $classes[] = 'page-' . basename(get_permalink());
+    }
+  }
 
-	// Add class if sidebar is active
-	if ( display_sidebar() ) {
-		$classes[] = 'sidebar-primary';
-	}
+  // Remove unnecessary classes
+	$classes = preg_grep('/^(?!('. implode('|', $excludePatterns) . ')$)/xs', $classes);
+	$classes = preg_replace(
+		array_keys( $replacePatterns ),
+		array_values( $replacePatterns ),
+		$classes
+	);
 
 	return $classes;
 }
@@ -142,7 +167,7 @@ function filter__wpseo_json_ld_search_url( $url ) {
 
 function filter__get_search_form() {
 	$form = '';
-	echo template( get_stylesheet_directory() . '/templates/partials/searchform.blade.php', [] );
+	echo template( get_stylesheet_directory() . '/views/partials/searchform.blade.php', [] );
 
 	return $form;
 }
