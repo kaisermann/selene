@@ -11,7 +11,9 @@ function registerController( $scopes, $fn ) {
 		$scopes = [ $scopes ];
 	}
 	foreach ( $scopes as $scope ) {
-		add_filter( "sage/template/{$scope}/data", $fn, 10, 2 );
+		add_filter( "sage/template/{$scope}/data", function( $data, $template ) use ($fn) {
+			return $data + $fn($data, $template);
+		}, 10, 2 );
 	}
 }
 

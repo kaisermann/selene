@@ -126,3 +126,12 @@ function dump( $data, $phpPrint = false, $onlyLogged = true ) {
 		}
 	}
 }
+
+function getSVG( $path, $echo = true ) {
+	$realPath = config( 'dir.stylesheet' ) . "/dist/images/{$path}.svg";
+	$content = file_get_contents(realpath($realPath));
+	if ( $echo ) {
+		echo $content;
+	}
+	return $content;
+}
