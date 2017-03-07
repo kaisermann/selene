@@ -1,8 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-	@while(have_posts())
-		@php(the_post())
+	@mainquery
 		@php(the_content())
-	@endwhile
+	@endmainquery
 @endsection

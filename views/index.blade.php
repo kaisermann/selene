@@ -8,8 +8,7 @@
 		{!! get_search_form(false) !!}
 	@endif
 	
-	@while (have_posts())
-		@php(the_post())
+	@mainquery
 		<article @php(post_class())>
 			<header>
 				<h2 class="entry-title"><a href="{{ get_permalink() }}">{{ get_the_title() }}</a></h2>
@@ -18,7 +17,7 @@
 				@php(the_excerpt())
 			</div>
 		</article>
-	@endwhile
+	@endmainquery
 
 	{!! get_the_posts_navigation() !!}
 @endsection
