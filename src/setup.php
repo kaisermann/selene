@@ -110,7 +110,7 @@ function action__wp_enqueue_scripts() {
 	wp_enqueue_style( 'selene/main.css', asset_path( 'styles/main.css' ), false, null );
 	wp_enqueue_script( 'selene/main.js#defer', asset_path( 'scripts/main.js' ), [], null, true );
 
-	wp_localize_script('selene/main.js', 'appMeta', [
+	wp_localize_script('selene/main.js#defer', 'appMeta', [
 	  	'homeUrl' => get_bloginfo( 'url' ),
 	  	'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 	]);
