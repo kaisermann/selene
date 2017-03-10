@@ -179,10 +179,22 @@ function action__cleanup_widgets() {
 function add_image_sizes() {
 }
 
+// https://github.com/johnbillion/extended-cpts/wiki
 function add_post_types() {
+	register_extended_post_type( 'article', [], [
+		'singular' => 'Article',
+		'plural'   => 'Articles',
+		'slug'     => 'article',
+	]);
 }
 
+// https://github.com/johnbillion/extended-taxos
 function add_taxonomies() {
+	register_extended_taxonomy( 'article_category', 'article' , [], [
+		'singular' => 'Article Category',
+		'plural'   => 'Article Categories',
+		'slug'     => 'article-category',
+	]);
 }
 
 function cleanup() {
