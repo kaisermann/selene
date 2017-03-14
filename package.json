@@ -21,7 +21,7 @@
   ],
   "devDependencies": {
     "asset-orchestrator": "^1.2.9",
-    "autoprefixer": "^6.7.6",
+    "autoprefixer": "^6.7.7",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.2.1",
@@ -50,7 +50,7 @@
     "gulp-sizereport": "^1.2.0",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-stylus": "^2.6.0",
-    "gulp-uglify": "^2.0.1",
+    "gulp-uglify": "^2.1.0",
     "gulp-uncss": "^1.0.6",
     "gulp-util": "^3.0.8",
     "lazypipe": "^1.0.1",
@@ -58,7 +58,7 @@
     "minimist": "^1.2.0",
     "require-directory": "^2.1.1",
     "rollup-plugin-babel": "^2.7.1",
-    "rollup-plugin-commonjs": "^7.0.1",
+    "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-builtins": "^2.1.0",
     "rollup-plugin-node-resolve": "^2.0.0"
   },
