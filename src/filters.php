@@ -167,7 +167,7 @@ function filter__wpseo_json_ld_search_url( $url ) {
 
 function filter__get_search_form() {
 	$form = '';
-	echo template( get_stylesheet_directory() . '/views/partials/searchform.blade.php', [] );
+	echo template(realpath(config('dir.template') . '/views/earchform.blade.php'), []);
 
 	return $form;
 }
