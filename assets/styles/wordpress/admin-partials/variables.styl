@@ -1,0 +1,47 @@
+$text-color = admin.text
+$base-color = admin.navigation
+$highlight-color = admin.highlight
+$notification-color = admin.notification
+$body-background = admin.background
+$button-color = admin.button
+$link = admin.link
+$submenu-background = !!admin.submenu ? admin.submenu : changeColor($base-color, 10%)
+	
+// Global
+$icon-color = hsl(hue($base-color), 7%, 95%)
+$link-focus = lighten($link, 10%)
+$form-checked = $highlight-color
+
+// Admin menu & Admin bar
+$menu-text = $text-color
+$menu-icon = $icon-color
+$menu-background = $base-color
+
+$menu-highlight-text = $text-color
+$menu-highlight-icon = $text-color
+$menu-highlight-background = $highlight-color
+
+$menu-current-text = invertIfDark($menu-highlight-text)
+$menu-current-icon = invertIfDark($menu-highlight-icon)
+$menu-current-background = $menu-highlight-background
+
+$menu-submenu-text = mix($base-color, $text-color, 20%)
+$menu-submenu-background = changeColor($submenu-background, 10%)
+$menu-submenu-background-alt = desaturate(lighten($menu-background, 7%), 7%)
+$menu-submenu-focus-text = changeColor($highlight-color, 20%)
+$menu-submenu-current-text = $text-color
+
+$menu-bubble-text = $text-color
+$menu-bubble-background = $notification-color
+$menu-bubble-current-text = $text-color
+$menu-bubble-current-background = $menu-submenu-background
+
+$menu-collapse-text = $menu-icon
+$menu-collapse-icon = $menu-icon
+$menu-collapse-focus-text = $text-color
+$menu-collapse-focus-icon = $menu-highlight-icon
+
+$adminbar-avatar-frame = lighten($menu-background, 7%)
+$adminbar-input-background = lighten($menu-background, 7%)
+
+$menu-customizer-text = mix($base-color, $text-color, 40%)

@@ -1,0 +1,46 @@
+// Login page
+body.login
+	font-family: fonts.main;
+	font-weight: 500;
+	background: admin.login.background;
+	display: flex;
+	align-content: center;
+	color: admin.login.color;
+			
+	label
+		font-family: fonts.main;
+		color: admin.login.formColor;
+		font-weight: 300;
+		text-transform: uppercase;
+		
+	a
+		color: admin.login.color !important;
+		&:hover
+			text-decoration: underline !important;
+
+#login
+	padding: 0;
+	h1
+		width: 100%;
+		margin: 0 auto;
+
+		a
+			width: 100%;
+			height: 100px;
+			background-image: url(s(admin.login.logo)); // we use s to make stylus read the admin.login obj
+			background-size: 190px auto;
+			
+#loginform
+	background-color: admin.login.form.background;
+	box-shadow: admin.login.form.background;
+
+		
+
+.login
+	form
+		input[type="checkbox"]
+			background-color: colors.white;
+			box-shadow: none;
+			border-color: colors.black;
+		input[type="checkbox"]:checked:before
+			color: colors.jasmine;

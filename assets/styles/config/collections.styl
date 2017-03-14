@@ -1,14 +1,14 @@
 // Colors
 colors = {
-	pink: #850047,
-	purple: #93648d,
-	green: #7bc8a4,
-	blue: #4cc3d9,
-	yellow: #ffc65d,
-	red: #f16745,
-	brown: #664f36,
-	white: whitesmoke,
-	gray: #404040,
+	pink: #850047
+	purple: #93648d
+	green: #7bc8a4
+	blue: #4cc3d9
+	yellow: #ffc65d
+	red: #f16745
+	brown: #664f36
+	white: whitesmoke
+	gray: #404040
 	black: #242629
 }
 
@@ -17,7 +17,36 @@ fonts = {
 
 }
 
-// Margins
+// Margins - Better control of your margins
 margins = {
   floatedContent: rem(15px)
 }
+
+// zindexes - Better control of your z-indexes
+zindexes = {
+	
+}
+
+// Admin style
+admin = {
+	font: 'Torque'
+	background: colors.white
+	navigation: colors.black
+	submenu: colors.gray
+	text: colors.white
+	button: colors.black
+	highlight: colors.white
+	notification: #d54e21
+	link: #0073aa
+		
+	login: {
+		logo: '../images/login-logo.png'
+		background: colors.white
+		color: colors.black
+		form: {
+			background: colors.black
+			color: colors.white
+		}
+	}
+}
+admin.isBaseDark = getPerceivedBrightness(admin.navigation) < 150

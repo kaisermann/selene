@@ -46,3 +46,7 @@ responsify()
 			&\\\@{key}
 				+min(key)
 					{block}
+
+// Tells if a color is bright or dark (values of +-150> means bright)
+getPerceivedBrightness($color)
+	return round((((red($color) ** 2) * 0.241) + ((green($color) ** 2) * 0.691) +	((blue($color) ** 2) * 0.068)) ** (1 / 2))

@@ -1,0 +1,33 @@
+// Global imports
+@import '../config/setup';
+@import '../config/mixins';
+@import '../config/collections';
+@import '../config/fonts';
+
+@import 'admin-partials/mixins'
+@import 'admin-partials/variables'
+@import 'admin-partials/core'
+@import 'admin-partials/admin-bar'
+@import 'admin-partials/admin-menu'
+@import 'admin-partials/forms'
+@import 'admin-partials/links'
+@import 'admin-partials/login-page'
+@import 'admin-partials/media'
+@import 'admin-partials/pointers'
+@import 'admin-partials/tables'
+@import 'admin-partials/themes'
+@import 'admin-partials/widgets'
+@import 'admin-partials/misc'
+	
+// Since we force an admin style, let's hide the admin theme selection area
+.user-admin-color-wrap
+	> td
+		position: relative;
+		
+		fieldset
+			display: none;
+		
+		&::before
+			content: 'Admin CSS is controller by the active theme. Check the "{theme}/assets/styles/wordpress/admin.styl" file';
+			display: block;
+			size(100%);
