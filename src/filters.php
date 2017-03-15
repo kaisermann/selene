@@ -16,8 +16,6 @@ add_filter( 'get_search_form', 'App\filter__get_search_form' );
 add_filter( 'jpeg_quality', 'App\filter__jpeg_quality' );
 // Defer scripts
 add_filter( 'script_loader_tag', 'App\filter__defer_scripts' , 10, 2 );
-// Allows svg to be uploaded as media
-add_filter( 'upload_mimes', 'App\filter__upload_mimes' );
 // Wraps oembeds with 'embed'
 add_filter( 'embed_oembed_html', 'App\filter__embed_oembed_html' );
 // Asset versioning
@@ -167,18 +165,13 @@ function filter__wpseo_json_ld_search_url( $url ) {
 
 function filter__get_search_form() {
 	$form = '';
-	echo template(realpath(config('dir.template') . '/views/earchform.blade.php'), []);
+	echo template(realpath(config('dir.template') . '/views/partials/searchform.blade.php'), []);
 
 	return $form;
 }
 
 function filter__jpeg_quality() {
 	return 100;
-}
-
-function filter__upload_mimes( $mimes ) {
-	$mimes['svg'] = 'image/svg+xml';
-	return $mimes;
 }
 
 function filter__embed_oembed_html( $cache ) {

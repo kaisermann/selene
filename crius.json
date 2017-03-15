@@ -58,18 +58,14 @@
       "pattern": "*.{eot,otf,svg,ttc,ttf,woff,woff2}",
       "directory": "fonts",
       "assets": {
-        "./": {
-          "files": "fonts/**/*"
-        }
+        "./": "fonts/**/*"
       }
     },
     "images": {
       "pattern": "*.{jpg,png,gif,svg}",
       "directory": "images",
       "assets": {
-        "./": {
-          "files": "images/**/*"
-        }
+        "./": "images/**/*"
       }
     }
   }

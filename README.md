@@ -24,7 +24,7 @@ Selene prepends a `global` class to the `body`, creating a global controller tha
 
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query.
 
-* `@inlinesvg` - Prints the specified svg.
+* `@inlinesvg` - Prints a svg with the specified path.
 
 * `@dump` - Dumps an php variable with a `var_export`.
 
