@@ -8,7 +8,7 @@ add_action( 'customize_register', 'App\action__customize_register' );
 add_action( 'customize_preview_init', 'App\action__customize_preview_init' );
 // Enqueues admin.css on login page and dashboard
 add_action( 'admin_enqueue_scripts', 'App\action__admin_enqueue_scripts', 100 );
-add_action( 'login_enqueue_scripts', 'App\action__admin_enqueue_scripts', 100 );
+add_action( 'login_enqueue_scripts', 'App\action__login_enqueue_scripts', 100 );
 // Removes default dashboard metaboxes
 add_action( 'admin_init', 'App\action__admin_init' );
 // Removes WP logo and comments menu from admin bar
@@ -47,6 +47,10 @@ function action__customize_preview_init() {
 
 function action__admin_enqueue_scripts() {
 	wp_enqueue_style( 'selene/admin.css', asset_path( 'styles/admin.css' ), false, null );
+}
+
+function action__login_enqueue_scripts() {
+	wp_enqueue_style( 'selene/login.css', asset_path( 'styles/login.css' ), false, null );
 }
 
 function action__admin_init() {

@@ -47,7 +47,10 @@
           "files": "styles/wordpress/editor.styl"
         },
         "admin.css": {
-          "files": "styles/wordpress/admin.styl"
+          "files": "styles/wordpress/admin/wrapper.styl"
+        },
+        "login.css": {
+          "files": "styles/wordpress/login/wrapper.styl"
         }
       }
     },

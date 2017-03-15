@@ -41,8 +41,9 @@ Directives can be defined on [`src/directives.php`](https://github.com/kaiserman
   * Rewrites the search url from `.com/?s=term` with `.com/search/term`;
   * Wraps all `oembed` around a `<div class="embed">`;
   * Remove all protocols (`http`,`https`) from urls;
-  * Admin dashboard and login page CSS customization with the [`collections.styl#L31`](https://github.com/kaisermann/selene/blob/master/assets/styles/config/collections.styl#L31) and [`admin.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/admin.styl) files;
-  * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/editor.styl) file;
+  * Custom admin and login CSS. Must be activated inside the [`setup.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/config/setup.styl#L5)
+    * Admin dashboard and login page CSS customization with the [`admin.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/admin/config.styl) file;
+    * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/editor.styl) file;
   * Provides an [`appMeta`](https://github.com/kaisermann/selene/blob/master/src/setup.php#L113) global javascript object with the ajax and home urls.
   
 * Back-end

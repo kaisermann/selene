@@ -1,0 +1,49 @@
+$text-color = admin.text
+$base-color = admin.navigation
+$highlight-color = admin.highlight
+$notification-color = admin.notification
+$body-background = admin.background
+$link = admin.link
+$submenu-background = !!admin.submenu ? admin.submenu : changeColor($base-color, 10%)
+$button-background-color = admin.button.background
+$button-text-color = invIfSimilar(admin.button.color, $button-background-color)
+	
+// Global
+$icon-color = hsl(hue($base-color), 7%, 95%)
+$link-focus = lighten($link, 10%)
+$form-checked = invIfSimilar($highlight-color, #fff)
+
+// Admin menu & Admin bar
+$menu-background = $base-color
+$menu-text = invIfSimilar($text-color, $menu-background)
+$menu-icon = invIfSimilar($icon-color, $menu-background)
+
+$menu-highlight-background = $highlight-color
+$menu-highlight-text = invIfSimilar($text-color, $menu-highlight-background)
+$menu-highlight-icon = invIfSimilar($text-color, $menu-highlight-background)
+
+$menu-current-background = $menu-highlight-background
+$menu-current-text = invIfSimilar($menu-highlight-text, $menu-current-background)
+$menu-current-icon = invIfSimilar($menu-highlight-icon, $menu-current-background)
+
+$menu-submenu-background = changeColor($submenu-background, 10%)
+$menu-submenu-background-alt = desaturate(lighten($menu-background, 7%), 7%)
+$menu-submenu-text = mix($base-color, $text-color, 20%)
+$menu-submenu-highlight-icon = invIfSimilar($text-color, $menu-submenu-background)
+$menu-submenu-focus-text = $menu-submenu-highlight-icon
+$menu-submenu-current-text = $menu-submenu-focus-text
+
+$menu-bubble-background = $notification-color
+$menu-bubble-text = invIfSimilar($text-color, $menu-bubble-background)
+$menu-bubble-current-background = invIfSimilar($menu-submenu-background, $menu-highlight-background)
+$menu-bubble-current-text = invIfSimilar($text-color, $menu-bubble-current-background)
+
+$menu-collapse-text = $menu-icon
+$menu-collapse-icon = $menu-icon
+$menu-collapse-focus-text = $text-color
+$menu-collapse-focus-icon = $menu-highlight-icon
+
+$adminbar-avatar-frame = lighten($menu-background, 7%)
+$adminbar-input-background = lighten($menu-background, 7%)
+
+$menu-customizer-text = mix($base-color, $text-color, 40%)
