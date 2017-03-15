@@ -59,11 +59,12 @@ if login.form
 	$login-form-background = login.form.background or whitesmoke
 	$login-form-color = invIfSimilar(login.form.color or black, $login-form-background)
 	$login-form-padding = login.form.padding != null ? login.form.padding : 26px
+	$login-form-border-radius = login.form.borderRadius or 0
 	
 	.login
 		#nav
 		#backtoblog
-			padding: 0 $login-form-padding 0;
+			padding: 0 $login-form-padding 0
 				
 		label
 			font-family: fonts.main
@@ -72,6 +73,7 @@ if login.form
 			text-transform: uppercase
 	
 	#loginform
+		border-radius: $login-form-border-radius
 		background-color: $login-form-background
 		box-shadow: 0 1px 3px rgba($login-form-background, .13)
 		padding: $login-form-padding
