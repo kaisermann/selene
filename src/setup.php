@@ -76,8 +76,6 @@ function action__init() {
 	add_taxonomies();
 
 	$wp_rewrite->search_base = 'search';
-
-	cleanup();
 }
 
 function action__after_setup_theme() {
@@ -181,52 +179,24 @@ function add_image_sizes() {
 
 // https://github.com/johnbillion/extended-cpts/wiki
 function add_post_types() {
+	/*
 	register_extended_post_type( 'article', [], [
 		'singular' => 'Article',
 		'plural'   => 'Articles',
 		'slug'     => 'article',
 	]);
+	*/
 }
 
 // https://github.com/johnbillion/extended-taxos
 function add_taxonomies() {
+	/*
 	register_extended_taxonomy( 'article_category', 'article' , [], [
 		'singular' => 'Article Category',
 		'plural'   => 'Article Categories',
 		'slug'     => 'article-category',
 	]);
-}
-
-function cleanup() {
-	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-	remove_action( 'admin_print_styles', 'print_emoji_styles' );
-	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
-	remove_action( 'wp_head', 'feed_links_extra', 3 );
-	remove_action( 'wp_head', 'feed_links', 2 );
-	remove_action( 'wp_head', 'index_rel_link' );
-	remove_action( 'wp_head', 'parent_post_rel_link', 10 );
-	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-	remove_action( 'wp_head', 'rel_canonical', 10 );
-	remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
-	remove_action( 'wp_head', 'rsd_link' );
-	remove_action( 'wp_head', 'start_post_rel_link', 10 );
-	remove_action( 'wp_head', 'wlwmanifest_link' );
-	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
-	remove_action( 'wp_head', 'wp_oembed_add_host_js' );
-	remove_action( 'wp_head', 'wp_shortlink_wp_head', 10 );
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-
-	// Remove emojis and default gallery style
-	add_filter( 'use_default_gallery_style', '__return_false' );
-	add_filter( 'emoji_svg_url', '__return_false' );
-	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
-	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-
-	global $wp_widget_factory;
-	if ( isset( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'] ) ) {
-		remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ] );
-	}
+	*/
 }
 
 /**

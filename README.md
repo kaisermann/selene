@@ -20,14 +20,38 @@ Selene prepends a `global` class to the `body`, creating a global controller tha
 
 #### Custom Blade Directives
 
-* [Node.js](http://nodejs.org/) >= 6.9.x
-* [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
-
 * `@mainquery ... @endmainquery` - Loops through the main query.
 
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query.
 
+* `@inlinesvg` - Prints the specified svg.
+
+* `@dump` - Dumps an php variable with a `var_export`.
+
+* `@console` - Dumps a php variable in the javascript console.
+
 Directives can be defined on [`src/directives.php`](https://github.com/kaisermann/selene/blob/master/src/directives.php).
+
+## WordPress things Selene does
+
+* Front-end
+  * Cleans up and prettify your `body_class()` output;
+  * Cleans up your `<head>`;
+  * Scripts load with `defer`;
+  * Rewrites the search url from `.com/?s=term` with `.com/search/term`;
+  * Wraps all `oembed` around a `<div class="embed">`;
+  * Remove all protocols (`http`,`https`) from urls;
+  * Admin dashboard and login page CSS customization with the [`collections.styl#L31`](https://github.com/kaisermann/selene/blob/master/assets/styles/config/collections.styl#L31) and [`admin.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/admin.styl) files;
+  * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/editor.styl) file;
+  * Provides an [`appMeta`](https://github.com/kaisermann/selene/blob/master/src/setup.php#L113) global javascript object with the ajax and home urls.
+  
+* Back-end
+  * Sets uploaded JPEG quality to 100;
+  * While `WP_DEBUG` is true, the enqueued assets will have a cache-busting file name;
+  * Provides John Billion's libraries which make painless to create custom post types and taxonomies.
+    * https://github.com/johnbillion/extended-cpts
+    * https://github.com/johnbillion/extended-taxos
+
 
 ## Observations
 
