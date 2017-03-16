@@ -67,11 +67,13 @@ array_map(function ( $type ) {
  * Render page using Blade
  */
 function filter__template_include( $template ) {
-	$data = array_reduce(get_body_class(), function ( $data, $class ) use ( $template ) {
+	$classes = get_body_class();
+	array_unshift( $classes, 'global' );
+	$data = array_reduce($classes, function ( $data, $class ) use ( $template ) {
 		return apply_filters( "sage/template/{$class}/data", $data, $template );
 	}, []);
 	echo template( $template, $data );
-
+	
 	// Return a blank file to make WordPress happy
 	return get_theme_file_path( 'index.php' );
 }
@@ -98,9 +100,7 @@ function filter__body_class( array $classes ) {
 		'/post-type-archive-(.*)/' => 'archive-$1' // Simplifies custom-post-type-archive
 	];
 	
-	// Adds 'global' class to the body
-	array_unshift( $classes, 'global' );
-	 // Add post/page slug if not present
+	// Add post/page slug if not present
   if (is_single() || is_page() && !is_front_page()) {
     if (!in_array(basename(get_permalink()), $classes)) {
       $classes[] = 'page-' . basename(get_permalink());
