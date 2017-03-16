@@ -2,7 +2,7 @@
 
 namespace App;
 
-registerController('global', function( $data, $template ) {
+controller('global', function( $data, $template ) {
 	return [
 		'current_template' => basename( $template ,'.blade.php' ),
 		'primary_nav_args' => [

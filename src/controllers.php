@@ -2,11 +2,7 @@
 
 namespace App;
 
-$controllers = array_map(function($val) {
-	return basename($val, '.php');
-}, glob( __DIR__ . '/controllers/*.php'));
-
-function registerController( $scopes, $fn ) {
+function controller( $scopes, $fn ) {
 	if ( ! is_array( $scopes ) ) {
 		$scopes = [ $scopes ];
 	}
@@ -18,4 +14,10 @@ function registerController( $scopes, $fn ) {
 }
 
 // Includes the files listed on $controllers
-includeArrayOfFiles( $controllers, 'src/controllers' );
+includeArrayOfFiles(
+	array_map(function( $filePath ) {
+			return basename( $filePath, '.php' );
+		}, glob( get_stylesheet_directory() . '/controllers/*.php' )
+	),
+	'controllers'
+);
