@@ -38,11 +38,11 @@ add_action( 'after_setup_theme', function() {
 
 	// Create @dump($obj) Blade directive
 	$sageCompiler->directive('dump', function ( $obj ) {
-		return '<?php App\\dump(' . $obj . ', true); ?>';
+		return '<?php App\\dump(' . $obj . ', true, false); ?>';
 	});
 
 	// Create @console($obj) Blade directive
 	$sageCompiler->directive('console', function ( $obj ) {
-		return '<?php App\\dump(' . $obj . ', false); ?>';
+		return '<?php App\\dump(' . $obj . ', false, false); ?>';
 	});
 }, 100 );
