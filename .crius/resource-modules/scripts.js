@@ -6,7 +6,8 @@ const sourcemaps = require('gulp-sourcemaps')
 const betterRollup = require('gulp-better-rollup')
 const rev = require('gulp-rev')
 
-const rollUpBabel = require('rollup-plugin-babel')
+// const rollUpBabel = require('rollup-plugin-babel')
+const rollUpBuble = require('rollup-plugin-buble')
 const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
 const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
@@ -42,9 +43,15 @@ module.exports = {
             // Transforms CommonJS modules into ES6 modules for RollUp
             rollUpCommonjs(),
             // Transpiles the code, ignoring coniguration from the `node_modules`
-            rollUpBabel({
-              exclude: 'node_modules/**/.babelrc',
+            rollUpBuble({
+              transforms: {
+                arrow: true,
+                dangerousForOf: true,
+              },
             }),
+            // rollUpBabel({
+            //  exclude: 'node_modules/**/.babelrc',
+            // }),
           ],
         }, {
           format: 'iife',
