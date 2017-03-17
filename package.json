@@ -63,6 +63,7 @@
     "rollup-plugin-node-resolve": "^2.0.0"
   },
   "dependencies": {
+    "aph": "^0.0.1",
     "babel-runtime": "^6.23.0",
     "rolleiflex": "^2.0.0",
     "rupture": "^0.6.2"
