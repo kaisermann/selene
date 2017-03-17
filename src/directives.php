@@ -6,7 +6,7 @@ add_action( 'after_setup_theme', function() {
 
 	// Helpers
 	$sageCompiler = sage( 'blade' )->compiler();
-	$fnEndWhile = function () { return '<?php endwhile; ?>'; };
+	$fnEndWhile = function () { return '<?php endwhile; wp_reset_query(); ?>'; };
 
 	// Create @asset() Blade directive
 	$sageCompiler->directive('asset', function ( $asset ) {
