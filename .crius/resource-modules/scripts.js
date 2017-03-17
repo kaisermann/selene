@@ -43,7 +43,7 @@ module.exports = {
             rollUpCommonjs(),
             // Transpiles the code, ignoring coniguration from the `node_modules`
             rollUpBabel({
-              exclude: 'node_modules/**',
+              exclude: 'node_modules/**/.babelrc',
             }),
           ],
         }, {
