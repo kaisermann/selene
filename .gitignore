@@ -1,7 +1,9 @@
-dist
-bower_components
-node_modules
+dist/
+bower_components/
+node_modules/
 npm-debug.log
 .DS_Store
-./index.html
+index.html
+vendor/
+!assets/**/vendor/
 yarn-error.log

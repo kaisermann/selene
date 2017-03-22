@@ -5,12 +5,14 @@
       "dist": "dist/"
     },
     "browserSync": {
-      "mode": "server",
+      "mode": "proxy",
+      "whitelist": ["wp-admin/admin-ajax.php"],
+      "blacklist": ["wp-admin/**"],
       "watch": [
-        "{src,templates}/**/*.{php,html}",
+        "{src,views}/**/*.{php,html}",
         "*.{php,html}"
       ],
-      "devUrl": "localhost/web/root"
+      "devUrl": "localhost/web/root/path"
     }
   },
   "resources": {
@@ -20,7 +22,7 @@
       "assets": {
         "main.js": {
           "files": "scripts/wrapper.js",
-          "vendor": "assets/scripts/vendor/*.js",
+          "vendor": ["assets/scripts/vendor/*.js"],
           "npm": []
         }
       }
@@ -37,7 +39,10 @@
           ],
           "npm": [],
           "uncss": true
-        }
+        },
+        "editor.css": "styles/wordpress/editor.styl",
+        "admin.css": "styles/wordpress/admin/wrapper.styl",
+        "login.css": "styles/wordpress/login/wrapper.styl"
       }
     },
     "fonts": {

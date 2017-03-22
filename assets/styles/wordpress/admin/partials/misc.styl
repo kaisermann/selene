@@ -1,0 +1,28 @@
+/* Active tabs use a bottom border color that matches the page background color. */
+.about-wrap h2 .nav-tab-active,
+.nav-tab-active,
+.nav-tab-active:hover
+	background-color: $body-background
+	border-bottom-color: $body-background
+	
+/* Responsive Component */
+div#wp-responsive-toggle a:before
+	color: $menu-icon
+	
+.wp-responsive-open div#wp-responsive-toggle a
+	border-color: transparent
+	background: $menu-highlight-background
+	
+.wp-responsive-open #wpadminbar #wp-admin-bar-menu-toggle a
+	background: $menu-submenu-background
+	
+.wp-responsive-open #wpadminbar #wp-admin-bar-menu-toggle .ab-icon:before
+	color: $menu-icon
+	
+/* TinyMCE */
+.mce-container.mce-menu .mce-menu-item:hover,
+.mce-container.mce-menu .mce-menu-item.mce-selected,
+.mce-container.mce-menu .mce-menu-item:focus,
+.mce-container.mce-menu .mce-menu-item-normal.mce-active,
+.mce-container.mce-menu .mce-menu-item-preview.mce-active
+	background: $highlight-color

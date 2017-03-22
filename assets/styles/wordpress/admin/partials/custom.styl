@@ -1,0 +1,12 @@
+// Since we force an admin style, let's hide the admin theme selection area
+.user-admin-color-wrap
+	> td
+		position: relative
+		
+		fieldset
+			display: none
+		
+		&::before
+			content: 'Admin CSS is controller by the active theme. Check the "{theme}/assets/styles/wordpress/admin.styl" file'
+			display: block
+			size(100%)

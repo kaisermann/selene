@@ -1,0 +1,11 @@
+@import '../../config/setup'
+@import '../../config/mixins'
+@import '../../config/collections'
+@import '../../config/fonts'
+@import '../mixins.styl'
+
+// Only build the admin css if crius.buildLoginCSS is true
+if crius.buildCSS.login
+	@import 'config'
+	@import 'partials/core'
+		

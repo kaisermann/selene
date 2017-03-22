@@ -1,0 +1,23 @@
+@import '../../config/setup'
+@import '../../config/mixins'
+@import '../../config/collections'
+@import '../../config/fonts'
+@import '../mixins.styl'
+
+// Only build the admin css if crius.buildAdminCSS is true
+if crius.buildCSS.admin
+	@import 'config'
+	@import 'partials/variables'
+	@import 'partials/core'
+	@import 'partials/admin-bar'
+	@import 'partials/admin-menu'
+	@import 'partials/forms'
+	@import 'partials/links'
+	@import 'partials/media'
+	@import 'partials/pointers'
+	@import 'partials/tables'
+	@import 'partials/themes'
+	@import 'partials/widgets'
+	@import 'partials/misc'
+	@import 'partials/custom'
+		

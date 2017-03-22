@@ -23,17 +23,13 @@ em($px, $base = crius.baseFontSize)
 // Font-face mixin, by jackbrewer
 // https://github.com/jackbrewer/stylus-mixins/
 font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
-	$url-fallback = 'url("' + $file-path + '.eot")'
-	$url  = 'url("' + $file-path + '.eot?#iefix") format("embedded-opentype"), '
-	$url = $url + 'url("' + $file-path + '.woff") format("woff"), '
-	$url = $url + 'url("' + $file-path + '.ttf") format("truetype"), '
-	$url = $url + 'url("' + $file-path + '.svg#svg' + replace(' ', '', $font-name) + '") format("svg")'
+	$url  = 'url("' + $file-path + '.woff2") format("woff2"),'
+	$url = $url + ' url("' + $file-path + '.woff") format("woff")'
 	@font-face
-		font-family: $font-name;
-		src: unquote($url-fallback);
-		src: unquote($url);
-		font-weight: unquote($weight);
-		font-style: unquote($style);
+		font-family: $font-name
+		src: unquote($url)
+		font-weight: unquote($weight)
+		font-style: unquote($style)
 
 // Responsive class factory. Uses the breakpoints from rolleiflex.
 // Generates .selector@xx classes
@@ -46,3 +42,7 @@ responsify()
 			&\\\@{key}
 				+min(key)
 					{block}
+
+// Tells if a color is bright or dark (values of +-150> means bright)
+getPerceivedBrightness($color)
+	return round((((red($color) ** 2) * 0.241) + ((green($color) ** 2) * 0.691) +	((blue($color) ** 2) * 0.068)) ** (1 / 2))
