@@ -3,9 +3,6 @@
 namespace App;
 
 // Actions
-// Customizer.js
-add_action( 'customize_register', 'App\action__customize_register' );
-add_action( 'customize_preview_init', 'App\action__customize_preview_init' );
 // Enqueues admin.css on login page and dashboard
 add_action( 'admin_enqueue_scripts', 'App\action__admin_enqueue_scripts', 100 );
 add_action( 'login_enqueue_scripts', 'App\action__admin_enqueue_scripts', 100 );
@@ -31,20 +28,6 @@ add_filter( 'contextual_help', 'App\filter__contextual_help', 11, 3 );
 // add_filter( 'update_footer',  'App\filter__update_footer', 11, 1 );
 
 // Actions
-function action__customize_register( \WP_Customize_Manager $wp_customize ) {
-	// Add postMessage support
-	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
-	$wp_customize->selective_refresh->add_partial('blogname', [
-		'selector' => '.brand',
-		'render_callback' => function () {
-			bloginfo( 'name' );
-		},
-	]);
-}
-function action__customize_preview_init() {
-	wp_enqueue_script( 'selene/customizer.js', asset_path( 'scripts/customizer.js' ), [ 'customize-preview' ], null, true );
-};
-
 function action__admin_enqueue_scripts() {
 	wp_enqueue_style( 'selene/admin.css', asset_path( 'styles/admin.css' ), false, null );
 	wp_enqueue_style( 'selene/login.css', asset_path( 'styles/login.css' ), false, null );
@@ -61,6 +44,7 @@ function action__admin_init() {
 function action__trim_adminbar( $wp_admin_bar ) {
 	$wp_admin_bar->remove_node( 'wp-logo' );
 	$wp_admin_bar->remove_node( 'view-site' );
+	$wp_admin_bar->remove_menu( 'customize' );
 	$wp_admin_bar->remove_menu( 'comments' );
 }
 

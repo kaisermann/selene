@@ -86,7 +86,6 @@ function filter__body_class( array $classes ) {
 	$excludePatterns = [
 		'page-template-views.*',		// Removes page-template-views-$template
 		'page-id-.*',								// Removes page-id-$id
-		'no-customize-support', 		// Removes no-customize-support
 		'post-template.*',					// Removes post-template-$template
 		'postid.*',									// Removes postid$id
 		'single-format.*', 					// Removes single-format-$format
