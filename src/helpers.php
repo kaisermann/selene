@@ -73,13 +73,13 @@ function asset_path( $asset ) {
 }
 
 /**
- * Determine whether to show the sidebar
- * @return bool
+ * Renders the specified blade template
+ * @param string $templatePath
+ * @param $data
+ * @return null
  */
-function display_sidebar() {
-	static $display;
-	isset( $display ) || $display = apply_filters( 'sage/display_sidebar', false );
-	return $display;
+function renderTemplate( $templatePath, $data) {
+	echo template( config( 'dir.stylesheet' ) . "/views/{$templatePath}.blade.php", $data);
 }
 
 /**
@@ -105,7 +105,13 @@ function title() {
 	return get_the_title();
 }
 
-
+/**
+ * Dumps an variable in the console/php stdout
+ * @param $data
+ * @param bool $phpPrint
+ * @param bool $onlyLogged
+ * @return null
+ */
 function dump( $data, $phpPrint = false, $onlyLogged = true ) {
 	if ( ! $onlyLogged || is_user_logged_in() ) {
 		if ( $phpPrint ) {
@@ -116,6 +122,12 @@ function dump( $data, $phpPrint = false, $onlyLogged = true ) {
 	}
 }
 
+/**
+ * Returns or echoes the specified svg file content
+ * @param string $path
+ * @param bool $echo
+ * @return string
+ */
 function getSVG( $path, $echo = true ) {
 	$realPath = config( 'dir.stylesheet' ) . "/dist/images/{$path}.svg";
 	$content = file_get_contents( realpath( $realPath ) );
