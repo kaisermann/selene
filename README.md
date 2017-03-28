@@ -16,8 +16,6 @@
 
 You can use controllers to pass data to specific templates. A controller must be created inside the [`./controllers/`](https://github.com/kaisermann/selene/blob/master/controllers/) directory. A controller scope is defined by each class name returned by `get_body_class`.
 
-Selene prepends a `global` class to the `body`, creating a global controller that can pass data to any template.
-
 #### Custom Blade Directives
 
 * `@mainquery ... @endmainquery` - Loops through the main query.
@@ -47,6 +45,7 @@ Directives can be defined on [`src/directives.php`](https://github.com/kaiserman
   
 * Back-end
   * Sets uploaded JPEG quality to 100;
+  * Provides options on the admin dashboard to crop default medium and large image sizes;
   * While `WP_DEBUG` is true, the enqueued assets will have a cache-busting file name;
   * Provides John Billion's libraries which make painless to create custom post types and taxonomies.
     * https://github.com/johnbillion/extended-cpts
