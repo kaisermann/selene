@@ -1,26 +1,21 @@
-// The "import" can be relative to the node_modules (or the package.json)
+// The "@require" can be relative to the node_modules (or the package.json)
 // directory as seen below.
 // External
-@import "rolleiflex/src/wrapper.styl"
-@import "rupture/rupture/index.styl"
+@require "rolleiflex/src/wrapper.styl"
+@require "rupture/rupture/index.styl"
 // External
 
-@import "config/setup"
-@import "config/mixins"
-@import "config/external"
-@import "config/collections"
-@import "config/fonts"
+// Configuration files
+@require "config/setup"
+@require "config/external"
+@require "config/*"
 
-@import "common/global"
-@import "components/grid"
-@import "components/buttons"
-@import "components/forms"
-@import "partials/header"
-@import "partials/sidebar"
-@import "partials/footer"
-@import "layouts/main"
-@import "layouts/pages"
-@import "wordpress/wp-classes"
-
-@import "common/helpers"
-@import "common/overrides"
+// Style files
+@require "common/helpers"
+@require "common/global"
+@require "components/grid"
+@require "components/*"
+@require "partials/*"
+@require "layouts/*"
+@require "wordpress/wp-classes"
+@require "common/overrides"
