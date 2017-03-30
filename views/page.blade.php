@@ -4,4 +4,4 @@
 	@mainquery
 		@php(the_content())
 	@endmainquery
-@endsection
+@stop

@@ -20,4 +20,4 @@
 	@endmainquery
 
 	{!! get_the_posts_navigation() !!}
-@endsection
+@stop

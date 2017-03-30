@@ -15,4 +15,4 @@
 			@php(comments_template('/views/partials/comments.blade.php'))
 		</article>
 	@endmainquery
-@endsection
+@stop
