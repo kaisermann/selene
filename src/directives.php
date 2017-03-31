@@ -45,4 +45,9 @@ add_action( 'after_setup_theme', function() {
 	$sageCompiler->directive('console', function ( $obj ) {
 		return '<?php App\\dump(' . $obj . ', false); ?>';
 	});
+
+	// Create @shortcode($shortCodeString) Blade directive
+	$sageCompiler->directive('shortcode', function ( $shortcode ) {
+		return '<?php echo do_shortcode(\'' . $shortcode . '\'); ?>';
+	});
 }, 100 );
