@@ -31,10 +31,7 @@
       "assets": {
         "main.css": {
           "files": "styles/wrapper.styl",
-          "vendor": [
-            "assets/styles/vendor/reset.css",
-            "assets/styles/vendor/*.css"
-          ],
+          "vendor": "assets/styles/vendor/*.css",
           "npm": [],
           "uncss": true
         }
