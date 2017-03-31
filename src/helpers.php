@@ -78,7 +78,7 @@ function asset_path( $asset ) {
  * @param $data
  * @return null
  */
-function renderTemplate( $templatePath, $data) {
+function renderTemplate( $templatePath, $data = []) {
 	echo template( config( 'dir.stylesheet' ) . "/views/{$templatePath}.blade.php", $data);
 }
 

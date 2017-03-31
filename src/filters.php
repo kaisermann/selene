@@ -165,10 +165,8 @@ function filter__wpseo_json_ld_search_url( $url ) {
 }
 
 function filter__get_search_form() {
-	$form = '';
-	echo template(realpath(config('dir.template') . '/views/partials/searchform.blade.php'), []);
-	
-	return $form;
+	renderTemplate('partials/searchform');
+	return '';
 }
 
 function filter__jpeg_quality() {
