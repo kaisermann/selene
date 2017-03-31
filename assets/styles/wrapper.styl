@@ -1,5 +1,9 @@
-// The "@require" can be relative to the node_modules (or the package.json)
-// directory as seen below.
+/* The "@require" can be relative to the:
+		- 'node_modules' directory
+		- 'gulpfile.js'/root directory
+		- 'components' directory
+*/
+
 // External
 @require "rolleiflex/src/wrapper.styl"
 @require "rupture/rupture/index.styl"
@@ -11,11 +15,12 @@
 @require "config/*"
 
 // Style files
+@require "common/normalize"
 @require "common/helpers"
 @require "common/global"
-@require "components/grid"
-@require "components/*"
+@require "elements/grid"
+@require "elements/*"
 @require "partials/*"
-@require "layouts/*"
+@require "views/*"
 @require "wordpress/wp-classes"
 @require "common/overrides"

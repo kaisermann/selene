@@ -22,8 +22,7 @@
       "assets": {
         "main.js": {
           "files": "scripts/wrapper.js",
-          "vendor": ["assets/scripts/vendor/*.js"],
-          "npm": []
+          "vendor": ["assets/scripts/vendor/*.js"]
         }
       }
     },
@@ -33,11 +32,7 @@
       "assets": {
         "main.css": {
           "files": "styles/wrapper.styl",
-          "vendor": [
-            "assets/styles/vendor/reset.css",
-            "assets/styles/vendor/*.css"
-          ],
-          "npm": [],
+          "vendor": "assets/styles/vendor/*.css",
           "uncss": true
         },
         "editor.css": "styles/wordpress/editor.styl",
