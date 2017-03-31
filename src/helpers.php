@@ -83,6 +83,23 @@ function renderTemplate( $templatePath, $data = []) {
 }
 
 /**
+ * Creates a controller for the specified scope
+ * @param string scope
+ * @param function $fn
+ * @return null
+ */
+function controller( $scopes, $fn ) {
+	if ( ! is_array( $scopes ) ) {
+		$scopes = [ $scopes ];
+	}
+	foreach ( $scopes as $scope ) {
+		add_filter( "sage/template/{$scope}/data", function( $data, $template ) use ( $fn ) {
+			return $data + $fn($data, $template);
+		}, 10, 2 );
+	}
+}
+
+/**
  * Page titles
  * @return string
  */
