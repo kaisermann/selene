@@ -1,20 +1,24 @@
-// The "@require" can be relative to the node_modules (or the package.json)
-// directory as seen below.
-// External
+// The '@require' can be relative to the:
+//	- 'node_modules' directory (use the '~' prefix for clarity)
+//	- 'gulpfile.js'/root directory (use the '#' prefix for clarity)
+
+// External (relative to node_modules directory)
 @require "rolleiflex/src/wrapper.styl"
 @require "rupture/rupture/index.styl"
-// External
 
 // Configuration files
 @require "config/setup"
 @require "config/external"
 @require "config/*"
 
-// Style files
+// General style files
+@require "common/normalize"
 @require "common/helpers"
 @require "common/global"
-@require "components/grid"
-@require "components/*"
+@require "elements/grid"
+@require "elements/*"
 @require "partials/*"
-@require "layouts/*"
+@require "views/*"
+
+// Overrides
 @require "common/overrides"
