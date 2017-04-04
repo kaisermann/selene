@@ -24,8 +24,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Roots\\Sage\\": "src/lib/Sage/",
-      "BEM\\": "src/lib/BEM/"
+      "Roots\\Sage\\": "app/lib/Sage/",
+      "BEM\\": "app/lib/BEM/"
     },
     "files": [
       "vendor/johnbillion/extended-cpts/extended-cpts.php",

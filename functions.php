@@ -69,9 +69,8 @@ includeArrayOfFiles([
 	'filters',
 	'admin',
 	'directives',
-	'controllers',
 	'ajax',
-], 'src');
+], 'app');
 
 /**
  * Here's what's happening with these hooks:
