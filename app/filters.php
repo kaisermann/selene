@@ -79,7 +79,7 @@ array_map(function ( $type ) {
 */
 function filter__template_include( $template ) {
 	$classes = get_body_class();
-	array_unshift( $classes, 'global' );
+	array_unshift( $classes, 'app' );
 	$data = array_reduce($classes, function ( $data, $class ) use ( $template ) {
 		return apply_filters( "sage/template/{$class}/data", $data, $template );
 	}, []);
