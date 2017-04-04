@@ -1,7 +1,7 @@
 {
   "config": {
     "paths": {
-      "source": "assets/",
+      "source": "resources/assets/",
       "dist": "dist/"
     },
     "browserSync": {
@@ -22,7 +22,7 @@
       "assets": {
         "main.js": {
           "files": "scripts/wrapper.js",
-          "vendor": ["assets/scripts/vendor/*.js"]
+          "vendor": ["resources/assets/scripts/vendor/*.js"]
         }
       }
     },
@@ -32,7 +32,7 @@
       "assets": {
         "main.css": {
           "files": "styles/wrapper.styl",
-          "vendor": "assets/styles/vendor/*.css",
+          "vendor": "resources/assets/styles/vendor/*.css",
           "uncss": true
         },
         "editor.css": "styles/wordpress/editor.styl",

@@ -36,9 +36,9 @@ add_filter( 'the_generator', '__return_false' );
 includeArrayOfFiles(
 	array_map(function( $filePath ) {
 			return basename( $filePath, '.php' );
-		}, glob( get_stylesheet_directory() . '/controllers/*.php' )
+		}, glob( get_stylesheet_directory() . '/resources/controllers/*.php' )
 	),
-	'controllers'
+	'resources/controllers'
 );
 
 /**
@@ -48,7 +48,7 @@ array_map(function ( $type ) {
 	add_filter("{$type}_template_hierarchy", function ( $templates ) {
 		return call_user_func_array('array_merge', array_map(function ( $template ) {
 			$transforms = [
-				'%^/?(views)?/?%' => config( 'sage.disable_option_hack' ) ? 'views/' : '',
+				'%^/?(resources/views)?/?%' => config( 'sage.disable_option_hack' ) ? 'views/' : '',
 				'%(\.blade)?(\.php)?$%' => '',
 			];
 			$normalizedTemplate = preg_replace( array_keys( $transforms ), array_values( $transforms ), $template );
