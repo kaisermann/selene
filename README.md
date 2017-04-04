@@ -14,21 +14,17 @@
 
 #### Controllers
 
-You can use controllers to pass data to specific templates. A controller must be created inside the [`./controllers/`](https://github.com/kaisermann/selene/blob/master/controllers/) directory. A controller scope is defined by each class name returned by `get_body_class`.
+You can use controllers to pass data to specific templates. A controller must be created inside the [`./resources/controllers/`](https://github.com/kaisermann/selene/blob/master/resources/controllers/) directory. A controller scope is defined by each class name returned by `get_body_class`.
 
 #### Custom Blade Directives
 
-* `@mainquery ... @endmainquery` - Loops through the main query.
-
-* `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query.
-
-* `@inlinesvg` - Prints the specified svg.
-
-* `@dump` - Dumps an php variable with a `var_export`.
-
+* `@mainquery ... @endmainquery` - Loops through the main query;
+* `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query;
+* `@inlinesvg` - Prints the specified svg file;
+* `@dump` - Dumps an php variable with a `var_export`;
 * `@console` - Dumps a php variable in the javascript console.
 
-Directives can be defined on [`src/directives.php`](https://github.com/kaisermann/selene/blob/master/src/directives.php).
+Directives can be defined on [`app/directives.php`](https://github.com/kaisermann/selene/blob/master/app/directives.php).
 
 ## WordPress things Selene does
 
@@ -39,9 +35,9 @@ Directives can be defined on [`src/directives.php`](https://github.com/kaiserman
   * Rewrites the search url from `.com/?s=term` with `.com/search/term`;
   * Wraps all `oembed` around a `<div class="embed">`;
   * Remove all protocols (`http`,`https`) from urls;
-  * Admin dashboard and login page CSS customization with the [`admin.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/admin/config.styl) file;
-  * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wordpress/editor.styl) file;
-  * Provides an [`appMeta`](https://github.com/kaisermann/selene/blob/master/src/setup.php#L113) global javascript object with the ajax and home urls.
+  * Admin dashboard and login page CSS customization with the [`admin.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/admin/config.styl) file;
+  * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/editor.styl) file;
+  * Provides an [`appMeta`](https://github.com/kaisermann/selene/blob/master/app/setup.php#L113) global javascript object with the ajax and home urls.
   
 * Back-end
   * Sets uploaded JPEG quality to 100;
