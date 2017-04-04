@@ -22,7 +22,7 @@
       "assets": {
         "main.js": {
           "files": "scripts/wrapper.js",
-          "vendor": ["resources/assets/scripts/vendor/*.js"]
+          "vendor": "resources/assets/scripts/vendor/*.js"
         }
       }
     },
