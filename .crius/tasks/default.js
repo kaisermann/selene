@@ -1,9 +1,9 @@
-const del = require('del')
+const rimraf = require('rimraf')
 const gulp = require('gulp')
 const crius = require('../manifest')
 const sizereport = require('../utils/sizereport')
 
-gulp.task('clean', done => del([crius.config.paths.dist], done))
+gulp.task('clean', done => rimraf(crius.config.paths.dist, done))
 
 gulp.task('sizereport', sizereport('*'))
 
