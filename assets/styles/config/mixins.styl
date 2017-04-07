@@ -14,10 +14,10 @@ size($width, $height = $width, $cache = false)
 		height: $height;
 
 // rem(px [,base-font-size]), em(px [,base-font-size])
-rem($px, $base = crius.baseFontSize)
+rem($px, $base = app.baseFontSize)
 	return unit($px / $base, "rem")
 
-em($px, $base = crius.baseFontSize)
+em($px, $base = app.baseFontSize)
 	return unit($px / $base, "em")
 
 // Font-face mixin, by jackbrewer
