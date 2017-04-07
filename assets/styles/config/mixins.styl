@@ -29,11 +29,11 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
 	$url = $url + 'url("' + $file-path + '.ttf") format("truetype"), '
 	$url = $url + 'url("' + $file-path + '.svg#svg' + replace(' ', '', $font-name) + '") format("svg")'
 	@font-face
-		font-family: $font-name;
-		src: unquote($url-fallback);
-		src: unquote($url);
-		font-weight: unquote($weight);
-		font-style: unquote($style);
+		font-family: $font-name
+		src: unquote($url-fallback)
+		src: unquote($url)
+		font-weight: unquote($weight)
+		font-style: unquote($style)
 
 // Responsive class factory. Uses the breakpoints from rolleiflex.
 // Generates .selector@xx classes
