@@ -64,11 +64,5 @@
     "aph": "^0.4.0",
     "rolleiflex": "^2.0.1",
     "rupture": "^0.6.2"
-  },
-  "overrides": {
-    "rupture": {
-      "main": "",
-      "style": "rupture/index.styl"
-    }
   }
 }
