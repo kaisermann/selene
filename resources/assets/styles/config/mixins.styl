@@ -27,6 +27,7 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
 	$url = $url + ' url("' + $file-path + '.woff") format("woff")'
 	@font-face
 		font-family: $font-name
+		src: unquote($url-fallback)
 		src: unquote($url)
 		font-weight: unquote($weight)
 		font-style: unquote($style)
