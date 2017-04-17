@@ -25,46 +25,48 @@ add_filter( 'the_generator', '__return_false' );
  * Setup Sage options
  */
 function action__sage_setup() {
-	/**
+	 /**
 	 * Sage config
 	 */
-	$paths = [
-		'dir.stylesheet' => get_stylesheet_directory(),
-		'dir.template'   => get_template_directory(),
-		'dir.upload'     => wp_upload_dir()['basedir'],
-		'uri.stylesheet' => get_stylesheet_directory_uri(),
-		'uri.template'   => get_template_directory_uri(),
-	];
-	$viewPaths = collect( preg_replace( '%[\/]?(views)?[\/.]*?$%', '', [ STYLESHEETPATH, TEMPLATEPATH ] ) )
-		->flatMap(function ( $path ) {
-			return [ "{$path}/resources/views", $path ];
-		})->unique()->toArray();
-	config([
-		'assets.manifest' => "{$paths['dir.stylesheet']}/dist/assets.json",
-		'assets.uri'      => "{$paths['uri.stylesheet']}/dist",
-		'view.compiled'   => "{$paths['dir.upload']}/cache/compiled",
-		'view.namespaces' => [ 'App' => WP_CONTENT_DIR ],
-		'view.paths'      => $viewPaths,
-	] + $paths);
-
-	/**
-	 * Add JsonManifest to Sage container
-	 */
-	sage()->singleton('sage.assets', function () {
-		return new JsonManifest( config( 'assets.manifest' ), config( 'assets.uri' ) );
-	});
-
-	/**
-	 * Add Blade to Sage container
-	 */
-	sage()->singleton('sage.blade', function ( ContainerContract $app ) {
-		$cachePath = config( 'view.compiled' );
-		if ( ! file_exists( $cachePath ) ) {
-			wp_mkdir_p( $cachePath );
-		}
-		(new BladeProvider( $app ))->register();
-		return new Blade( $app['view'], $app );
-	});
+  $paths = [
+      'dir.stylesheet' => get_stylesheet_directory(),
+      'dir.template'   => get_template_directory(),
+      'dir.upload'     => wp_upload_dir()['basedir'],
+      'uri.stylesheet' => get_stylesheet_directory_uri(),
+      'uri.template'   => get_template_directory_uri(),
+  ];
+	
+  $viewPaths = collect(preg_replace('%[\/]?(resources/views)?[\/.]*?$%', '', [STYLESHEETPATH, TEMPLATEPATH]))
+      ->flatMap(function ($path) {
+          return ["{$path}/resources/views", $path];
+      })->unique()->toArray();
+			
+  config([
+      'assets.manifest' => "{$paths['dir.stylesheet']}/dist/assets.json",
+      'assets.uri'      => "{$paths['uri.stylesheet']}/dist",
+      'view.compiled'   => "{$paths['dir.upload']}/cache/compiled",
+      'view.namespaces' => ['App' => WP_CONTENT_DIR],
+      'view.paths'      => $viewPaths,
+  ] + $paths);
+	
+  /**
+   * Add JsonManifest to Sage container
+   */
+  sage()->singleton('sage.assets', function () {
+      return new JsonManifest(config('assets.manifest'), config('assets.uri'));
+  });
+	
+  /**
+   * Add Blade to Sage container
+   */
+  sage()->singleton('sage.blade', function (ContainerContract $app) {
+      $cachePath = config('view.compiled');
+      if (!file_exists($cachePath)) {
+          wp_mkdir_p($cachePath);
+      }
+      (new BladeProvider($app))->register();
+      return new Blade($app['view'], $app);
+  });
 }
 
 function action__init() {
