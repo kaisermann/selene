@@ -17,7 +17,11 @@ export default class Router {
   }
 
   fire (route, fn = 'init', args = undefined) {
-    if (route !== '' && this.events[route] && typeof this.events[route][fn] === 'function') {
+    if (
+      route !== '' &&
+      this.events[route] &&
+      typeof this.events[route][fn] === 'function'
+    ) {
       this.events[route][fn](args)
     }
     return this
@@ -34,7 +38,7 @@ export default class Router {
       .map(camelCase)
 
     // Fire page-specific init JS, and then finalize JS
-    this.classes.forEach((className) => {
+    this.classes.forEach(className => {
       this.fire(className)
       this.fire(className, 'finalize')
     })
