@@ -9,9 +9,15 @@ const routes = {
 // Usually, you won't need to modify anything below this line.
 const router = new Router(routes)
 
-if (document.readyState === 'complete' ||
-  (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+if (
+  document.readyState === 'complete' ||
+  (document.readyState !== 'loading' && !document.documentElement.doScroll)
+) {
   router.loadRoutes()
 } else {
-  document.addEventListener('DOMContentLoaded', router.loadRoutes.bind(router), false)
+  document.addEventListener(
+    'DOMContentLoaded',
+    router.loadRoutes.bind(router),
+    false
+  )
 }
