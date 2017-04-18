@@ -42,7 +42,7 @@ function action__sage_setup() {
       })->unique()->toArray();
 			
   config([
-      'assets.manifest' => "{$paths['dir.stylesheet']}/dist/assets.json",
+      'assets.manifest' => "{$paths['dir.stylesheet']}/../dist/assets.json",
       'assets.uri'      => "{$paths['uri.stylesheet']}/dist",
       'view.compiled'   => "{$paths['dir.upload']}/cache/compiled",
       'view.namespaces' => ['App' => WP_CONTENT_DIR],
