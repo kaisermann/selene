@@ -5055,9 +5055,9 @@ ripemd160@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-1.0.1.tgz#93a4bbd4942bc574b69a8fa57c71de10ecca7d6e"
 
-rolleiflex@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/rolleiflex/-/rolleiflex-2.0.1.tgz#8e6a754f93abbf0254651a4cf673b88b960f2668"
+rolleiflex@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/rolleiflex/-/rolleiflex-2.0.2.tgz#7145dd2ca122f670688332d2d096071f432aaa33"
 
 rollup-plugin-buble@^0.15.0:
   version "0.15.0"

@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "aph": "^0.4.1",
-    "rolleiflex": "^2.0.1",
+    "rolleiflex": "^2.0.2",
     "rupture": "^0.6.2"
   }
 }
