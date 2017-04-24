@@ -32,11 +32,11 @@ add_filter( 'stylesheet_directory_uri', 'App\filter__url_protocol', 10, 3 );
 // Removes WP version from RSS feeds
 add_filter( 'the_generator', '__return_false' );
 
-// Includes the files listed on the controllers
+// Includes the files listed on the controllers directory
 includeArrayOfFiles(
 	array_map(function( $filePath ) {
 			return basename( $filePath, '.php' );
-		}, glob( get_stylesheet_directory() . '/controllers/*.php' )
+		}, glob( get_template_directory() . '/controllers/*.php' )
 	),
 	'controllers'
 );
