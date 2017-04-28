@@ -1,19 +1,23 @@
-$login-background = login.background or whitesmoke
+$login-bg-color = login.background.color or whitesmoke
+$login-bg-img = 'url(%s)' % login.background.image
+$login-bg-size = login.background.size
 $login-color = login.color or black
-$roaming-link = invIfSimilar(login.color, $login-background)
-$roaming-link-hover = mix($roaming-link, $login-background, 80%)
+$roaming-link = invIfSimilar(login.color, $login-bg-color)
+$roaming-link-hover = mix($roaming-link, $login-bg-color, 80%)
 
 // Login page
 body.login
-	font-family: fonts.main
-	font-weight: 500
-	background: $login-background
 	display: flex
 	align-content: center
 	color: $login-color
+	background-color: $login-bg-color
+	background-image: unquote($login-bg-img)
+	background-size: $login-bg-size
+	font-family: fonts.main
+	font-weight: 500
 		
 #wp-auth-check-wrap #wp-auth-check
-	background-color: $login-background
+	background-color: $login-bg-color
 	
 .login #nav
 .login #backtoblog
