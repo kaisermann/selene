@@ -65,12 +65,12 @@ includeArrayOfFiles([
 
 /**
  * Here's what's happening with these hooks:
- * 1. WordPress initially detects theme in themes/sage
- * 2. Upon activation, we tell WordPress that the theme is actually in themes/sage/resources/views
- * 3. When we call get_template_directory() or get_template_directory_uri(), we point it back to themes/sage
+ * 1. WordPress initially detects theme in themes/selene/resources
+ * 2. Upon activation, we tell WordPress that the theme is actually in themes/selene/resources/views
+ * 3. When we call get_template_directory() or get_template_directory_uri(), we point it back to themes/sage/resources
  *
- * We do this so that the Template Hierarchy will look in themes/sage/resources/views for core WordPress themes
- * But functions.php, style.css, and index.php are all still located in themes/sage
+ * We do this so that the Template Hierarchy will look in themes/selene/resources/views for core WordPress themes
+ * But functions.php, style.css, and index.php are all still located in themes/selene/resources
  *
  * This is not compatible with the WordPress Customizer theme preview prior to theme activation
  *
