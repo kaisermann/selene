@@ -4,8 +4,7 @@ const flatten = require('gulp-flatten')
 module.exports = {
   pipelines: {
     each: asset => {
-      return lazypipe()
-        .pipe(flatten)
+      return lazypipe().pipe(flatten)
     },
   },
 }

@@ -25,7 +25,7 @@ const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
 
 // Helper to create resources tasks
 const dynamicTaskHelper = (resourceType, resourceInfo) => {
-  const innerTaskFn = (done) => {
+  const innerTaskFn = done => {
     // Merged object to use on resourceModule.pipelines.merged
     const merged = merge()
 
@@ -37,17 +37,23 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
         isDir(asset.outputName) ? asset.outputName : ''
       )
 
-      merged.add(gulp.src(asset.globs)
-        .pipe(plumber({ errorHandler: onError }))
-        .pipe(getResourcePipeline(resourceType, 'each', asset))
-        .pipe(gulp.dest(output))
-        .pipe(crius.browserSyncInstance
-          ? crius.browserSyncInstance.stream({ match: `**/${resourceInfo.pattern}` })
-          : util.noop()
-        )
+      merged.add(
+        gulp
+          .src(asset.globs)
+          .pipe(plumber({ errorHandler: onError }))
+          .pipe(getResourcePipeline(resourceType, 'each', asset))
+          .pipe(gulp.dest(output))
+          .pipe(
+            crius.browserSyncInstance
+              ? crius.browserSyncInstance.stream({
+                match: `**/${resourceInfo.pattern}`,
+              })
+              : util.noop()
+          )
       )
     })
-    merged.pipe(getResourcePipeline(resourceType, 'merged', resourceInfo))
+    merged
+      .pipe(getResourcePipeline(resourceType, 'merged', resourceInfo))
       .on('end', done)
       .on('error', done)
       .resume()
@@ -58,23 +64,30 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
   return innerTaskFn
 }
 
+// Appends tasks to a task array
+const appendAuxTasks = (key, module, queue) => {
+  if (!module) return
+  let depTasks = module[key] || []
+  if (!Array.isArray(depTasks)) {
+    depTasks = [depTasks]
+  }
+  return queue.concat(depTasks)
+}
+
 // Automatically creates resources tasks
 for (const resourceType of Object.keys(crius.resources)) {
   const resourceInfo = crius.resources[resourceType]
   const resourceModule = resourceModules[resourceType]
-  const taskQueue = []
+  let taskQueue = []
 
-  // Checks if a resource task have any task as a dependency
-  if (resourceModule) {
-    let depTasks = resourceModule.dependencyTasks || []
-    if (!Array.isArray(depTasks)) {
-      depTasks = [depTasks]
-    }
-    taskQueue.push(...depTasks)
-  }
+  // Checks if a resource task have any tasks to run before itself
+  taskQueue = appendAuxTasks('preTasks', resourceModule, taskQueue)
 
   // Pushes the resource task
   taskQueue.push(dynamicTaskHelper(resourceType, resourceInfo))
+
+  // Checks if a resource task have any tasks to run after itself
+  taskQueue = appendAuxTasks('postTasks', resourceModule, taskQueue)
 
   // When '--verbose' is set, are we doing a resource task or the watch task?
   // If yes, let's append the sireReport task to the pipeline
@@ -85,5 +98,8 @@ for (const resourceType of Object.keys(crius.resources)) {
   }
 
   // If we have no dependency tasks, pass only the resource task and not a task series
-  gulp.task(resourceType, taskQueue.length === 1 ? taskQueue[0] : gulp.series(taskQueue))
+  gulp.task(
+    resourceType,
+    taskQueue.length === 1 ? taskQueue[0] : gulp.series(taskQueue)
+  )
 }

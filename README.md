@@ -127,7 +127,7 @@ const lazypipe = require('lazypipe')
 
 module.exports = {
   // Names of tasks to be ran before the resource task
-  dependencyTasks: ['nameOftaskToRunBeforeThisOne'],
+  preTasks: ['nameOftaskToRunBeforeThisOne'],
   pipelines: {
     // Pipeline attached to each asset stream
     each: asset => {

@@ -13,18 +13,23 @@ const onError = require('../utils/onError')
 
 gulp.task('uncss', done => {
   const stylesDir = getResourceDir('dist', 'styles')
-  const revManifestDir = getResourceDir('dist', crius.config.paths.revisionManifest)
+  const revManifestDir = getResourceDir(
+    'dist',
+    crius.config.paths.revisionManifest
+  )
 
   if (!pathExists(stylesDir)) {
     throw new Error('Styles distribution directory not found.')
   }
 
   if (!pathExists('./sitemap.json')) {
-    throw new Error('Couldn\'t find the \'sitemap.json\'')
+    throw new Error("Couldn't find the 'sitemap.json'")
   }
 
   // Let's get all assets with uncss:true
-  const assetsObj = Object.keys(crius.resources.styles.assets).reduce((acc, assetName) => {
+  const assetsObj = Object.keys(
+    crius.resources.styles.assets
+  ).reduce((acc, assetName) => {
     if (crius.resources.styles.assets[assetName].uncss) {
       acc[assetName] = assetName
     }
@@ -42,28 +47,35 @@ gulp.task('uncss', done => {
     })
   }
 
-  return gulp.src(Object.keys(assetsObj).map(
-      key => join(stylesDir, assetsObj[key])
-    ), {
+  return gulp
+    .src(Object.keys(assetsObj).map(key => join(stylesDir, assetsObj[key])), {
       base: './',
     })
-    .pipe(plumber({
-      errorHandler: onError,
-    }))
-    .pipe(size({
-      showFiles: true,
-      showTotal: false,
-      title: 'Before unCSS:',
-    }))
-    .pipe(uncss({
-      html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
-      uncssrc: '.uncssrc',
-    }))
-    .pipe(size({
-      showFiles: true,
-      showTotal: false,
-      title: 'After unCSS:',
-    }))
+    .pipe(
+      plumber({
+        errorHandler: onError,
+      })
+    )
+    .pipe(
+      size({
+        showFiles: true,
+        showTotal: false,
+        title: 'Before unCSS:',
+      })
+    )
+    .pipe(
+      uncss({
+        html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
+        uncssrc: '.uncssrc',
+      })
+    )
+    .pipe(
+      size({
+        showFiles: true,
+        showTotal: false,
+        title: 'After unCSS:',
+      })
+    )
     .pipe(gulp.dest('./'))
     .on('end', done)
     .on('error', done)
