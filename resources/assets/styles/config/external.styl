@@ -1,36 +1,43 @@
 rolleiflex.baseFontSize       = app.baseFontSize
 rolleiflex.autoBorderBox      = false
-rolleiflex.use.em             = true
+rolleiflex.use.em             = false
 rolleiflex.breakpoints = {
 	"xs": {
-		"breakpoint": 0
+		"triggerAt": 0
+		"container": 100%
 	}
 	
 	"sm": {
-		"breakpoint": 767px
+		"triggerAt": 768px
 		"container": 740px
 	}
 	
 	"md": {
-		"breakpoint": 991px
+		"triggerAt": 992px
 		"container": 960px
 	}
 	
 	"lg": {
-		"breakpoint": 1200px
+		"triggerAt": 1201px
 		"container": app.siteWidth
 	}
 }
 
-__bps = rolleiflex.breakpoints
+_bps = rolleiflex.breakpoints
+_generateRuptureBpsList()
+	list = ()
+	for scaleName, scaleOpts in _bps
+		push(list, max(scaleOpts.triggerAt - 1, 0))
+	return list
+	
 rupture = merge(rupture, {
 	"base-font-size":          app.baseFontSize
-	"scale":                   0 (__bps.sm.breakpoint) (__bps.md.breakpoint) (__bps.lg.breakpoint)
-	"scale-names":             keys(__bps)
+	"scale":                   _generateRuptureBpsList()
+	"scale-names":             keys(_bps)
 	"anti-overlap":            true
 	"enable-em-breakpoints":   rolleiflex.use.em
-	"mobile-cutoff":           __bps.sm.breakpoint
-	"tablet-cutoff":           __bps.md.breakpoint
-	"desktop-cutoff":          __bps.md.breakpoint
-	"hd-cutoff":               __bps.lg.breakpoint
+	"mobile-cutoff":           _bps.sm.triggerAt - 1
+	"tablet-cutoff":           _bps.md.triggerAt - 1
+	"desktop-cutoff":          _bps.md.triggerAt - 1
+	"hd-cutoff":               _bps.lg.triggerAt - 1
 })
