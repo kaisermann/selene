@@ -17,29 +17,44 @@ module.exports = {
   pipelines: {
     each: asset => {
       return lazypipe()
-      .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
-      .pipe(() => gulpIf('*.styl', stylus({
-        'include': ['./', './node_modules/'],
-        'include css': true,
-        use: [stylusRenderer => {
-          const rootDirRegEx = /@(import|require)\s("|')?(#|~)/g
-          stylusRenderer.str = stylusRenderer.str.replace(rootDirRegEx, '@$1 $2')
-          return stylusRenderer
-        }],
-      })))
-      .pipe(concat, asset.outputName)
-      .pipe(postcss, [
-        postCSSautoprefixer(),
-        postCSSmqpacker(),
-        postCSSnano({
-          core: !crius.params.debug,
-          discardComments: !crius.params.debug,
-        }),
-      ])
-      .pipe(() => gulpIf(crius.params.maps, sourcemaps.write('.', {
-        sourceRoot: crius.config.paths.fromDistToSource,
-      })))
-      .pipe(() => gulpIf(crius.params.production, rev()))
+        .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
+        .pipe(() =>
+          gulpIf(
+            '*.styl',
+            stylus({
+              include: ['./', './node_modules/'],
+              'include css': true,
+              use: [
+                stylusRenderer => {
+                  const rootDirRegEx = /@(import|require)\s("|')?(#|~)/g
+                  stylusRenderer.str = stylusRenderer.str.replace(
+                    rootDirRegEx,
+                    '@$1 $2'
+                  )
+                  return stylusRenderer
+                },
+              ],
+            })
+          )
+        )
+        .pipe(concat, asset.outputName)
+        .pipe(postcss, [
+          postCSSautoprefixer(),
+          postCSSmqpacker(),
+          postCSSnano({
+            core: !crius.params.debug,
+            discardComments: !crius.params.debug,
+          }),
+        ])
+        .pipe(() =>
+          gulpIf(
+            crius.params.maps,
+            sourcemaps.write('.', {
+              sourceRoot: crius.config.paths.fromDistToSource,
+            })
+          )
+        )
+        .pipe(() => gulpIf(crius.params.production, rev()))
     },
     merged: writeToManifest,
   },

@@ -31,14 +31,27 @@ gulp.task('watch', done => {
       }
       crius.browserSyncInstance.init(browserSyncOptions)
     } else {
-      throw new util.PluginError('watch', util.colors.red('Passed "--sync" but no browser-sync configuration was found on "crius.json"'))
+      throw new util.PluginError(
+        'watch',
+        util.colors.red(
+          'Passed "--sync" but no browser-sync configuration was found on "crius.json"'
+        )
+      )
     }
   }
 
   // Watch based on resource-type-names
   for (const resourceType of Object.keys(crius.resources)) {
     const resourceInfo = crius.resources[resourceType]
-    gulp.watch([getResourceDir('source', resourceInfo.directory, '**/', resourceInfo.pattern)],
+    gulp.watch(
+      [
+        getResourceDir(
+          'source',
+          resourceInfo.directory,
+          '**/',
+          resourceInfo.pattern
+        ),
+      ],
       gulp.series(resourceType)
     )
   }

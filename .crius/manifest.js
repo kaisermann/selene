@@ -12,39 +12,52 @@ const mainManifestPath = './crius.json'
 const crius = assetOrchestrator(mainManifestPath)
 
 // Default path values
-crius.config.paths = deepExtend({
-  source: 'app/',
-  dist: 'dist/',
-}, crius.config.paths)
+crius.config.paths = deepExtend(
+  {
+    source: 'app/',
+    dist: 'dist/',
+  },
+  crius.config.paths
+)
 
 // Default values for the `config` object
-crius.config = deepExtend({
-  paths: {
-    revisionManifest: 'assets.json',
-    fromDistToSource: relative(
-      join(crius.config.paths.dist, 'any'), crius.config.paths.source
-    ),
+crius.config = deepExtend(
+  {
+    paths: {
+      revisionManifest: 'assets.json',
+      fromDistToSource: relative(
+        join(crius.config.paths.dist, 'any'),
+        crius.config.paths.source
+      ),
+    },
   },
-}, crius.config)
+  crius.config
+)
 
 // Default browserSync configuration
 if (crius.config.browserSync) {
-  crius.config.browserSync = deepExtend({
-    mode: 'proxy',
-    index: 'index.html',
-    baseDir: './',
-    watchFiles: [],
-    whitelist: [],
-    blacklist: [],
-  }, crius.config.browserSync)
+  crius.config.browserSync = deepExtend(
+    {
+      mode: 'proxy',
+      index: 'index.html',
+      baseDir: './',
+      watchFiles: [],
+      whitelist: [],
+      blacklist: [],
+    },
+    crius.config.browserSync
+  )
 }
 
 // Default values for each 'resource' entry
 for (const resourceType of Object.keys(crius.resources)) {
   const resourceInfo = crius.resources[resourceType]
-  crius.resources[resourceType] = deepExtend({
-    directory: resourceType,
-  }, resourceInfo)
+  crius.resources[resourceType] = deepExtend(
+    {
+      directory: resourceType,
+    },
+    resourceInfo
+  )
 }
 
 // Parses passed parameters
