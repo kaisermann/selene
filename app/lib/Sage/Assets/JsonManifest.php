@@ -30,12 +30,14 @@ class JsonManifest implements ManifestInterface
     /** @inheritdoc */
     public function get($asset)
     {
-        return isset($this->manifest[$asset]) ? $this->manifest[$asset] : $asset;
+			$directory = dirname($asset);
+			$file = basename($asset);
+      return isset($this->manifest[$file]) ? "{$directory}/{$this->manifest[$file]}" : $asset;
     }
 
     /** @inheritdoc */
     public function getUri($asset)
     {
-        return "{$this->dist}/{$this->get($asset)}";
+    	return "{$this->dist}/{$this->get($asset)}";
     }
 }
