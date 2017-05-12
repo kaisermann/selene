@@ -43,17 +43,17 @@ gulp.task('watch', done => {
   // Watch based on resource-type-names
   for (const resourceType of Object.keys(crius.resources)) {
     const resourceInfo = crius.resources[resourceType]
-    gulp.watch(
-      [
-        getResourceDir(
-          'source',
-          resourceInfo.directory,
-          '**/',
-          resourceInfo.pattern
-        ),
-      ],
-      gulp.series(resourceType)
-    )
+    let filesToWatch = [
+      getResourceDir(
+        'source',
+        resourceInfo.directory,
+        '**/',
+        resourceInfo.pattern
+      ),
+      // watches extra files
+    ].concat(resourceInfo.watch ? resourceInfo.watch : [])
+
+    gulp.watch(filesToWatch, gulp.series(resourceType))
   }
   done()
 })
