@@ -7,7 +7,11 @@ const getResourceDir = require('../utils/getResourceDir')
 gulp.task('eslint', done => {
   const scriptsDir = getResourceDir('source', 'scripts')
   return gulp
-    .src(['gulpfile.*.js', `${scriptsDir}/**/*`, `${scriptsDir}/vendor/*`])
+    .src([
+      'gulpfile.*.js',
+      `${scriptsDir}/**/*.js`,
+      `${scriptsDir}/vendor/*.js`,
+    ])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(gulpIf(crius.params.production, eslint.failAfterError()))

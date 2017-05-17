@@ -66,7 +66,7 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
 
 // Appends tasks to a task array
 const appendAuxTasks = (key, module, queue) => {
-  if (!module) return
+  if (!module) return queue
   let depTasks = module[key] || []
   if (!Array.isArray(depTasks)) {
     depTasks = [depTasks]
