@@ -5,8 +5,8 @@ const mkdirp = require('mkdirp')
 const gulp = require('gulp')
 
 const JS_CONTENT = `import aph from 'aph'
-import Component from 'Components.Base'
- 
+import Component from 'Components/Base'
+
 export default class %camelizedName% extends Component {
 
 }
@@ -17,6 +17,15 @@ export default class %camelizedName% extends Component {
 const BLADE_CONTENT = `<div class="%lowerName% js-%lowerName%">
 
 </div>`
+
+const CSS_CONTENT = `// .%lowerName%
+`
+
+const FILE_TEMPLATES = [
+  ['styl', CSS_CONTENT],
+  ['blade.php', BLADE_CONTENT],
+  ['js', JS_CONTENT],
+]
 
 const capitalizeStr = str => str[0].toUpperCase() + str.slice(1)
 
@@ -36,41 +45,47 @@ const fillComponentName = (content, name) =>
 
 gulp.task('component', done => {
   const args = process.argv.slice(3)
+  const promiseQueue = []
+  const componentsToManage = args[1].split(',')
 
-  let componentName = capitalizeStr(args[1])
-  let fileName = semiCamelize(componentName)
-  let componentPath = join(
-    process.cwd(),
-    `resources/views/components/${fileName}`
-  )
+  componentsToManage.forEach(tmpComponentName => {
+    let realComponentName = capitalizeStr(tmpComponentName)
+    let fileName = semiCamelize(realComponentName)
+    let componentPath = join(
+      process.cwd(),
+      `resources/views/components/${fileName}`
+    )
 
-  if (!args[0]) throw new Error('Missing first parameter')
+    if (!args[0]) throw new Error('Missing first parameter')
 
-  switch (args[0].slice(2)) {
-    case 'create':
-      mkdirp(componentPath, err => {
-        if (err) return done(err)
+    switch (args[0].slice(2)) {
+      case 'create':
+        // Creates the component directory
+        mkdirp.sync(componentPath)
 
-        fs.writeFile(join(componentPath, fileName + '.styl'), '', () =>
-          fs.writeFile(
-            join(componentPath, fileName + '.blade.php'),
-            fillComponentName(BLADE_CONTENT, componentName),
-            () =>
+        // Creates the .styl, .js and .blade.php files
+        FILE_TEMPLATES.forEach(resTemplate => {
+          promiseQueue.push(
+            new Promise((resolve, reject) => {
               fs.writeFile(
-                join(componentPath, fileName + '.js'),
-                fillComponentName(JS_CONTENT, componentName),
-                done
+                join(componentPath, `${fileName}.${resTemplate[0]}`),
+                fillComponentName(resTemplate[1], realComponentName),
+                resolve
               )
+            })
           )
+        })
+        break
+
+      case 'delete':
+        promiseQueue.push(
+          new Promise((resolve, reject) => rimraf(componentPath, resolve))
         )
-      })
-      break
+        break
 
-    case 'delete':
-      rimraf(componentPath, done)
-      break
-
-    default:
-      throw new Error('Invalid parameter. ')
-  }
+      default:
+        throw new Error('Invalid parameter. ')
+    }
+  })
+  Promise.all(promiseQueue).then(() => done())
 })

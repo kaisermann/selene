@@ -1,5 +1,5 @@
 import aph from 'aph'
-import Component from 'Components.Base'
+import Component from 'Components/Base'
 
 export default class Header extends Component {
 

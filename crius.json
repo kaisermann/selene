@@ -12,7 +12,7 @@
         "{app,views}/**/*.{php,html}",
         "*.{php,html}"
       ],
-      "devUrl": "localhost/web/root/path"
+      "devUrl": "localhost:8888/selene"
     }
   },
   "resources": {
