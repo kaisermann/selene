@@ -4,8 +4,8 @@ const rimraf = require('rimraf')
 const mkdirp = require('mkdirp')
 const gulp = require('gulp')
 
-const JS_CONTENT = `import aph from 'aph'
-import Component from 'Components/Base'
+const JS_CONTENT = `import Component from 'Components/Base'
+import aph from 'aph'
 
 export default class %camelizedName% extends Component {
 

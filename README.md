@@ -16,9 +16,12 @@
 
 * A component javascript modules can be imported by using the alias `Components.{componentName}`
  * Example: `import Header from 'Components.Header'`
-* A component `.styl` files are imported automatically by the [`wrapper.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wrapper.styl).
-* A component blade template can be included by using its directory path.
+* A components `.styl` file is imported automatically by the [`wrapper.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wrapper.styl).
+* A components blade template can be included by using its path.
   * Example: `@include('Components.Header.Header')`
+* Gulp can create or delete components:
+  * `gulp component --create component1,component2,component3,...`
+  * `gulp component --delete component1,component2,component3,...`
 
 #### Controllers
 

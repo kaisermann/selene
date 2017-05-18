@@ -1,5 +1,5 @@
-import aph from 'aph'
 import Component from 'Components/Base'
+import aph from 'aph'
 
 export default class Footer extends Component {
 
