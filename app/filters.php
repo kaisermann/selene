@@ -159,7 +159,7 @@ function filter__wpseo_json_ld_search_url( $url ) {
 }
 
 function filter__get_search_form() {
-	renderTemplate('partials/searchform');
+	renderComponent('SearchForm');
 	return '';
 }
 
