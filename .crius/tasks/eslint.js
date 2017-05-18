@@ -9,6 +9,7 @@ gulp.task('eslint', done => {
   return gulp
     .src([
       'gulpfile.*.js',
+      `${crius.config.paths.components}/**/*.js`,
       `${scriptsDir}/**/*.js`,
       `${scriptsDir}/vendor/*.js`,
     ])

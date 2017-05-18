@@ -12,6 +12,14 @@
 * [Node.js](http://nodejs.org/) >= 6.9.x
 * [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
 
+#### Components
+
+* A component javascript modules can be imported by using the alias `Components.{componentName}`
+ * Example: `import Header from 'Components.Header'`
+* A component `.styl` files are imported automatically by the [`wrapper.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wrapper.styl).
+* A component blade template can be included by using its directory path.
+  * Example: `@include('Components.Header.Header')`
+
 #### Controllers
 
 You can use controllers to pass data to specific templates. A controller must be created inside the [`./resources/controllers/`](https://github.com/kaisermann/selene/blob/master/resources/controllers/) directory. A controller scope is defined by each class name returned by `get_body_class`.
@@ -32,7 +40,7 @@ Directives can be defined on [`app/directives.php`](https://github.com/kaiserman
   * Cleans up and prettify your `body_class()` output;
   * Cleans up your `<head>`;
   * Scripts load with `defer`;
-  * Rewrites the search url from `.com/?s=term` with `.com/search/term`;
+  * Rewrites the search url `.com/?s=term` with `.com/search/term`;
   * Wraps all `oembed` around a `<div class="embed">`;
   * Remove all protocols (`http`,`https`) from urls;
   * Admin dashboard and login page CSS customization with the [`admin.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/admin/config.styl) file;
