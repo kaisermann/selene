@@ -22,11 +22,11 @@ module.exports = {
           gulpIf(
             '*.styl',
             stylus({
-              include: ['./', './node_modules/'],
+              include: ['./', './node_modules/', './resources/views'],
               'include css': true,
               use: [
                 stylusRenderer => {
-                  const rootDirRegEx = /@(import|require)\s("|')?(#|~)/g
+                  const rootDirRegEx = /@(import|require)\s("|')?(#|~|@)/g
                   stylusRenderer.str = stylusRenderer.str.replace(
                     rootDirRegEx,
                     '@$1 $2'

@@ -1,5 +1,5 @@
-const fs = require('fs')
-const { join, basename } = require('path')
+const { readdirSync, statSync } = require('fs')
+const { join } = require('path')
 const lazypipe = require('lazypipe')
 const gulpIf = require('gulp-if')
 const concat = require('gulp-concat')
@@ -9,7 +9,7 @@ const betterRollup = require('gulp-better-rollup')
 const rev = require('gulp-rev')
 
 // const rollUpBabel = require('rollup-plugin-babel')
-const rollUpAlias = require('rollup-plugin-alias')
+const rollUpAlias = require('rollup-plugin-strict-alias')
 const rollUpBuble = require('rollup-plugin-buble')
 const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
@@ -21,29 +21,24 @@ const writeToManifest = require('../utils/writeToManifest')
 // Caches the project's globs
 const projectGlobs = crius.getProjectGlobs()
 
-// Bare components alias object
-const componentsAliasObject = {
-  'Components/Base': join(crius.config.paths.components, 'Base.js'),
+// Searches recursively for directories
+function getDirs (dir, filenamesAcc = []) {
+  return readdirSync(dir).reduce((list, dirName) => {
+    const realPath = join(dir, dirName)
+    if (statSync(realPath).isDirectory()) {
+      filenamesAcc.push(dirName)
+      list.push(filenamesAcc)
+      list = list.concat(getDirs(realPath, filenamesAcc.slice(0)))
+      filenamesAcc = []
+    }
+    return list
+  }, [])
 }
 
 module.exports = {
   preTasks: ['eslint'],
   pipelines: {
     each: asset => {
-      const componentsDirs = fs
-        .readdirSync(crius.config.paths.components)
-        .map(dirName => join(crius.config.paths.components, dirName))
-        .filter(dirName => fs.statSync(dirName).isDirectory())
-
-      // Generates the components alias object
-      // Used for import calls
-      // Ex: import Header from 'Components/Header'
-      const componentsObj = componentsDirs.reduce((obj, dir) => {
-        const dirName = basename(dir)
-        obj[`Components/${dirName}`] = join(dir, dirName + '.js')
-        return obj
-      }, componentsAliasObject)
-
       return (
         lazypipe()
           .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
@@ -58,8 +53,29 @@ module.exports = {
               betterRollup(
                 {
                   plugins: [
-                    // Makes "import" work relative to the assets/scripts and components/*
-                    rollUpAlias(componentsObj),
+                    // Generates the components alias object
+                    // Used for import calls
+                    // Ex: import Header from 'Components/Header'
+                    rollUpAlias(
+                      getDirs(crius.config.paths.components).reduce(
+                        (obj, acc) => {
+                          const alias = ['@Components', ...acc].join('/')
+                          // '@Components/ComponentName...'
+                          obj[alias] = join(
+                            crius.config.paths.components, // Components directory
+                            acc.join('/'), // File path inside componenets directory
+                            acc[acc.length - 1] + '.js' // File name
+                          )
+                          return obj
+                        },
+                        {
+                          '@Components/Base': join(
+                            crius.config.paths.components,
+                            'Base.js'
+                          ),
+                        }
+                      )
+                    ),
                     // Allow to import node builtin modules such as path, url, querystring, etc
                     rollUpNodebuiltins(),
                     // Allow to import modules from the `node_modules`

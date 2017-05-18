@@ -15,7 +15,8 @@
 #### Components
 
 * A component javascript modules can be imported by using the alias `Components.{componentName}`
-  * Example: `import Header from 'Components.Header'`
+  * Example: `import Header from '@Components/Header'`
+  * Example 2: `import SubHeader from '@Components/Header/SubHeder'`
 * A component `.styl` file is imported automatically by the [`wrapper.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wrapper.styl).
 * A component blade template can be included in the same way as any blade file. The inclusion is relative to the current template or to the `views` directory.
   * Example: `@include('Components.Header.Header')`
