@@ -11,8 +11,8 @@
   "license": "(MIT)",
   "scripts": {
     "watch": "gulp watch -d --sync --verbose --maps",
-    "build": "gulp",
-    "build:dev": "gulp -d",
+    "build": "gulp -d",
+    "build:staging": "gulp",
     "build:production": "gulp -p"
   },
   "engines": {
