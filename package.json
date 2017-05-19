@@ -38,7 +38,7 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "gulp": "git+ssh://git@github.com/gulpjs/gulp.git#4.0",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-better-rollup": "^1.1.1",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^3.0.1",
