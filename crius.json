@@ -9,7 +9,8 @@
       "whitelist": ["wp-admin/admin-ajax.php"],
       "blacklist": ["wp-admin/**"],
       "watch": [
-        "{app,resources/views}/**/*.{php,html}",
+        "app/**/*.php",
+        "resources/{views,components}/**/*.php",
         "*.{php,html}"
       ],
       "devUrl": "localhost:8888/selene"

@@ -1,7 +1,6 @@
 // The '@require' can be relative to the:
 //	- 'node_modules' directory (use the '~' prefix for clarity)
 //	- 'gulpfile.js'/root directory (use the '#' prefix for clarity)
-//	- 'resources/views' directory (use the '@' prefix for clarity)
 
 // External (relative to node_modules directory)
 @require "~rolleiflex/src/wrapper.styl"
@@ -21,7 +20,7 @@
 @require "wordpress/wp-classes"
 
 // Component files (relative to 'resources/views' directory)
-@require '@components/**/*'
+@require '#resources/components/**/*'
 
 // Overrides
 @require "common/overrides"

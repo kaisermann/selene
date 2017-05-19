@@ -29,7 +29,7 @@ crius.config = deepExtend(
         join(crius.config.paths.dist, 'any'),
         crius.config.paths.source
       ),
-      components: join(process.cwd(), 'resources/views/components'),
+      components: join(process.cwd(), 'resources/components'),
     },
   },
   crius.config
