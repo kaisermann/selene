@@ -5,16 +5,10 @@
 With crius you can:
 
 - Write CSS with Stylus
-
   - Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
   - Use simplified media queries with rupture (stylus)
-
-- Write ES6 Javascript (with async/await support)
+- Write modern Javascript
 - See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
-- Have your [bower](https://bower.io/) or npm packages automatically included in your assets
-
-  - Check the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) on the **root** directory
-
 - Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
 
 ## Requirements
@@ -27,6 +21,7 @@ With crius you can:
 1. `git clone git@github.com:kaisermann/crius.git`
 2. `npm install` or `yarn`
 3. Run at least `gulp build` before running `gulp watch`
+
 
 ## Usage samples
 
@@ -176,7 +171,7 @@ The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be c
 
 --------------------------------------------------------------------------------
 
-### Gulp Tasks
+### Theme Development
 
 #### Out of the box tasks
 
@@ -200,7 +195,7 @@ To create new generic gulp tasks, just create a file inside `.crius/tasks`, impo
 
 All tasks defined on the mentioned directory are imported BEFORE the resource tasks. If it's needed to load them AFTER the resource tasks, you can define a 'later-loading' queue at the beginning of the [`gulpfile.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js). For an example, check the [`loadLater`](https://github.com/kaisermann/crius/blob/master/gulpfile.js#L6) constant which already delays the loading of `default.js`.
 
-### Gulp Parameters
+#### Gulp Parameters
 
 You can also pass the following parameters to gulp:
 
@@ -212,6 +207,15 @@ You can also pass the following parameters to gulp:
 - `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
 The available parameters can be extended at [`.crius/params.js`](https://github.com/kaisermann/crius/blob/master/.crius/params.js).
+
+#### Build commands
+
+Useful gulp tasks aliases
+
+- `yarn run watch`
+- `yarn run build`
+- `yarn run build:staging`
+- `yarn run build:production`
 
 ## External links
 
