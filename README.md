@@ -12,7 +12,7 @@
 * [Node.js](http://nodejs.org/) >= 6.9.x
 * [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
 
-#### Components
+### Components
 
 * A component javascript modules can be imported by using the alias `Components.{componentName}`
   * Example: `import Header from '@Components/Header'`
@@ -24,11 +24,11 @@
   * `gulp component --create component1,component2,component3,...`
   * `gulp component --delete component1,component2,component3,...`
 
-#### Controllers
+### Controllers
 
 You can use controllers to pass data to specific templates. A controller must be created inside the [`./resources/controllers/`](https://github.com/kaisermann/selene/blob/master/resources/controllers/) directory. A controller scope is defined by each class name returned by `get_body_class`.
 
-#### Custom Blade Directives
+### Custom Blade Directives
 
 * `@mainquery ... @endmainquery` - Loops through the main query;
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query;
@@ -38,7 +38,7 @@ You can use controllers to pass data to specific templates. A controller must be
 
 Directives can be defined on [`app/directives.php`](https://github.com/kaisermann/selene/blob/master/app/directives.php).
 
-## WordPress things Selene does
+## WordPress tweaks
 
 * Front-end
   * Cleans up and prettify your `body_class()` output;
