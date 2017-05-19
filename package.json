@@ -9,7 +9,12 @@
     "url": "git@github.com:kaisermann/selene.git"
   },
   "license": "(MIT)",
-  "scripts": {},
+  "scripts": {
+    "watch": "gulp watch -d --sync --verbose --maps",
+    "build": "gulp",
+    "build:dev": "gulp -d",
+    "build:production": "gulp -p"
+  },
   "engines": {
     "node": ">= 6.9.4"
   },
