@@ -5,11 +5,8 @@ const deepExtend = require('deep-extend')
 
 const params = require('./params')
 
-// Path to the main manifest file.
-const mainManifestPath = './crius.json'
-
 // Loads the crius manifest
-const crius = JSON.parse(readFileSync(mainManifestPath, 'utf8'))
+const crius = JSON.parse(readFileSync('./crius.json', 'utf8'))
 
 // Default path values
 crius.config.paths = deepExtend(
