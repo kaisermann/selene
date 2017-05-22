@@ -24,7 +24,6 @@ module.exports = {
       return (
         lazypipe()
           .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
-          // Only pipes our main code to rollup/babel
           .pipe(
             betterRollup,
           {
