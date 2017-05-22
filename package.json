@@ -25,7 +25,6 @@
     "Safari >= 8"
   ],
   "devDependencies": {
-    "asset-orchestrator": "^1.3.0",
     "autoprefixer": "^7.1.0",
     "browser-sync": "^2.18.11",
     "css-mqpacker": "^6.0.0",

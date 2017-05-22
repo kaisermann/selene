@@ -1,6 +1,6 @@
+const { readFileSync } = require('fs')
 const { relative, join } = require('path')
 const browserSyncLib = require('browser-sync')
-const assetOrchestrator = require('asset-orchestrator')
 const deepExtend = require('deep-extend')
 
 const params = require('./params')
@@ -9,7 +9,7 @@ const params = require('./params')
 const mainManifestPath = './crius.json'
 
 // Loads the crius manifest
-const crius = assetOrchestrator(mainManifestPath)
+const crius = JSON.parse(readFileSync(mainManifestPath, 'utf8'))
 
 // Default path values
 crius.config.paths = deepExtend(
