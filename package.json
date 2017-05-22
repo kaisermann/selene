@@ -51,7 +51,7 @@
     "gulp-sizereport": "^1.2.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-stylus": "^2.6.0",
-    "gulp-uglify": "^2.1.2",
+    "gulp-uglify": "^3.0.0",
     "gulp-uncss": "^1.0.6",
     "gulp-util": "^3.0.8",
     "lazypipe": "^1.0.1",
