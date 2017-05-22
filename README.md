@@ -30,10 +30,6 @@ With crius you can:
 
 ## Documentation
 
-### [General manifest specification](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
-
-The attributes listed below are specific to `crius`. Therefore, it's highly recommended to read the overall manifest documentation first.
-
 ### The `config` object
 
 The [`config.paths`](https://github.com/kaisermann/crius/blob/master/crius.json#L3) object MAY have a `revisionManifest` **string** attribute that defines the revision manifest's file name on production distributions.
@@ -86,8 +82,6 @@ With `mode: "server"`
 --------------------------------------------------------------------------------
 
 ### The `resources` object
-
-For a complete base description of the object, please see the [General manifest specification](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md).
 
 ```json
 {
@@ -219,7 +213,6 @@ Useful gulp tasks aliases
 
 ## External links
 
-- [Asset Orchestrator documentation](https://github.com/kaisermann/asset-orchestrator/blob/master/manifest.md)
 - [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
 - [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
 - [Sage documentation](https://github.com/roots/sage/) (Sage 9 uses webpack, please refer to the **8.*.*** documentation.)

@@ -1,3 +1,4 @@
+const { join } = require('path')
 const requireDir = require('require-directory')
 const merge = require('merge-stream')
 
@@ -23,25 +24,48 @@ const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
   return util.noop()
 }
 
+const buildAssetObj = (outputName, preObj) => {
+  let assetObj = {}
+
+  if ('' + preObj === preObj) {
+    assetObj.files = [preObj]
+  } else {
+    assetObj = preObj
+    if (!assetObj.files) assetObj.files = []
+    else if (!Array.isArray(assetObj.files)) {
+      assetObj.files = [assetObj.files]
+    }
+  }
+  assetObj.vendor = assetObj.vendor || []
+  assetObj.outputName = outputName
+  assetObj.globs = assetObj.files.map(path =>
+    join(crius.config.paths.source, path)
+  )
+  return assetObj
+}
+
 // Helper to create resources tasks
 const dynamicTaskHelper = (resourceType, resourceInfo) => {
   const innerTaskFn = done => {
     // Merged object to use on resourceModule.pipelines.merged
     const merged = merge()
+    const curAssets = crius.resources[resourceType].assets
 
     // For each asset on the current resource
-    crius.forEachAsset(resourceType, asset => {
+    Object.keys(curAssets).forEach(outputName => {
+      // Reads each resource asset and parses its 'files' property
+      const curAsset = buildAssetObj(outputName, curAssets[outputName])
       const output = getResourceDir(
         'dist',
         resourceInfo.directory,
-        isDir(asset.outputName) ? asset.outputName : ''
+        isDir(outputName) ? outputName : ''
       )
 
       merged.add(
         gulp
-          .src(asset.globs)
+          .src(curAsset.globs)
           .pipe(plumber({ errorHandler: onError }))
-          .pipe(getResourcePipeline(resourceType, 'each', asset))
+          .pipe(getResourcePipeline(resourceType, 'each', curAsset))
           .pipe(gulp.dest(output))
           .pipe(
             crius.browserSyncInstance
