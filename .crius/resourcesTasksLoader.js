@@ -113,12 +113,14 @@ for (const resourceType of Object.keys(crius.resources)) {
   // Checks if a resource task have any tasks to run after itself
   taskQueue = appendAuxTasks('postTasks', resourceModule, taskQueue)
 
-  // When '--verbose' is set, are we doing a resource task or the watch task?
-  // If yes, let's append the sireReport task to the pipeline
-  if (crius.params.verbose) {
-    if (process.argv.includes(resourceType) || process.argv.includes('watch')) {
-      taskQueue.push(sizereport(resourceInfo.pattern))
-    }
+  // When '--report' is set, are we doing a resource task or the watch task?
+  // If yes, let's append the Report task to the pipeline
+  // If not, is it a resource task called by the CLI?
+  if (
+    (crius.params.report && process.argv.includes('watch')) ||
+    process.argv.includes(resourceType)
+  ) {
+    taskQueue.push(sizereport(resourceInfo.pattern))
   }
 
   // If we have no dependency tasks, pass only the resource task and not a task series

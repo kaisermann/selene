@@ -194,7 +194,7 @@ All tasks defined on the mentioned directory are imported BEFORE the resource ta
 You can also pass the following parameters to gulp:
 
 - `--sync` Starts browserSync. Use only with `gulp watch`
-- `--verbose` Verbose mode
+- `--report` or `-r` Report mode
   - If used with `watch`, it will display the assets sizes of the current resource being edited
 - `--maps` Allows sourcemaps to be created
 - `-d` Asset debug mode. It won't minify the files

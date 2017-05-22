@@ -13,6 +13,6 @@ module.exports = {
   production: isProduction,
   // Start BroswerSync when '--sync'
   sync: args.sync,
-  // Verbose flag
-  verbose: args.verbose,
+  // Report flag
+  report: args.report || args.r,
 }
