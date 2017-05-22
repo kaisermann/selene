@@ -4,7 +4,14 @@
 
 ## Informations
 
-### Requirements
+- Write CSS with Stylus
+  - Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
+  - Use simplified media queries with rupture (stylus)
+- Write modern Javascript
+- See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
+- Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
+
+## Requirements
 
 * [WordPress](https://wordpress.org/) >= 4.7
 * [PHP](http://php.net/manual/en/install.php) >= 5.6.4
@@ -58,6 +65,15 @@ Directives can be defined on [`app/directives.php`](https://github.com/kaiserman
   * Provides John Billion's libraries which make painless to create custom post types and taxonomies.
     * https://github.com/johnbillion/extended-cpts
     * https://github.com/johnbillion/extended-taxos
+
+#### Build commands
+
+Useful gulp tasks aliases
+
+- `yarn run watch`
+- `yarn run build`
+- `yarn run build:staging`
+- `yarn run build:production`
 
 ## External links
 * [Crius documentation](https://github.com/kaisermann/crius)

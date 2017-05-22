@@ -1,3 +1,4 @@
+const { join } = require('path')
 const requireDir = require('require-directory')
 const merge = require('merge-stream')
 
@@ -23,25 +24,48 @@ const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
   return util.noop()
 }
 
+const buildAssetObj = (outputName, preObj) => {
+  let assetObj = {}
+
+  if ('' + preObj === preObj) {
+    assetObj.files = [preObj]
+  } else {
+    assetObj = preObj
+    if (!assetObj.files) assetObj.files = []
+    else if (!Array.isArray(assetObj.files)) {
+      assetObj.files = [assetObj.files]
+    }
+  }
+  assetObj.vendor = assetObj.vendor || []
+  assetObj.outputName = outputName
+  assetObj.globs = assetObj.files.map(path =>
+    join(crius.config.paths.source, path)
+  )
+  return assetObj
+}
+
 // Helper to create resources tasks
 const dynamicTaskHelper = (resourceType, resourceInfo) => {
   const innerTaskFn = done => {
     // Merged object to use on resourceModule.pipelines.merged
     const merged = merge()
+    const curAssets = crius.resources[resourceType].assets
 
     // For each asset on the current resource
-    crius.forEachAsset(resourceType, asset => {
+    Object.keys(curAssets).forEach(outputName => {
+      // Reads each resource asset and parses its 'files' property
+      const curAsset = buildAssetObj(outputName, curAssets[outputName])
       const output = getResourceDir(
         'dist',
         resourceInfo.directory,
-        isDir(asset.outputName) ? asset.outputName : ''
+        isDir(outputName) ? outputName : ''
       )
 
       merged.add(
         gulp
-          .src(asset.globs)
+          .src(curAsset.globs)
           .pipe(plumber({ errorHandler: onError }))
-          .pipe(getResourcePipeline(resourceType, 'each', asset))
+          .pipe(getResourcePipeline(resourceType, 'each', curAsset))
           .pipe(gulp.dest(output))
           .pipe(
             crius.browserSyncInstance
@@ -89,12 +113,14 @@ for (const resourceType of Object.keys(crius.resources)) {
   // Checks if a resource task have any tasks to run after itself
   taskQueue = appendAuxTasks('postTasks', resourceModule, taskQueue)
 
-  // When '--verbose' is set, are we doing a resource task or the watch task?
-  // If yes, let's append the sireReport task to the pipeline
-  if (crius.params.verbose) {
-    if (process.argv.includes(resourceType) || process.argv.includes('watch')) {
-      taskQueue.push(sizereport(resourceInfo.pattern))
-    }
+  // When '--report' is set, are we doing a resource task or the watch task?
+  // If yes, let's append the Report task to the pipeline
+  // If not, is it a resource task called by the CLI?
+  if (
+    (crius.params.report && process.argv.includes('watch')) ||
+    process.argv.includes(resourceType)
+  ) {
+    taskQueue.push(sizereport(resourceInfo.pattern))
   }
 
   // If we have no dependency tasks, pass only the resource task and not a task series
