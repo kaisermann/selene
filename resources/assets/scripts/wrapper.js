@@ -1,3 +1,4 @@
+import aph from 'aph'
 import Router from './utils/Router.js'
 import common from './routes/common.js'
 
@@ -9,15 +10,4 @@ const routes = {
 // Usually, you won't need to modify anything below this line.
 const router = new Router(routes)
 
-if (
-  document.readyState === 'complete' ||
-  (document.readyState !== 'loading' && !document.documentElement.doScroll)
-) {
-  router.loadRoutes()
-} else {
-  document.addEventListener(
-    'DOMContentLoaded',
-    router.loadRoutes.bind(router),
-    false
-  )
-}
+aph.onDOMLoaded(() => router.loadRoutes())
