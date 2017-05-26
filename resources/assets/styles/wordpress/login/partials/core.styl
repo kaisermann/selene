@@ -13,11 +13,9 @@ body.login
 	background-color: $login-bg-color
 	background-image: unquote($login-bg-img)
 	background-size: $login-bg-size
+	background-position: 50%
 	font-family: fonts.main
 	font-weight: 500
-		
-#wp-auth-check-wrap #wp-auth-check
-	background-color: $login-bg-color
 	
 .login #nav
 .login #backtoblog
@@ -81,7 +79,7 @@ if login.form
 	
 	#loginform
 		border-radius: $login-form-border-radius
-		background-color: $login-form-background
+		background: $login-form-background
 		box-shadow: 0 1px 3px rgba($login-form-background, .13)
 		padding: $login-form-padding
 		
@@ -108,3 +106,7 @@ if login.form
 					
 					&:focus
 						box-shadow: inset 0 0 2px rgba( $login-form-input-color, 0.4 )
+
+/* Auth lightbox */
+.interim-login #login
+	margin: 30px auto

@@ -83,7 +83,7 @@ function renderTemplate( $templatePath, $data = []) {
 }
 
 function renderComponent( $componentName, $data = []) {
-	renderTemplate("components/{$componentName}/{$componentName}", $data);
+	echo template( config( 'dir.stylesheet' ) . "/components/{$componentName}/{$componentName}.blade.php", $data);
 }
 
 /**
