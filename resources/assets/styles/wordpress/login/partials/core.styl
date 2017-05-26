@@ -16,7 +16,7 @@ body.login
 	background-position: 50%
 	font-family: fonts.main
 	font-weight: 500
-	
+
 .login #nav
 .login #backtoblog
 	a
@@ -46,7 +46,7 @@ if login.alert
 	$login-alert-background = login.alert.background or whitesmoke
 	$login-alert-text = invIfSimilar(login.alert.color or black, $login-alert-background)
 	$login-alert-link = invIfSimilar(login.alert.link or black, $login-alert-background)
-	
+
 	.login .message
 	.login #login_error
 		background-color: $login-alert-background
@@ -59,31 +59,31 @@ if login.button
 	$login-form-button-color = login.button.color or #fff
 	#wp-submit
 		button($login-form-button-background, $login-form-button-color)
-		
+
 if login.form
 	$login-form-background = login.form.background or whitesmoke
 	$login-form-color = login.form.color or black
 	$login-form-padding = login.form.padding != null ? login.form.padding : 26px
 	$login-form-border-radius = login.form.borderRadius or 0
-	
+
 	.login
 		#nav
 		#backtoblog
 			padding: 0 $login-form-padding 0
-				
+
 		label
 			font-family: fonts.main
 			color: $login-form-color
 			font-weight: 300
 			text-transform: uppercase
-	
+
 	#loginform
 		border-radius: $login-form-border-radius
 		background: $login-form-background
 		padding: $login-form-padding
 		box-shadow: none
-		
-		
+
+
 	if login.form.input
 		$login-form-input-background = login.form.input.background or whitesmoke
 		$login-form-input-color = invIfSimilar(login.form.input.color or black, $login-form-input-background)
@@ -94,18 +94,21 @@ if login.form
 					&[type="password"]
 						background-color: $login-form-input-background
 						color: $login-form-input-color
-					
+
 					&[type="checkbox"]
 						background-color: $login-form-input-background
 						box-shadow: inset 0 0 2px rgba( $login-form-input-color, 0.4 )
 						border-color: $login-form-input-background
-							
+
 						&:checked
 							&::before
 								color: $login-form-input-color
-					
+
 					&:focus
 						box-shadow: inset 0 0 2px rgba( $login-form-input-color, 0.4 )
+
+					&:-webkit-autofill
+						-webkit-box-shadow: 0 0 0px 1000px $login-form-input-background inset !important
 
 /* Auth lightbox */
 .interim-login #login
