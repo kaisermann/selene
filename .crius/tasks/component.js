@@ -53,7 +53,7 @@ gulp.task('component', done => {
     let fileName = semiCamelize(realComponentName)
     let componentPath = join(
       process.cwd(),
-      `resources/views/components/${fileName}`
+      `resources/components/${fileName}`
     )
 
     if (!args[0]) throw new Error('Missing first parameter')
