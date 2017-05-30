@@ -1,4 +1,4 @@
-import Component from '@Components/Base'
+import Component from '@Components/Base.js'
 import aph from 'aph'
 
 export default class Header extends Component {

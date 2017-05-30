@@ -734,13 +734,9 @@ caniuse-api@^1.5.2:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-db@1.0.30000671:
+caniuse-db@1.0.30000671, caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000671"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000671.tgz#9f071bbc7b96994638ccbaf47829d58a1577a8ed"
-
-caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000674"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000674.tgz#d78e99a3291341f53830e96ad2f12921b9715e8d"
 
 caniuse-lite@^1.0.30000670:
   version "1.0.30000674"
@@ -5186,6 +5182,12 @@ rolleiflex@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/rolleiflex/-/rolleiflex-3.0.0.tgz#15ea81239009784b508073f4f396985a1ccd3101"
 
+rollup-plugin-alias@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-alias/-/rollup-plugin-alias-1.3.1.tgz#a9152fec4b6a6510dae93989517ca7853c32a6fa"
+  dependencies:
+    slash "^1.0.0"
+
 rollup-plugin-buble@^0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-buble/-/rollup-plugin-buble-0.15.0.tgz#83c3e89c7fd2266c7918f41ba3980313519c7fd0"
@@ -5220,10 +5222,6 @@ rollup-plugin-node-resolve@^3.0.0:
     builtin-modules "^1.1.0"
     is-module "^1.0.0"
     resolve "^1.1.6"
-
-rollup-plugin-strict-alias@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-strict-alias/-/rollup-plugin-strict-alias-1.0.0.tgz#7079ee25785c5f9506e4430b5abff4c581ac8cfc"
 
 rollup-pluginutils@^1.5.0:
   version "1.5.2"
@@ -5386,6 +5384,10 @@ shelljs@^0.7.5:
 signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
+
+slash@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
 slice-ansi@0.0.4:
   version "0.0.4"

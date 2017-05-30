@@ -21,9 +21,10 @@
 
 ### Components
 
-* A component javascript modules can be imported by using the alias `Components.{componentName}`
-  * Example: `import Header from '@Components/Header'`
-  * Example 2: `import SubHeader from '@Components/Header/SubHeder'`
+* A component javascript modules can be imported by using the alias `@Components/...pathToComponent`
+  * Example: `import Header from '@Components/Header/Header.js'`
+  * Example 2: `import SubHeader from '@Components/Header/SubHeder/SubHeader.js'`
+  * There's also an alias for the 'scripts' dicrectory available: `@Scripts/...` 
 * A component `.styl` file is imported automatically by the [`wrapper.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wrapper.styl).
 * A component blade template can be included in the same way as any blade file. The inclusion is relative to the current template or to the `views` directory.
   * Example: `@include('Components.Header.Header')`
@@ -57,7 +58,7 @@ Directives can be defined on [`app/directives.php`](https://github.com/kaiserman
   * Admin dashboard and login page CSS customization with the [`admin.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/admin/config.styl) file;
   * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/editor.styl) file;
   * Provides an [`appMeta`](https://github.com/kaisermann/selene/blob/master/app/setup.php#L113) global javascript object with the ajax and home urls.
-  
+
 * Back-end
   * Sets uploaded JPEG quality to 100;
   * Provides options on the admin dashboard to crop default medium and large image sizes;
