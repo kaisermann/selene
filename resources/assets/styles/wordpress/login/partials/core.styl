@@ -26,7 +26,7 @@ body.login
 			text-decoration: underline !important
 
 if login.logo
-	$login-logo-url = login.logo.url or 'https://s.w.org/about/images/logos/wordpress-logo-notext-rgb.png'
+	$login-logo-img = login.logo.image or 'https://s.w.org/about/images/logos/wordpress-logo-notext-rgb.png'
 	$login-logo-width = login.logo.width or 120px
 	$login-logo-height = login.logo.height or 120px
 	#login
@@ -39,7 +39,7 @@ if login.logo
 				width: 100%
 				if login.logo != null
 					height: $login-logo-height
-					background-image: url($login-logo-url)
+					background-image: url($login-logo-img)
 					background-size: $login-logo-width auto
 
 if login.alert
