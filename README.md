@@ -24,7 +24,7 @@
 * A component javascript modules can be imported by using the alias `@Components/...pathToComponent`
   * Example: `import Header from '@Components/Header/Header.js'`
   * Example 2: `import SubHeader from '@Components/Header/SubHeder/SubHeader.js'`
-  * There's also an alias for the 'scripts' dicrectory available: `@Scripts/...` 
+  * There's also an alias for the 'scripts' directory available: `@Scripts/...`
 * A component `.styl` file is imported automatically by the [`wrapper.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wrapper.styl).
 * A component blade template can be included in the same way as any blade file. The inclusion is relative to the current template or to the `views` directory.
   * Example: `@include('Components.Header.Header')`
@@ -40,6 +40,7 @@ You can use controllers to pass data to specific templates. A controller must be
 
 * `@mainquery ... @endmainquery` - Loops through the main query;
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query;
+* `@shortcode` - Executes a certain shortcode;
 * `@inlinesvg` - Prints the specified svg file;
 * `@dump` - Dumps an php variable with a `var_export`;
 * `@console` - Dumps a php variable in the javascript console.
