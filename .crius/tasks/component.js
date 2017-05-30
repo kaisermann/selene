@@ -11,7 +11,7 @@ export default class %camelizedName% extends Component {
 
 }
 
-%camelizedName%.seek = () => aph('.js-%lowerName%').each(element => new %camelizedName%(element))
+%camelizedName%.init = () => aph('.js-%lowerName%').each(element => new %camelizedName%(element))
 `
 
 const BLADE_CONTENT = `<div class="%lowerName% js-%lowerName%">
