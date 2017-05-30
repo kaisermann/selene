@@ -47,10 +47,10 @@ if (!class_exists('Roots\\Sage\\Container')) {
 function includeArrayOfFiles( $includeArray, $path ) {
  global $sage_error;
  array_map(function ( $file ) use ( $sage_error, $path ) {
-	 $file = "{$path}/{$file}.php";
-	 if ( ! locate_template( $file, true, true ) ) {
-		 $sage_error(sprintf( __( 'Error locating <code>%s</code> for inclusion.', 'selene' ), $file ), 'File not found');
-	 }
+   $file = "{$path}/{$file}.php";
+   if ( ! locate_template( $file, true, true ) ) {
+     $sage_error(sprintf( __( 'Error locating <code>%s</code> for inclusion.', 'selene' ), $file ), 'File not found');
+   }
  }, $includeArray);
 }
 
@@ -95,6 +95,9 @@ add_filter('stylesheet_directory_uri', function ($uri) {
 
 if ($sage_views !== get_option('stylesheet')) {
     update_option('stylesheet', $sage_views);
+    if (php_sapi_name() === 'cli') {
+      return;
+    }
     wp_redirect($_SERVER['REQUEST_URI']);
     exit();
 }

@@ -5,14 +5,14 @@
 		<div class="page-wrapper" role="document">
 			<div class="page-container">
 				@php(do_action('get_header'))
-				@include('partials.header')
+				@include('components.Header.Header')
 				<div class="page-content">
 					<main class="main" role="main">
 						@yield('content')
 					</main>
 				</div>
 				@php(do_action('get_footer'))
-				@include('partials.footer')
+				@include('components.Footer.Footer')
 				@php(wp_footer())
 			</div>
 		</div>

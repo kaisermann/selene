@@ -1,4 +1,4 @@
-<footer class="footer" role="contentinfo">
+<footer class="footer js-footer" role="contentinfo">
 	<div class="container">
 		@php(dynamic_sidebar( 'sidebar-footer' ))
 	</div>

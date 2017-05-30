@@ -82,6 +82,10 @@ function renderTemplate( $templatePath, $data = []) {
 	echo template( config( 'dir.stylesheet' ) . "/views/{$templatePath}.blade.php", $data);
 }
 
+function renderComponent( $componentName, $data = []) {
+	echo template( config( 'dir.stylesheet' ) . "/components/{$componentName}/{$componentName}.blade.php", $data);
+}
+
 /**
  * Creates a controller for the specified scope
  * @param string scope
