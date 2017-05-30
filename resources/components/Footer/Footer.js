@@ -5,4 +5,4 @@ export default class Footer extends Component {
 
 }
 
-Footer.seek = () => aph('.js-footer').each(element => new Footer(element))
+Footer.init = () => aph('.js-footer').each(element => new Footer(element))

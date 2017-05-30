@@ -5,4 +5,4 @@ export default class Header extends Component {
 
 }
 
-Header.seek = () => aph('.js-header').each(element => new Header(element))
+Header.init = () => aph('.js-header').each(element => new Header(element))

@@ -49,9 +49,9 @@ gulp.task('component', done => {
   const componentsToManage = args[1].split(',')
 
   componentsToManage.forEach(tmpComponentName => {
-    let realComponentName = capitalizeStr(tmpComponentName)
-    let fileName = semiCamelize(realComponentName)
-    let componentPath = join(
+    const realComponentName = capitalizeStr(tmpComponentName)
+    const fileName = semiCamelize(realComponentName)
+    const componentPath = join(
       process.cwd(),
       `resources/components/${fileName}`
     )
