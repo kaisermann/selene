@@ -1,4 +1,3 @@
-const { readdirSync, statSync } = require('fs')
 const { join } = require('path')
 const gulp = require('gulp')
 const lazypipe = require('lazypipe')
@@ -11,7 +10,7 @@ const rev = require('gulp-rev')
 const util = require('gulp-util')
 
 // const rollUpBabel = require('rollup-plugin-babel')
-const rollUpAlias = require('rollup-plugin-strict-alias')
+const rollUpAlias = require('rollup-plugin-alias')
 const rollUpBuble = require('rollup-plugin-buble')
 const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
@@ -19,20 +18,6 @@ const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
 
 const crius = require('../manifest')
 const writeToManifest = require('../utils/writeToManifest')
-
-// Searches recursively for directories
-function getDirs (dir, filenamesAcc = []) {
-  return readdirSync(dir).reduce((list, dirName) => {
-    const realPath = join(dir, dirName)
-    if (statSync(realPath).isDirectory()) {
-      filenamesAcc.push(dirName)
-      list.push(filenamesAcc)
-      list = list.concat(getDirs(realPath, filenamesAcc.slice(0)))
-      filenamesAcc = []
-    }
-    return list
-  }, [])
-}
 
 module.exports = {
   preTasks: ['eslint'],
@@ -45,32 +30,16 @@ module.exports = {
             betterRollup,
           {
             plugins: [
-              // Generates the components alias object
-              // Used for import calls
-              // Ex: import Header from 'Components/Header'
-              rollUpAlias(
-                  getDirs(crius.config.paths.components).reduce(
-                    (obj, acc) => {
-                      const alias = ['@Components', ...acc].join('/')
-                      // '@Components/ComponentName...'
-                      obj[alias] = join(
-                        crius.config.paths.components, // Components directory
-                        acc.join('/'), // File path inside componenets directory
-                        acc[acc.length - 1] + '.js' // File name
-                      )
-                      return obj
-                    },
-                    {
-                      '@Components/Base': join(
-                        crius.config.paths.components,
-                        'Base.js'
-                      ),
-                    }
-                  )
-                ),
-              // Allow to import node builtin modules such as path, url, querystring, etc
+                // Generates the components alias object
+                // Used for import calls
+                // Ex: import Header from 'Components/Header'
+              rollUpAlias({
+                '@Components': crius.config.paths.components,
+                '@Scripts': join(crius.config.paths.source, 'scripts'),
+              }),
+                // Allow to import node builtin modules such as path, url, querystring, etc
               rollUpNodebuiltins(),
-              // Allow to import modules from the `node_modules`
+                // Allow to import modules from the `node_modules`
               rollUpNodeResolve({
                 module: true,
                 jsnext: true,

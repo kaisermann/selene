@@ -1,8 +1,8 @@
-import Component from '@Components/Base'
+import Component from '@Components/Base.js'
 import aph from 'aph'
 
 export default class Footer extends Component {
 
 }
 
-Footer.seek = () => aph('.js-footer').each(element => new Footer(element))
+Footer.init = () => aph('.js-footer').each(element => new Footer(element))

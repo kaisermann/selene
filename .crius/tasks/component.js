@@ -4,14 +4,12 @@ const rimraf = require('rimraf')
 const mkdirp = require('mkdirp')
 const gulp = require('gulp')
 
-const JS_CONTENT = `import Component from '@Components/Base'
-import aph from 'aph'
-
-export default class %camelizedName% extends Component {
-
+const JS_CONTENT = `export default class %camelizedName% {
+  static init() {
+    // Initialization code here
+    // JS Class: 'js-%lowerName%'
+  }
 }
-
-%camelizedName%.seek = () => aph('.js-%lowerName%').each(element => new %camelizedName%(element))
 `
 
 const BLADE_CONTENT = `<div class="%lowerName% js-%lowerName%">
@@ -49,9 +47,9 @@ gulp.task('component', done => {
   const componentsToManage = args[1].split(',')
 
   componentsToManage.forEach(tmpComponentName => {
-    let realComponentName = capitalizeStr(tmpComponentName)
-    let fileName = semiCamelize(realComponentName)
-    let componentPath = join(
+    const realComponentName = capitalizeStr(tmpComponentName)
+    const fileName = semiCamelize(realComponentName)
+    const componentPath = join(
       process.cwd(),
       `resources/components/${fileName}`
     )
