@@ -38,7 +38,8 @@
     "illuminate/view": "~5.4.0",
     "illuminate/config": "~5.4.0",
     "johnbillion/extended-cpts": "~3.0.3",
-    "johnbillion/extended-taxos": "~2.0.3"
+    "johnbillion/extended-taxos": "~2.0.3",
+    "soberwp/controller": "9.0.0-beta.3"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.5.1"
