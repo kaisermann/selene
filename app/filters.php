@@ -32,15 +32,6 @@ add_filter( 'stylesheet_directory_uri', 'App\filter__url_protocol', 10, 3 );
 // Removes WP version from RSS feeds
 add_filter( 'the_generator', '__return_false' );
 
-// Includes the files listed on the controllers directory
-includeArrayOfFiles(
-	array_map(function( $filePath ) {
-			return basename( $filePath, '.php' );
-		}, glob( get_template_directory() . '/controllers/*.php' )
-	),
-	'controllers'
-);
-
 /**
 * Template Hierarchy should search for .blade.php files
 */
@@ -75,7 +66,7 @@ function filter__template_include( $template ) {
 }
 
 function filter__body_class( array $classes ) {
-	
+
 	// String patterns to remove
 	$excludePatterns = [
 		'page-template-views.*',		// Removes page-template-views-$template
@@ -87,21 +78,21 @@ function filter__body_class( array $classes ) {
 		'tag-\d*', 									// Removes tag-$id,
 		'post-type-archive',				// Removes post-type-archive
 	];
-	
+
 	// Regex patterns to replace class names
 	$replacePatterns = [
 		'/page-template-template-(.*)-blade/' => 'template-$1', // Simplifies template classes
 		'/page-template(.*)/' => 'template$1',
 		'/post-type-archive-(.*)/' => 'archive-$1' // Simplifies custom-post-type-archive
 	];
-	
+
 	// Add post/page slug if not present
 	if (is_single() || is_page() && !is_front_page()) {
 		if (!in_array(basename(get_permalink()), $classes)) {
 			$classes[] = 'page-' . basename(get_permalink());
 		}
 	}
-	
+
 	// Remove unnecessary classes
 	$classes = preg_grep('/^(?!('. implode('|', $excludePatterns) . ')$)/xs', $classes);
 	$classes = preg_replace(
@@ -125,26 +116,26 @@ function filter__template_redirect() {
 	if ( ! isset( $wp_rewrite ) || ! is_object( $wp_rewrite ) || ! $wp_rewrite->using_permalinks() ) {
 		return;
 	}
-	
+
 	$search_base = $wp_rewrite->search_base;
 	if ( is_search() && ! is_admin() && strpos( $_SERVER['REQUEST_URI'], "/{$search_base}/" ) === false && strpos( $_SERVER['REQUEST_URI'], '&' ) === false ) {
 		wp_redirect( get_search_link() );
 		exit();
 	}
-	
+
 	if ( WP_ENV === 'development' && isset( $_GET['show_sitemap'] ) ) {
 		$homeUrl = get_home_url();
 		$blogUrl = get_permalink( get_option( 'page_for_posts' ) );
 		$the_query = new \WP_Query( [ 'post_type' => 'any', 'posts_per_page' => '-1', 'post_status' => 'publish' ] );
-		
+
 		$urls = [];
 		$urls[] = $homeUrl;
 		if ( strcmp( $blogUrl, $homeUrl ) !== 0 ) {
 			$urls[] = $blogUrl;
 		}
-		
+
 		$urls[] = $homeUrl . '/404';
-		
+
 		while ( $the_query->have_posts() ) {
 			$the_query->the_post();
 			$urls[] = get_permalink();

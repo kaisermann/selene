@@ -36,6 +36,8 @@
 
 You can use controllers to pass data to specific templates. A controller must be created inside the [`./resources/controllers/`](https://github.com/kaisermann/selene/blob/master/resources/controllers/) directory. A controller scope is defined by each class name returned by `get_body_class`.
 
+[Controller documentation](https://github.com/soberwp/controller)
+
 ### Custom Blade Directives
 
 * `@mainquery ... @endmainquery` - Loops through the main query;

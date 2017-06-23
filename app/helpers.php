@@ -87,46 +87,6 @@ function renderComponent( $componentName, $data = []) {
 }
 
 /**
- * Creates a controller for the specified scope
- * @param string scope
- * @param function $fn
- * @return null
- */
-function controller( $scopes, $fn ) {
-	if ( ! is_array( $scopes ) ) {
-		$scopes = [ $scopes ];
-	}
-	foreach ( $scopes as $scope ) {
-		add_filter( "sage/template/{$scope}/data", function( $data, $template ) use ( $fn ) {
-			return $data + $fn($data, $template);
-		}, 10, 2 );
-	}
-}
-
-/**
- * Page titles
- * @return string
- */
-function title() {
-	if ( is_home() ) {
-		if ( $home = get_option( 'page_for_posts', true ) ) {
-			return get_the_title( $home );
-		}
-		return __( 'Latest Posts', 'selene' );
-	}
-	if ( is_archive() ) {
-		return get_the_archive_title();
-	}
-	if ( is_search() ) {
-		return sprintf( __( 'Search Results for %s', 'selene' ), get_search_query() );
-	}
-	if ( is_404() ) {
-		return __( 'Not Found', 'selene' );
-	}
-	return get_the_title();
-}
-
-/**
  * Dumps an variable in the console/php stdout
  * @param $data
  * @param bool $phpPrint
