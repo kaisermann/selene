@@ -1,8 +1,6 @@
-import Component from '@Components/Base.js'
-import aph from 'aph'
-
-export default class Header extends Component {
-
+export default class Header {
+  static init () {
+    // Initialization code here
+    // JS Class: 'js-header'
+  }
 }
-
-Header.init = () => aph('.js-header').each(element => new Header(element))
