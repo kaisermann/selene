@@ -1,1 +1,35 @@
+.burger-checkbox
+	&:checked
+		~ .burger
+			span
+				&::before
+				&::after
+					background-color: colors.white
+
+		~ .header__overlay
+			opacity: 1
+			visibility: visible
+
+.burger
+	top: margins.burger
+	right: margins.burger
+
 // .header
+.header__overlay
+	position: fixed
+	z-index: layers.overlay
+	top: 0
+	left: 0
+	size(100%)
+	background-color: rgba(colors.black, .6)
+	transition: .3s ease
+	opacity: 0
+	visibility: hidden
+	padding: 45px
+	font-size: rem(48px)
+	line-height: 1.4
+
+	a
+		color: colors.white
+		&:hover
+			text-decoration: underline

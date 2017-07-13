@@ -12,7 +12,7 @@ class App extends Controller
 	 * @return string
 	 */
 	public function siteName() {
-	    return get_bloginfo('name');
+		return get_bloginfo('name');
 	}
 
 	/**
@@ -25,19 +25,21 @@ class App extends Controller
 	}
 
 	/**
-	 * Renders the primary navigation menu if available
+	 * Returns the primary navigation menu if available
 	 * @return string
 	 */
-	public static function renderPrimaryMenu(){
+	public function primaryMenu() {
 		if(has_nav_menu('primary_navigation')) {
-			wp_nav_menu([
+			return wp_nav_menu([
 				'theme_location' => 'primary_navigation',
 				'walker' => new \BEM\MenuWalker,
 				'block' => 'header__nav',
 				'menu_class' => 'nav header__nav',
 				'container' => false,
+				'echo' => false
 			]);
 		}
+		return '[no-primary-navigation]';
 	}
 
 	/**
