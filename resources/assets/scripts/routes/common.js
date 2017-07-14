@@ -1,5 +1,8 @@
+import Header from '@Components/Header/Header'
+
 export default {
   init () {
+    Header.init()
     // JavaScript to be fired on all pages
   },
   finalize () {

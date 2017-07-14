@@ -1,12 +1,11 @@
 <header class="header js-header">
 	<a class="brand" href="{{ home_url('/') }}">{{ $site_name }}</a>
 
-	<input type="checkbox" id="burger-checkbox" class="burger-checkbox">
-	<label for="burger-checkbox" class="burger">
+	<button class="burger js-burger">
 		<span class="burger__slices"><span>Toggle Main Menu</span></span>
-	</label>
+	</button>
 
-	<div class="af-overlay -hidden-first header__overlay">
+	<div class="header__overlay js-header-overlay">
 		{!! $primary_menu !!}
 	</div>
 </header>

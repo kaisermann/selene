@@ -1,37 +1,33 @@
 $burger = {
-	width: 26px
-	height: 22px
+	width: 20px
+	height: 20px
 	stripeHeight: 4px
 	extraClickArea: 15px
 }
 $burger.stripePadding = (($burger.height - $burger.stripeHeight * 3) / 2)
-
-.burger-checkbox
-	display: none
-
-	&:checked
-		~ .burger
-			span
-				background none
-
-				&::before
-				&::after
-					background-color: colors.black
-					transition-delay: .3s, .3s, 0s
-
-				&::before
-					top 0
-					transform rotate(45deg)
-
-				&::after
-					bottom 0
-					transform rotate(-45deg)
 
 .burger
 	z-index: layers.burger
 	position: fixed
 	cursor: pointer
 	padding: $burger.extraClickArea
+
+	&.is-active
+		span
+			background none
+
+			&::before
+			&::after
+				background-color: colors.black
+				transition-delay: .3s, .3s, 0s
+
+			&::before
+				top 0
+				transform rotate(45deg)
+
+			&::after
+				bottom 0
+				transform rotate(-45deg)
 
 .burger__slices
 	display: block

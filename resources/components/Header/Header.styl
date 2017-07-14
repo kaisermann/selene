@@ -1,14 +1,9 @@
-.burger-checkbox
-	&:checked
-		~ .burger
-			span
-				&::before
-				&::after
-					background-color: colors.white
-
-		~ .header__overlay
-			opacity: 1
-			visibility: visible
+.burger
+	&.is-active
+		span
+			&::before
+			&::after
+				background-color: colors.white
 
 .burger
 	top: margins.burger
@@ -28,6 +23,10 @@
 	padding: 45px
 	font-size: rem(48px)
 	line-height: 1.4
+
+	&.is-visible
+		opacity: 1
+		visibility: visible
 
 	a
 		color: colors.white
