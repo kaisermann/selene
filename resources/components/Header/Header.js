@@ -1,6 +1,6 @@
-export default class Header {
-  static init () {
+export default {
+  init () {
     // Initialization code here
     // JS Class: 'js-header'
-  }
+  },
 }

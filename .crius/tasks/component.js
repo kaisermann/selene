@@ -4,12 +4,13 @@ const rimraf = require('rimraf')
 const mkdirp = require('mkdirp')
 const gulp = require('gulp')
 
-const JS_CONTENT = `export default class %camelizedName% {
-  static init() {
+const JS_CONTENT = `export default {
+  init () {
     // Initialization code here
     // JS Class: 'js-%lowerName%'
-  }
+  },
 }
+
 `
 
 const BLADE_CONTENT = `<div class="%lowerName% js-%lowerName%">
