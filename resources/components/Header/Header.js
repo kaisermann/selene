@@ -1,7 +1,8 @@
 let burger
 let headerOverlay
 
-const toggleOverlay = () => {
+const toggleOverlay = e => {
+  if (e && e.keyCode !== undefined && e.keyCode !== 27) return
   if (
     burger.classList.toggle('is-active') &
     headerOverlay.classList.toggle('is-visible')
