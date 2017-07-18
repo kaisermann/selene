@@ -1,9 +1,9 @@
-dist/
-bower_components/
-node_modules/
-npm-debug.log
 .DS_Store
-index.html
-vendor/
-!assets/**/vendor/
+./index.html
+./sitemap.json
+dist
+node_modules
+npm-debug.log
 yarn-error.log
+!assets/**/vendor/
+vendor/
