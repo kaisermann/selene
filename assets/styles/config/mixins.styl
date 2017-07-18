@@ -23,26 +23,10 @@ em($px, $base = app.baseFontSize)
 // Font-face mixin, by jackbrewer
 // https://github.com/jackbrewer/stylus-mixins/
 font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
-	$url-fallback = 'url("' + $file-path + '.eot")'
-	$url  = 'url("' + $file-path + '.eot?#iefix") format("embedded-opentype"), '
-	$url = $url + 'url("' + $file-path + '.woff") format("woff"), '
-	$url = $url + 'url("' + $file-path + '.ttf") format("truetype"), '
-	$url = $url + 'url("' + $file-path + '.svg#svg' + replace(' ', '', $font-name) + '") format("svg")'
+	$url  = 'url("' + $file-path + '.woff2") format("woff2"),'
+	$url = $url + ' url("' + $file-path + '.woff") format("woff")'
 	@font-face
 		font-family: $font-name
-		src: unquote($url-fallback)
 		src: unquote($url)
 		font-weight: unquote($weight)
 		font-style: unquote($style)
-
-// Responsive class factory. Uses the breakpoints from rolleiflex.
-// Generates .selector@xx classes
-responsify()
-	for key, value in rolleiflex.breakpoints
-		if(value.breakpoint == 0)
-			&\\\@{key}
-				{block}
-		else
-			&\\\@{key}
-				+min(key)
-					{block}
