@@ -122,8 +122,7 @@ function filter__template_redirect() {
 		wp_redirect( get_search_link() );
 		exit();
 	}
-
-	if ( WP_ENV === 'development' && isset( $_GET['show_sitemap'] ) ) {
+	if ( strtoupper(WP_ENV) === 'DEVELOPMENT' && isset( $_GET['show_sitemap'] ) ) {
 		$homeUrl = get_home_url();
 		$blogUrl = get_permalink( get_option( 'page_for_posts' ) );
 		$the_query = new \WP_Query( [ 'post_type' => 'any', 'posts_per_page' => '-1', 'post_status' => 'publish' ] );
