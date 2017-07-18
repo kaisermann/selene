@@ -4,19 +4,26 @@ const { join } = require('path')
 const gulp = require('gulp')
 const plumber = require('gulp-plumber')
 const size = require('gulp-size')
-const uncss = require('gulp-uncss')
+const postCSS = require('gulp-postcss')
+const postCSSuncss = require('postcss-uncss')
 
 const crius = require('../manifest')
 const getResourceDir = require('../utils/getResourceDir')
 const pathExists = require('../utils/doesPathExist')
 const onError = require('../utils/onError')
 
-gulp.task('uncss', done => {
+const auxSizeReport = msg =>
+  size({ showFiles: true, showTotal: false, title: msg })
+
+const unCSSInternal = done => {
   const stylesDir = getResourceDir('dist', 'styles')
   const revManifestDir = getResourceDir(
     'dist',
     crius.config.paths.revisionManifest
   )
+  const revManifest = pathExists(revManifestDir)
+    ? JSON.parse(readFileSync(revManifestDir, 'utf-8'))
+    : {}
 
   if (!pathExists(stylesDir)) {
     throw new Error('Styles distribution directory not found.')
@@ -31,52 +38,32 @@ gulp.task('uncss', done => {
     crius.resources.styles.assets
   ).reduce((acc, assetName) => {
     if (crius.resources.styles.assets[assetName].uncss) {
-      acc[assetName] = assetName
+      acc[assetName] = revManifest[assetName] || assetName
     }
     return acc
   }, {})
 
-  // Does the revision manifest exists?
-  if (pathExists(revManifestDir)) {
-    // Yes! Let's override the files name
-    const revManifest = JSON.parse(readFileSync(revManifestDir, 'utf-8'))
-    Object.keys(revManifest).some(item => {
-      if (assetsObj[item]) {
-        assetsObj[item] = revManifest[item]
-      }
-    })
-  }
+  const cssPaths = Object.keys(assetsObj).map(key =>
+    join(stylesDir, assetsObj[key])
+  )
 
   return gulp
-    .src(Object.keys(assetsObj).map(key => join(stylesDir, assetsObj[key])), {
-      base: './',
-    })
+    .src(cssPaths, { base: './' })
+    .pipe(plumber({ errorHandler: onError }))
+    .pipe(auxSizeReport('Before unCSS:'))
     .pipe(
-      plumber({
-        errorHandler: onError,
-      })
+      postCSS([
+        postCSSuncss({
+          html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
+          uncssrc: '.uncssrc',
+        }),
+      ])
     )
-    .pipe(
-      size({
-        showFiles: true,
-        showTotal: false,
-        title: 'Before unCSS:',
-      })
-    )
-    .pipe(
-      uncss({
-        html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
-        uncssrc: '.uncssrc',
-      })
-    )
-    .pipe(
-      size({
-        showFiles: true,
-        showTotal: false,
-        title: 'After unCSS:',
-      })
-    )
+    .pipe(auxSizeReport('Before unCSS:'))
     .pipe(gulp.dest('./'))
     .on('end', done)
     .on('error', done)
-})
+}
+unCSSInternal.displayName = 'unCSS > inner task'
+
+gulp.task('uncss', gulp.series('styles', unCSSInternal))

@@ -27,7 +27,7 @@ const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
 const buildAssetObj = (outputName, preObj) => {
   let assetObj = {}
 
-  if ('' + preObj === preObj) {
+  if (typeof preObj === 'string') {
     assetObj.files = [preObj]
   } else {
     assetObj = preObj
@@ -114,7 +114,7 @@ for (const resourceType of Object.keys(crius.resources)) {
   taskQueue = appendAuxTasks('postTasks', resourceModule, taskQueue)
 
   // When '--report' is set, are we doing a resource task or the watch task?
-  // If yes, let's append the Report task to the pipeline
+  // If yes, let's append the report task to the pipeline
   // If not, is it a resource task called by the CLI?
   if (
     (crius.params.report && process.argv.includes('watch')) ||
