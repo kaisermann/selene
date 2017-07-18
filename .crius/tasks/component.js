@@ -45,7 +45,7 @@ const fillComponentName = (content, name) =>
 gulp.task('component', done => {
   const args = process.argv.slice(3)
   const promiseQueue = []
-  const componentsToManage = args[1].split(',')
+  const componentsToManage = args[1].split(',').map(s => s.trim())
 
   componentsToManage.forEach(tmpComponentName => {
     const realComponentName = capitalizeStr(tmpComponentName)
