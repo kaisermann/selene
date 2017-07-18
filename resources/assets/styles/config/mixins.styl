@@ -27,22 +27,9 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
 	$url = $url + ' url("' + $file-path + '.woff") format("woff")'
 	@font-face
 		font-family: $font-name
-		src: unquote($url-fallback)
 		src: unquote($url)
 		font-weight: unquote($weight)
 		font-style: unquote($style)
-
-// Responsive class factory. Uses the breakpoints from rolleiflex.
-// Generates .selector@xx classes
-responsify()
-	for key, value in rolleiflex.breakpoints
-		if(value.breakpoint == 0)
-			&\\\@{key}
-				{block}
-		else
-			&\\\@{key}
-				+min(key)
-					{block}
 
 // Tells if a color is bright or dark (values of +-150> means bright)
 getPerceivedBrightness($color)
