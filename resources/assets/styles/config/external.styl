@@ -1,24 +1,27 @@
-rolleiflex.baseFontSize       = app.baseFontSize
-rolleiflex.autoBorderBox      = false
-rolleiflex.use.em             = false
+rolleiflex.baseFontSize             = app.baseFontSize
+rolleiflex.autoBorderBox            = false
+rolleiflex.use.em                   = false
+rolleiflex.spaces.gutter            = 24px
+rolleiflex.spaces.containerPadding  = 12px
+
 rolleiflex.breakpoints = {
 	"xs": {
-		"triggerAt": 0
+		"minWidth": 0
 		"container": 100%
 	}
-	
+
 	"sm": {
-		"triggerAt": 768px
+		"minWidth": 768px
 		"container": 740px
 	}
-	
+
 	"md": {
-		"triggerAt": 992px
+		"minWidth": 992px
 		"container": 960px
 	}
-	
+
 	"lg": {
-		"triggerAt": 1201px
+		"minWidth": 1201px
 		"container": app.siteWidth
 	}
 }
@@ -27,17 +30,17 @@ _bps = rolleiflex.breakpoints
 _generateRuptureBpsList()
 	list = ()
 	for scaleName, scaleOpts in _bps
-		push(list, max(scaleOpts.triggerAt - 1, 0))
+		push(list, max(scaleOpts.minWidth - 1, 0))
 	return list
-	
+
 rupture = merge(rupture, {
 	"base-font-size":          app.baseFontSize
 	"scale":                   _generateRuptureBpsList()
 	"scale-names":             keys(_bps)
 	"anti-overlap":            true
 	"enable-em-breakpoints":   rolleiflex.use.em
-	"mobile-cutoff":           _bps.sm.triggerAt - 1
-	"tablet-cutoff":           _bps.md.triggerAt - 1
-	"desktop-cutoff":          _bps.md.triggerAt - 1
-	"hd-cutoff":               _bps.lg.triggerAt - 1
+	"mobile-cutoff":           _bps.sm.minWidth - 1
+	"tablet-cutoff":           _bps.md.minWidth - 1
+	"desktop-cutoff":          _bps.md.minWidth - 1
+	"hd-cutoff":               _bps.lg.minWidth - 1
 })
