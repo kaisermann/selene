@@ -35,12 +35,12 @@ function action__sage_setup() {
       'uri.stylesheet' => get_stylesheet_directory_uri(),
       'uri.template'   => get_template_directory_uri(),
   ];
-	
+
   $viewPaths = collect(preg_replace('%[\/]?(resources/views)?[\/.]*?$%', '', [STYLESHEETPATH, TEMPLATEPATH]))
       ->flatMap(function ($path) {
           return ["{$path}/resources/views", $path];
       })->unique()->toArray();
-			
+
   config([
       'assets.manifest' => "{$paths['dir.stylesheet']}/../dist/assets.json",
       'assets.uri'      => "{$paths['uri.stylesheet']}/dist",
@@ -48,14 +48,14 @@ function action__sage_setup() {
       'view.namespaces' => ['App' => WP_CONTENT_DIR],
       'view.paths'      => $viewPaths,
   ] + $paths);
-	
+
   /**
    * Add JsonManifest to Sage container
    */
   sage()->singleton('sage.assets', function () {
       return new JsonManifest(config('assets.manifest'), config('assets.uri'));
   });
-	
+
   /**
    * Add Blade to Sage container
    */
@@ -87,7 +87,6 @@ function action__after_setup_theme() {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'automatic-feed-links' );
-	//add_theme_support('post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat']);
 	//add_theme_support('woocommerce');
 
 	add_post_type_support( 'page', 'excerpt' );
@@ -99,8 +98,6 @@ function action__after_setup_theme() {
 	]);
 }
 function action__wp_enqueue_scripts() {
-	global $post;
-
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
 		wp_register_script( 'jquery', 'https://code.jquery.com/jquery-3.1.1.min.js', false, '3.1.1', true );
@@ -110,30 +107,28 @@ function action__wp_enqueue_scripts() {
 	wp_enqueue_script( 'selene/main.js#defer', asset_path( 'scripts/main.js' ), [], null, true );
 
 	wp_localize_script('selene/main.js#defer', 'appMeta', [
-	  	'homeUrl' => get_bloginfo( 'url' ),
-	  	'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+			'homeUrl' => get_bloginfo( 'url' ),
+			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 	]);
 }
 
 function action__widgets_init() {
 	$config = [
-		 'before_widget' => '<section class="widget %1$s %2$s">',
-		 'after_widget' => '</section>',
-		 'before_title' => '<h3>',
-		 'after_title' => '</h3>',
-		];
-	register_sidebar(
-		[
-		 'name' => __( 'Main', 'selene' ),
-		 'id' => 'sidebar-main',
-		] + $config
-	);
-	register_sidebar(
-		[
-		 'name' => __( 'Footer', 'selene' ),
-		 'id' => 'sidebar-footer',
-		] + $config
-	);
+		'before_widget' => '<section class="widget %1$s %2$s">',
+		'after_widget' => '</section>',
+		'before_title' => '<h3>',
+		'after_title' => '</h3>',
+	];
+
+	register_sidebar([
+		'name' => __( 'Main', 'selene' ),
+		'id' => 'sidebar-main',
+	] + $config);
+
+	register_sidebar([
+		'name' => __( 'Footer', 'selene' ),
+		'id' => 'sidebar-footer',
+	] + $config);
 }
 
 function action__the_post( $post ) {
@@ -170,12 +165,16 @@ function action__cleanup_head() {
 function action__cleanup_widgets() {
 	global $wp_widget_factory;
 	if ( isset( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'] ) ) {
-		remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ] );
+		remove_action( 'wp_head', [
+			$wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
+			'recent_comments_style'
+		]);
 	}
 }
 
 // Helpers
 function add_image_sizes() {
+	/* add_image_size(width, height, crop) */
 }
 
 // https://github.com/johnbillion/extended-cpts/wiki
