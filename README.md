@@ -91,7 +91,7 @@ With `mode: "server"`
       "directory": "scripts",
       "assets": {
         "main.js": {
-          "files": "js/wrapper.js"
+          "files": "wrapper.js"
         }
       }
     }
@@ -102,6 +102,20 @@ With `mode: "server"`
 --------------------------------------------------------------------------------
 
 Each resource type MAY have a **directory** `string` attribute, defining where the assets are inside [`config.paths.src`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) and where the built ones will be inside [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5). If not specified, the resource type name will be used.
+
+Each resource type MUST have a **assets** `object`, defining which assets are to be generated. The generated file output name is represented by the key:
+
+```json
+...
+  "assets": {
+    "main.js": {
+      "files": "wrapper.js",
+      "vendor": "full/path/relative/to/gulpfile.js"
+    }
+  }
+...
+```
+The value can be either a `string`, an array of `strings` or an `object` with a MUST-HAVE `files` and an OPTIONAL `vendor` properties.
 
 --------------------------------------------------------------------------------
 
@@ -146,10 +160,10 @@ Each CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss`
       "assets": {
         "main.css": {
           "uncss": true,
-          "files": "styles/wrapper.styl"
+          "files": "wrapper.styl"
         },
         "admin.css": {
-          "files": "styles/admin.styl"
+          "files": "admin.styl"
         }
       }
     }

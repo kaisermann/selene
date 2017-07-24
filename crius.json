@@ -19,7 +19,7 @@
       "directory": "scripts",
       "assets": {
         "main.js": {
-          "files": "scripts/wrapper.js",
+          "files": "wrapper.js",
           "vendor": "assets/scripts/vendor/*.js"
         }
       }
@@ -29,7 +29,7 @@
       "directory": "styles",
       "assets": {
         "main.css": {
-          "files": "styles/wrapper.styl",
+          "files": "wrapper.styl",
           "vendor": "assets/styles/vendor/*.css",
           "uncss": true
         }
@@ -39,14 +39,14 @@
       "pattern": "*.{eot,otf,svg,ttc,ttf,woff,woff2}",
       "directory": "fonts",
       "assets": {
-        "./": "fonts/**/*"
+        "./": "**/*"
       }
     },
     "images": {
       "pattern": "*.{jpg,png,gif,svg}",
       "directory": "images",
       "assets": {
-        "./": "images/**/*"
+        "./": "**/*"
       }
     }
   }
