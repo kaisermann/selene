@@ -12,13 +12,13 @@ $burger.stripePadding = (($burger.height - $burger.stripeHeight * 3) / 2)
 	cursor: pointer
 	padding: $burger.extraClickArea
 
-	&.is-active
+	body.is-header-overlay-active &
 		span
 			background none
 
 			&::before
 			&::after
-				background-color: colors.black
+				background-color: colors.white
 				transition-delay: .3s, .3s, 0s
 
 			&::before
