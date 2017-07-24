@@ -24,7 +24,7 @@ const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
   return util.noop()
 }
 
-const buildAssetObj = (outputName, preObj) => {
+const buildAssetObj = (outputName, preObj, resourceInfo) => {
   let assetObj = {}
 
   if (typeof preObj === 'string') {
@@ -39,7 +39,7 @@ const buildAssetObj = (outputName, preObj) => {
   assetObj.vendor = assetObj.vendor || []
   assetObj.outputName = outputName
   assetObj.globs = assetObj.files.map(path =>
-    join(crius.config.paths.source, path)
+    join(crius.config.paths.source, resourceInfo.directory, path)
   )
   return assetObj
 }
@@ -54,7 +54,11 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
     // For each asset on the current resource
     Object.keys(curAssets).forEach(outputName => {
       // Reads each resource asset and parses its 'files' property
-      const curAsset = buildAssetObj(outputName, curAssets[outputName])
+      const curAsset = buildAssetObj(
+        outputName,
+        curAssets[outputName],
+        resourceInfo
+      )
       const output = getResourceDir(
         'dist',
         resourceInfo.directory,
