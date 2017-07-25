@@ -13,11 +13,11 @@ if (
   document.readyState === 'complete' ||
   (document.readyState !== 'loading' && !document.documentElement.doScroll)
 ) {
-  router.loadRoutes()
+  router.loadEvents()
 } else {
   document.addEventListener(
     'DOMContentLoaded',
-    router.loadRoutes.bind(router),
+    router.loadEvents.bind(router),
     false
   )
 }
