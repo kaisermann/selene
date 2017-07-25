@@ -111,7 +111,7 @@ function filter_templates($templates) {
  * @return string Location of the template
  */
 function locate_template($templates) {
-		return \locate_template(filter_templates($templates));
+	return \locate_template(filter_templates($templates));
 }
 
 /**
@@ -140,7 +140,7 @@ function dump( $data, $phpPrint = false, $onlyLogged = true ) {
 		if ( $phpPrint ) {
 			echo '<pre style="white-space: pre-wrap;">' . htmlspecialchars( @var_export( $data, true ) ) . '</pre>';
 		} else {
-			echo '<script>console.log(' . ((is_array( $data ) || is_object( $data )) ? json_encode( $data ) : $data) . ');</script>';
+			echo '<script>console.log(' . json_encode( $data ) . ');</script>';
 		}
 	}
 }

@@ -28,8 +28,8 @@ add_action( 'after_setup_theme', function() {
 
 	// Creates @customquery(\WP_Query $queryObj) Blade directive
 	$sageCompiler->directive('customquery', function( $queryObj ) {
-		$output = '<?php while (' . $queryObj . '->have_posts()) : ?>';
-		$output .= '<?php ' . $queryObj . '->the_post(); ?>';
+		$output = "<?php while ({$queryObj}->have_posts()) : ?>";
+		$output .= "<?php {$queryObj}->the_post(); ?>";
 		return $output;
 	});
 
@@ -38,16 +38,16 @@ add_action( 'after_setup_theme', function() {
 
 	// Create @dump($obj) Blade directive
 	$sageCompiler->directive('dump', function ( $obj ) {
-		return '<?php " . __NAMESPACE__ . "\\dump(' . $obj . ', true); ?>';
+		return "<?php " . __NAMESPACE__ . "\\dump({$obj}, true); ?>";
 	});
 
 	// Create @console($obj) Blade directive
 	$sageCompiler->directive('console', function ( $obj ) {
-		return '<?php " . __NAMESPACE__ . "\\dump(' . $obj . ', false); ?>';
+		return "<?php " . __NAMESPACE__ . "\\dump({$obj}, false); ?>";
 	});
 
 	// Create @shortcode($shortCodeString) Blade directive
 	$sageCompiler->directive('shortcode', function ( $shortcode ) {
-		return '<?php echo do_shortcode(\'' . $shortcode . '\'); ?>';
+		return "<?php echo do_shortcode({$shortcode}); ?>";
 	});
 }, 100 );
