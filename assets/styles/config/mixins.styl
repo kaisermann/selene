@@ -28,25 +28,45 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
 		font-style: unquote($style)
 
 /*
- * Responsive font-size based on viewport units
+ * Responsive property based on viewport units
  *
  * Usage:
- * responsive-font-size: viewportUnitBase minFontSize maxFontSize, fallbackSize
+ * responsive: property viewportUnitBase minFontSize maxFontSize, fallbackSize
  */
-responsive-font-size($responsive, $min, $max = false, $fallback = false)
+responsive($prop, $responsive, $min, $max = false, $fallback = false)
+	$responsive-unit = unit($responsive)
 	$responsive-unitless = $responsive / ($responsive - $responsive + 1)
-	$dimension = unit($responsive) == 'vh' ? 'height' : 'width'
-	$min-breakpoint = $min / $responsive-unitless * 100
+	$min-bp = $min / $responsive-unitless * 100
+	$max-bp = ($max != false) ? $max / $responsive-unitless * 100 : 0
 
-	@media (max-{$dimension}: $min-breakpoint)
-		font-size: $min
+	$minQueries = ()
+	$maxQueries = ()
 
-	if $max
-		$max-breakpoint = $max / $responsive-unitless * 100
-		@media (min-{$dimension}: $max-breakpoint)
-			font-size: $max
+	$dimensions = (width height)
+	if ($responsive-unit == 'vw')
+		$dimensions = (width)
+	else if ($responsive-unit == 'vh')
+		$dimensions = (height)
+
+	for $dimension in $dimensions
+		push($minQueries, s('(max-%s: %s)', $dimension, $min-bp))
+
+		if ($max)
+			push($maxQueries, s('(min-%s: %s)', $dimension, $max-bp))
+
+	$minQuery = unquote(join(', ', $minQueries))
+	@media $minQuery
+		{$prop}: $min
+
+	if ($max)
+		$maxQuery = unquote(join(', ', $maxQueries))
+		@media $maxQuery
+			{$prop}: $max
 
 	if ($fallback)
-		font-size: $fallback
+		{$prop}: $fallback
 
-	font-size: $responsive
+	{$prop}: $responsive
+
+responsive-font-size($responsive, $min, $max = false, $fallback = false)
+	responsive(font-size, $responsive, $min, $max, $fallback)
