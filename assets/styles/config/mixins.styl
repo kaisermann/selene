@@ -1,27 +1,23 @@
-// Mixin shortcuts
+/* Mixin shortcuts */
 max = to-width
 min = from-width
 
-// size(width, height)
-size($width, $height = $width, $cache = false)
-	if($cache)
-		+cache('w' + $width)
-			width: $width
-		+cache('h' + $height)
-			height: $height
-	else
-		width: $width
-		height: $height
+/* size(width, height) */
+size($width, $height = $width)
+	width: $width
+	height: $height
 
-// rem(px [,base-font-size]), em(px [,base-font-size])
+/* rem(px [,base-font-size]), em(px [,base-font-size]) */
 rem($px, $base = app.baseFontSize)
-	return unit($px / $base, "rem")
+	return unit($px / $base, 'rem')
 
 em($px, $base = app.baseFontSize)
-	return unit($px / $base, "em")
+	return unit($px / $base, 'em')
 
-// Font-face mixin, by jackbrewer
-// https://github.com/jackbrewer/stylus-mixins/
+/*
+ * Modified verson of Font-face mixin, by jackbrewer
+ * https://github.com/jackbrewer/stylus-mixins/
+ */
 font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
 	$url  = 'url("' + $file-path + '.woff2") format("woff2"),'
 	$url = $url + ' url("' + $file-path + '.woff") format("woff")'
@@ -30,3 +26,27 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
 		src: unquote($url)
 		font-weight: unquote($weight)
 		font-style: unquote($style)
+
+/*
+ * Responsive font-size based on viewport units
+ *
+ * Usage:
+ * responsive-font-size: viewportUnitBase minFontSize maxFontSize, fallbackSize
+ */
+responsive-font-size($responsive, $min, $max = false, $fallback = false)
+	$responsive-unitless = $responsive / ($responsive - $responsive + 1)
+	$dimension = unit($responsive) == 'vh' ? 'height' : 'width'
+	$min-breakpoint = $min / $responsive-unitless * 100
+
+	@media (max-{$dimension}: $min-breakpoint)
+		font-size: $min
+
+	if $max
+		$max-breakpoint = $max / $responsive-unitless * 100
+		@media (min-{$dimension}: $max-breakpoint)
+			font-size: $max
+
+	if ($fallback)
+		font-size: $fallback
+
+	font-size: $responsive
