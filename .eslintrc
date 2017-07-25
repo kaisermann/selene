@@ -21,26 +21,23 @@
     "ecmaVersion": 2017,
     "sourceType": "module"
   },
-  "plugins": [
-    "import",
-    "compat"
-  ],
+  "plugins": ["import", "compat"],
   "settings": {
     "import/core-modules": [],
-    "import/ignore": [
-      "node_modules",
-      "\\.(coffee|scss|css|less|hbs|svg|json)$"
-    ]
+    "import/ignore": ["node_modules", "\\.(coffee|scss|css|less|hbs|svg|json)$"]
   },
   "rules": {
     "no-new": "off",
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "exports": "always-multiline",
-      "functions": "ignore"
-    }],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "ignore"
+      }
+    ],
     "no-console": "off",
     "compat/compat": 2
   }
