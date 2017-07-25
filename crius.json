@@ -7,8 +7,7 @@
     "browserSync": {
       "mode": "server",
       "watch": [
-        "{src,templates,views}/**/*.{php,html}",
-        "*.{php,html}"
+        "**/*.{php,html}"
       ],
       "devUrl": "localhost/web/root"
     }
@@ -19,7 +18,7 @@
       "directory": "scripts",
       "assets": {
         "main.js": {
-          "files": "wrapper.js",
+          "files": "index.js",
           "vendor": "assets/scripts/vendor/*.js"
         }
       }
@@ -29,7 +28,7 @@
       "directory": "styles",
       "assets": {
         "main.css": {
-          "files": "wrapper.styl",
+          "files": "index.styl",
           "vendor": "assets/styles/vendor/*.css",
           "uncss": true
         }

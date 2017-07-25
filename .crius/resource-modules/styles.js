@@ -27,16 +27,6 @@ module.exports = {
               stylus({
                 include: ['./', './node_modules/'],
                 'include css': true,
-                use: [
-                  stylusRenderer => {
-                    const rootDirRegEx = /@(import|require)\s("|')?(#|~)/g
-                    stylusRenderer.str = stylusRenderer.str.replace(
-                      rootDirRegEx,
-                      '@$1 $2'
-                    )
-                    return stylusRenderer
-                  },
-                ],
               })
             )
           )

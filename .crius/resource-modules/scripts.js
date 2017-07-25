@@ -26,36 +26,36 @@ module.exports = {
           .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
           .pipe(
             betterRollup,
-          {
-            plugins: [
+            {
+              plugins: [
                 // Allow to import node builtin modules such as path, url, querystring, etc
-              rollUpNodebuiltins(),
+                rollUpNodebuiltins(),
                 // Allow to import modules from the `node_modules`
-              rollUpNodeResolve({
-                module: true,
-                jsnext: true,
-                main: true,
-                browser: true,
-                extensions: ['.js'],
-                preferBuiltins: true,
-              }),
+                rollUpNodeResolve({
+                  module: true,
+                  jsnext: true,
+                  main: true,
+                  browser: true,
+                  extensions: ['.js'],
+                  preferBuiltins: true,
+                }),
                 // Transforms CommonJS modules into ES6 modules for RollUp
-              rollUpCommonjs(),
+                rollUpCommonjs(),
                 // Transpiles the code, ignoring coniguration from the `node_modules`
-              rollUpBuble({
-                transforms: {
-                  arrow: true,
-                  dangerousForOf: true,
-                },
-              }),
+                rollUpBuble({
+                  transforms: {
+                    arrow: true,
+                    dangerousForOf: true,
+                  },
+                }),
                 // rollUpBabel({
                 //  exclude: 'node_modules/**/.babelrc',
                 // }),
-            ],
-          },
-          {
-            format: 'iife',
-          }
+              ],
+            },
+            {
+              format: 'iife',
+            }
           )
           // Gulp 4. Appends vendor files to the main stream
           // Only if asset.vendor is defined
