@@ -4,7 +4,7 @@ namespace App;
 
 // Beginning of Sage filters
 add_filter( 'template_include', 'App\filter__template_include', PHP_INT_MAX );
-add_filter( 'comments_template', 'App\template_path' );
+add_filter( 'comments_template', 'App\filter__comments_template' );
 add_filter( 'body_class', 'App\filter__body_class' );
 
 // Beginning of Selene filters
@@ -36,19 +36,10 @@ add_filter( 'the_generator', '__return_false' );
 * Template Hierarchy should search for .blade.php files
 */
 collect([
-    'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date', 'home',
-    'frontpage', 'page', 'paged', 'search', 'single', 'singular', 'attachment'
+		'index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy', 'date', 'home',
+		'frontpage', 'page', 'paged', 'search', 'single', 'singular', 'attachment'
 ])->map(function ($type) {
-    add_filter("{$type}_template_hierarchy", function ($templates) {
-        return collect($templates)->flatMap(function ($template) {
-            $transforms = [
-                '%^/?(resources[\\/]views)?[\\/]?%' => '',
-                '%(\.blade)?(\.php)?$%' => ''
-            ];
-            $normalizedTemplate = preg_replace(array_keys($transforms), array_values($transforms), $template);
-            return ["{$normalizedTemplate}.blade.php", "{$normalizedTemplate}.php"];
-        })->toArray();
-    });
+		add_filter("{$type}_template_hierarchy", __NAMESPACE__.'\\filter_templates');
 });
 
 /**
@@ -60,9 +51,24 @@ function filter__template_include( $template ) {
 	$data = collect($classes)->reduce(function ($data, $class) use ($template) {
 			return apply_filters("sage/template/{$class}/data", $data, $template);
 	}, []);
-	echo template($template, $data);
-	// Return a blank file to make WordPress happy
-	return get_theme_file_path('index.php');
+	if ($template) {
+		echo template($template, $data);
+		return get_stylesheet_directory() . '/index.php';
+	}
+	return $template;
+}
+
+function filter__comments_template ( $comments_template ) {
+	$comments_template = str_replace(
+		[get_stylesheet_directory(), get_template_directory()],
+		'',
+		$comments_template
+	);
+
+	return template_path(
+		locate_template(["views/{$comments_template}", $comments_template])
+		?: $comments_template
+	);
 }
 
 function filter__body_class( array $classes ) {

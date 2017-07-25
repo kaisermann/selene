@@ -10,12 +10,12 @@ add_action( 'after_setup_theme', function() {
 
 	// Create @asset() Blade directive
 	$sageCompiler->directive('asset', function ( $asset ) {
-		return "<?php echo App\\asset_path({$asset}); ?>";
+		return "<?php echo " . __NAMESPACE__ . "\\asset_path({$asset}); ?>";
 	});
 
 	// Create @asset() Blade directive
 	$sageCompiler->directive('inlinesvg', function ( $path ) {
-		return "<?php App\\getSVG({$path}, true); ?>";
+		return "<?php " . __NAMESPACE__ . "\\getSVG({$path}, true); ?>";
 	});
 
 	// Creates @posts Blade directive
@@ -38,12 +38,12 @@ add_action( 'after_setup_theme', function() {
 
 	// Create @dump($obj) Blade directive
 	$sageCompiler->directive('dump', function ( $obj ) {
-		return '<?php App\\dump(' . $obj . ', true); ?>';
+		return '<?php " . __NAMESPACE__ . "\\dump(' . $obj . ', true); ?>';
 	});
 
 	// Create @console($obj) Blade directive
 	$sageCompiler->directive('console', function ( $obj ) {
-		return '<?php App\\dump(' . $obj . ', false); ?>';
+		return '<?php " . __NAMESPACE__ . "\\dump(' . $obj . ', false); ?>';
 	});
 
 	// Create @shortcode($shortCodeString) Blade directive

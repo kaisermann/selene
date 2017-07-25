@@ -4,7 +4,8 @@
   "license": "MIT",
   "description": "WordPress starter theme with a modern development workflow",
   "homepage": "https://roots.io/sage/",
-  "authors": [{
+  "authors": [
+    {
       "name": "Ben Word",
       "email": "ben@benword.com",
       "homepage": "https://github.com/retlehs"
@@ -15,16 +16,14 @@
       "homepage": "https://github.com/swalkinshaw"
     }
   ],
-  "keywords": [
-    "wordpress"
-  ],
+  "keywords": ["wordpress"],
   "support": {
     "issues": "https://github.com/roots/sage/issues",
     "forum": "https://discourse.roots.io/"
   },
   "autoload": {
     "psr-4": {
-      "Roots\\Sage\\": "app/lib/Sage/",
+      "App\\": "app/",
       "BEM\\": "app/lib/BEM/"
     },
     "files": [
@@ -35,18 +34,16 @@
   "require": {
     "php": ">=5.6.4",
     "composer/installers": "~1.0",
-    "illuminate/view": "~5.4.0",
-    "illuminate/config": "~5.4.0",
+    "illuminate/support": "~5.4",
+    "roots/sage-lib": "~9.0.0-beta.3",
     "soberwp/controller": "dev-master",
     "johnbillion/extended-cpts": "~3.0.3",
     "johnbillion/extended-taxos": "~2.0.3"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^2.5.1"
+    "squizlabs/php_codesniffer": "^2.8.0"
   },
   "scripts": {
-    "test": [
-      "phpcs"
-    ]
+    "test": ["phpcs"]
   }
 }
