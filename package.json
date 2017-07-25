@@ -9,6 +9,59 @@
     "url": "git@github.com:kaisermann/selene.git"
   },
   "license": "(MIT)",
+  "eslintConfig": {
+    "root": true,
+    "extends": "standard",
+    "globals": {
+      "wp": true
+    },
+    "env": {
+      "node": true,
+      "es6": true,
+      "amd": true,
+      "browser": true,
+      "jquery": false
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "globalReturn": true,
+        "generators": false,
+        "objectLiteralDuplicateProperties": false,
+        "experimentalObjectRestSpread": true
+      },
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "plugins": ["import", "compat"],
+    "settings": {
+      "import/core-modules": [],
+      "import/ignore": [
+        "node_modules",
+        "\\.(coffee|scss|css|less|hbs|svg|json)$"
+      ]
+    },
+    "rules": {
+      "no-new": "off",
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "always-multiline",
+          "exports": "always-multiline",
+          "functions": "ignore"
+        }
+      ],
+      "no-console": "off",
+      "compat/compat": 2
+    }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "no-empty-source": null
+    }
+  },
   "scripts": {
     "watch": "gulp watch -d --sync --report --maps",
     "build": "gulp -d",
@@ -18,12 +71,7 @@
   "engines": {
     "node": ">= 6.9.4"
   },
-  "browserslist": [
-    "last 2 versions",
-    "opera 12",
-    "IE 11",
-    "Safari >= 8"
-  ],
+  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "browser-sync": "^2.18.13",
