@@ -18,28 +18,30 @@ const resourceModules = requireDir(module, './resource-modules')
 // Gets the specified resource's pipeline
 const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
   const resMod = resourceModules[resourceType]
-  if (resMod && typeof resMod.pipelines[whichPipeline] === 'function') {
+  if (
+    resMod &&
+    resMod.pipelines &&
+    typeof resMod.pipelines[whichPipeline] === 'function'
+  ) {
     return resMod.pipelines[whichPipeline](...args)()
   }
   return util.noop()
 }
 
-const buildAssetObj = (outputName, preObj, resourceInfo) => {
-  let assetObj = {}
-
-  if (typeof preObj === 'string') {
-    assetObj.files = [preObj]
+const buildAsset = (outputName, baseObj, directory) => {
+  let assetObj
+  if (typeof baseObj === 'string') {
+    assetObj = { files: [baseObj] }
   } else {
-    assetObj = preObj
+    assetObj = baseObj
     if (!assetObj.files) assetObj.files = []
     else if (!Array.isArray(assetObj.files)) {
       assetObj.files = [assetObj.files]
     }
   }
-  assetObj.vendor = assetObj.vendor || []
   assetObj.outputName = outputName
   assetObj.globs = assetObj.files.map(path =>
-    join(crius.config.paths.source, resourceInfo.directory, path)
+    join(crius.config.paths.source, directory, path)
   )
   return assetObj
 }
@@ -52,13 +54,9 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
     const curAssets = crius.resources[resourceType].assets
 
     // For each asset on the current resource
-    Object.keys(curAssets).forEach(outputName => {
+    for (const [outputName, asset] of Object.entries(curAssets)) {
       // Reads each resource asset and parses its 'files' property
-      const curAsset = buildAssetObj(
-        outputName,
-        curAssets[outputName],
-        resourceInfo
-      )
+      const curAsset = buildAsset(outputName, asset, resourceInfo.directory)
       const output = getResourceDir(
         'dist',
         resourceInfo.directory,
@@ -74,12 +72,13 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
           .pipe(
             crius.browserSyncInstance
               ? crius.browserSyncInstance.stream({
-                match: `**/${resourceInfo.pattern}`,
-              })
+                  match: `**/${resourceInfo.pattern}`,
+                })
               : util.noop()
           )
       )
-    })
+    }
+
     merged
       .pipe(getResourcePipeline(resourceType, 'merged', resourceInfo))
       .on('end', done)
@@ -93,29 +92,23 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
 }
 
 // Appends tasks to a task array
-const appendAuxTasks = (key, module, queue) => {
-  if (!module) return queue
-  let depTasks = module[key] || []
-  if (!Array.isArray(depTasks)) {
-    depTasks = [depTasks]
+const getAuxTasks = (key, module) => {
+  if (!module || !module.tasks || !module.tasks[key]) {
+    return []
   }
-  return queue.concat(depTasks)
+  return module.tasks[key]
 }
 
 // Automatically creates resources tasks
-for (const resourceType of Object.keys(crius.resources)) {
-  const resourceInfo = crius.resources[resourceType]
+for (const [resourceType, resourceInfo] of Object.entries(crius.resources)) {
   const resourceModule = resourceModules[resourceType]
-  let taskQueue = []
-
-  // Checks if a resource task have any tasks to run before itself
-  taskQueue = appendAuxTasks('preTasks', resourceModule, taskQueue)
-
   // Pushes the resource task
-  taskQueue.push(dynamicTaskHelper(resourceType, resourceInfo))
-
-  // Checks if a resource task have any tasks to run after itself
-  taskQueue = appendAuxTasks('postTasks', resourceModule, taskQueue)
+  // Checks if a resource task have any tasks to run before/after itself
+  let taskQueue = [].concat(
+    getAuxTasks('before', resourceModule),
+    dynamicTaskHelper(resourceType, resourceInfo),
+    getAuxTasks('after', resourceModule)
+  )
 
   // When '--report' is set, are we doing a resource task or the watch task?
   // If yes, let's append the report task to the pipeline

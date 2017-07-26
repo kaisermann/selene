@@ -36,18 +36,9 @@ const unCSSInternal = done => {
     : {}
 
   // Let's get all assets with uncss:true
-  const assetsObj = Object.keys(
-    crius.resources.styles.assets
-  ).reduce((acc, assetName) => {
-    if (crius.resources.styles.assets[assetName].uncss) {
-      acc[assetName] = revManifest[assetName] || assetName
-    }
-    return acc
-  }, {})
-
-  const cssPaths = Object.keys(assetsObj).map(key =>
-    join(stylesDir, assetsObj[key])
-  )
+  const cssPaths = Object.entries(crius.resources.styles.assets)
+    .filter(([name, asset]) => asset.uncss)
+    .map(([name, asset]) => join(stylesDir, revManifest[name] || name))
 
   return gulp
     .src(cssPaths, { base: './' })

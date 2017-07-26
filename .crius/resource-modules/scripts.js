@@ -18,7 +18,9 @@ const crius = require('../manifest')
 const writeToManifest = require('../utils/writeToManifest')
 
 module.exports = {
-  preTasks: ['eslint'],
+  tasks: {
+    before: ['eslint'],
+  },
   pipelines: {
     each: asset => {
       return (
@@ -59,9 +61,13 @@ module.exports = {
           )
           // Gulp 4. Appends vendor files to the main stream
           // Only if asset.vendor is defined
-          .pipe(asset.vendor.length ? gulp.src : util.noop, asset.vendor, {
-            passthrough: true,
-          })
+          .pipe(
+            asset.vendor && asset.vendor.length ? gulp.src : util.noop,
+            asset.vendor,
+            {
+              passthrough: true,
+            }
+          )
           .pipe(concat, asset.outputName)
           .pipe(() => gulpIf(!crius.params.debug, uglify()))
           .pipe(() =>

@@ -14,7 +14,7 @@ With crius you can:
 
 ## Requirements
 
-* [Node.js](http://nodejs.org/) >= 6.9.x
+* [Node.js](http://nodejs.org/) >= 7.x.x
 * [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
 
 ## Installation
@@ -130,8 +130,11 @@ Resource module format:
 const lazypipe = require('lazypipe')
 
 module.exports = {
-  // Names of tasks to be ran before the resource task
-  preTasks: ['nameOftaskToRunBeforeThisOne'],
+  // Names of tasks to be ran before/after the resource task
+  tasks: {
+    before: ['nameOftaskToRunBEFOREThisOne'],
+    after: ['nameOftaskToRunAFTERThisOne']
+  },
   pipelines: {
     // Pipeline attached to each asset stream
     each: asset => {
