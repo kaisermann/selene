@@ -48,12 +48,9 @@ if (crius.config.browserSync) {
 }
 
 // Default values for each 'resource' entry
-for (const resourceType of Object.keys(crius.resources)) {
-  const resourceInfo = crius.resources[resourceType]
+for (const [resourceType, resourceInfo] of Object.entries(crius.resources)) {
   crius.resources[resourceType] = deepExtend(
-    {
-      directory: resourceType,
-    },
+    { directory: resourceType },
     resourceInfo
   )
 }

@@ -32,9 +32,13 @@ module.exports = {
           )
           // Gulp 4. Appends vendor files to the main stream
           // Only if asset.vendor is defined
-          .pipe(asset.vendor.length ? gulp.src : util.noop, asset.vendor, {
-            passthrough: true,
-          })
+          .pipe(
+            asset.vendor && asset.vendor.length ? gulp.src : util.noop,
+            asset.vendor,
+            {
+              passthrough: true,
+            }
+          )
           .pipe(concat, asset.outputName)
           .pipe(postcss, [
             postCSSautoprefixer(),

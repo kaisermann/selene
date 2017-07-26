@@ -5,15 +5,15 @@ const crius = require('../manifest.js')
 const getResourceDir = require('./getResourceDir.js')
 
 // Writes production asset to a json manifest
-module.exports = function writeToManifest () {
+module.exports = () => {
   return lazypipe()
     .pipe(
       rev.manifest,
       getResourceDir('dist', crius.config.paths.revisionManifest),
-    {
-      base: crius.config.paths.dist,
-      merge: true,
-    }
+      {
+        base: crius.config.paths.dist,
+        merge: true,
+      }
     )
     .pipe(gulp.dest, crius.config.paths.dist)
 }
