@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fbbff5d3e29f3f903c3f9703fba61d3",
+    "content-hash": "6d5b8a3b82693a9fd26202fe71e4e106",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -631,16 +631,16 @@
         },
         {
             "name": "johnbillion/extended-cpts",
-            "version": "3.0.3",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnbillion/extended-cpts.git",
-                "reference": "51b3812db889f368019eb2e325fd1be21949992c"
+                "reference": "3a0c4fd338fce2e81496cbdca2cfea38bca6e34b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnbillion/extended-cpts/zipball/51b3812db889f368019eb2e325fd1be21949992c",
-                "reference": "51b3812db889f368019eb2e325fd1be21949992c",
+                "url": "https://api.github.com/repos/johnbillion/extended-cpts/zipball/3a0c4fd338fce2e81496cbdca2cfea38bca6e34b",
+                "reference": "3a0c4fd338fce2e81496cbdca2cfea38bca6e34b",
                 "shasum": ""
             },
             "require": {
@@ -649,7 +649,7 @@
             },
             "require-dev": {
                 "johnbillion/php-docs-standards": "^1.0.2",
-                "phpunit/phpunit": ">=3.7",
+                "phpunit/phpunit": ">=4.8 <6.0",
                 "satooshi/php-coveralls": ">=0.7.0"
             },
             "suggest": {
@@ -669,7 +669,7 @@
             ],
             "description": "A library which provides extended functionality to WordPress custom post types, allowing developers to quickly build custom post types without having to write the same code again and again.",
             "homepage": "https://github.com/johnbillion/extended-cpts/",
-            "time": "2016-07-26T10:34:52+00:00"
+            "time": "2017-06-11T21:36:21+00:00"
         },
         {
             "name": "johnbillion/extended-taxos",

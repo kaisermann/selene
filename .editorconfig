@@ -8,13 +8,9 @@ charset = utf-8
 trim_trailing_whitespace = auto
 insert_final_newline = auto
 
-[*.{php,html}]
-indent_style = tab
-indent_size = 2
-
-[*.{styl,css,scss,sass,less}]
-indent_style = tab
-indent_size = 2
+[*.php]
+indent_style = space
+indent_size = 4
 
 [*.txt]
 end_of_line = crlf
