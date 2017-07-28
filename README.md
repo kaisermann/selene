@@ -35,7 +35,7 @@
 
 ### Controllers
 
-You can use controllers to pass data to specific templates. A controller must be created inside the [`./resources/controllers/`](https://github.com/kaisermann/selene/blob/master/resources/controllers/) directory. A controller scope is defined by each class name returned by `get_body_class`.
+You can use controllers to pass data to specific templates. A controller must be created inside the [`./resources/controllers/`](https://github.com/kaisermann/selene/blob/master/resources/controllers/) directory.
 
 [Controller documentation](https://github.com/soberwp/controller)
 
@@ -44,9 +44,10 @@ You can use controllers to pass data to specific templates. A controller must be
 * `@mainquery ... @endmainquery` - Loops through the main query;
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query;
 * `@shortcode` - Executes a certain shortcode;
-* `@inlinesvg` - Prints the specified svg file;
+* `@inlinesvg` - Prints the specified SVG file;
 * `@dump` - Dumps an php variable with a `var_export`;
-* `@console` - Dumps a php variable in the javascript console.
+* `@console` - Dumps a php variable in the javascript console;
+* `@set($var, value)` - Sets a PHP variable.
 
 Directives can be defined on [`app/directives.php`](https://github.com/kaisermann/selene/blob/master/app/directives.php).
 
@@ -66,7 +67,7 @@ Directives can be defined on [`app/directives.php`](https://github.com/kaiserman
 * Back-end
   * Sets uploaded JPEG quality to 100;
   * Provides options on the admin dashboard to crop default medium and large image sizes;
-  * While `WP_DEBUG` is true, the enqueued assets will have a cache-busting file name;
+  * While `WP_DEBUG` is true or `WP_ENV` is equal to 'development', the enqueued assets will have a cache-busting file name;
   * Provides John Billion's libraries which make painless to create custom post types and taxonomies.
     * https://github.com/johnbillion/extended-cpts
     * https://github.com/johnbillion/extended-taxos
