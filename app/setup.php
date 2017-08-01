@@ -9,6 +9,7 @@ use Roots\Sage\Template\BladeProvider;
 
 // Actions
 add_action('init', 'App\\action__init', 0, 2);
+add_action('acf/init', 'App\\action__acf_init', 100);
 add_action('after_setup_theme', 'App\\action__sage_setup', 100);
 add_action('after_setup_theme', 'App\\action__after_setup_theme', 100);
 add_action('wp_enqueue_scripts', 'App\\action__wp_enqueue_scripts', 100);
@@ -19,6 +20,39 @@ add_action('the_post', 'App\\action__the_post');
 add_action('init', 'App\\action__cleanup_head');
 add_action('widgets_init', 'App\\action__cleanup_widgets');
 add_filter('the_generator', '__return_false');
+add_action( 'acf/init', 'App\\action__acf_init' );
+
+/**
+ * Setup image sizes, post types and taxonomies
+ */
+function action__init()
+{
+    global $wp_rewrite;
+
+    add_image_sizes();
+    add_post_types();
+    add_taxonomies();
+
+    $wp_rewrite->search_base = 'search';
+}
+
+/**
+ * ACF Builder initialization
+ */
+function action__acf_init()
+{
+    $fieldsDir = dirname(__FILE__) . '/fields/*.php';
+    foreach (glob($fieldsDir) as $file_path) {
+        if(($fields = require_once $file_path) !== true) {
+            if(!is_array($fields)) {
+                $fields = [$fields];
+            }
+            foreach($fields as $field) {
+                acf_add_local_field_group($field->build());
+            }
+        }
+    }
+}
 
 /**
  * Setup Sage options
@@ -57,17 +91,6 @@ function action__sage_setup()
     foreach (config('directives') as $directive => $fn) {
         $sageCompiler->directive($directive, $fn);
     }
-}
-
-function action__init()
-{
-    global $wp_rewrite;
-
-    add_image_sizes();
-    add_post_types();
-    add_taxonomies();
-
-    $wp_rewrite->search_base = 'search';
 }
 
 function action__after_setup_theme()

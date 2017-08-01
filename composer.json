@@ -34,7 +34,8 @@
     "roots/sage-lib": "~9.0.0-beta.3",
     "soberwp/controller": "dev-master",
     "johnbillion/extended-cpts": "~3.2.1",
-    "johnbillion/extended-taxos": "~2.0.5"
+    "johnbillion/extended-taxos": "~2.0.5",
+    "StoutLogic/acf-builder": "^1.3"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.8.0"
