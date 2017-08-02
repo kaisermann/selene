@@ -62,7 +62,7 @@ You can use controllers to pass data to specific templates. A controller must be
 * `@console` - Dumps a php variable in the javascript console;
 * `@set($var, value)` - Sets a PHP variable.
 
-Directives can be defined on [`app/directives.php`](https://github.com/kaisermann/selene/blob/master/app/directives.php).
+Directives can be defined on [`config/directives.php`](https://github.com/kaisermann/selene/blob/master/config/directives.php).
 
 ## WordPress tweaks
 
