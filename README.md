@@ -71,7 +71,7 @@ Directives can be defined on [`config/directives.php`](https://github.com/kaiser
   * Cleans up your `<head>`;
   * Scripts load with `defer`;
   * Rewrites the search url `.com/?s=term` with `.com/search/term`;
-  * Wraps all `oembed` around a `<div class="embed">`;
+  * Wraps all `oembed` inside `the_content()` around a `<div class="oembed-container">`;
   * Remove all protocols (`http`,`https`) from urls;
   * Admin dashboard and login page CSS customization with the [`admin.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/admin/config.styl) file;
   * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/editor.styl) file;
