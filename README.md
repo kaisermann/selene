@@ -11,6 +11,7 @@
 - Write modern Javascript
 - See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
 - Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
+- Component oriented folder structure.
 
 ## Requirements
 
@@ -19,6 +20,18 @@
 * [Composer](https://getcomposer.org/download/)
 * [Node.js](http://nodejs.org/) >= 7.x.x
 * [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
+
+#### Recommended
+
+* [ACF](https://www.advancedcustomfields.com/) >= 5.x.x
+
+### ACF Builder
+
+Selene comes out of the box with [ACF Builder](https://github.com/StoutLogic/acf-builder) which makes a piece-of-cake to programmatically create custom fields with ACF.
+
+Create your `field group` inside the root of [`app/fields`](https://github.com/kaisermann/selene/blob/master/app/fields) and return one (the `field group` itself) or more (an array of `field groups`).
+
+If ACF is not installed, the files will be ignored.
 
 ### Components
 

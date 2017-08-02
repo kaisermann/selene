@@ -6,7 +6,7 @@ use Roots\Sage\Container;
 use Roots\Sage\Assets\JsonManifest;
 use Roots\Sage\Template\Blade;
 use Roots\Sage\Template\BladeProvider;
-use Sober\Intervention\intervention;
+use StoutLogic\AcfBuilder\FieldsBuilder;
 
 // Actions
 add_action('init', 'App\\action__init', 0, 2);
@@ -20,6 +20,21 @@ add_action('the_post', 'App\\action__the_post');
 add_action('init', 'App\\action__cleanup_head');
 add_action('widgets_init', 'App\\action__cleanup_widgets');
 add_filter('the_generator', '__return_false');
+
+/**
+ * Setup image sizes, post types and taxonomies
+ */
+function action__init()
+{
+    global $wp_rewrite;
+
+    add_image_sizes();
+    add_post_types();
+    add_taxonomies();
+
+    $wp_rewrite->search_base = 'search';
+}
+
 
 /**
  * Setup Sage options
@@ -58,17 +73,6 @@ function action__sage_setup()
     foreach (config('directives') as $directive => $fn) {
         $sageCompiler->directive($directive, $fn);
     }
-}
-
-function action__init()
-{
-    global $wp_rewrite;
-
-    add_image_sizes();
-    add_post_types();
-    add_taxonomies();
-
-    $wp_rewrite->search_base = 'search';
 }
 
 function action__after_setup_theme()
@@ -186,31 +190,24 @@ function action__cleanup_widgets()
     }
 }
 
-// Cleanup
-if (function_exists('Sober\Intervention\intervention')) {
-    // intervention('add-acf-page', 'Theme Settings');
-    // intervention('add-dashboard-item', ['Header', 'Content']);
-    // intervention('add-dashboard-redirect', 'pages', ['editor', 'author']);
-    // intervention('add-svg-support', ['admin', 'editor']);
-    // intervention('remove-dashboard-items', ['right-now', 'activity'], ['admin', 'editor']);
-    // intervention('remove-emoji');
-    // intervention('remove-help-tabs');
-    // intervention('remove-howdy');
-    // intervention('remove-menu-items', ['themes', 'plugins'], ['editor', 'author']);
-    // intervention('remove-page-components', ['author', 'custom-fields', 'comments']);
-    // intervention('remove-post-components', ['custom-fields', 'comments', 'trackbacks']);
-    // intervention('remove-taxonomies', ['tag', 'category']);
-    // intervention('remove-toolbar-frontend', ['all-not-admin']);
-    // intervention('remove-toolbar-items', ['logo', 'updates', 'comments', 'new-media', 'new-user'], ['editor', 'author']);
-    // intervention('remove-update-notices', ['editor', 'author']);
-    // intervention('remove-user-fields', ['options', 'names', 'contact'], ['editor', 'author']);
-    // intervention('remove-user-roles', ['subscriber', 'contributor']);
-    // intervention('remove-widgets', ['calendar', 'rss']);
-    // intervention('update-dashboard-columns', 2);
-    // intervention('update-label-footer', 'Footer Paragraph');
-    // intervention('update-label-page', ['Content', 'Content', 'smiley']);
-    // intervention('update-label-post', ['Books', 'Book', 'book']);
-    // intervention('update-pagination', 100);
+/**
+ * ACF Builder initialization and fields loading
+ */
+
+define('FIELDS_DIR', dirname(__FILE__) . '/fields');
+if(is_dir(FIELDS_DIR)) {
+    add_action('acf/init', function () {
+        foreach (glob(FIELDS_DIR . '/*.php') as $file_path) {
+            if(($fields = require_once $file_path) !== true) {
+                if(!is_array($fields)) $fields = [$fields];
+                foreach($fields as $field) {
+                    if($field instanceof FieldsBuilder) {
+                        acf_add_local_field_group($field->build());
+                    }
+                }
+            }
+        }
+    });
 }
 
 // Helpers
