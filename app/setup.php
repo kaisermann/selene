@@ -6,6 +6,7 @@ use Roots\Sage\Container;
 use Roots\Sage\Assets\JsonManifest;
 use Roots\Sage\Template\Blade;
 use Roots\Sage\Template\BladeProvider;
+use Sober\Intervention\intervention;
 
 // Actions
 add_action('init', 'App\\action__init', 0, 2);
@@ -137,14 +138,27 @@ function action__the_post($post)
 
 function action__cleanup_head()
 {
-    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    // Remove emojis
     remove_action('admin_print_styles', 'print_emoji_styles');
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('admin_print_scripts', 'print_emoji_detection_script');
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+    add_filter('emoji_svg_url', '__return_false');
+    add_filter('tiny_mce_plugins', function ($plugins) {
+        if (is_array($plugins)) {
+            return array_diff($plugins, ['wpemoji']);
+        }
+        return [];
+    });
+
     remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
     remove_action('wp_head', 'feed_links_extra', 3);
     remove_action('wp_head', 'feed_links', 2);
     remove_action('wp_head', 'index_rel_link');
     remove_action('wp_head', 'parent_post_rel_link', 10);
-    remove_action('wp_head', 'print_emoji_detection_script', 7);
     remove_action('wp_head', 'rel_canonical', 10);
     remove_action('wp_head', 'rest_output_link_wp_head', 10);
     remove_action('wp_head', 'rsd_link');
@@ -153,14 +167,9 @@ function action__cleanup_head()
     remove_action('wp_head', 'wp_oembed_add_discovery_links');
     remove_action('wp_head', 'wp_oembed_add_host_js');
     remove_action('wp_head', 'wp_shortlink_wp_head', 10);
-    remove_action('wp_print_styles', 'print_emoji_styles');
 
-    // Remove emojis and default gallery style
+    // Remove default gallery style
     add_filter('use_default_gallery_style', '__return_false');
-    add_filter('emoji_svg_url', '__return_false');
-    remove_filter('comment_text_rss', 'wp_staticize_emoji');
-    remove_filter('the_content_feed', 'wp_staticize_emoji');
-    remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 }
 
 function action__cleanup_widgets()
@@ -175,6 +184,33 @@ function action__cleanup_widgets()
             ]
         );
     }
+}
+
+// Cleanup
+if (function_exists('Sober\Intervention\intervention')) {
+    // intervention('add-acf-page', 'Theme Settings');
+    // intervention('add-dashboard-item', ['Header', 'Content']);
+    // intervention('add-dashboard-redirect', 'pages', ['editor', 'author']);
+    // intervention('add-svg-support', ['admin', 'editor']);
+    // intervention('remove-dashboard-items', ['right-now', 'activity'], ['admin', 'editor']);
+    // intervention('remove-emoji');
+    // intervention('remove-help-tabs');
+    // intervention('remove-howdy');
+    // intervention('remove-menu-items', ['themes', 'plugins'], ['editor', 'author']);
+    // intervention('remove-page-components', ['author', 'custom-fields', 'comments']);
+    // intervention('remove-post-components', ['custom-fields', 'comments', 'trackbacks']);
+    // intervention('remove-taxonomies', ['tag', 'category']);
+    // intervention('remove-toolbar-frontend', ['all-not-admin']);
+    // intervention('remove-toolbar-items', ['logo', 'updates', 'comments', 'new-media', 'new-user'], ['editor', 'author']);
+    // intervention('remove-update-notices', ['editor', 'author']);
+    // intervention('remove-user-fields', ['options', 'names', 'contact'], ['editor', 'author']);
+    // intervention('remove-user-roles', ['subscriber', 'contributor']);
+    // intervention('remove-widgets', ['calendar', 'rss']);
+    // intervention('update-dashboard-columns', 2);
+    // intervention('update-label-footer', 'Footer Paragraph');
+    // intervention('update-label-page', ['Content', 'Content', 'smiley']);
+    // intervention('update-label-post', ['Books', 'Book', 'book']);
+    // intervention('update-pagination', 100);
 }
 
 // Helpers
