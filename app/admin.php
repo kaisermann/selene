@@ -8,7 +8,9 @@ add_action('admin_enqueue_scripts', 'App\action__admin_enqueue_scripts', 100);
 add_action('login_enqueue_scripts', 'App\action__admin_enqueue_scripts', 100);
 
 // Removes default dashboard metaboxes
-add_action('admin_init', 'App\action__admin_init');
+add_action('wp_dashboard_setup', 'App\action__wp_dashboard_setup');
+
+// Add option to crop large and medium thumbnail sizes.
 add_action('admin_init', 'App\action__default_sizes_crop');
 
 // Removes WP logo and comments menu from admin bar
@@ -16,10 +18,6 @@ add_action('admin_bar_menu', 'App\action__trim_adminbar', 100);
 
 // Removes some unused dashboard menu items
 // add_action( 'admin_menu','App\action__trim_adminmenu' );
-
-remove_action('welcome_panel', 'wp_welcome_panel');
-remove_action('admin_print_styles', 'print_emoji_styles');
-remove_action('admin_print_scripts', 'print_emoji_detection_script');
 
 // Filters
 // Sets login page logo redirecting to home url
@@ -44,8 +42,9 @@ function action__admin_enqueue_scripts()
     wp_enqueue_style('selene/login.css', asset_path('styles/login.css'), false, null);
 }
 
-function action__admin_init()
+function action__wp_dashboard_setup()
 {
+    remove_action('welcome_panel', 'wp_welcome_panel');
     remove_meta_box('dashboard_primary', 'dashboard', 'normal');
     remove_meta_box('dashboard_secondary', 'dashboard', 'normal');
     remove_meta_box('dashboard_incoming_links', 'dashboard', 'normal');
