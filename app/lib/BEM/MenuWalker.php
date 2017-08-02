@@ -5,10 +5,11 @@ namespace BEM;
 // Better BEM classes for wp_nav_menu https://codepad.co/snippet/xzEkTh25
 class MenuWalker extends \Walker_Nav_Menu
 {
-
     public function start_lvl(&$output, $depth = 0, $args = [])
     {
-        $block = isset($args->block) ? $args->block : explode(' ', $args->menu_class);
+        $block = isset($args->block)
+            ? $args->block
+            : explode(' ', $args->menu_class);
         $block = is_array($block) ? $block[0] : $block;
         if (isset($args->item_spacing) && 'discard' === $args->item_spacing) {
             $t = '';
@@ -81,7 +82,9 @@ class MenuWalker extends \Walker_Nav_Menu
 
     public function prepare_el_classes(&$item, $args = [], $depth = 0)
     {
-        $block = isset($args->block) ? $args->block : explode(' ', $args->menu_class);
+        $block = isset($args->block)
+            ? $args->block
+            : explode(' ', $args->menu_class);
         $block = is_array($block) ? $block[0] : $block;
         $classes = [ $block . '__item' ];
 

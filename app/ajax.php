@@ -1,10 +1,10 @@
 <?php
-/**
- * Ajax methods
- */
 
 namespace App;
 
+/**
+ * Ajax methods
+ */
 $methods = [];
 
 foreach ($methods as $method) {
@@ -12,4 +12,4 @@ foreach ($methods as $method) {
     add_action('wp_ajax_' . $method, 'App\action__' . $method);
 }
 
-// Ajax methods
+// Ajax methods down here
