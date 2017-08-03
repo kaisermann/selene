@@ -13,9 +13,37 @@ const rollUpBuble = require('rollup-plugin-buble')
 const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
 const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
+const rollUpSizes = require('rollup-plugin-sizes')
 
 const crius = require('../manifest')
 const writeToManifest = require('../utils/writeToManifest')
+
+const rollUpPlugins = [
+  // Allow to import node builtin modules such as path, url, querystring, etc
+  rollUpNodebuiltins(),
+  // Allow to import modules from the `node_modules`
+  rollUpNodeResolve({
+    module: true,
+    jsnext: true,
+    main: true,
+    browser: true,
+    extensions: ['.js'],
+    preferBuiltins: true,
+  }),
+  // Transforms CommonJS modules into ES6 modules for RollUp
+  rollUpCommonjs(),
+  // Transpiles the code, ignoring coniguration from the `node_modules`
+  rollUpBuble({
+    transforms: {
+      arrow: true,
+      dangerousForOf: true,
+    },
+  }),
+]
+
+if (crius.params.report) {
+  rollUpPlugins.push(rollUpSizes())
+}
 
 module.exports = {
   tasks: {
@@ -26,47 +54,13 @@ module.exports = {
       return (
         lazypipe()
           .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
-          .pipe(
-            betterRollup,
-            {
-              plugins: [
-                // Allow to import node builtin modules such as path, url, querystring, etc
-                rollUpNodebuiltins(),
-                // Allow to import modules from the `node_modules`
-                rollUpNodeResolve({
-                  module: true,
-                  jsnext: true,
-                  main: true,
-                  browser: true,
-                  extensions: ['.js'],
-                  preferBuiltins: true,
-                }),
-                // Transforms CommonJS modules into ES6 modules for RollUp
-                rollUpCommonjs(),
-                // Transpiles the code, ignoring coniguration from the `node_modules`
-                rollUpBuble({
-                  transforms: {
-                    arrow: true,
-                    dangerousForOf: true,
-                  },
-                }),
-                // rollUpBabel({
-                //  exclude: 'node_modules/**/.babelrc',
-                // }),
-              ],
-            },
-            {
-              format: 'iife',
-            }
-          )
+          .pipe(betterRollup, { plugins: rollUpPlugins }, { format: 'iife' })
           // Gulp 4. Appends vendor files to the main stream
           // Only if asset.vendor is defined
           .pipe(
             asset.vendor && asset.vendor.length ? gulp.src : util.noop,
             asset.vendor,
-            {
-              passthrough: true,
-            }
+            { passthrough: true }
           )
           .pipe(concat, asset.outputName)
           .pipe(() => gulpIf(!crius.params.debug, uglify()))

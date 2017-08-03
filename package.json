@@ -32,7 +32,10 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
-    "plugins": ["import", "compat"],
+    "plugins": [
+      "import",
+      "compat"
+    ],
     "settings": {
       "import/core-modules": [],
       "import/ignore": [
@@ -71,7 +74,12 @@
   "engines": {
     "node": ">= 6.9.4"
   },
-  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
+  "browserslist": [
+    "last 2 versions",
+    "opera 12",
+    "IE 11",
+    "Safari >= 8"
+  ],
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "browser-sync": "^2.18.13",
@@ -107,9 +115,10 @@
     "require-directory": "^2.1.1",
     "rimraf": "^2.6.1",
     "rollup-plugin-buble": "^0.15.0",
-    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-commonjs": "^8.1.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-sizes": "^0.4.0",
     "uncss": "^0.15.0"
   },
   "dependencies": {
