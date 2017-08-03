@@ -3,6 +3,7 @@
 $fn_end_while = function () {
     return '<?php endwhile; wp_reset_query(); ?>';
 };
+$fn_end_if = function () { return '<?php endif; ?>'; };
 
 return [
     /*
@@ -36,6 +37,22 @@ return [
 
     /** Creates @endcustomquery Blade directive */
     'endcustomquery' => $fn_end_while,
+
+    /** Creates @loggedin Blade directive */
+    'loggedin' => function () {
+        return "<?php if(is_user_logged_in()) : ?>";
+    },
+
+    /** Creates @endloggedin Blade directive */
+    'endloggedin' => $fn_end_if,
+
+    /** Creates @visitor Blade directive */
+    'visitor' => function () {
+        return "<?php if(!is_user_logged_in()) : ?>";
+    },
+
+    /** Creates @endvisitor Blade directive */
+    'endvisitor' => $fn_end_if,
 
     /** Create @shortcode($shortCodeString) Blade directive */
     'shortcode' => function ($shortcode) {
