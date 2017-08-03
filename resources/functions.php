@@ -23,7 +23,7 @@ $sage_error = function ($message, $subtitle = '', $title = '') {
 /**
  * Ensure compatible version of PHP is used
  */
-if (version_compare('5.6.4', phpversion(), '>=')) {
+if (version_compare('7', phpversion(), '>=')) {
     $sage_error(__('You must be using PHP 5.6.4 or greater.', 'sage'), __('Invalid PHP version', 'sage'));
 }
 

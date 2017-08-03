@@ -16,7 +16,7 @@
 ## Requirements
 
 * [WordPress](https://wordpress.org/) >= 4.7
-* [PHP](http://php.net/manual/en/install.php) >= 5.6.4
+* [PHP](http://php.net/manual/en/install.php) >= 7
 * [Composer](https://getcomposer.org/download/)
 * [Node.js](http://nodejs.org/) >= 7.x.x
 * [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x

@@ -154,7 +154,6 @@ add_action('after_setup_theme', function () {
 /**
  * ACF Builder initialization and fields loading
  */
-
 define('FIELDS_DIR', dirname(__FILE__) . '/fields');
 if (is_dir(FIELDS_DIR)) {
     add_action('acf/init', function () {
