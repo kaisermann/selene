@@ -56,6 +56,8 @@ You can use controllers to pass data to specific templates. A controller must be
 
 * `@mainquery ... @endmainquery` - Loops through the main query;
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query;
+* `@visitor ... @endvisitor` - Shows a certain content only to site visitors (not logged in);
+* `@loggedin ... @endloggedin` - Shows a certain content only logged users;
 * `@shortcode` - Executes a certain shortcode;
 * `@inlinesvg` - Prints the specified SVG file;
 * `@dump` - Dumps an php variable with a `var_export`;
