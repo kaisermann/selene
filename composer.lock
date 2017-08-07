@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "da4298274b9cc6d2dede747c8ba4c9e7",
+    "content-hash": "aed25d95e8ccf891c1ee4417455bff7c",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -861,12 +861,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/soberwp/controller.git",
-                "reference": "f45eddf3427b5a4d9e487d1f3e2e4e3785531d14"
+                "reference": "220d88a8e2e4ca8dc97364f913defac4d8e82c1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/soberwp/controller/zipball/f45eddf3427b5a4d9e487d1f3e2e4e3785531d14",
-                "reference": "f45eddf3427b5a4d9e487d1f3e2e4e3785531d14",
+                "url": "https://api.github.com/repos/soberwp/controller/zipball/220d88a8e2e4ca8dc97364f913defac4d8e82c1d",
+                "reference": "220d88a8e2e4ca8dc97364f913defac4d8e82c1d",
                 "shasum": ""
             },
             "require": {
@@ -905,20 +905,20 @@
             "keywords": [
                 "wordpress"
             ],
-            "time": "2017-08-02 10:59:14"
+            "time": "2017-08-04 18:38:48"
         },
         {
             "name": "stoutlogic/acf-builder",
-            "version": "1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/StoutLogic/acf-builder.git",
-                "reference": "1698f0a9fae26b0cfb90fa797047464a8fabd073"
+                "reference": "5e00a3bf1461ff583e4fd8e2a15b469cec9a60fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/StoutLogic/acf-builder/zipball/1698f0a9fae26b0cfb90fa797047464a8fabd073",
-                "reference": "1698f0a9fae26b0cfb90fa797047464a8fabd073",
+                "url": "https://api.github.com/repos/StoutLogic/acf-builder/zipball/5e00a3bf1461ff583e4fd8e2a15b469cec9a60fd",
+                "reference": "5e00a3bf1461ff583e4fd8e2a15b469cec9a60fd",
                 "shasum": ""
             },
             "require": {
@@ -946,7 +946,7 @@
                 }
             ],
             "description": "An Advanced Custom Field Configuration Builder",
-            "time": "2017-01-10T04:40:22+00:00"
+            "time": "2017-08-06T13:52:19+00:00"
         },
         {
             "name": "symfony/debug",
@@ -1198,7 +1198,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.4"
+        "php": ">=7"
     },
     "platform-dev": []
 }
