@@ -9,8 +9,10 @@ trim_trailing_whitespace = auto
 insert_final_newline = auto
 
 [*.php]
-indent_style = space
 indent_size = 4
+
+[*.blade.php]
+indent_size = 2
 
 [*.txt]
 end_of_line = crlf

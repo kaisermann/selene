@@ -66,12 +66,12 @@ return [
 
     /** Create @dump($obj) Blade directive */
     'dump' => function ($obj) {
-        return "<?php App\dump({$obj}, true); ?>";
+        return "<?php App\dump({$obj}); ?>";
     },
 
     /** Create @console($obj) Blade directive */
     'console' => function ($obj) {
-        return "<?php App\dump({$obj}, false); ?>";
+        return "<?php App\console({$obj}); ?>";
     },
 
     /** Create @set($name, value) Blade directive */

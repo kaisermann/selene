@@ -94,7 +94,7 @@ function filter_templates($templates)
 {
     return collect($templates)
         ->map(function ($template) {
-            return preg_replace('#\.(blade\.)?php$#', '', ltrim($template));
+            return basename(basename(ltrim($template), '.php'), '.blade');
         })
         ->flatMap(function ($template) {
             $paths = apply_filters('sage/filter_templates/paths', [
@@ -155,19 +155,25 @@ function render_component($componentName, $data = [])
 }
 
 /**
- * Dumps an variable in the console/php stdout
+ * Dumps a variable in the php stdout
  * @param $data
- * @param bool $phpPrint
  * @param bool $onlyLogged
  * @return null
  */
-function dump($data, $phpPrint = false, $onlyLogged = true)
+function dump($data, $onlyLogged = true)
 {
-    if ($phpPrint) {
-        echo '<pre style="white-space: pre-wrap;">' . htmlspecialchars(@var_export($data, true)) . '</pre>';
-    } else {
-        echo '<script>console.log(' . json_encode($data) . ');</script>';
-    }
+    echo '<pre style="white-space: pre-wrap;">' . htmlspecialchars(@var_export($data, true)) . '</pre>';
+}
+
+/**
+ * Dumps an variable in the console
+ * @param $data
+ * @param bool $onlyLogged
+ * @return null
+ */
+function console($data, $onlyLogged = true)
+{
+     echo '<script>console.log(' . json_encode($data) . ');</script>';
 }
 
 /**

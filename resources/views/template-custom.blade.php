@@ -1,6 +1,11 @@
+{{--
+  Template Name: Custom Template
+--}}
+
 @extends('layouts.app')
 
 @section('content')
+  @debug('hierarchy')
   @mainquery
     <article @php(post_class())>
       <header>
@@ -11,4 +16,4 @@
       </div>
     </article>
   @endmainquery
-@stop
+@endsection
