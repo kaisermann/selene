@@ -1,9 +1,9 @@
 .DS_Store
-./index.html
-./sitemap.json
+/index.html
+/sitemap.json
 dist
 node_modules
 npm-debug.log
 yarn-error.log
 !assets/**/vendor/
-vendor/
+/vendor
