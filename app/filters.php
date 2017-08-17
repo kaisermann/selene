@@ -7,15 +7,14 @@ namespace App;
  */
 add_filter('template_redirect', function () {
     global $wp_rewrite;
-    if (! isset($wp_rewrite) || ! is_object($wp_rewrite) || ! $wp_rewrite->using_permalinks()) {
+    if (!isset($wp_rewrite) || !is_object($wp_rewrite) || !$wp_rewrite->using_permalinks()) {
         return;
     }
 
     $search_base = $wp_rewrite->search_base;
-    if (is_search() &&
-        ! is_admin() &&
-        strpos($_SERVER['REQUEST_URI'], "/{$search_base}/") === false &&
-        strpos($_SERVER['REQUEST_URI'], '&') === false
+    if (is_search() && !is_admin() &&
+        !strpos($_SERVER['REQUEST_URI'], "/{$search_base}/") &&
+        !strpos($_SERVER['REQUEST_URI'], '&')
     ) {
         wp_redirect(get_search_link());
         exit();
@@ -23,13 +22,11 @@ add_filter('template_redirect', function () {
     if (strtoupper(WP_ENV) === 'DEVELOPMENT' && isset($_GET['show_sitemap'])) {
         $home_url = get_home_url();
         $blog_url = get_permalink(get_option('page_for_posts'));
-        $the_query = new \WP_Query(
-            [
-                'post_type' => 'any',
-                'posts_per_page' => '-1',
-                'post_status' => 'publish',
-            ]
-        );
+        $the_query = new \WP_Query([
+            'post_type' => 'any',
+            'posts_per_page' => '-1',
+            'post_status' => 'publish',
+        ]);
 
         $urls = [];
         $urls[] = $home_url;
@@ -95,7 +92,7 @@ add_filter('embed_oembed_html', function ($cache) {
  */
 $filter__parse_asset_version = function ($src) {
     if (WP_DEBUG || strtoupper(WP_ENV) === 'DEVELOPMENT') {
-        return add_query_arg('ver', rand(), remove_query_arg('ver', $src));
+        return add_query_arg('ver', 'dev-'.rand(), remove_query_arg('ver', $src));
     }
     return $src;
 };
@@ -121,34 +118,37 @@ add_filter('stylesheet_directory_uri', $filter__url_protocol, 10, 3);
  */
 add_filter('body_class', function (array $classes) {
 
-    // String patterns to remove
+    /** String patterns to remove */
     $excludePatterns = [
         'page-template-views.*',        // Removes page-template-views-$template
-        'page-id-.*',                               // Removes page-id-$id
-        'post-template.*',                  // Removes post-template-$template
-        'postid.*',                                 // Removes postid$id
-        'single-format.*',                  // Removes single-format-$format
-        'category-\d*',                         // Removes category-$id
-        'tag-\d*',                                  // Removes tag-$id,
-        'post-type-archive',                // Removes post-type-archive
+        'page-id-.*',                   // Removes page-id-$id
+        'post-template.*',              // Removes post-template-$template
+        'postid.*',                     // Removes postid$id
+        'single-format.*',              // Removes single-format-$format
+        'category-\d*',                 // Removes category-$id
+        'tag-\d*',                      // Removes tag-$id,
+        'post-type-archive',            // Removes post-type-archive
     ];
 
-    // Regex patterns to replace class names
+    /** Regex patterns to replace class names */
     $replacePatterns = [
         '/page-template-template-(.*)-blade/' => 'template-$1', // Simplifies template classes
         '/page-template(.*)/' => 'template$1',
         '/post-type-archive-(.*)/' => 'archive-$1', // Simplifies custom-post-type-archive
     ];
 
-    // Add post/page slug if not present
-    if (is_single() || is_page() && ! is_front_page()) {
-        if (! in_array(basename(get_permalink()), $classes)) {
-            $classes[] = 'page-' . basename(get_permalink());
+    /** Add post/page slug if not present */
+    if (is_single() || is_page() && !is_front_page()) {
+        $page_slug = 'page-'.basename(get_permalink());
+        if (!in_array($page_slug, $classes)) {
+            $classes[] = $page_slug;
         }
     }
 
-    // Remove unnecessary classes
+    /** Remove unnecessary classes */
     $classes = preg_grep('/^(?!(' . implode('|', $excludePatterns) . ')$)/xs', $classes);
+
+    /** Prettify some other classes */
     $classes = preg_replace(
         array_keys($replacePatterns),
         array_values($replacePatterns),
@@ -169,24 +169,7 @@ add_filter('excerpt_more', function () {
  * Template Hierarchy should search for .blade.php files
  */
 collect(
-    [
-        'index',
-        '404',
-        'archive',
-        'author',
-        'category',
-        'tag',
-        'taxonomy',
-        'date',
-        'home',
-        'frontpage',
-        'page',
-        'paged',
-        'search',
-        'single',
-        'singular',
-        'attachment',
-    ]
+    ['index', '404', 'archive', 'author', 'category', 'tag', 'taxonomy','date', 'home', 'frontpage', 'page', 'paged', 'search', 'single','singular', 'attachment']
 )->map(
     function ($type) {
         add_filter("{$type}_template_hierarchy", __NAMESPACE__ . '\\filter_templates');
@@ -198,17 +181,19 @@ collect(
  * Render page using Blade
  */
 add_filter('template_include', function ($template) {
-    $classes = get_body_class();
-    array_unshift($classes, 'app');
-    $data = collect($classes)->reduce(
+    $data = collect(get_body_class())->reduce(
         function ($data, $class) use ($template) {
-            return apply_filters("sage/template/{$class}/data", $data, $template);
+            return apply_filters(
+                "sage/template/{$class}/data",
+                $data,
+                $template
+            );
         },
         []
     );
     if ($template) {
         echo template($template, $data);
-        return get_stylesheet_directory() . '/index.php';
+        return get_stylesheet_directory().'/index.php';
     }
     return $template;
 }, PHP_INT_MAX);
