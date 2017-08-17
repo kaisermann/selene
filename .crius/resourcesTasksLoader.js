@@ -28,6 +28,7 @@ const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
   return util.noop()
 }
 
+const nodeModulesRegEx = /^(\.|\.\/)?(~|node_modules)/
 const buildAsset = (outputName, baseObj, directory) => {
   let assetObj
   if (typeof baseObj === 'string') {
@@ -39,9 +40,13 @@ const buildAsset = (outputName, baseObj, directory) => {
       assetObj.files = [assetObj.files]
     }
   }
+  assetObj.vendor = baseObj.vendor || []
   assetObj.outputName = outputName
-  assetObj.globs = assetObj.files.map(path =>
-    join(crius.config.paths.source, directory, path)
+  assetObj.globs = assetObj.files.map(
+    path =>
+      nodeModulesRegEx.test(path)
+        ? join(path.replace(nodeModulesRegEx, './node_modules'))
+        : join(crius.config.paths.source, directory, path)
   )
   return assetObj
 }

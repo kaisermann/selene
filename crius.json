@@ -22,7 +22,7 @@
       "assets": {
         "main.js": {
           "files": "index.js",
-          "vendor": "assets/scripts/vendor/*.js"
+          "vendor": "resources/assets/scripts/vendor/*.js"
         }
       }
     },
@@ -32,7 +32,7 @@
       "assets": {
         "main.css": {
           "files": "index.styl",
-          "vendor": "assets/styles/vendor/*.css",
+          "vendor": "resources/assets/styles/vendor/*.css",
           "uncss": true
         },
         "editor.css": "wordpress/editor.styl",
