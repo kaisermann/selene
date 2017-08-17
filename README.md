@@ -111,12 +111,14 @@ Each resource type MUST have a **assets** `object`, defining which assets are to
   "assets": {
     "main.js": {
       "files": "wrapper.js",
-      "vendor": "full/path/relative/to/gulpfile.js"
+      "vendor": "path/relative/to/gulpfile.js"
     }
   }
 ...
 ```
 The value can be either a `string`, an array of `strings` or an `object` with a MUST-HAVE `files` and an OPTIONAL `vendor` properties.
+
+If a path begins with `~`, `crius` references the `node_modules` directory. If not, the path is relative to the `resource directory`.
 
 --------------------------------------------------------------------------------
 
