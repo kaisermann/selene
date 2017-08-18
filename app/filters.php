@@ -60,7 +60,6 @@ add_filter('get_search_form', function () {
     return '';
 });
 
-
 /**
  * Set JPEG upload quality back to 100
  */
@@ -68,6 +67,28 @@ add_filter('jpeg_quality', function () {
     return 100;
 });
 
+/**
+ * Produces cleaner filenames for uploads
+ * Reference: wpartisan.me/tutorials/rename-clean-wordpress-media-filenames
+ *
+ * @param  string $filename
+ * @return string
+ */
+add_filter('sanitize_file_name', function ($filename) {
+    // Convert to ASCII
+    $sanitized_filename = remove_accents($filename);
+    // Remove all non-alphanumeric except .
+    $sanitized_filename = preg_replace('/[^A-Za-z0-9-\. ]/', '', $sanitized_filename);
+     // Remove all but last .
+    $sanitized_filename = preg_replace('/\.(?=.*\.)/', '', $sanitized_filename);
+    // Replace any more than one - in a row
+    $sanitized_filename = preg_replace('/-+/', '-', $sanitized_filename);
+    // Remove last - if at the end
+    $sanitized_filename = str_replace('-.', '.', $sanitized_filename);
+    // Lowercase
+    $sanitized_filename = strtolower($sanitized_filename);
+    return $sanitized_filename;
+}, 10, 1);
 
 /**
  * Defer enqueued scripts which has '#defer' on their name
