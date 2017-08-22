@@ -14,6 +14,9 @@ indent_size = 4
 [*.blade.php]
 indent_size = 2
 
+[*.{styl,sass,sss}]
+indent_style = tab
+
 [*.txt]
 end_of_line = crlf
 

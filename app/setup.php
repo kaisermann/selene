@@ -154,10 +154,10 @@ add_action('after_setup_theme', function () {
 /**
  * ACF Builder initialization and fields loading
  */
-define('FIELDS_DIR', dirname(__FILE__) . '/fields');
-if (is_dir(FIELDS_DIR)) {
+define('ACF_FIELDS_DIR', dirname(__FILE__) . '/fields');
+if (is_dir(ACF_FIELDS_DIR)) {
     add_action('acf/init', function () {
-        foreach (glob(FIELDS_DIR . '/*.php') as $file_path) {
+        foreach (glob(ACF_FIELDS_DIR . '/*.php') as $file_path) {
             if (($fields = require_once $file_path) !== true) {
                 if (!is_array($fields)) {
                     $fields = [$fields];
