@@ -14,8 +14,18 @@ if app.buildCSS.admin
 				size(100%)
 
 #toplevel_page_edit-post_type-acf-field-group
+	// Hide 'add new', 'field groups' and 'tools'
 	li:nth-of-type(n+2):nth-of-type(-n+4)
 		display: none
+
+	// Add warning message to submenu
+	.wp-submenu
+		&::after
+			display: block
+			padding: 6px 12px
+			content: 'Other ACF menu items hidden by the active theme'
+			font-size: 10px
+			color: colors.red
 
 // Hide new ACF fields related dashboard items
 body.post-type-acf-field-group
