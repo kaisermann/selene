@@ -1,6 +1,6 @@
 # Selene
 
-> Wordpress theme based on [Sage 9](https://github.com/roots/sage/) and [Crius](https://github.com/kaisermann/crius).
+> Opinionated Wordpress theme based on [Sage 9](https://github.com/roots/sage/) and [Crius](https://github.com/kaisermann/crius).
 
 ## Informations
 
