@@ -19,19 +19,19 @@ if app.buildCSS.admin
 
 // Hide new ACF fields related dashboard items
 body.post-type-acf-field-group
-	// Hides 'add new field on admin dashboard'
+
+	// Hide 'add new field on admin dashboard'
 	.page-title-action
-		display: none
 	.subsubsub
 		display: none
 
-	// Message above field listing
+	// Write warning message above acf fields listing
 	#posts-filter
 		position: relative
 		border: none
 		box-shadow: none
 		&::before
-			content: 'When using the Selene theme, ACF Fields are configured in the source code. Check "themes/selene/app/fields".'
+			content: 'When using the Selene theme, ACF Fields are configured in the source code. Check the ".../themes/selene/app/fields" directory.'
 			box-sizing: border-box
 			position: absolute
 			top: 0

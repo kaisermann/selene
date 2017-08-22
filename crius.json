@@ -10,7 +10,7 @@
       "blacklist": ["wp-admin/**"],
       "watch": [
         "{app,config}/**/*.php",
-        "resources/{views,controllers,components}/**/*.php"
+        "resources/{views,components}/**/*.php"
       ],
       "devUrl": "localhost:8888/selene"
     }

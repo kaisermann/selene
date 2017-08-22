@@ -1,7 +1,7 @@
-$login-bg-color = login.background.color or whitesmoke
+$login-bg-color = login.background.color or colors.white
 $login-bg-img = 'url(%s)' % login.background.image
 $login-bg-size = login.background.size
-$login-color = login.color or black
+$login-color = login.color or colors.black
 $roaming-link = invIfSimilar(login.color, $login-bg-color)
 $roaming-link-hover = mix($roaming-link, $login-bg-color, 80%)
 
@@ -43,9 +43,9 @@ if login.logo
 					background-size: $login-logo-width auto
 
 if login.alert
-	$login-alert-background = login.alert.background or whitesmoke
-	$login-alert-text = invIfSimilar(login.alert.color or black, $login-alert-background)
-	$login-alert-link = invIfSimilar(login.alert.link or black, $login-alert-background)
+	$login-alert-background = login.alert.background or colors.white
+	$login-alert-text = invIfSimilar(login.alert.color or colors.black, $login-alert-background)
+	$login-alert-link = invIfSimilar(login.alert.link or colors.black, $login-alert-background)
 
 	.login .message
 	.login #login_error
@@ -61,7 +61,7 @@ if login.button
 		button($login-form-button-background, $login-form-button-color)
 
 if login.form
-	$login-form-background = login.form.background or whitesmoke
+	$login-form-background = login.form.background or colors.white
 	$login-form-color = login.form.color or black
 	$login-form-padding = login.form.padding != null ? login.form.padding : 26px
 	$login-form-border-radius = login.form.borderRadius or 0
@@ -84,8 +84,8 @@ if login.form
 
 
 	if login.form.input
-		$login-form-input-background = login.form.input.background or whitesmoke
-		$login-form-input-color = invIfSimilar(login.form.input.color or black, $login-form-input-background)
+		$login-form-input-background = login.form.input.background or colors.white
+		$login-form-input-color = invIfSimilar(login.form.input.color or colors.black, $login-form-input-background)
 		.login
 			form
 				input
