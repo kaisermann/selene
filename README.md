@@ -177,17 +177,13 @@ Each CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss`
 }
 ```
 
---------------------------------------------------------------------------------
-
-### Supported browsers
+## Supported browsers
 
 The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be configured by editing the `browserslist` array inside the [`package.json`](https://github.com/kaisermann/crius/blob/master/package.json).
 
---------------------------------------------------------------------------------
+## Theme Development
 
-### Theme Development
-
-#### Out of the box tasks
+### Out of the box tasks
 
 - `gulp` / `gulp build` Erases distribution directory and builds all assets
 - `gulp compile` Same as `gulp build` without deleting distribution directory
@@ -196,20 +192,20 @@ The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be c
 - `gulp uncss` Reads a `sitemap.json` file and removes unused selectors
 - `gulp sizereport` Displays the size and gzipped size of your project
 
-#### Out of the box resource tasks
+### Out of the box resource tasks
 
 - `gulp scripts` Build everything on the scripts directory
 - `gulp styles` Build everything on the styles directory
 - `gulp fonts` Build everything on the fonts directory
 - `gulp images` Build everything on the images directory
 
-#### Creating new tasks
+### Creating new tasks
 
 To create new generic gulp tasks, just create a file inside `.crius/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself.
 
 All tasks defined on the mentioned directory are imported BEFORE the resource tasks. If it's needed to load them AFTER the resource tasks, you can define a 'later-loading' queue at the beginning of the [`gulpfile.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js). For an example, check the [`loadLater`](https://github.com/kaisermann/crius/blob/master/gulpfile.js#L6) constant which already delays the loading of `default.js`.
 
-#### Gulp Parameters
+### Gulp Parameters
 
 You can also pass the following parameters to gulp:
 
@@ -222,7 +218,7 @@ You can also pass the following parameters to gulp:
 
 The available parameters can be extended at [`.crius/params.js`](https://github.com/kaisermann/crius/blob/master/.crius/params.js).
 
-#### Build commands
+## Build commands
 
 Useful gulp tasks aliases
 
