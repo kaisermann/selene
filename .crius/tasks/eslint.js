@@ -10,7 +10,7 @@ gulp.task('eslint', done => {
     .src([
       'gulpfile.*.js',
       `${scriptsDir}/**/*.js`,
-      `${scriptsDir}/vendor/*.js`,
+      `!${scriptsDir}/autoload/*.js`,
     ])
     .pipe(eslint())
     .pipe(eslint.format())

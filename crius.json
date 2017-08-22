@@ -19,7 +19,7 @@
       "assets": {
         "main.js": {
           "files": "index.js",
-          "vendor": "resources/assets/scripts/vendor/*.js"
+          "autoload": "resources/assets/scripts/autoload/*.js"
         }
       }
     },
@@ -29,7 +29,7 @@
       "assets": {
         "main.css": {
           "files": "index.styl",
-          "vendor": "resources/assets/styles/vendor/*.css",
+          "autoload": "resources/assets/styles/autoload/*.css",
           "uncss": true
         }
       }

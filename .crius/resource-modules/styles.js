@@ -30,11 +30,11 @@ module.exports = {
               })
             )
           )
-          // Gulp 4. Appends vendor files to the main stream
-          // Only if asset.vendor is defined
+          // Gulp 4. Appends autoload files to the main stream
+          // Only if asset.autoload is defined
           .pipe(
-            asset.vendor && asset.vendor.length ? gulp.src : util.noop,
-            asset.vendor,
+            asset.autoload && asset.autoload.length ? gulp.src : util.noop,
+            asset.autoload,
             {
               passthrough: true,
             }
