@@ -25,15 +25,7 @@
 
 * [ACF](https://www.advancedcustomfields.com/) >= 5.x.x
 
-### ACF Builder
-
-Selene comes out of the box with [ACF Builder](https://github.com/StoutLogic/acf-builder) which makes a piece-of-cake to programmatically create custom fields with ACF.
-
-Create your `field group` inside the root of [`app/fields`](https://github.com/kaisermann/selene/blob/master/app/fields) and return one (the `field group` itself) or more (an array of `field groups`).
-
-If ACF is not installed, the files will be ignored.
-
-### Components
+## Components
 
 * A component javascript modules can be imported by using the alias `@Components/...pathToComponent`
   * Example: `import Header from '@Components/Header/Header.js'`
@@ -46,13 +38,13 @@ If ACF is not installed, the files will be ignored.
   * `gulp component --create component1,component2,component3,...`
   * `gulp component --delete component1,component2,component3,...`
 
-### Controllers
+## Controllers
 
-You can use controllers to pass data to specific templates. A controller must be created inside the [`./resources/controllers/`](https://github.com/kaisermann/selene/blob/master/resources/controllers/) directory.
+You can use controllers to pass data to specific templates. A controller must be created inside the [`./app/controllers/`](https://github.com/kaisermann/selene/blob/master/app/controllers/) directory.
 
 [Controller documentation](https://github.com/soberwp/controller)
 
-### Custom Blade Directives
+## Custom Blade Directives
 
 * `@mainquery ... @endmainquery` - Loops through the main query;
 * `@customquery(\WP_Query $queryObj) ... @endcustomquery` - Loops through a custom query;
@@ -86,8 +78,17 @@ Directives can be defined on [`config/directives.php`](https://github.com/kaiser
   * Provides John Billion's libraries which make painless to create custom post types and taxonomies.
     * https://github.com/johnbillion/extended-cpts
     * https://github.com/johnbillion/extended-taxos
+  * Use ACF Builder to build ACF fields in the theme's source code instead of the website's database.
 
-#### Build commands
+## ACF Builder
+
+Selene comes out of the box with [ACF Builder](https://github.com/StoutLogic/acf-builder) which makes a piece-of-cake to programmatically create custom fields with ACF.
+
+Create your `field group` inside the root of [`app/fields`](https://github.com/kaisermann/selene/blob/master/app/fields) and return one (the `field group` itself) or more (an array of `field groups`).
+
+If ACF is not installed, the files will be ignored.
+
+## Build commands
 
 Useful gulp tasks aliases
 
