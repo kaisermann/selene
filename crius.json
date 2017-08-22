@@ -36,8 +36,8 @@
           "uncss": true
         },
         "editor.css": "wordpress/editor.styl",
-        "admin.css": "wordpress/admin/wrapper.styl",
-        "login.css": "wordpress/login/wrapper.styl"
+        "admin.css": "wordpress/admin/index.styl",
+        "login.css": "wordpress/login/index.styl"
       }
     },
     "fonts": {
