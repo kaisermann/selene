@@ -1,7 +1,7 @@
 // Grid configuration
-rolleiflex.baseFontSize             = app.baseFontSize
-rolleiflex.autoBorderBox            = false
-rolleiflex.use.em                   = false
+rolleiflex.baseFontSize  = app.baseFontSize
+rolleiflex.autoBorderBox = false
+rolleiflex.use.em        = false
 rolleiflex.spaces = {
 	gutter: 24px
 	containerPadding: 12px
@@ -24,26 +24,27 @@ rolleiflex.breakpoints = {
 
 	lg: {
 		minWidth: 1201px
-		container: app.siteWidth
+		container: 1170px
 	}
 }
 
 // No need to modify anything below this line
-_bps = rolleiflex.breakpoints
-_generateRuptureBpsList()
-	list = ()
-	for scaleName, scaleOpts in _bps
-		push(list, max(scaleOpts.minWidth - 1, 0))
-	return list
 
+// Get list of breakpoints
+_bps = rolleiflex.breakpoints
+_bpsList = ()
+for scaleName, scaleOpts in _bps
+	push(_bpsList, max(scaleOpts.minWidth - 1, 0))
+
+// Configure rupture to work with rolleiflex breakpoints
 rupture = merge(rupture, {
-	"base-font-size":          app.baseFontSize
-	"scale":                   _generateRuptureBpsList()
-	"scale-names":             keys(_bps)
-	"anti-overlap":            true
-	"enable-em-breakpoints":   rolleiflex.use.em
-	"mobile-cutoff":           _bps.sm.minWidth - 1
-	"tablet-cutoff":           _bps.md.minWidth - 1
-	"desktop-cutoff":          _bps.md.minWidth - 1
-	"hd-cutoff":               _bps.lg.minWidth - 1
+	"base-font-size":        app.baseFontSize
+	"scale":                 _bpsList
+	"scale-names":           keys(_bps)
+	"anti-overlap":          true
+	"enable-em-breakpoints": rolleiflex.use.em
+	"mobile-cutoff":         _bps.sm.minWidth - 1
+	"tablet-cutoff":         _bps.md.minWidth - 1
+	"desktop-cutoff":        _bps.md.minWidth - 1
+	"hd-cutoff":             _bps.lg.minWidth - 1
 })

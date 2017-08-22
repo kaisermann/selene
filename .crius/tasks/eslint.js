@@ -11,7 +11,7 @@ gulp.task('eslint', done => {
       'gulpfile.*.js',
       `${crius.config.paths.components}/**/*.js`,
       `${scriptsDir}/**/*.js`,
-      `${scriptsDir}/vendor/*.js`,
+      `!${scriptsDir}/autoload/*.js`,
     ])
     .pipe(eslint())
     .pipe(eslint.format())

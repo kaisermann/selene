@@ -40,7 +40,7 @@ const buildAsset = (outputName, baseObj, directory) => {
       assetObj.files = [assetObj.files]
     }
   }
-  assetObj.vendor = baseObj.vendor || []
+  assetObj.autoload = baseObj.autoload || []
   assetObj.outputName = outputName
   assetObj.globs = assetObj.files.map(
     path =>
