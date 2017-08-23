@@ -92,7 +92,7 @@ With `mode: "server"`
       "directory": "scripts",
       "assets": {
         "main.js": {
-          "files": "wrapper.js"
+          "files": "index.js"
         }
       }
     }
@@ -110,7 +110,7 @@ Each resource type MUST have a **assets** `object`, defining which assets are to
 ...
   "assets": {
     "main.js": {
-      "files": "wrapper.js",
+      "files": "index.js",
       "autoload": "path/relative/to/**/gulpfile.js"
     }
   }
@@ -166,7 +166,7 @@ Each CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss`
       "assets": {
         "main.css": {
           "uncss": true,
-          "files": "wrapper.styl"
+          "files": "index.styl"
         },
         "admin.css": {
           "files": "admin.styl"
