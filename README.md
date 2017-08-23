@@ -31,7 +31,7 @@
   * Example: `import Header from '@Components/Header/Header.js'`
   * Example 2: `import SubHeader from '@Components/Header/SubHeder/SubHeader.js'`
   * There's also an alias for the 'scripts' directory available: `@Scripts/...`
-* A component `.styl` file is imported automatically by the [`wrapper.styl`](https://github.com/kaisermann/selene/blob/master/assets/styles/wrapper.styl).
+* A component `.styl` file is imported automatically by the [`index.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/index.styl).
 * A component blade template can be included in the same way as any blade file. The inclusion is relative to the current template or to the `views` directory.
   * Example: `@include('Components.Header.Header')`
 * Gulp can create or delete components:
