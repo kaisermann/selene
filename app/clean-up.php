@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 /*
  * Remove default dashboard metaboxes
  */
