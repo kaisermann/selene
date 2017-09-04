@@ -3,7 +3,7 @@ const requireDir = require('require-directory')
 
 // Defaults NODE_ENV to 'dev' if not set
 if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = 'dev'
+  process.env.NODE_ENV = 'development'
 }
 
 // Array of file names (without extension) inside `.crius/tasks`
