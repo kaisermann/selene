@@ -53,10 +53,7 @@ add_action('init', function () {
     remove_filter('comment_text_rss', 'wp_staticize_emoji');
     add_filter('emoji_svg_url', '__return_false');
     add_filter('tiny_mce_plugins', function ($plugins) {
-        if (is_array($plugins)) {
-            return array_diff($plugins, ['wpemoji']);
-        }
-        return [];
+        return is_array($plugins) ? array_diff($plugins, ['wpemoji']) : [];
     });
 
     /** Clean the <head> */
