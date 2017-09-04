@@ -35,11 +35,11 @@ getPerceivedBrightness($color)
  * Responsive property based on viewport units
  *
  * Usage:
- * responsive: property viewportUnitBase minFontSize maxFontSize, fallbackSize
+ * fluid: property viewportUnitBase minFontSize maxFontSize, fallbackSize
  */
-responsive($prop, $responsive, $min, $max = false, $fallback = false)
-	$responsive-unit = unit($responsive)
-	$responsive-unitless = $responsive / ($responsive - $responsive + 1)
+fluid($prop, $fluidVal, $min, $max = false, $fallback = false)
+	$responsive-unit = unit($fluidVal)
+	$responsive-unitless = $responsive / ($fluidVal - $fluidVal + 1)
 	$min-bp = $min / $responsive-unitless * 100
 	$max-bp = ($max != false) ? $max / $responsive-unitless * 100 : 0
 
@@ -70,7 +70,56 @@ responsive($prop, $responsive, $min, $max = false, $fallback = false)
 	if ($fallback)
 		{$prop}: $fallback
 
-	{$prop}: $responsive
+	{$prop}: $fluidVal
 
-responsive-font-size($responsive, $min, $max = false, $fallback = false)
-	responsive(font-size, $responsive, $min, $max, $fallback)
+/*
+ * Responsive property mixin
+ *
+ * Requires: 'rupture'
+ *
+ * Note: Recommended to used a 'combine media query' plugin
+ *
+ * Usage:
+ * responsive: propertyName value/values '<= scaleName' value/values '>= scaleName2' value2/values2
+ *
+ * Example:
+ * responsive: background-image url('desktop.jpg') '<= sm' url('mobile.jpg')
+ */
+responsive()
+	$property = shift(arguments)
+	$initialValue = null
+	$currentObj = null
+	$breakpoints = ()
+
+	for $value, $index in arguments
+		$match = null
+		if type($value) == 'string'
+			$match = match('^(?:(>|<)=?)\s?(.+)', $value)
+
+		// Check if it is a scale string (<= | >= scaleName)
+		if !$match
+			// If the current object is null, we're still parsing the initial value
+			if !$currentObj
+				$initialValue = ($initialValue || unquote('')) $value
+			else
+				$currentObj.value = ($currentObj.value || unquote('')) $value
+		else
+			if $currentObj != null
+				push($breakpoints, $currentObj)
+			$currentObj = { scale: $match[2], operator: $match[1] }
+
+	// Append the last breakpoint object to the list
+	if $currentObj
+		push($breakpoints, $currentObj)
+
+	if $initialValue
+		{$property}: $initialValue
+
+	for $bpObj in $breakpoints
+		// If passed only one breakpoint value, stylus parses it as a list...
+		if type($bpObj) != 'object'
+			$bpObj = $breakpoints
+
+		$mediaMixin = $bpObj.operator == '<' ? to-width : from-width
+		+$mediaMixin($bpObj.scale)
+			{$property}: $bpObj.value
