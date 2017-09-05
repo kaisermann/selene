@@ -10,6 +10,7 @@
 #wpadminbar a.ab-item,
 #wpadminbar > #wp-toolbar span.ab-label,
 #wpadminbar > #wp-toolbar span.noticon
+	transition: $default-color-transition
 	color: $menu-text
 
 #wpadminbar .ab-icon,
@@ -25,6 +26,14 @@
 #wpadminbar .ab-top-menu > li.menupop.hover > .ab-item
 	color: $menu-submenu-focus-text
 	background: $menu-submenu-background
+
+#wpadminbar:not(.mobile) .ab-top-menu > li:hover
+#wpadminbar:not(.mobile) .ab-top-menu > li
+#wpadminbar.nojq .quicklinks .ab-top-menu > li
+#wpadminbar.nojs .ab-top-menu > li.menupop:hover
+#wpadminbar .ab-top-menu > li.menupop.hover
+	.wp-ui-notification
+		background: $menu-bubble-current-background
 
 #wpadminbar:not(.mobile) > #wp-toolbar li:hover span.ab-label,
 #wpadminbar:not(.mobile) > #wp-toolbar li.hover span.ab-label,
@@ -51,7 +60,7 @@
 #wpadminbar.nojs .quicklinks .menupop:hover ul li a
 	color: $menu-submenu-text
 	opacity: $menu-highlight-text-opacity
-	transition: all .1s ease-in-out
+	transition: $default-color-transition
 
 	&:hover
 		font-weight: bold

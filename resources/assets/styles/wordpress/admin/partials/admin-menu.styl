@@ -5,6 +5,7 @@
 	background: $menu-background
 
 #adminmenu a
+	transition: $default-color-transition
 	color: $menu-text
 
 #adminmenu div.wp-menu-image:before
@@ -42,7 +43,7 @@
 #adminmenu .wp-has-current-submenu.opensub .wp-submenu a
 	color: $menu-submenu-text
 	opacity: $menu-highlight-text-opacity
-	transition: all .1s ease-in-out
+	transition: $default-color-transition
 	&:focus
 	&:hover
 		font-weight: bold
