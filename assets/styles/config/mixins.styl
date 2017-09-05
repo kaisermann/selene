@@ -14,6 +14,10 @@ rem($px, $base = app.baseFontSize)
 em($px, $base = app.baseFontSize)
 	return unit($px / $base, 'em')
 
+// Only unquote a string variable
+unquoteStr($maybeStr)
+	return type($maybeStr) != 'string' ? $maybeStr : unquote($maybeStr)
+
 /*
  * Modified verson of Font-face mixin, by jackbrewer
  * https://github.com/jackbrewer/stylus-mixins/
@@ -24,8 +28,8 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
 	@font-face
 		font-family: $font-name
 		src: unquote($url)
-		font-weight: unquote($weight)
-		font-style: unquote($style)
+		font-weight: unquoteStr($weight)
+		font-style: unquoteStr($style)
 
 /*
  * Responsive property based on viewport units
