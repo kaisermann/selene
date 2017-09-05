@@ -3,27 +3,30 @@
 .theme-browser .theme.add-new-theme a:hover:after,
 .theme-browser .theme.add-new-theme a:focus:after
 	background: $highlight-color
-	
+
+.theme-browser .theme.active .theme-name
+	color: $highlight-text
+
 .theme-browser .theme.add-new-theme a:hover span:after,
 .theme-browser .theme.add-new-theme a:focus span:after
 	color: $highlight-color
-	
+
 .theme-section.current,
 .theme-filter.current
 	border-bottom-color: $menu-background
-	
+
 body.more-filters-opened .more-filters
 	color: $menu-text
-	
+
 	background-color: $menu-background
 body.more-filters-opened .more-filters:before
 	color: $menu-text
-	
+
 body.more-filters-opened .more-filters:hover,
 body.more-filters-opened .more-filters:focus
 	background-color: $menu-highlight-background
 	color: $menu-highlight-text
-	
+
 body.more-filters-opened .more-filters:hover:before,
 body.more-filters-opened .more-filters:focus:before
 	color: $menu-highlight-text

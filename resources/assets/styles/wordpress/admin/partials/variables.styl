@@ -1,13 +1,14 @@
 $text-color = admin.text
 $base-color = admin.navigation
 $highlight-color = admin.highlight
+$highlight-text = invIfSimilar($text-color, $highlight-color)
 $notification-color = admin.notification
 $body-background = admin.background
 $link = admin.link
-$submenu-background = !!admin.submenu ? admin.submenu : changeColor($base-color, 10%)
+$submenu-background = !!admin.submenu ? admin.submenu : makeContrast($base-color, 10%)
 $button-background-color = admin.button.background
 $button-text-color = invIfSimilar(admin.button.color, $button-background-color)
-	
+
 // Global
 $icon-color = hsl(hue($base-color), 7%, 95%)
 $link-focus = lighten($link, 10%)
@@ -26,9 +27,10 @@ $menu-current-background = $menu-highlight-background
 $menu-current-text = invIfSimilar($menu-highlight-text, $menu-current-background)
 $menu-current-icon = invIfSimilar($menu-highlight-icon, $menu-current-background)
 
-$menu-submenu-background = changeColor($submenu-background, 10%)
+$menu-submenu-background = makeContrast($submenu-background, 10%)
 $menu-submenu-background-alt = desaturate(lighten($menu-background, 7%), 7%)
-$menu-submenu-text = mix($base-color, $text-color, 20%)
+
+$menu-submenu-text = makeFade(invIfSimilar($text-color, $menu-submenu-background), 30%, $menu-submenu-background)
 $menu-submenu-highlight-icon = invIfSimilar($text-color, $menu-submenu-background)
 $menu-submenu-focus-text = $menu-submenu-highlight-icon
 $menu-submenu-current-text = $menu-submenu-focus-text
