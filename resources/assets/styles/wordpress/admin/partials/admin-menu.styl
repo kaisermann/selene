@@ -41,14 +41,19 @@
 #adminmenu a.wp-has-current-submenu:focus + .wp-submenu a,
 #adminmenu .wp-has-current-submenu.opensub .wp-submenu a
 	color: $menu-submenu-text
+	opacity: .8
+	transition: all .1s ease-in-out
 	&:focus
 	&:hover
+		font-weight: bold
+		opacity: 1
 		color: $menu-submenu-focus-text
 
 /* Admin Menu: current */
 #adminmenu .wp-submenu li.current a,
 #adminmenu a.wp-has-current-submenu:focus + .wp-submenu li.current a,
 #adminmenu .wp-has-current-submenu.opensub .wp-submenu li.current a
+	opacity: 1
 	color: $menu-submenu-current-text
 	&:hover
 	&:focus

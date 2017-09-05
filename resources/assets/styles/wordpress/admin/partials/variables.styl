@@ -30,14 +30,14 @@ $menu-current-icon = invIfSimilar($menu-highlight-icon, $menu-current-background
 $menu-submenu-background = makeContrast($submenu-background, 10%)
 $menu-submenu-background-alt = desaturate(lighten($menu-background, 7%), 7%)
 
-$menu-submenu-text = makeFade(invIfSimilar($text-color, $menu-submenu-background), 30%, $menu-submenu-background)
-$menu-submenu-highlight-icon = invIfSimilar($text-color, $menu-submenu-background)
+$menu-submenu-text = invIfSimilar($text-color, $menu-submenu-background)
+$menu-submenu-highlight-icon = $menu-submenu-text
 $menu-submenu-focus-text = $menu-submenu-highlight-icon
 $menu-submenu-current-text = $menu-submenu-focus-text
 
 $menu-bubble-background = $notification-color
 $menu-bubble-text = invIfSimilar($text-color, $menu-bubble-background)
-$menu-bubble-current-background = invIfSimilar($menu-submenu-background, $menu-highlight-background)
+$menu-bubble-current-background = invIfSimilar($base-color, $menu-highlight-background)
 $menu-bubble-current-text = invIfSimilar($text-color, $menu-bubble-current-background)
 
 $menu-collapse-text = $menu-icon
