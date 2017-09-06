@@ -33,8 +33,7 @@
     "illuminate/support": "~5.4",
     "roots/sage-lib": "~9.0.0-beta.4",
     "soberwp/controller": "~9.0.0-beta.4",
-    "johnbillion/extended-cpts": "~3.2.1",
-    "johnbillion/extended-taxos": "~2.0.5",
+    "johnbillion/extended-cpts": "~4",
     "StoutLogic/acf-builder": "^1.4"
   },
   "require-dev": {

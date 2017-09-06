@@ -28,8 +28,6 @@ add_action('wp_enqueue_scripts', function () {
 /**
  * Setup image sizes, post types and taxonomies
  */
-require_once __DIR__.'/../vendor/johnbillion/extended-cpts/extended-cpts.php';
-require_once __DIR__.'/../vendor/johnbillion/extended-taxos/extended-taxos.php';
 add_action('init', function () {
     global $wp_rewrite;
     $wp_rewrite->search_base = 'search';
@@ -41,25 +39,21 @@ add_action('init', function () {
      * Register custom post types here
      * @link https://github.com/johnbillion/extended-cpts/wiki
      */
-    /*
     register_extended_post_type('article', [], [
         'singular' => 'Article',
         'plural'   => 'Articles',
         'slug'     => 'article',
     ]);
-    */
 
     /**
      * Register custom taxonomies here
-     * @link https://github.com/johnbillion/extended-taxos
+     * @link https://github.com/johnbillion/extended-cpts/wiki/Integration-with-Extended-Taxonomies
      */
-    /*
-    register_extended_taxonomy( 'article_category', 'article' , [], [
+    register_extended_taxonomy( 'article_category', 'article', [], [
         'singular' => 'Article Category',
         'plural'   => 'Article Categories',
         'slug'     => 'article-category',
     ]);
-    */
 }, 0, 2);
 
 /**
