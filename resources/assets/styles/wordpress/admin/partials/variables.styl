@@ -1,20 +1,26 @@
+// Constants
+$default-color-transition = all .1s ease-in-out
+
+// Variables setup
+$body-background = admin.background
 $text-color = admin.text
 $base-color = admin.navigation
+
+$link-color = admin.link
+$link-focus-color = lighten($link-color, 15%)
+
 $highlight-color = admin.highlight
 $highlight-text = invIfSimilar($text-color, $highlight-color)
+
 $notification-color = admin.notification
-$body-background = admin.background
-$link = admin.link
-$submenu-background = !!admin.submenu ? admin.submenu : makeContrast($base-color, 10%)
+
+$submenu-background = admin.submenu || makeContrast($base-color, 10%)
+
 $button-background-color = admin.button.background
 $button-text-color = invIfSimilar(admin.button.color, $button-background-color)
 
-// Global
 $icon-color = hsl(hue($base-color), 7%, 95%)
-$link-focus = lighten($link, 10%)
-$form-checked = invIfSimilar($highlight-color, #fff)
-
-$default-color-transition = all .1s ease-in-out
+$form-checked-color = invIfSimilar($link-color, #fff)
 
 // Admin menu & Admin bar
 $menu-background = $base-color
