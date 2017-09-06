@@ -39,21 +39,25 @@ add_action('init', function () {
      * Register custom post types here
      * @link https://github.com/johnbillion/extended-cpts/wiki
      */
+    /*
     register_extended_post_type('article', [], [
         'singular' => 'Article',
         'plural'   => 'Articles',
         'slug'     => 'article',
     ]);
+    */
 
     /**
      * Register custom taxonomies here
      * @link https://github.com/johnbillion/extended-cpts/wiki/Integration-with-Extended-Taxonomies
      */
+    /*
     register_extended_taxonomy( 'article_category', 'article', [], [
         'singular' => 'Article Category',
         'plural'   => 'Article Categories',
         'slug'     => 'article-category',
     ]);
+    */
 }, 0, 2);
 
 /**
