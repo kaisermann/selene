@@ -1,15 +1,20 @@
 isColorDark($color)
 	return getPerceivedBrightness($color) < 150
-	
+
 invIfSimilar($c1, $c2)
 	if (isColorDark($c1) && isColorDark($c2)) || (!isColorDark($c1) && !isColorDark($c2))
 		return invert($c1)
 	return $c1
 
-changeColor($color, $percentage, $baseColor = admin.navigation)
+makeContrast($color, $percentage, $baseColor = admin.navigation)
 	if isColorDark($baseColor)
 		return lighten($color, $percentage)
 	return darken($color, $percentage)
+
+makeFade($color, $percentage, $baseColor = admin.navigation)
+	if isColorDark($baseColor)
+		return darken($color, $percentage)
+	return lighten($color, $percentage)
 
 button($button-color, $text-color = white, $box-shadow-color = #33b3db)
 	background: $button-color
