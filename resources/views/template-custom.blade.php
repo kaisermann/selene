@@ -5,7 +5,6 @@
 @extends('layouts.app')
 
 @section('content')
-  @debug('hierarchy')
   @mainquery
     <article @php(post_class())>
       <header>
