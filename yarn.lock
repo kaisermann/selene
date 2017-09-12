@@ -6256,9 +6256,9 @@ wordwrap@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
 
-wpdl.styl@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/wpdl.styl/-/wpdl.styl-0.0.1.tgz#7eb3dc58b88f2f6723cfadc872ddc6f7e1b6e616"
+wpdls@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/wpdls/-/wpdls-0.0.3.tgz#672791394ada433cb80dca47e1d16662f368bec0"
 
 wrap-ansi@^2.0.0:
   version "2.1.0"
