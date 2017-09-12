@@ -5,28 +5,29 @@
 	- 'assets/styles' directory
 */
 
-// Relative to node_modules directory
+/** Relative to node_modules directory */
 @require "rolleiflex/src/index.styl"
 @require "rupture/rupture/index.styl"
 
-// Relative to assets/styles directory
-// Configuration files
+/** Relative to assets/styles directory */
+/** Configuration files */
 @require "config/setup"
-@require "config/external"
 @require "config/mixins"
 @require "config/collections"
-@require "config/*"
+@require "config/external/*"
+@require "config/fonts"
 
-// General style files
+
+/** General style files */
 @require "common/normalize"
 @require "common/helpers"
 @require "common/global"
 @require "views/*"
 @require "wordpress/wp-classes"
 
-// Relative to gulpfile.js directory
+/** Relative to gulpfile.js directory */
 @require "resources/components/**/*"
 
-// Relative to assets/styles directory
-// Overrides
+/** Relative to assets/styles directory */
+/** Overrides */
 @require "common/overrides"

@@ -6,8 +6,7 @@ namespace App;
  * Enqueue 'admin.css' and 'login.css' on login page and dashboard
  */
 $adminEnqueueFn = function () {
-    wp_enqueue_style('selene/admin.css', asset_path('styles/admin.css'), false, null);
-    wp_enqueue_style('selene/login.css', asset_path('styles/login.css'), false, null);
+    wp_enqueue_style('selene/wpdl.css', asset_path('styles/wpdl.css'), false, null);
 };
 add_action('admin_enqueue_scripts', $adminEnqueueFn, 100);
 add_action('login_enqueue_scripts', $adminEnqueueFn, 100);

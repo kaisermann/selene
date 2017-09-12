@@ -1,20 +1,16 @@
-// Mixin shortcuts
-max = to-width
-min = from-width
-
-// size(width, height)
+/** size(width, height) */
 size($width, $height = $width)
 	width: $width
 	height: $height
 
-// rem(px [,base-font-size]), em(px [,base-font-size])
+/** rem(px [,base-font-size]), em(px [,base-font-size]) */
 rem($px, $base = app.baseFontSize)
 	return unit($px / $base, 'rem')
 
 em($px, $base = app.baseFontSize)
 	return unit($px / $base, 'em')
 
-// Only unquote a string variable
+/** Only unquote a string variable */
 unquoteStr($maybeStr)
 	return type($maybeStr) != 'string' ? $maybeStr : unquote($maybeStr)
 
@@ -96,9 +92,9 @@ responsive()
 		if type($value) == 'string'
 			$match = match('^(?:(>|<)=?)\s?(.+)', $value)
 
-		// Check if it is a scale string (<= | >= scaleName)
+		/** Check if it is a scale string (<= | >= scaleName) */
 		if !$match
-			// If the current object is null, we're still parsing the initial value
+			/** If the current object is null, we're still parsing the initial value */
 			if !$currentObj
 				$initialValue = ($initialValue || unquote('')) $value
 			else
@@ -108,7 +104,7 @@ responsive()
 				push($breakpoints, $currentObj)
 			$currentObj = { scale: $match[2], operator: $match[1] }
 
-	// Append the last breakpoint object to the list
+	/** Append the last breakpoint object to the list */
 	if $currentObj
 		push($breakpoints, $currentObj)
 
@@ -116,7 +112,7 @@ responsive()
 		{$property}: $initialValue
 
 	for $bpObj in $breakpoints
-		// If passed only one breakpoint value, stylus parses it as a list...
+		/** If passed only one breakpoint value, stylus parses it as a list... */
 		if type($bpObj) != 'object'
 			$bpObj = $breakpoints
 
