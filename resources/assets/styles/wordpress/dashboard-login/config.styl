@@ -1,0 +1,59 @@
+/** WPDLS Style object override. Must be named 'wpdls'. */
+wpdl = {
+	dashboard: {
+		// font: 'Arial'
+		background: colors.white
+		navigation: colors.black
+		submenu: darken(colors.gray, 50%)
+		text: colors.white
+		highlight: colors.gray
+		notification: colors.gray
+		link: colors.gray
+
+		button: {
+			background: colors.black
+			color: colors.white
+		}
+	}
+
+	login: {
+		color: colors.white
+		background: {
+			color: colors.black
+			// image: '../images/path-to-img.jpg'
+			size: cover
+		}
+
+		/** Custom logo - Optional, can be deleted */
+		logo: {
+			// image: '../images/login-logo.png'
+			width: 145px
+			height: 145px
+		}
+
+		/** Custom login alert - Optional, can be deleted  */
+		alert: {
+			background: colors.white
+			color: colors.black
+			link: colors.white
+		}
+
+		/** Custom button - Optional, can be deleted  */
+		button: {
+			background: colors.black
+			color: colors.white
+		}
+
+		/** Custom form - Optional, can be deleted  */
+		form: {
+			background: colors.white
+			color: colors.black
+			borderRadius: 5px
+			// padding: 0
+			input: {
+				background: colors.white
+				color: colors.black
+			}
+		}
+	}
+}

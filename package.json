@@ -125,6 +125,6 @@
   "dependencies": {
     "rolleiflex": "^6.0.0",
     "rupture": "^0.6.2",
-    "wpdls": "^0.0.3"
+    "wpdls": "^0.0.4"
   }
 }

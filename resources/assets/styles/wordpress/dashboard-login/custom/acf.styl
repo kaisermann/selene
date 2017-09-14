@@ -1,0 +1,38 @@
+/** Hides ACF menu items */
+#toplevel_page_edit-post_type-acf-field-group
+	/** Hides 'add new', 'field groups' and 'tools' */
+	li:nth-of-type(n+2):nth-of-type(-n+4)
+		display: none
+
+	/** Adds warning message to submenu */
+	.wp-submenu
+		&::after
+			display: block
+			padding: 6px 12px
+			content: 'Other ACF menu items hidden by the active theme'
+			font-size: 10px
+			color: colors.red
+
+/** Hides new ACF fields related dashboard items */
+body.post-type-acf-field-group
+	/** Hides 'add new field on admin dashboard' */
+	.page-title-action
+	.subsubsub
+		display: none
+
+	/** Writes warning message above acf fields listing */
+	#posts-filter
+		position: relative
+		border: none
+		box-shadow: none
+		&::before
+			content: 'When using the Selene theme, ACF Fields are configured in the source code. Check the ".../themes/selene/app/fields" directory.'
+			box-sizing: border-box
+			position: absolute
+			top: 0
+			left: 0
+			size(100%)
+			z-index: 2
+			background: colors.white
+			color: colors.red
+			font-weight: bold
