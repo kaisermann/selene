@@ -7,7 +7,6 @@
   <file>resources/functions.php</file>
   <file>resources/index.php</file>
   <file>resources/views</file>
-  <file>resources/controllers</file>
   <file>resources/components</file>
   <exclude-pattern>resources/components/**/*.js</exclude-pattern>
   <exclude-pattern>resources/components/**/*.js</exclude-pattern>
