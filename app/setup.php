@@ -153,16 +153,19 @@ add_action('after_setup_theme', function () {
  * ACF Builder initialization and fields loading
  */
 define('ACF_FIELDS_DIR', dirname(__FILE__) . '/fields');
-if (is_dir(ACF_FIELDS_DIR)) {
-    add_action('acf/init', function () {
+if (is_dir(ACF_FIELDS_DIR) && function_exists('acf_add_local_field_group')) {
+    add_action('init', function () {
         foreach (glob(ACF_FIELDS_DIR . '/*.php') as $file_path) {
-            if (($fields = require_once $file_path) !== true) {
-                if (!is_array($fields)) {
-                    $fields = [$fields];
-                }
-                foreach ($fields as $field) {
-                    if ($field instanceof FieldsBuilder) {
-                        acf_add_local_field_group($field->build());
+            if (($fields = require_once($file_path)) !== true) {
+                if (is_array($fields)) {
+                    foreach ($fields as $field) {
+                        if ($field instanceof FieldsBuilder) {
+                            acf_add_local_field_group($field->build());
+                        }
+                    }
+                } else {
+                    if ($fields instanceof FieldsBuilder) {
+                        acf_add_local_field_group($fields->build());
                     }
                 }
             }

@@ -8,7 +8,6 @@ use StoutLogic\AcfBuilder\FieldsBuilder;
  * ACF Builder documentation: https://github.com/StoutLogic/acf-builder/wiki
  * ACF PHP documentation: https://www.advancedcustomfields.com/resources/register-fields-via-php/
  * Guide to registering ACF fields via PHP: https://bwap.ch/guide-to-registering-acf-fields-via-php/
- * Use the 'ACF_FIELDS_DIR' constant to reference the app/fields directory (for partials inclusions)
  */
 /*
 
