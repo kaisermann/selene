@@ -13,6 +13,8 @@ use StoutLogic\AcfBuilder\FieldsBuilder;
 
 /** Field Group setup */
 $sample_field = new FieldsBuilder('sample_field', [
+    'style' => 'seamless',
+    'position' => 'acf_after_title',
     'hide_on_screen' => ['the_content'],
 ]);
 
