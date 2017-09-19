@@ -68,6 +68,14 @@ add_filter('jpeg_quality', function () {
 });
 
 /**
+ * Allows the upload of SVG files
+ */
+add_filter('upload_mimes', function ($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+});
+
+/**
  * Produces cleaner filenames for uploads
  * Reference: wpartisan.me/tutorials/rename-clean-wordpress-media-filenames
  *
