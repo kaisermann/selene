@@ -73,19 +73,4 @@ return [
     'console' => function ($obj) {
         return "<?php App\console({$obj}); ?>";
     },
-
-    /** Create @set($name, value) Blade directive */
-    'set' => function ($expression) {
-        list($variable, $value) = explode(', ', $expression, 2);
-
-        /** Ensure variable has no spaces or apostrophes */
-        $variable = trim(str_replace('\'', '', $variable));
-
-        /** Make sure that the variable starts with $ */
-        if (! starts_with($variable, '$')) {
-            $variable = '$' . $variable;
-        }
-        $value = trim($value);
-        return "<?php {$variable} = {$value}; ?>";
-    },
 ];

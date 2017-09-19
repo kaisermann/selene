@@ -54,7 +54,6 @@ You can use controllers to pass data to specific templates. A controller must be
 * `@inlinesvg` - Prints the specified SVG file;
 * `@dump` - Dumps an php variable with a `var_export`;
 * `@console` - Dumps a php variable in the javascript console;
-* `@set($var, value)` - Sets a PHP variable.
 
 Directives can be defined on [`config/directives.php`](https://github.com/kaisermann/selene/blob/master/config/directives.php).
 
@@ -67,7 +66,7 @@ Directives can be defined on [`config/directives.php`](https://github.com/kaiser
   * Rewrites the search url `.com/?s=term` with `.com/search/term`;
   * Wraps all `oembed` inside `the_content()` around a `<div class="oembed-container">`;
   * Remove all protocols (`http`,`https`) from urls;
-  * Admin dashboard and login page CSS customization with the [`admin.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/admin/config.styl) file;
+  * [Dashboard and login page]((https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/dashboard-login/config.styl)) CSS customization;
   * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/editor.styl) file;
   * Provides an [`appMeta`](https://github.com/kaisermann/selene/blob/master/app/setup.php#L113) global javascript object with the ajax and home urls.
 
@@ -75,9 +74,7 @@ Directives can be defined on [`config/directives.php`](https://github.com/kaiser
   * Sets uploaded JPEG quality to 100;
   * Provides options on the admin dashboard to crop default medium and large image sizes;
   * While `WP_DEBUG` is true or `WP_ENV` is equal to 'development', the enqueued assets will have a cache-busting file name;
-  * Provides John Billion's libraries which make painless to create custom post types and taxonomies.
-    * https://github.com/johnbillion/extended-cpts
-    * https://github.com/johnbillion/extended-taxos
+  * Provides [John Billion's libraries](https://github.com/johnbillion/extended-cpts) which make painless to create custom post types and taxonomies.
   * Use ACF Builder to build ACF fields in the theme's source code instead of the website's database.
 
 ## ACF Builder
