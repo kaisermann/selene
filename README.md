@@ -65,7 +65,7 @@ Directives can be defined on [`config/directives.php`](https://github.com/kaiser
   * Scripts load with `defer`;
   * Rewrites the search url `.com/?s=term` with `.com/search/term`;
   * Wraps all `oembed` inside `the_content()` around a `<div class="oembed-container">`;
-  * Remove all protocols (`http`,`https`) from urls;
+  * Removes all protocols (`http`,`https`) from urls;
   * [Dashboard and login page]((https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/dashboard-login/config.styl)) CSS customization;
   * Custom text editor CSS customization with the [`editor.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/editor.styl) file;
   * Provides an [`appMeta`](https://github.com/kaisermann/selene/blob/master/app/setup.php#L113) global javascript object with the ajax and home urls.
@@ -73,9 +73,9 @@ Directives can be defined on [`config/directives.php`](https://github.com/kaiser
 * Back-end
   * Sets uploaded JPEG quality to 100;
   * Provides options on the admin dashboard to crop default medium and large image sizes;
-  * While `WP_DEBUG` is true or `WP_ENV` is equal to 'development', the enqueued assets will have a cache-busting file name;
+  * While `WP_DEBUG` is true or `WP_ENV` is equal to 'development', the enqueued assets will have a cache-busting filename;
   * Provides [John Billion's libraries](https://github.com/johnbillion/extended-cpts) which make painless to create custom post types and taxonomies.
-  * Use ACF Builder to build ACF fields in the theme's source code instead of the website's database.
+  * Uses ACF Builder to build ACF fields in the theme's source code instead of the website's database.
   * Uses [Whoops](https://github.com/filp/whoops) error handler for... handling errors.
 
 ## ACF Builder
