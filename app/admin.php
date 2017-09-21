@@ -28,8 +28,8 @@ add_action('admin_init', function () {
                 type=\"checkbox\"
                 id=\"{$size}_crop\"
                 value=\"1\"
-                " . (get_option("{$size}_crop") === 1 ? ' checked' : '') . "/>
-                <label for=\"{$size}_crop\">Crop {$size} to exact dimensions</label>";
+                " . (intval(get_option("{$size}_crop")) === 1 ? ' checked' : '') . "/>
+                <label for=\"{$size}_crop\">Crop '{$size}' to exact dimensions</label>";
         };
     }
 
