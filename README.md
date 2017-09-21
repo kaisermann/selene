@@ -7,7 +7,7 @@
 - Write CSS with Stylus
   - Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
   - Use simplified media queries with rupture (stylus)
-  - Responsive font-size and [other useful mixins](https://github.com/kaisermann/crius/blob/master/assets/styles/config/mixins.styl)
+  - Responsive, fluid properties and [other useful mixins](https://github.com/kaisermann/crius/blob/master/assets/styles/config/mixins.styl)
 - Write modern Javascript
 - See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
 - Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
@@ -76,6 +76,7 @@ Directives can be defined on [`config/directives.php`](https://github.com/kaiser
   * While `WP_DEBUG` is true or `WP_ENV` is equal to 'development', the enqueued assets will have a cache-busting file name;
   * Provides [John Billion's libraries](https://github.com/johnbillion/extended-cpts) which make painless to create custom post types and taxonomies.
   * Use ACF Builder to build ACF fields in the theme's source code instead of the website's database.
+  * Uses [Whoops](https://github.com/filp/whoops) error handler for... handling errors.
 
 ## ACF Builder
 
