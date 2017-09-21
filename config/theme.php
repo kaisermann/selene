@@ -11,7 +11,7 @@ return [
     |   /srv/www/example.com/current/web/app/themes/sage
     |
     */
-    'dir' => get_theme_file_path(),
+    'dir' => ge t_theme_file_path(),
 
     /*
     |--------------------------------------------------------------------------

@@ -92,3 +92,7 @@ Container::getInstance()
             'directives' => require dirname(__DIR__).'/config/directives.php'
         ]);
     }, true);
+
+
+/** Initializes the WPS (whoops error handling) instance */
+(new Rarst\wps\Plugin())->run();
