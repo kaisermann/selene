@@ -135,10 +135,9 @@ add_action('after_setup_theme', function () {
         'sage.blade',
         function (Container $app) {
             $cachePath = config('view.compiled');
-            if (! file_exists($cachePath)) {
+            if (!file_exists($cachePath)) {
                 wp_mkdir_p($cachePath);
-            }
-            (new BladeProvider($app))->register();
+            }(new BladeProvider($app))->register();
             return new Blade($app['view']);
         }
     );
@@ -152,7 +151,7 @@ add_action('after_setup_theme', function () {
 /**
  * ACF Builder initialization and fields loading
  */
-define('ACF_FIELDS_DIR', dirname(__FILE__) . '/fields');
+define('ACF_FIELDS_DIR', __DIR__ . '/fields');
 if (is_dir(ACF_FIELDS_DIR) && function_exists('acf_add_local_field_group')) {
     add_action('init', function () {
         foreach (glob(ACF_FIELDS_DIR . '/*.php') as $file_path) {

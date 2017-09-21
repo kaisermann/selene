@@ -48,7 +48,7 @@ if (!class_exists('Roots\\Sage\\Container')) {
 }
 
 /** Initializes the WPS (whoops error handling) instance */
-if(WP_DEBUG_DISPLAY) {
+if (WP_DEBUG_DISPLAY) {
     (new Rarst\wps\Plugin())->run();
 }
 
