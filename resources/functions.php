@@ -47,6 +47,11 @@ if (!class_exists('Roots\\Sage\\Container')) {
     require_once $composer;
 }
 
+/** Initializes the WPS (whoops error handling) instance */
+if(WP_DEBUG_DISPLAY) {
+    (new Rarst\wps\Plugin())->run();
+}
+
 /**
  * Sage required files
  *
@@ -92,7 +97,3 @@ Container::getInstance()
             'directives' => require dirname(__DIR__).'/config/directives.php'
         ]);
     }, true);
-
-
-/** Initializes the WPS (whoops error handling) instance */
-(new Rarst\wps\Plugin())->run();
