@@ -3,7 +3,9 @@
 $fn_end_while = function () {
     return '<?php endwhile; wp_reset_query(); ?>';
 };
-$fn_end_if = function () { return '<?php endif; ?>'; };
+$fn_end_if = function () {
+    return '<?php endif; ?>';
+};
 
 return [
     /*

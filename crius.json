@@ -12,7 +12,7 @@
         "{app,config}/**/*.php",
         "resources/{views,components}/**/*.php"
       ],
-      "devUrl": "localhost:8888/selene"
+      "devUrl": "http://selene.test"
     }
   },
   "resources": {
