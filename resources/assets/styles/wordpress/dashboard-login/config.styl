@@ -1,15 +1,34 @@
 /** WPDLS Style object override. Must be named 'wpdls'. */
-wpdl = {
+wpdls = {
 	dashboard: {
+		/** Dashboard font */
 		// font: 'Arial'
-		background: colors.white
-		navigation: colors.black
-		submenu: darken(colors.gray, 50%)
-		text: colors.white
-		highlight: colors.gray
-		notification: colors.gray
-		link: colors.gray
 
+		/** Dashboard background */
+		background: colors.white
+
+		/** Generic text color */
+		text: colors.black
+
+		/** Links color */
+		link: darken(colors.gray, 20%)
+
+		/** Admin bar & sidebar text color */
+		menuText: red
+
+		/** Admin bar & sidebar background color */
+		navigation: colors.black
+
+		/** Sidebar sub-menu background color */
+		submenu: darken(colors.gray, 10%)
+
+		/** Sidebar sub-menu hover/active page color */
+		highlight: colors.gray
+
+		/** Notification dot color */
+		notification: colors.gray
+
+		/** Generic button colors */
 		button: {
 			background: colors.black
 			color: colors.white
