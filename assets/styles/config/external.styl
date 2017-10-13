@@ -1,5 +1,5 @@
 // Grid configuration
-rolleiflex.baseFontSize  = app.baseFontSize
+rolleiflex.baseFontSize  = app.base.fontSize
 rolleiflex.autoBorderBox = false
 rolleiflex.use.em        = false
 rolleiflex.spaces = {
@@ -38,7 +38,7 @@ for scaleName, scaleOpts in _bps
 
 // Configure rupture to work with rolleiflex breakpoints
 rupture = merge(rupture, {
-	"base-font-size":        app.baseFontSize
+	"base-font-size":        app.base.fontSize
 	"scale":                 _bpsList
 	"scale-names":           keys(_bps)
 	"anti-overlap":          true

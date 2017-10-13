@@ -8,10 +8,10 @@ size($width, $height = $width)
 	height: $height
 
 // rem(px [,base-font-size]), em(px [,base-font-size])
-rem($px, $base = app.baseFontSize)
+rem($px, $base = app.base.fontSize)
 	return unit($px / $base, 'rem')
 
-em($px, $base = app.baseFontSize)
+em($px, $base = app.base.fontSize)
 	return unit($px / $base, 'em')
 
 // Only unquote a string variable
