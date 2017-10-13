@@ -96,9 +96,15 @@ responsive()
 		if !$match
 			/** If the current object is null, we're still parsing the initial value */
 			if !$currentObj
-				$initialValue = ($initialValue || unquote('')) $value
+				if($initialValue != null)
+					$initialValue = $initialValue $value
+				else
+					$initialValue = $value
 			else
-				$currentObj.value = ($currentObj.value || unquote('')) $value
+				if($currentObj.value != null)
+					$currentObj.value = $currentObj.value $value
+				else
+					$currentObj.value = $value
 		else
 			if $currentObj != null
 				push($breakpoints, $currentObj)
