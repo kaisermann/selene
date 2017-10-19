@@ -124,7 +124,7 @@ If a path begins with `~`, `crius` references the `node_modules` directory. If n
 
 `crius` **automatically** creates a gulp task for each resource. All of a resource assets will be moved from the [`config.paths.source`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) to [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5) without you doing anything besides defining the resource in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json).
 
-If a resource assets need any type of processing, a drop-in module can be created at [`.crius/resource-modules/${resourceName}.js`](https://github.com/kaisermann/crius/blob/master/.crius/resource-modules/) to modify the stream with a [lazypipe](https://github.com/OverZealous/lazypipe). The file name must match the resource name.
+If a resource assets need any type of processing, a drop-in module can be created at [`gulpfile.js/resources/${resourceName}.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) to modify the stream with a [lazypipe](https://github.com/OverZealous/lazypipe). The file name must match the resource name.
 
 Resource module format:
 
@@ -151,7 +151,7 @@ module.exports = {
 }
 ```
 
-You can see other real examples by looking at the [`.crius/resource-modules`](https://github.com/kaisermann/crius/blob/master/.crius/resource-modules/) directory.
+You can see other real examples by looking at the [`gulpfile.js/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) directory.
 
 --------------------------------------------------------------------------------
 
@@ -201,9 +201,9 @@ The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be c
 
 ### Creating new tasks
 
-To create new generic gulp tasks, just create a file inside `.crius/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself.
+To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself.
 
-All tasks defined on the mentioned directory are imported BEFORE the resource tasks. If it's needed to load them AFTER the resource tasks, you can define a 'later-loading' queue at the beginning of the [`gulpfile.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js). For an example, check the [`loadLater`](https://github.com/kaisermann/crius/blob/master/gulpfile.js#L6) constant which already delays the loading of `default.js`.
+All tasks defined on the mentioned directory are imported BEFORE the resource tasks. If it's needed to load them AFTER the resource tasks, you can define a 'later-loading' queue at the beginning of the [`gulpfile.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js). For an example, check the [`loadLater`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/index.js#L6) constant which already delays the loading of `default.js`.
 
 ### Gulp Parameters
 
@@ -216,7 +216,7 @@ You can also pass the following parameters to gulp:
 - `-d` Asset debug mode. It won't minify the files
 - `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
-The available parameters can be extended at [`.crius/params.js`](https://github.com/kaisermann/crius/blob/master/.crius/params.js).
+The available parameters can be extended at [`gulpfile.js/params.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/params.js).
 
 ## Build commands
 
