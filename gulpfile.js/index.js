@@ -6,12 +6,12 @@ if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
 }
 
-// Array of file names (without extension) inside `.crius/tasks`
+// Array of file names (without extension) inside `./tasks`
 // that should be loaded after all others tasks
 const loadLater = ['default', 'uncss']
 
 // Loads generic gulp tasks, except ones listed on `loadLater`
-requireDir(module, './.crius/tasks', {
+requireDir(module, './tasks', {
   exclude: fileName => {
     return loadLater.some(
       modName => modName === basename(fileName, extname(fileName))
@@ -20,7 +20,7 @@ requireDir(module, './.crius/tasks', {
 })
 
 // Creates the resources tasks
-require('./.crius/resourcesTasksLoader')
+require('./resourcesTasksLoader')
 
 // Load task files defined on `loadLater`
-loadLater.forEach(fileName => require(`./.crius/tasks/${fileName}`))
+loadLater.forEach(fileName => require(`./tasks/${fileName}`))

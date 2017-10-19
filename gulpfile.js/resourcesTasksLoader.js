@@ -13,7 +13,7 @@ const isDir = require('./utils/isDir')
 const sizereport = require('./utils/sizereport')
 
 // Loads resource inner task modules
-const resourceModules = requireDir(module, './resource-modules')
+const resourceModules = requireDir(module, './resources')
 
 // Gets the specified resource's pipeline
 const getResourcePipeline = (resourceType, whichPipeline, ...args) => {
