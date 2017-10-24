@@ -322,30 +322,6 @@ module.exports = {
 
 You can see other real examples by looking at the [`gulpfile.js/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) directory.
 
---------------------------------------------------------------------------------
-
-Each CSS `asset` MAY have a **uncss** `boolean` attribute. If `true` the `uncss` task will search the file for unused selectors based on a `sitemap.json` file. The `sitemap.json` must be composed by an array of your projects pages urls.
-
-```json
-{
-  "resources": {
-    "styles": {
-      "pattern": "*.css",
-      "directory": "styles",
-      "assets": {
-        "main.css": {
-          "uncss": true,
-          "files": "index.styl"
-        },
-        "admin.css": {
-          "files": "admin.styl"
-        }
-      }
-    }
-  }
-}
-```
-
 ## Supported browsers
 
 The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be configured by editing the `browserslist` array inside the [`package.json`](https://github.com/kaisermann/crius/blob/master/package.json).
@@ -358,7 +334,6 @@ The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be c
 - `gulp compile` Same as `gulp build` without deleting distribution directory
 - `gulp clean` Deletes the distribution directory
 - `gulp watch` Starts watching the asset files
-- `gulp uncss` Reads a `sitemap.json` file and removes unused selectors
 - `gulp sizereport` Displays the size and gzipped size of your project
 
 ### Out of the box resource tasks
