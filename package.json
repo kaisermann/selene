@@ -118,8 +118,7 @@
     "rollup-plugin-commonjs": "^8.2.3",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-sizes": "^0.4.0",
-    "uncss": "^0.15.0"
+    "rollup-plugin-sizes": "^0.4.0"
   },
   "dependencies": {
     "rolleiflex": "^6.0.1",
