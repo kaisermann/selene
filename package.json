@@ -62,7 +62,18 @@
   "stylelint": {
     "extends": "stylelint-config-standard",
     "rules": {
-      "no-empty-source": null
+      "no-empty-source": null,
+      "block-closing-brace-empty-line-before": null,
+      "block-closing-brace-newline-after": null,
+      "block-closing-brace-newline-before": null,
+      "block-closing-brace-space-before": null,
+      "block-opening-brace-newline-after": null,
+      "block-opening-brace-space-after": null,
+      "block-opening-brace-space-before": null,
+      "declaration-block-semicolon-newline-after": null,
+      "declaration-block-semicolon-space-after": null,
+      "declaration-block-semicolon-space-before": null,
+      "declaration-block-trailing-semicolon": null
     }
   },
   "scripts": {
@@ -107,6 +118,7 @@
     "gulp-size": "^2.1.0",
     "gulp-sizereport": "^1.2.0",
     "gulp-sourcemaps": "^2.6.1",
+    "gulp-stylelint": "^5.0.0",
     "gulp-stylus": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
