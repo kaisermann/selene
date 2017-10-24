@@ -21,13 +21,13 @@ const unCSSInternal = done => {
     throw new Error('Styles distribution directory not found.')
   }
 
-  const revManifestDir = getResourceDir(
+  const revManifestPath = getResourceDir(
     'dist',
     crius.config.paths.revisionManifest
   )
 
-  const revManifest = pathExists(revManifestDir)
-    ? JSON.parse(readFileSync(revManifestDir, 'utf-8'))
+  const revManifest = pathExists(revManifestPath)
+    ? JSON.parse(readFileSync(revManifestPath, 'utf-8'))
     : {}
 
   // Let's get all assets with uncss:true
@@ -36,22 +36,20 @@ const unCSSInternal = done => {
     .map(([name, asset]) => join(stylesDir, revManifest[name] || name))
 
   const rootDir = process.cwd()
+  const globsToParse = [
+    getResourceDir('dist', 'scripts', '**', '*.js'),
+    join(rootDir, 'app', '**', '*.php'),
+    join(rootDir, 'resources', '**', '*.php'),
+  ]
 
   return gulp
     .src(cssPaths, { base: './' })
     .pipe(plumber({ errorHandler: onError }))
     .pipe(auxSizeReport('Before unCSS:'))
     .pipe(
-      purifyCSS(
-        [
-          getResourceDir('dist', 'scripts', '**', '*.js'),
-          join(rootDir, 'app', '**', '*.php'),
-          join(rootDir, 'resources', '**', '*.php'),
-        ],
-        {
-          whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
-        }
-      )
+      purifyCSS(globsToParse, {
+        whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
+      })
     )
     .pipe(auxSizeReport('After unCSS:'))
     .pipe(gulp.dest('./'))
