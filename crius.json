@@ -6,9 +6,7 @@
     },
     "browserSync": {
       "mode": "server",
-      "watch": [
-        "**/*.{php,html}"
-      ],
+      "watch": ["**/*.{php,html}"],
       "devUrl": "localhost/web/root"
     }
   },
@@ -29,8 +27,7 @@
       "assets": {
         "main.css": {
           "files": "index.styl",
-          "autoload": "resources/assets/styles/autoload/*.css",
-          "uncss": true
+          "autoload": "resources/assets/styles/autoload/*.css"
         }
       }
     },
