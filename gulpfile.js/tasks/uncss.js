@@ -1,12 +1,10 @@
 const { readFileSync } = require('fs')
 const { join } = require('path')
-const { execSync } = require('child_process')
 
 const gulp = require('gulp')
 const plumber = require('gulp-plumber')
 const size = require('gulp-size')
-const postCSS = require('gulp-postcss')
-const { postcssPlugin: postCSSunCSS } = require('uncss')
+const purifyCSS = require('gulp-purifycss')
 
 const crius = require('../manifest')
 const getResourceDir = require('../utils/getResourceDir')
@@ -23,15 +21,6 @@ const unCSSInternal = done => {
     throw new Error('Styles distribution directory not found.')
   }
 
-  execSync(
-    `curl -L --silent --output sitemap.json '${crius.config.browserSync
-      .devUrl}?show_sitemap'`
-  )
-
-  if (!pathExists('./sitemap.json')) {
-    throw new Error("Couldn't find the 'sitemap.json'")
-  }
-
   const revManifestDir = getResourceDir(
     'dist',
     crius.config.paths.revisionManifest
@@ -46,19 +35,25 @@ const unCSSInternal = done => {
     .filter(([name, asset]) => asset.uncss)
     .map(([name, asset]) => join(stylesDir, revManifest[name] || name))
 
+  const rootDir = process.cwd()
+
   return gulp
     .src(cssPaths, { base: './' })
     .pipe(plumber({ errorHandler: onError }))
     .pipe(auxSizeReport('Before unCSS:'))
     .pipe(
-      postCSS([
-        postCSSunCSS({
-          html: JSON.parse(readFileSync('./sitemap.json', 'utf-8')),
-          uncssrc: '.uncssrc',
-        }),
-      ])
+      purifyCSS(
+        [
+          getResourceDir('dist', 'scripts', '**', '*.js'),
+          join(rootDir, 'app', '**', '*.php'),
+          join(rootDir, 'resources', '**', '*.php'),
+        ],
+        {
+          whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
+        }
+      )
     )
-    .pipe(auxSizeReport('Before unCSS:'))
+    .pipe(auxSizeReport('After unCSS:'))
     .pipe(gulp.dest('./'))
     .on('end', done)
     .on('error', done)
