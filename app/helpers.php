@@ -118,11 +118,13 @@ function filter_templates($templates)
                 ->flatMap(function ($path) use ($template) {
                     return [
                         "{$path}/{$template}.blade.php",
-                        "{$path}/{$template}.php",
-                        "{$template}.blade.php",
-                        "{$template}.php",
+                        "{$path}/{$template}.php"
                     ];
-                });
+                })
+                ->concat([
+                    "{$template}.blade.php",
+                    "{$template}.php",
+                ]);
         })
         ->filter()
         ->unique()
