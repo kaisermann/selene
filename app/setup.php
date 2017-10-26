@@ -38,7 +38,7 @@ add_action('init', function () {
     $wp_rewrite->search_base = 'search';
 
     /** Register custom image sizes here */
-    /* add_image_size('name', width, height, crop) */
+    // add_image_size('name', width, height, crop)
 
     /**
      * Register custom post types here
