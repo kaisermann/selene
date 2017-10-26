@@ -23,7 +23,8 @@
         "main.js": {
           "files": "index.js",
           "autoload": "resources/assets/scripts/autoload/*.js"
-        }
+        },
+        "accessibility-test.js": "accessibility-test.js"
       }
     },
     "styles": {
