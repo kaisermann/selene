@@ -135,6 +135,7 @@
     "rollup-plugin-sizes": "^0.4.0"
   },
   "dependencies": {
+    "accessibilityjs": "^1.0.1",
     "rolleiflex": "^6.0.1",
     "rupture": "^0.6.2",
     "wpdls": "^0.0.7"

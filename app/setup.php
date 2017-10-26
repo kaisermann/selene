@@ -15,6 +15,11 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('selene/main.css', asset_path('styles/main.css'), false, null);
     wp_enqueue_script('selene/main.js#defer', asset_path('scripts/main.js'), [], null, true);
 
+    /** Enqueue accessibility test script on development env */
+    if (strtolower(WP_ENV) === 'development') {
+        wp_enqueue_script('selene/accessibility-test.js#defer', asset_path('scripts/accessibility-test.js'), [], null, true);
+    }
+
     wp_localize_script(
         'selene/main.js#defer',
         'appMeta',
