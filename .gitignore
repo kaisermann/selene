@@ -2,6 +2,7 @@
 /sitemap.json
 /vendor
 /dist
+/.blade.cache
 .DS_Store
 node_modules
 npm-debug.log
