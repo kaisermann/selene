@@ -9,6 +9,16 @@
     "url": "git@github.com:kaisermann/crius.git"
   },
   "license": "(MIT)",
+  "engines": {
+    "node": ">= 6.9.4"
+  },
+  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
+  "scripts": {
+    "watch": "gulp watch -d --sync --report --maps",
+    "build": "gulp -d",
+    "build:staging": "gulp",
+    "build:production": "gulp -p"
+  },
   "eslintConfig": {
     "root": true,
     "extends": "standard",
@@ -32,10 +42,7 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
-    "plugins": [
-      "import",
-      "compat"
-    ],
+    "plugins": ["import", "compat"],
     "settings": {
       "import/core-modules": [],
       "import/ignore": [
@@ -76,21 +83,6 @@
       "declaration-block-trailing-semicolon": null
     }
   },
-  "scripts": {
-    "watch": "gulp watch -d --sync --report --maps",
-    "build": "gulp -d",
-    "build:staging": "gulp",
-    "build:production": "gulp -p"
-  },
-  "engines": {
-    "node": ">= 6.9.4"
-  },
-  "browserslist": [
-    "last 2 versions",
-    "opera 12",
-    "IE 11",
-    "Safari >= 8"
-  ],
   "devDependencies": {
     "autoprefixer": "^7.1.5",
     "browser-sync": "^2.18.13",
