@@ -34,7 +34,7 @@
         "main.css": {
           "files": "index.styl",
           "autoload": "resources/assets/styles/autoload/*.css",
-          "uncss": true
+          "purify": true
         },
         "editor.css": "wordpress/editor.styl",
         "dashboard-login.css": "wordpress/dashboard-login/index.styl"

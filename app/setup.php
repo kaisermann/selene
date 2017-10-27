@@ -69,7 +69,6 @@ add_action('init', function () {
  * Theme setup
  */
 add_action('after_setup_theme', function () {
-
     load_theme_textdomain('selene', get_template_directory() . '/languages');
 
     add_theme_support('html5', [ 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption' ]);

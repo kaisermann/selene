@@ -97,7 +97,7 @@ Useful gulp tasks aliases
 
 ## Extra Gulp tasks (others listed [here](https://github.com/kaisermann/crius))
 
-- `gulp uncss` - Reads `.blade.php` and `.js` files and removes unused css definitions.
+- `gulp purify` - Reads `.blade.php` and `.js` files and removes unused css definitions.
 
 ## External links
 * [Crius documentation](https://github.com/kaisermann/crius)

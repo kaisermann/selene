@@ -14,7 +14,7 @@ const onError = require('../utils/onError')
 const auxSizeReport = msg =>
   size({ showFiles: true, showTotal: false, title: msg })
 
-const unCSSInternal = done => {
+gulp.task('purify', done => {
   const stylesDir = getResourceDir('dist', 'styles')
 
   if (!pathExists(stylesDir)) {
@@ -30,15 +30,16 @@ const unCSSInternal = done => {
     ? JSON.parse(readFileSync(revManifestPath, 'utf-8'))
     : {}
 
-  // Let's get all assets with uncss:true
+  // Let's get all assets with purify:true
   const cssPaths = Object.entries(crius.resources.styles.assets)
-    .filter(([name, asset]) => asset.uncss)
+    .filter(([name, asset]) => asset.purify)
     .map(([name, asset]) => join(stylesDir, revManifest[name] || name))
 
   const rootDir = process.cwd()
   const globsToParse = [
     getResourceDir('dist', 'scripts', '**', '*.js'),
     join(rootDir, 'app', '**', '*.php'),
+    join(rootDir, '.blade.cache', '**', '*.php'),
     join(rootDir, 'resources', '**', '*.php'),
   ]
 
@@ -55,9 +56,4 @@ const unCSSInternal = done => {
     .pipe(gulp.dest('./'))
     .on('end', done)
     .on('error', done)
-}
-unCSSInternal.displayName = 'unCSS > inner task'
-
-process.argv.includes('--purify-only', 2)
-  ? gulp.task('uncss', unCSSInternal)
-  : gulp.task('uncss', gulp.series('styles', unCSSInternal))
+})
