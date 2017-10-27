@@ -8,7 +8,7 @@ const plumber = require('gulp-plumber')
 
 const crius = require('./manifest')
 const getResourceDir = require('./utils/getResourceDir')
-const onError = require('./utils/onError')
+const errorHandler = require('./utils/errorHandler')
 const isDir = require('./utils/isDir')
 const sizereport = require('./utils/sizereport')
 
@@ -32,7 +32,9 @@ const nodeModulesRegEx = /^(\.|\.\/)?(~|node_modules)/
 const buildAsset = (outputName, baseObj, directory) => {
   let assetObj
   if (typeof baseObj === 'string') {
-    assetObj = { files: [baseObj] }
+    assetObj = {
+      files: [baseObj],
+    }
   } else {
     assetObj = baseObj
     if (!assetObj.files) assetObj.files = []
@@ -71,7 +73,11 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
       merged.add(
         gulp
           .src(curAsset.globs)
-          .pipe(plumber({ errorHandler: onError }))
+          .pipe(
+            plumber({
+              errorHandler,
+            })
+          )
           .pipe(getResourcePipeline(resourceType, 'each', curAsset))
           .pipe(gulp.dest(output))
           .pipe(
@@ -109,11 +115,11 @@ for (const [resourceType, resourceInfo] of Object.entries(crius.resources)) {
   const resourceModule = resourceModules[resourceType]
   // Pushes the resource task
   // Checks if a resource task have any tasks to run before/after itself
-  let taskQueue = [].concat(
-    getAuxTasks('before', resourceModule),
+  let taskQueue = [
+    ...getAuxTasks('before', resourceModule),
     dynamicTaskHelper(resourceType, resourceInfo),
-    getAuxTasks('after', resourceModule)
-  )
+    ...getAuxTasks('after', resourceModule),
+  ]
 
   // When '--report' is set, are we doing a resource task or the watch task?
   // If yes, let's append the report task to the pipeline
