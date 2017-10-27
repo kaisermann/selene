@@ -9,6 +9,10 @@
     "url": "git@github.com:kaisermann/selene.git"
   },
   "license": "(MIT)",
+  "engines": {
+    "node": ">= 6.9.4"
+  },
+  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
   "scripts": {
     "watch": "gulp watch --sync -d --maps --report",
     "build:dev": "gulp -d",
@@ -85,10 +89,6 @@
       "declaration-block-trailing-semicolon": null
     }
   },
-  "engines": {
-    "node": ">= 6.9.4"
-  },
-  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
   "devDependencies": {
     "autoprefixer": "^7.1.5",
     "browser-sync": "^2.18.13",
