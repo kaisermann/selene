@@ -9,7 +9,7 @@ const purifyCSS = require('gulp-purifycss')
 const crius = require('../manifest')
 const getResourceDir = require('../utils/getResourceDir')
 const pathExists = require('../utils/doesPathExist')
-const onError = require('../utils/onError')
+const errorHandler = require('../utils/errorHandler')
 
 const auxSizeReport = msg =>
   size({ showFiles: true, showTotal: false, title: msg })
@@ -45,7 +45,7 @@ gulp.task('purify', done => {
 
   return gulp
     .src(cssPaths, { base: './' })
-    .pipe(plumber({ errorHandler: onError }))
+    .pipe(plumber({ errorHandler }))
     .pipe(auxSizeReport('Before purifyCSS:'))
     .pipe(
       purifyCSS(globsToParse, {
