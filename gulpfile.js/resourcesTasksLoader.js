@@ -77,8 +77,8 @@ const dynamicTaskHelper = (resourceType, resourceInfo) => {
           .pipe(
             crius.browserSyncInstance
               ? crius.browserSyncInstance.stream({
-                  match: `**/${resourceInfo.pattern}`,
-                })
+                match: `**/${resourceInfo.pattern}`,
+              })
               : util.noop()
           )
       )
