@@ -45,17 +45,19 @@ const unCSSInternal = done => {
   return gulp
     .src(cssPaths, { base: './' })
     .pipe(plumber({ errorHandler: onError }))
-    .pipe(auxSizeReport('Before unCSS:'))
+    .pipe(auxSizeReport('Before purifyCSS:'))
     .pipe(
       purifyCSS(globsToParse, {
         whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
       })
     )
-    .pipe(auxSizeReport('After unCSS:'))
+    .pipe(auxSizeReport('After purifyCSS:'))
     .pipe(gulp.dest('./'))
     .on('end', done)
     .on('error', done)
 }
 unCSSInternal.displayName = 'unCSS > inner task'
 
-gulp.task('uncss', gulp.series('styles', unCSSInternal))
+process.argv.includes('--purify-only', 2)
+  ? gulp.task('uncss', unCSSInternal)
+  : gulp.task('uncss', gulp.series('styles', unCSSInternal))

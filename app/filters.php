@@ -131,8 +131,8 @@ add_filter('script_loader_src', $filter__parse_asset_version);
 /**
  * Remove the protocol (http(s)) from asset's url
  *
- * Based on 'https://github.com/ryanjbonnell/Protocol-Relative-Theme-Assets
- * by Ryan J. Bonnell'
+ * Based on 'https://github.com/ryanjbonnell/Protocol-Relative-Theme-Assets'
+ * by Ryan J. Bonnell
  */
 $filter__url_protocol = function ($url) {
     return preg_replace('(https?://)', '//', $url);

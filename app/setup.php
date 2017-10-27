@@ -69,13 +69,15 @@ add_action('init', function () {
  * Theme setup
  */
 add_action('after_setup_theme', function () {
+
     load_theme_textdomain('selene', get_template_directory() . '/languages');
+
     add_theme_support('html5', [ 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption' ]);
     add_theme_support('menus');
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('automatic-feed-links');
-    //add_theme_support('woocommerce');
+    // add_theme_support('woocommerce');
 
     add_post_type_support('page', 'excerpt');
 
