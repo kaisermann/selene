@@ -107,7 +107,7 @@
     "mixins": [],
     "namingConvention": false,
     "namingConventionStrict": false,
-    "none": "never",
+    "none": false,
     "noImportant": true,
     "parenSpace": "never",
     "placeholders": false,
