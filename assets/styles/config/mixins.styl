@@ -1,3 +1,5 @@
+// @stylint off
+
 /** size(width, height) */
 size($width, $height = $width)
   width: $width
@@ -125,3 +127,5 @@ responsive()
     $mediaMixin = $bpObj.operator == '<' ? to-width : from-width
     +$mediaMixin($bpObj.scale)
       {$property}: $bpObj.value
+
+// @stylint on
