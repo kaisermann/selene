@@ -15,21 +15,23 @@ const postCSSnano = require('cssnano')
 const crius = require('../manifest')
 const writeToManifest = require('../utils/writeToManifest')
 
+const stylusOpts = {
+  'include css': true,
+  use: [require('rupture')(), require('nib')()],
+  include: ['./', './node_modules/'],
+  import: ['nib/lib/nib/positions'],
+}
+
 module.exports = {
+  tasks: {
+    before: ['lint:styles'],
+  },
   pipelines: {
     each: asset => {
       return (
         lazypipe()
           .pipe(() => gulpIf(crius.params.maps, sourcemaps.init()))
-          .pipe(() =>
-            gulpIf(
-              '*.styl',
-              stylus({
-                include: ['./', './node_modules/'],
-                'include css': true,
-              })
-            )
-          )
+          .pipe(() => gulpIf('*.styl', stylus(stylusOpts)))
           // Gulp 4. Appends autoload files to the main stream
           // Only if asset.autoload is defined
           .pipe(

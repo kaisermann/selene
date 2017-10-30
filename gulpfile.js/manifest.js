@@ -63,4 +63,6 @@ if (crius.params.sync) {
   crius.browserSyncInstance = browserSyncLib.create()
 }
 
+crius.pkg = require(join(process.cwd(), 'package.json'))
+
 module.exports = crius

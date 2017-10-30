@@ -1,34 +1,34 @@
 .burger
-	&.is-active
-		span
-			&::before
-			&::after
-				background-color: colors.white
+  &.is-active
+    span
+      &::before
+      &::after
+        background-color: colors.white
 
 .burger
-	top: margins.burger
-	right: margins.burger
+  top: margins.burger
+  right: margins.burger
 
 // .header
 .header__overlay
-	position: fixed
-	z-index: layers.overlay
-	top: 0
-	left: 0
-	size(100%)
-	background-color: rgba(colors.black, .6)
-	transition: .3s ease
-	opacity: 0
-	visibility: hidden
-	padding: 45px
-	font-size: rem(48px)
-	line-height: 1.4
+  position: fixed
+  z-index: layers.overlay
+  top: 0
+  left: 0
+  size(100%)
+  background-color: rgba(colors.black, .6)
+  transition: .3s ease
+  opacity: 0
+  visibility: hidden
+  padding: 45px
+  font-size: rem(48px)
+  line-height: 1.4
 
-	body.is-header-overlay-active &
-		opacity: 1
-		visibility: visible
+  body.is-header-overlay-active &
+    opacity: 1
+    visibility: visible
 
-	a
-		color: colors.white
-		&:hover
-			text-decoration: underline
+  a
+    color: colors.white
+    &:hover
+      text-decoration: underline
