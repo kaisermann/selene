@@ -9,11 +9,7 @@ const getResourceDir = require('../utils/getResourceDir')
 gulp.task('lint:styles', done => {
   const stylesDir = getResourceDir('source', 'styles')
   return gulp
-    .src([
-      `${stylesDir}/**/*.styl`,
-      `!${stylesDir}/common/reboot.styl`,
-      `!${stylesDir}/config/mixins.styl`,
-    ])
+    .src([`${stylesDir}/**/*.styl`])
     .pipe(
       stylint({
         reporter: crius.pkg.stylintrc.reporter,
