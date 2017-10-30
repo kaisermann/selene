@@ -15,9 +15,15 @@
   "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
   "scripts": {
     "watch": "gulp watch -d --sync --report --maps",
-    "build": "gulp -d",
-    "build:staging": "gulp",
-    "build:production": "gulp -p"
+    "start": "npm run -s watch",
+    "build": "gulp",
+    "build:dev": "gulp -d",
+    "build:production": "gulp -p",
+    "clean": "npm run -s clean:dist",
+    "clean:dist": "rimraf dist",
+    "lint": "gulp lint",
+    "lint:styles": "gulp lint:styles",
+    "lint:scripts": "gulp lint:scripts"
   },
   "eslintConfig": {
     "root": true,
@@ -66,22 +72,50 @@
       "compat/compat": 2
     }
   },
-  "stylelint": {
-    "extends": "stylelint-config-standard",
-    "rules": {
-      "no-empty-source": null,
-      "block-closing-brace-empty-line-before": null,
-      "block-closing-brace-newline-after": null,
-      "block-closing-brace-newline-before": null,
-      "block-closing-brace-space-before": null,
-      "block-opening-brace-newline-after": null,
-      "block-opening-brace-space-after": null,
-      "block-opening-brace-space-before": null,
-      "declaration-block-semicolon-newline-after": null,
-      "declaration-block-semicolon-space-after": null,
-      "declaration-block-semicolon-space-before": null,
-      "declaration-block-trailing-semicolon": null
-    }
+  "stylintrc": {
+    "blocks": false,
+    "brackets": false,
+    "colons": "always",
+    "colors": false,
+    "commaSpace": "always",
+    "commentSpace": "always",
+    "cssLiteral": "never",
+    "customProperties": [],
+    "depthLimit": false,
+    "duplicates": true,
+    "efficient": "always",
+    "exclude": [],
+    "extendPref": false,
+    "globalDupe": true,
+    "groupOutputByFile": true,
+    "indentPref": 2,
+    "leadingZero": "never",
+    "maxErrors": false,
+    "maxWarnings": false,
+    "mixed": true,
+    "mixins": [],
+    "namingConvention": false,
+    "namingConventionStrict": false,
+    "none": "never",
+    "noImportant": true,
+    "parenSpace": "never",
+    "placeholders": false,
+    "prefixVarsWithDollar": "always",
+    "quotePref": "single",
+    "reporter": "stylint-stylish",
+    "reporterOptions": {
+      "absolutePath": false,
+      "verbose": true,
+      "ruleName": true
+    },
+    "semicolons": "never",
+    "sortOrder": false,
+    "stackedProperties": "never",
+    "trailingWhitespace": "never",
+    "universal": "never",
+    "valid": false,
+    "zeroUnits": "never",
+    "zIndexNormalize": false
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",
@@ -109,6 +143,7 @@
     "gulp-size": "^2.1.0",
     "gulp-sizereport": "^1.2.0",
     "gulp-sourcemaps": "^2.6.1",
+    "gulp-stylint": "^4.0.0",
     "gulp-stylus": "^2.6.0",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
@@ -121,9 +156,11 @@
     "rollup-plugin-commonjs": "^8.2.3",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-sizes": "^0.4.0"
+    "rollup-plugin-sizes": "^0.4.0",
+    "stylint-stylish": "^1.4.0"
   },
   "dependencies": {
+    "nib": "^1.1.2",
     "rolleiflex": "^6.0.1",
     "rupture": "^0.6.2"
   }
