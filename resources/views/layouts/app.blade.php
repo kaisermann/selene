@@ -13,8 +13,8 @@
         </div>
         @php(do_action('get_footer'))
         @include('components.Footer.Footer')
-        @php(wp_footer())
       </div>
     </div>
+    @php(wp_footer())
   </body>
 </html>
