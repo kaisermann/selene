@@ -17,7 +17,7 @@ $burger.stripePadding = (($burger.height - $burger.stripeHeight * 3) / 2)
 
   body.is-header-overlay-active &
     span
-      background none
+      background: none
 
       &::before
       &::after
@@ -25,12 +25,12 @@ $burger.stripePadding = (($burger.height - $burger.stripeHeight * 3) / 2)
         transition-delay: .3s, .3s, 0s
 
       &::before
-        top 0
-        transform rotate(45deg)
+        top: 0
+        transform: rotate(45deg)
 
       &::after
-        bottom 0
-        transform rotate(-45deg)
+        bottom: 0
+        transform: rotate(-45deg)
 
 .burger__slices
   display: block

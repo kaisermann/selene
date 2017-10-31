@@ -10,8 +10,10 @@ const params = require('../../params')
 
 gulp.task('lint:styles', done => {
   const stylesDir = join(crius.config.paths.source, 'styles')
+  const lintGlobs = [stylesDir]
+
   return gulp
-    .src([`${stylesDir}/**/*.styl`])
+    .src(lintGlobs.map(path => join(path, '**/*.styl')))
     .pipe(
       stylint({
         reporter: crius.pkg.stylintrc.reporter,
@@ -27,12 +29,12 @@ gulp.task('lint:styles', done => {
 
 gulp.task('lint:scripts', done => {
   const scriptsDir = join(crius.config.paths.source, 'scripts')
+  const lintGlobs = [scriptsDir, `!${join(scriptsDir, 'autoload')}`]
+
   return gulp
-    .src([
-      'gulpfile.*.js',
-      `${scriptsDir}/**/*.js`,
-      `!${scriptsDir}/autoload/*.js`,
-    ])
+    .src(
+      lintGlobs.map(path => join(path, '**/*.js')).concat('gulpfile.js/**/*.js')
+    )
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(params.production ? eslint.failAfterError() : noop())

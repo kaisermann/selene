@@ -1,3 +1,5 @@
+const { join } = require('path')
+
 const gulp = require('gulp')
 const lazypipe = require('lazypipe')
 const concat = require('gulp-concat')
@@ -6,6 +8,7 @@ const sourcemaps = require('gulp-sourcemaps')
 const betterRollup = require('gulp-better-rollup')
 const rev = require('gulp-rev')
 
+const rollUpAlias = require('rollup-plugin-alias')
 const rollUpBuble = require('rollup-plugin-buble')
 const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
@@ -18,6 +21,11 @@ const params = require('../../params')
 const writeToManifest = require('../../utils/writeToManifest')
 
 const rollUpPlugins = [
+  /** Javascript import paths aliases */
+  rollUpAlias({
+    '@Components': crius.config.paths.components,
+    '@Scripts': join(crius.config.paths.source, 'scripts'),
+  }),
   /** Allow to import node builtin modules such as path, url, querystring, etc */
   rollUpNodebuiltins(),
   /** Allow to import modules from the `node_modules` */

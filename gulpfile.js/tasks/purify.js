@@ -7,25 +7,22 @@ const size = require('gulp-size')
 const purifyCSS = require('gulp-purifycss')
 
 const crius = require('../manifest')
-const getResourceDir = require('../utils/getResourceDir')
 const pathExists = require('../utils/doesPathExist')
 const errorHandler = require('../utils/errorHandler')
 
 const auxSizeReport = msg =>
   size({ showFiles: true, showTotal: false, title: msg })
 
+const distPath = crius.config.paths.dist
+
 gulp.task('purify', done => {
-  const stylesDir = getResourceDir('dist', 'styles')
+  const stylesDir = join(distPath, 'styles')
 
   if (!pathExists(stylesDir)) {
     throw new Error('Styles distribution directory not found.')
   }
 
-  const revManifestPath = getResourceDir(
-    'dist',
-    crius.config.paths.revisionManifest
-  )
-
+  const revManifestPath = join(distPath, crius.config.paths.manifest)
   const revManifest = pathExists(revManifestPath)
     ? JSON.parse(readFileSync(revManifestPath, 'utf-8'))
     : {}
@@ -37,7 +34,7 @@ gulp.task('purify', done => {
 
   const rootDir = process.cwd()
   const globsToParse = [
-    getResourceDir('dist', 'scripts', '**', '*.js'),
+    join(distPath, 'scripts', '**', '*.js'),
     join(rootDir, 'app', '**', '*.php'),
     join(rootDir, '.blade.cache', '**', '*.php'),
     join(rootDir, 'resources', '**', '*.php'),

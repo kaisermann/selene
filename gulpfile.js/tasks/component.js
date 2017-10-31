@@ -4,6 +4,8 @@ const rimraf = require('rimraf')
 const mkdirp = require('mkdirp')
 const gulp = require('gulp')
 
+const crius = require('../manifest')
+
 const JS_CONTENT = `export default {
   init () {
     // Initialization code here
@@ -50,10 +52,7 @@ gulp.task('component', done => {
   componentsToManage.forEach(tmpComponentName => {
     const realComponentName = capitalizeStr(tmpComponentName)
     const fileName = semiCamelize(realComponentName)
-    const componentPath = join(
-      process.cwd(),
-      `resources/components/${fileName}`
-    )
+    const componentPath = join(crius.config.paths.components, fileName)
 
     if (!args[0]) throw new Error('Missing first parameter')
 
