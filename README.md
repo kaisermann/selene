@@ -14,22 +14,74 @@ With crius you can:
 
 ## Requirements
 
-* [Node.js](http://nodejs.org/) >= 7.x.x
-* [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
+- [Node.js](http://nodejs.org/) >= 7.x.x
+- [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
 
 ## Installation
 
 1. `git clone git@github.com:kaisermann/crius.git`
-2. `npm install` or `yarn`
-3. Run at least `gulp build` before running `gulp watch`
-
+1. `npm install` or `yarn`
+1. Run at least `gulp build` before running `gulp watch`
 
 ## Usage samples
 
 - [Selene](https://github.com/kaisermann/selene) - Wordpress theme based on [Sage](https://github.com/roots/sage) and Crius.
 - [Hyperion](https://github.com/kaisermann/hyperion) - A static web-app workflow based on Crius.
 
-## Documentation
+## Theme Development
+
+### Build commands
+
+Pretty much every task needed is covered by the `package.json` scripts:
+
+- `npm run watch|start` - Run browsersync and watch file changes;
+- `npm run build` - Build minified assets;
+- `npm run build:dev` - Build unminified assets;
+- `npm run build:production` - Build the assets, append a hash to the name;
+- `npm run clean` - Remove the `dist` folder;
+- `npm run lint` - Lint all `styl` and `js` files;
+- `npm run lint:styles` - Lint all `styl` files;
+- `npm run lint:scripts` - Lint all `js` files.
+
+### Gulp
+
+- `gulp` / `gulp build` - Erases distribution directory and builds all assets
+- `gulp compile` - Same as `gulp build` - without deleting distribution directory
+- `gulp clean` - Deletes the distribution directory
+- `gulp watch` - Starts watching the asset files
+- `gulp sizereport` - Displays the size and gzipped size of your project
+- `gulp scripts` - Build 'scripts';
+- `gulp styles` - Build 'styles';
+- `gulp fonts` - Build 'fonts';
+- `gulp images` - Build 'images';
+- `gulp lint` - Lint all `styl` and `js` files;
+- `gulp lint:styles` - Lint all `styl` files;
+- `gulp lint:scripts` - Lint all `js` files.
+
+#### Creating new tasks
+
+To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself.
+
+All tasks defined on the mentioned directory are imported BEFORE the resource tasks. If it's needed to load them AFTER the resource tasks, you can define a 'later-loading' queue at the beginning of the [`gulpfile.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js). For an example, check the [`loadLater`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/index.js#L6) constant which already delays the loading of `default.js`.
+
+#### Gulp Parameters
+
+You can also pass the following parameters to gulp:
+
+- `--sync` Starts browserSync. Use only with `gulp watch`
+- `--report` or `-r` Report mode
+  - If used with `watch`, it will display the assets sizes of the current resource being edited
+- `--maps` Allows sourcemaps to be created
+- `-d` Asset debug mode. It won't minify the files
+- `-p` Production mode. File names will be appended with a hash of its content for cache-busting
+
+The available parameters can be extended at [`gulpfile.js/params.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/params.js).
+
+### Supported browsers
+
+The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be configured by editing the `browserslist` array inside the [`package.json`](https://github.com/kaisermann/crius/blob/master/package.json).
+
+## Manifest (`crius.json`) Documentation
 
 ### The `config` object
 
@@ -116,6 +168,7 @@ Each resource type MUST have a **assets** `object`, defining which assets are to
   }
 ...
 ```
+
 The value can be either a `string`, an array of `strings` or an `object` with a MUST-HAVE `files` and an OPTIONAL `autoload` properties.
 
 If a path begins with `~`, `crius` references the `node_modules` directory. If not, the path is relative to the `resource directory`.
@@ -152,55 +205,6 @@ module.exports = {
 ```
 
 You can see other real examples by looking at the [`gulpfile.js/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) directory.
-
-## Supported browsers
-
-The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be configured by editing the `browserslist` array inside the [`package.json`](https://github.com/kaisermann/crius/blob/master/package.json).
-
-## Theme Development
-
-### Out of the box tasks
-
-- `gulp` / `gulp build` Erases distribution directory and builds all assets
-- `gulp compile` Same as `gulp build` without deleting distribution directory
-- `gulp clean` Deletes the distribution directory
-- `gulp watch` Starts watching the asset files
-- `gulp sizereport` Displays the size and gzipped size of your project
-
-### Out of the box resource tasks
-
-- `gulp scripts` Build everything on the scripts directory
-- `gulp styles` Build everything on the styles directory
-- `gulp fonts` Build everything on the fonts directory
-- `gulp images` Build everything on the images directory
-
-### Creating new tasks
-
-To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself.
-
-All tasks defined on the mentioned directory are imported BEFORE the resource tasks. If it's needed to load them AFTER the resource tasks, you can define a 'later-loading' queue at the beginning of the [`gulpfile.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js). For an example, check the [`loadLater`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/index.js#L6) constant which already delays the loading of `default.js`.
-
-### Gulp Parameters
-
-You can also pass the following parameters to gulp:
-
-- `--sync` Starts browserSync. Use only with `gulp watch`
-- `--report` or `-r` Report mode
-  - If used with `watch`, it will display the assets sizes of the current resource being edited
-- `--maps` Allows sourcemaps to be created
-- `-d` Asset debug mode. It won't minify the files
-- `-p` Production mode. File names will be appended with a hash of its content for cache-busting
-
-The available parameters can be extended at [`gulpfile.js/params.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/params.js).
-
-## Build commands
-
-Useful gulp tasks aliases
-
-- `yarn run watch`
-- `yarn run build`
-- `yarn run build:staging`
-- `yarn run build:production`
 
 ## External links
 

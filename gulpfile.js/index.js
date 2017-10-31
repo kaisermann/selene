@@ -1,4 +1,4 @@
-const { basename, extname } = require('path')
+import { basename, extname } from 'path'
 const requireDir = require('require-directory')
 
 // Defaults NODE_ENV to 'dev' if not set
