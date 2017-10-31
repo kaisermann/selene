@@ -1,13 +1,15 @@
+const { join } = require('path')
+
 const gulp = require('gulp')
-const util = require('gulp-util')
+const { noop } = require('gulp-util')
 const stylint = require('gulp-stylint')
 const eslint = require('gulp-eslint')
-const gulpIf = require('gulp-if')
-const crius = require('../manifest')
-const getResourceDir = require('../utils/getResourceDir')
+
+const crius = require('../../manifest')
+const params = require('../../params')
 
 gulp.task('lint:styles', done => {
-  const stylesDir = getResourceDir('source', 'styles')
+  const stylesDir = join(crius.config.paths.source, 'styles')
   return gulp
     .src([`${stylesDir}/**/*.styl`])
     .pipe(
@@ -18,13 +20,13 @@ gulp.task('lint:styles', done => {
       })
     )
     .pipe(stylint.reporter())
-    .pipe(crius.params.production ? stylint.reporter('fail') : util.noop())
+    .pipe(params.production ? stylint.reporter('fail') : noop())
     .on('end', done)
     .on('error', done)
 })
 
 gulp.task('lint:scripts', done => {
-  const scriptsDir = getResourceDir('source', 'scripts')
+  const scriptsDir = join(crius.config.paths.source, 'scripts')
   return gulp
     .src([
       'gulpfile.*.js',
@@ -33,7 +35,7 @@ gulp.task('lint:scripts', done => {
     ])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(gulpIf(crius.params.production, eslint.failAfterError()))
+    .pipe(params.production ? eslint.failAfterError() : noop())
     .on('end', done)
     .on('error', done)
 })

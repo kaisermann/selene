@@ -1,41 +1,34 @@
 const { readFileSync } = require('fs')
 const { relative, join } = require('path')
-const browserSyncLib = require('browser-sync')
-const deepExtend = require('deep-extend')
 
 const params = require('./params')
+const browserSync = require('browser-sync')
 
-// Loads the crius manifest
+/** Load the crius manifest */
 const crius = JSON.parse(readFileSync('./crius.json', 'utf8'))
 
-// Default path values
-crius.config.paths = deepExtend(
-  {
+/** Default path values */
+crius.config.paths = {
+  ...{
     source: 'app/',
     dist: 'dist/',
+    manifest: 'assets.json',
+    root: process.cwd(),
   },
-  crius.config.paths
+  ...crius.config.paths,
+}
+crius.config.paths.distToRoot = relative(
+  join(crius.config.paths.dist, 'resource'),
+  crius.config.paths.root
 )
 
-// Default values for the `config` object
-crius.config = deepExtend(
-  {
-    paths: {
-      revisionManifest: 'assets.json',
-      fromDistToSource: relative(
-        join(crius.config.paths.dist, 'any'),
-        crius.config.paths.source
-      ),
-      components: join(process.cwd(), 'resources/components'),
-    },
-  },
-  crius.config
-)
+/** Project's package.json content (used for getting stylint config) */
+crius.pkg = require(join(crius.config.paths.root, 'package.json'))
 
-// Default browserSync configuration
+/** Default browserSync configuration */
 if (crius.config.browserSync) {
-  crius.config.browserSync = deepExtend(
-    {
+  crius.config.browserSync = {
+    ...{
       mode: 'proxy',
       index: 'index.html',
       baseDir: './',
@@ -43,26 +36,21 @@ if (crius.config.browserSync) {
       whitelist: [],
       blacklist: [],
     },
-    crius.config.browserSync
-  )
+    ...crius.config.browserSync,
+  }
 }
 
-// Default values for each 'resource' entry
+/** Default values for each 'resource' entry */
 for (const [resourceType, resourceInfo] of Object.entries(crius.resources)) {
-  crius.resources[resourceType] = deepExtend(
-    { directory: resourceType },
-    resourceInfo
-  )
+  crius.resources[resourceType] = {
+    ...{ directory: resourceType },
+    ...resourceInfo,
+  }
 }
 
-// Parses passed parameters
-crius.params = params
-
-// Creates a broswersync instance
-if (crius.params.sync) {
-  crius.browserSyncInstance = browserSyncLib.create()
+/** Create a browsersync instance if '--sync' was passed */
+if (params.sync) {
+  crius.browserSyncInstance = browserSync.create()
 }
-
-crius.pkg = require(join(process.cwd(), 'package.json'))
 
 module.exports = crius
