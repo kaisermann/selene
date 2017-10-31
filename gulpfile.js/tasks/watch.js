@@ -43,6 +43,7 @@ gulp.task('watch', done => {
   /** Watch based on resource-type-names */
   for (const [resourceType, resourceInfo] of Object.entries(crius.resources)) {
     const filesToWatch = [
+      join(crius.config.paths.components, '**', resourceInfo.pattern),
       join(
         crius.config.paths.source,
         resourceInfo.directory,
