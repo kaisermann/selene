@@ -10,7 +10,7 @@ const params = require('../../params')
 
 gulp.task('lint:styles', done => {
   const stylesDir = join(crius.config.paths.source, 'styles')
-  const lintGlobs = [stylesDir]
+  const lintGlobs = [stylesDir, crius.config.paths.components]
 
   return gulp
     .src(lintGlobs.map(path => join(path, '**/*.styl')))
@@ -29,7 +29,11 @@ gulp.task('lint:styles', done => {
 
 gulp.task('lint:scripts', done => {
   const scriptsDir = join(crius.config.paths.source, 'scripts')
-  const lintGlobs = [scriptsDir, `!${join(scriptsDir, 'autoload')}`]
+  const lintGlobs = [
+    scriptsDir,
+    `!${join(scriptsDir, 'autoload')}`,
+    crius.config.paths.components,
+  ]
 
   return gulp
     .src(
