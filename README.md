@@ -85,7 +85,7 @@ The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be c
 
 ### The `config` object
 
-The [`config.paths`](https://github.com/kaisermann/crius/blob/master/crius.json#L3) object MAY have a `revisionManifest` **string** attribute that defines the revision manifest's file name on production distributions.
+The [`config.paths`](https://github.com/kaisermann/crius/blob/master/crius.json#L3) object MAY have a `manifest` **string** attribute that defines the revision manifest's file name on production distributions.
 
 Defaults to `"assets.json"`
 
@@ -177,7 +177,7 @@ If a path begins with `~`, `crius` references the `node_modules` directory. If n
 
 `crius` **automatically** creates a gulp task for each resource. All of a resource assets will be moved from the [`config.paths.source`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) to [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5) without you doing anything besides defining the resource in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json).
 
-If a resource assets need any type of processing, a drop-in module can be created at [`gulpfile.js/resources/${resourceName}.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) to modify the stream with a [lazypipe](https://github.com/OverZealous/lazypipe). The file name must match the resource name.
+If a resource assets need any type of processing, a drop-in module can be created at [`gulpfile.js/tasks/resources/${resourceName}.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) to modify the stream with a [lazypipe](https://github.com/OverZealous/lazypipe). The file name must match the resource name.
 
 Resource module format:
 
