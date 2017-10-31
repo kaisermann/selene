@@ -6,7 +6,6 @@ const postcss = require('gulp-postcss')
 const sourcemaps = require('gulp-sourcemaps')
 const stylus = require('gulp-stylus')
 const rev = require('gulp-rev')
-const { noop } = require('gulp-util')
 
 const postCSSautoprefixer = require('autoprefixer')
 const postCSSmqpacker = require('css-mqpacker')
