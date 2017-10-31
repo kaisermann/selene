@@ -60,9 +60,7 @@ Pretty much every task needed is covered by the `package.json` scripts:
 
 #### Creating new tasks
 
-To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself.
-
-All tasks defined on the mentioned directory are imported BEFORE the resource tasks. If it's needed to load them AFTER the resource tasks, you can define a 'later-loading' queue at the beginning of the [`gulpfile.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js). For an example, check the [`loadLater`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/index.js#L6) constant which already delays the loading of `default.js`.
+To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself. However, if you need a task as a dependency for a resource task, which are loaded later, create the task inside the [`before-resources` directory](https://github.com/kaisermann/crius/blob/master/gulpfile.js/tasks/before-resources).
 
 #### Gulp Parameters
 
