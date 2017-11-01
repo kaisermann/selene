@@ -1,6 +1,10 @@
+const { relative } = require('path')
 const { colors } = require('gulp-util')
 const filesize = require('filesize')
 
+const crius = require('../../manifest')
+
+/** Custom reporter for rollup-plugin-sizes */
 module.exports = details => {
   const divisor = '---------------------------------------'
   const args = { ...details }
@@ -8,7 +12,10 @@ module.exports = details => {
   // Sort
   args.totals.sort((a, b) => b.size - a.size)
   console.log('\n' + divisor)
-  console.log(colors.blue.bold('  Module "%s":'), args.input)
+  console.log(
+    colors.blue.bold('  Module "%s":'),
+    relative(crius.config.paths.root, args.input)
+  )
   console.log(divisor)
 
   args.totals.forEach(item => {

@@ -139,7 +139,6 @@
     "eslint-plugin-standard": "^3.0.1",
     "filesize": "^3.5.11",
     "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-better-rollup": "^2.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^4.0.0",
     "gulp-flatten": "^0.3.1",
@@ -147,6 +146,7 @@
     "gulp-imagemin": "^3.4.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
+    "gulp-print": "^2.0.1",
     "gulp-rev": "^8.0.0",
     "gulp-size": "^2.1.0",
     "gulp-sizereport": "^1.2.0",
@@ -160,12 +160,14 @@
     "minimist": "^1.2.0",
     "require-directory": "^2.1.1",
     "rimraf": "^2.6.2",
+    "rollup": "^0.50.0",
     "rollup-plugin-buble": "^0.16.0",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sizes": "^0.4.2",
-    "stylint-stylish": "^1.4.0"
+    "stylint-stylish": "^1.4.0",
+    "through2": "^2.0.3"
   },
   "dependencies": {
     "nib": "^1.1.2",
