@@ -164,7 +164,7 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-sizes": "^0.4.0",
+    "rollup-plugin-sizes": "^0.4.2",
     "stylint-stylish": "^1.4.0"
   },
   "dependencies": {

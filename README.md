@@ -21,7 +21,6 @@ With crius you can:
 
 1. `git clone git@github.com:kaisermann/crius.git`
 1. `npm install` or `yarn`
-1. Run at least `gulp build` before running `gulp watch`
 
 ## Usage samples
 
@@ -50,10 +49,7 @@ Pretty much every task needed is covered by the `package.json` scripts:
 - `gulp clean` - Deletes the distribution directory
 - `gulp watch` - Starts watching the asset files
 - `gulp sizereport` - Displays the size and gzipped size of your project
-- `gulp scripts` - Build 'scripts';
-- `gulp styles` - Build 'styles';
-- `gulp fonts` - Build 'fonts';
-- `gulp images` - Build 'images';
+- `gulp scripts|styles|fonts|images` - Build the specified resource assets;
 - `gulp lint` - Lint all `styl` and `js` files;
 - `gulp lint:styles` - Lint all `styl` files;
 - `gulp lint:scripts` - Lint all `js` files.
