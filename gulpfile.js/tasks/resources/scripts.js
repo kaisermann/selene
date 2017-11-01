@@ -1,5 +1,3 @@
-const { join } = require('path')
-
 const gulp = require('gulp')
 const lazypipe = require('lazypipe')
 const concat = require('gulp-concat')

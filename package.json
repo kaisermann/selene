@@ -174,10 +174,10 @@
     "through2": "^2.0.3"
   },
   "dependencies": {
-    "accessibilityjs": "^1.0.1",
     "nib": "^1.1.2",
     "rolleiflex": "^6.0.1",
     "rupture": "^0.6.2",
+    "tota11y": "^0.1.6",
     "wpdls": "^0.0.7"
   }
 }

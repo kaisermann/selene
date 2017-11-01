@@ -24,7 +24,7 @@
           "files": "index.js",
           "autoload": "resources/assets/scripts/autoload/*.js"
         },
-        "accessibility-test.js": "accessibility-test.js"
+        "accessibility-test.js": "~/tota11y/build/tota11y.js"
       }
     },
     "styles": {
