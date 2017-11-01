@@ -146,7 +146,6 @@
     "gulp-imagemin": "^3.4.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
-    "gulp-print": "^2.0.1",
     "gulp-rev": "^8.0.0",
     "gulp-size": "^2.1.0",
     "gulp-sizereport": "^1.2.0",
