@@ -198,7 +198,7 @@ module.exports = {
 }
 ```
 
-You can see other real examples by looking at the [`gulpfile.js/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) directory.
+You can see other real examples by looking at the [`gulpfile.js/tasks/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/tasks/resources/) directory.
 
 ## External links
 
