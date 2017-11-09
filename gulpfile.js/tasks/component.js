@@ -1,5 +1,5 @@
 const { join } = require('path')
-const fs = require('fs')
+const { writeFileSync } = require('fs')
 const rimraf = require('rimraf')
 const mkdirp = require('mkdirp')
 const gulp = require('gulp')
@@ -46,7 +46,6 @@ const fillComponentName = (content, name) =>
 
 gulp.task('component', done => {
   const args = process.argv.slice(3)
-  const promiseQueue = []
   const componentsToManage = args[1].split(',').map(s => s.trim())
 
   componentsToManage.forEach(tmpComponentName => {
@@ -62,28 +61,21 @@ gulp.task('component', done => {
         mkdirp.sync(componentPath)
 
         // Creates the .styl, .js and .blade.php files
-        FILE_TEMPLATES.forEach(resTemplate => {
-          promiseQueue.push(
-            new Promise((resolve, reject) => {
-              fs.writeFile(
-                join(componentPath, `${fileName}.${resTemplate[0]}`),
-                fillComponentName(resTemplate[1], realComponentName),
-                resolve
-              )
-            })
+        FILE_TEMPLATES.forEach(resTemplate =>
+          writeFileSync(
+            join(componentPath, `${fileName}.${resTemplate[0]}`),
+            fillComponentName(resTemplate[1], realComponentName)
           )
-        })
+        )
+        done()
         break
 
       case 'delete':
-        promiseQueue.push(
-          new Promise((resolve, reject) => rimraf(componentPath, resolve))
-        )
+        rimraf(componentPath, done)
         break
 
       default:
         throw new Error('Invalid parameter. ')
     }
   })
-  Promise.all(promiseQueue).then(() => done())
 })
