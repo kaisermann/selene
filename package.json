@@ -12,12 +12,7 @@
   "engines": {
     "node": ">= 8.6.0"
   },
-  "browserslist": [
-    "last 2 versions",
-    "opera 12",
-    "IE 11",
-    "Safari >= 8"
-  ],
+  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
   "scripts": {
     "watch": "gulp watch -d --sync --report --maps",
     "start": "npm run -s watch",
@@ -31,7 +26,8 @@
     "lint": "gulp lint",
     "lint:styles": "gulp lint:styles",
     "lint:scripts": "gulp lint:scripts",
-    "pot": "npm run -s build:views; mkdir -p languages; find .blade.cache app resources -iname '*.php' | xargs xgettext --language=PHP --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n -k_x -k_ex -k_nx -kesc_attr__ -kesc_attr_e -kesc_attr_x -kesc_html__ -kesc_html_e -kesc_html_x -k_n_noop -k_nx_noop -o ./languages/selene.pot"
+    "pot":
+      "npm run -s build:views; mkdir -p languages; find .blade.cache app resources -iname '*.php' | xargs xgettext --language=PHP --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n -k_x -k_ex -k_nx -kesc_attr__ -kesc_attr_e -kesc_attr_x -kesc_html__ -kesc_html_e -kesc_html_x -k_n_noop -k_nx_noop -o ./languages/selene.pot"
   },
   "eslintConfig": {
     "root": true,
@@ -56,10 +52,7 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
-    "plugins": [
-      "import",
-      "compat"
-    ],
+    "plugins": ["import", "compat"],
     "settings": {
       "import/core-modules": [],
       "import/ignore": [
