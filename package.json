@@ -27,7 +27,7 @@
     "lint:styles": "gulp lint:styles",
     "lint:scripts": "gulp lint:scripts",
     "pot":
-      "npm run -s build:views; mkdir -p languages; find .blade.cache app resources -iname '*.php' | xargs xgettext --language=PHP --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n -k_x -k_ex -k_nx -kesc_attr__ -kesc_attr_e -kesc_attr_x -kesc_html__ -kesc_html_e -kesc_html_x -k_n_noop -k_nx_noop -o ./languages/selene.pot"
+      "mkdir -p ./resources/lang && find ./resources ./app -iname '*.php' | xargs xgettext --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -o resources/lang/selene.pot && find ./resources -iname '*.blade.php' | xargs xgettext --language=Python --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -j -o resources/lang/selene.pot"
   },
   "eslintConfig": {
     "root": true,

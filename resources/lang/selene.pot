@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-27 15:48-0200\n"
+"POT-Creation-Date: 2017-11-09 13:43-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,43 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: .blade.cache/ace4c8fa0660297188ec5df12dca87b910606b7f.php:3
-msgid "Search for"
-msgstr ""
-
-#: .blade.cache/ace4c8fa0660297188ec5df12dca87b910606b7f.php:4
-msgid "Search"
-msgstr ""
-
-#: .blade.cache/e8e4f1476bdc4ee94ba3cb1ab15948a10efd0136.php:3
-msgid "404 - Page Not Found"
-msgstr ""
-
-#: app/controllers/app.php:61
-msgid "Latest Posts"
-msgstr ""
-
-#: app/controllers/app.php:67
-#, php-format
-msgid "Search Results for %s"
-msgstr ""
-
-#: app/controllers/app.php:70
-msgid "Not Found"
-msgstr ""
-
-#: app/setup.php:87
-msgid "Primary Navigation"
-msgstr ""
-
-#: app/setup.php:103
-msgid "Main"
-msgstr ""
-
-#: app/setup.php:108
-msgid "Footer"
-msgstr ""
 
 #: resources/functions.php:17
 msgid "Sage &rsaquo; Error"
@@ -85,4 +48,37 @@ msgstr ""
 #: resources/functions.php:64
 #, php-format
 msgid "Error locating <code>%s</code> for inclusion."
+msgstr ""
+
+#: app/setup.php:86
+msgid "Primary Navigation"
+msgstr ""
+
+#: app/setup.php:102
+msgid "Main"
+msgstr ""
+
+#: app/setup.php:107
+msgid "Footer"
+msgstr ""
+
+#: app/controllers/app.php:61
+msgid "Latest Posts"
+msgstr ""
+
+#: app/controllers/app.php:67
+#, php-format
+msgid "Search Results for %s"
+msgstr ""
+
+#: app/controllers/app.php:70
+msgid "Not Found"
+msgstr ""
+
+#: resources/components/SearchForm/SearchForm.blade.php:4
+msgid "Search"
+msgstr ""
+
+#: resources/views/404.blade.php:5
+msgid "404 - Page Not Found"
 msgstr ""
