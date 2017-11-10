@@ -44,7 +44,7 @@ module.exports = () =>
     } catch (err) {
       /** Invalidate the cache in case of error */
       rollupCache.delete(file.path)
-      console.err(new PluginError('rollup', err))
+      console.log(new PluginError('rollup', err.stack))
     } finally {
       next(null, file)
     }
