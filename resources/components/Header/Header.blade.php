@@ -1,7 +1,7 @@
 <header class="header js-header">
   <a class="brand" href="{{ home_url('/') }}">{{ $site_name }}</a>
 
-  <button class="burger js-burger">
+  <button class="burger js-burger" aria-label="Menu" aria-pressed="false">
     <span class="burger__slices"><span>Toggle Main Menu</span></span>
   </button>
 
