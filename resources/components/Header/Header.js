@@ -12,7 +12,7 @@ export default {
 
       burgerEl.setAttribute(
         'aria-pressed',
-        !(this.getAttribute('aria-pressed') === 'true')
+        !(burgerEl.getAttribute('aria-pressed') === 'true')
       )
     })
   },
