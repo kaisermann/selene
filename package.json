@@ -12,7 +12,12 @@
   "engines": {
     "node": ">= 8.6.0"
   },
-  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
+  "browserslist": [
+    "last 2 versions",
+    "opera 12",
+    "IE 11",
+    "Safari >= 8"
+  ],
   "scripts": {
     "watch": "gulp watch -d --sync --report --maps",
     "start": "npm run -s watch",
@@ -26,8 +31,7 @@
     "lint": "gulp lint",
     "lint:styles": "gulp lint:styles",
     "lint:scripts": "gulp lint:scripts",
-    "pot":
-      "mkdir -p ./resources/lang && find ./resources ./app -iname '*.php' | xargs xgettext --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -o resources/lang/selene.pot && find ./resources -iname '*.blade.php' | xargs xgettext --language=Python --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -j -o resources/lang/selene.pot"
+    "pot": "mkdir -p ./resources/lang && find ./resources ./app -iname '*.php' | xargs xgettext --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -o resources/lang/selene.pot && find ./resources -iname '*.blade.php' | xargs xgettext --language=Python --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -j -o resources/lang/selene.pot"
   },
   "eslintConfig": {
     "root": true,
@@ -52,7 +56,10 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
-    "plugins": ["import", "compat"],
+    "plugins": [
+      "import",
+      "compat"
+    ],
     "settings": {
       "import/core-modules": [],
       "import/ignore": [
@@ -126,9 +133,9 @@
     "browser-sync": "^2.18.13",
     "css-mqpacker": "^6.0.1",
     "cssnano": "^3.10.0",
-    "eslint": "^4.10.0",
+    "eslint": "^4.12.0",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-compat": "^2.0.1",
+    "eslint-plugin-compat": "^2.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
@@ -139,11 +146,11 @@
     "gulp-eslint": "^4.0.0",
     "gulp-flatten": "^0.3.1",
     "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^3.4.0",
+    "gulp-imagemin": "^4.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
     "gulp-purifycss": "^0.2.0",
-    "gulp-rev": "^8.0.0",
+    "gulp-rev": "^8.1.0",
     "gulp-size": "^2.1.0",
     "gulp-sizereport": "^1.2.0",
     "gulp-sourcemaps": "^2.6.1",
@@ -156,9 +163,9 @@
     "minimist": "^1.2.0",
     "require-directory": "^2.1.1",
     "rimraf": "^2.6.2",
-    "rollup": "^0.50.0",
+    "rollup": "^0.52.0",
     "rollup-plugin-alias": "^1.3.1",
-    "rollup-plugin-buble": "^0.16.0",
+    "rollup-plugin-buble": "^0.18.0",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
@@ -167,9 +174,9 @@
     "through2": "^2.0.3"
   },
   "dependencies": {
+    "rolleiflex": "^6.1.0",
+    "rupture": "^0.7.1",
     "nib": "^1.1.2",
-    "rolleiflex": "^6.0.1",
-    "rupture": "^0.6.2",
     "tota11y": "^0.1.6",
     "wpdls": "^0.0.8"
   }
