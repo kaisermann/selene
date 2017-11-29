@@ -50,7 +50,9 @@ class MenuWalker extends \Walker_Nav_Menu
         //$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
         $id = '';
 
-        $output .= $indent . '<li' . $id . $class_names .'>';
+        $aria_current = $item->current ? 'aria-current="page"' : '';
+
+        $output .= $indent . '<li ' . $id . ' ' . $class_names .' '. $aria_current .'>';
 
         $atts = [];
         $atts['title']  = ! empty($item->attr_title) ? $item->attr_title : '';

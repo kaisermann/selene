@@ -11,8 +11,8 @@ export default {
       }
 
       burgerEl.setAttribute(
-        'aria-pressed',
-        !(burgerEl.getAttribute('aria-pressed') === 'true')
+        'aria-expanded',
+        !(burgerEl.getAttribute('aria-expanded') === 'true')
       )
     })
   },

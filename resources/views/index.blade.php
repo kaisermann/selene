@@ -2,7 +2,7 @@
 
 @section('content')
   @mainquery
-    <article @php(post_class())>
+    <article @php(post_class()) role="article">
       <header>
         <h2 class="entry__title">
           <a href="{{ get_permalink() }}">

@@ -38,9 +38,10 @@ class App extends Controller
                 [
                     'theme_location' => 'primary_navigation',
                     'walker' => new \BEM\MenuWalker,
-                    'block' => 'header__nav',
-                    'menu_class' => 'nav header__nav',
-                    'container' => false,
+                    'block' => 'header__menu',
+                    'menu_class' => 'header__menu',
+                    'container' => 'nav',
+                    'container_class' => 'app__nav',
                     'echo' => false,
                 ]
             );
