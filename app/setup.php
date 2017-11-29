@@ -28,10 +28,11 @@ add_action('wp_enqueue_scripts', function () {
 
     wp_localize_script(
         'selene/main.js#defer',
-        'appMeta',
+        'selene',
         [
             'homeUrl' => get_bloginfo('url'),
             'ajaxUrl' => admin_url('admin-ajax.php'),
+            'assetsUrl' => config('assets.uri')
         ]
     );
 }, 100);
