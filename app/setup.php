@@ -17,7 +17,13 @@ add_action('wp_enqueue_scripts', function () {
 
     /** Enqueue accessibility test script on development env */
     if (strtolower(WP_ENV) === 'development') {
-        wp_enqueue_script('selene/accessibility-test.js#defer', asset_path('scripts/accessibility-test.js'), [], null, true);
+        wp_enqueue_script(
+            'selene/accessibility-test.js#defer',
+            asset_path('scripts/accessibility-test.js'),
+            [],
+            null,
+            true
+        );
     }
 
     wp_localize_script(

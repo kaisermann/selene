@@ -1,5 +1,7 @@
 <?php
-// Documentation: https://github.com/soberwp/controller
+/*
+ * Controllers documentation: https://github.com/soberwp/controller
+ */
 
 namespace App;
 
