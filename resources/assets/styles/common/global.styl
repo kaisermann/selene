@@ -1,2 +1,37 @@
-/** Builds the Rolleiflex grid */
+html
+  font-size: app.base.fontSize
+  line-height: app.base.lineHeight
+
+body
+  font-family: app.base.fontFamily
+  background-color: #fff
+  color: colors.black
+
+a
+  color: #00f
+
+  &:not(:hover)
+    text-decoration: none
+
+h1
+h2
+h3
+h4
+h5
+h6
+  margin-bottom: app.headings.marginBottom
+
+p
+ol
+ul
+dl
+blockquote
+pre
+  margin-bottom: app.paragraphs.marginBottom
+
+caption
+  padding-top: app.table.cellPadding
+  padding-bottom: app.table.cellPadding
+
+/** Builds the Rolleiflex grid */
 buildRolleiflex()

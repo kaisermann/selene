@@ -2,10 +2,19 @@
 rolleiflex.baseFontSize = app.base.fontSize
 rolleiflex.autoBorderBox = false
 rolleiflex.use.em = false
+
 rolleiflex.spaces = {
   gutter: 24px
   containerPadding: 12px
 }
+
+rolleiflex.build = {
+  container: true
+  grid: true
+  helpers: true
+  responsiveText: true
+}
+
 rolleiflex.breakpoints = {
   xs: {
     minWidth: 0
@@ -38,13 +47,13 @@ for scaleName, scaleOpts in $_bps
 
 /** Configure rupture to work with rolleiflex breakpoints */
 rupture = merge(rupture, {
-  "base-font-size":        app.base.fontSize
-  "scale":                 $_bpsList
-  "scale-names":           keys($_bps)
-  "anti-overlap":          true
-  "enable-em-breakpoints": rolleiflex.use.em
-  "mobile-cutoff":         $_bps.sm.minWidth - 1
-  "tablet-cutoff":         $_bps.md.minWidth - 1
-  "desktop-cutoff":        $_bps.md.minWidth - 1
-  "hd-cutoff":             $_bps.lg.minWidth - 1
+  base-font-size:        app.base.fontSize
+  scale:                 $_bpsList
+  scale-names:           keys($_bps)
+  anti-overlap:          true
+  enable-em-breakpoints: rolleiflex.use.em
+  mobile-cutoff:         $_bps.sm.minWidth - 1
+  tablet-cutoff:         $_bps.md.minWidth - 1
+  desktop-cutoff:        $_bps.md.minWidth - 1
+  hd-cutoff:             $_bps.lg.minWidth - 1
 })
