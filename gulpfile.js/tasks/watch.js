@@ -1,12 +1,25 @@
 const { join } = require('path')
+const { unlinkSync } = require('fs')
 const gulp = require('gulp')
 const util = require('gulp-util')
 
+const pathExists = require('../utils/doesPathExist')
 const params = require('../params')
 const crius = require('../manifest')
 
 gulp.task('watch', done => {
   const bsConf = crius.config.browserSync
+
+  if (crius.config.paths.manifest !== undefined) {
+    const manifestPath = join(
+      crius.config.paths.dist,
+      crius.config.paths.manifest
+    )
+
+    if (pathExists(manifestPath)) {
+      unlinkSync(manifestPath)
+    }
+  }
 
   if (params.sync && crius.browserSyncInstance) {
     if (bsConf) {
