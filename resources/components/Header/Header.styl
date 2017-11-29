@@ -1,6 +1,6 @@
 .burger
-  top: margins.burger
-  right: margins.burger
+  top: 35px
+  right: 35px
   &.is-active
     span
       &::before
@@ -9,24 +9,29 @@
 
 // .header
 .header__overlay
+  display: flex
+  align-items: center
   position: fixed
   z-index: layers.overlay
   top: 0
   left: 0
   size(100%)
-  background-color: rgba(colors.black, .6)
-  transition: .3s ease
-  opacity: 0
-  visibility: hidden
   padding: 45px
   font-size: rem(48px)
   line-height: 1.4
+  background-color: rgba(colors.black, .6)
+  transition: .3s ease
 
-  body.is-header-overlay-active &
-    opacity: 1
-    visibility: visible
+  body:not(.is-header-overlay-active) &
+    opacity: 0
+    visibility: hidden
 
   a
     color: colors.white
-    &:hover
-      text-decoration: underline
+
+.header__nav
+  padding: 0
+  margin: 0
+
+.header__nav__item
+  list-style: none
