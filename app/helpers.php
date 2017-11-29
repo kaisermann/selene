@@ -199,7 +199,7 @@ function console($data, $onlyLogged = true)
 function get_svg($path, $echo = true)
 {
     $realPath = config('theme')['dir'] . "/dist/images/{$path}.svg";
-    $content = file_get_contents(realpath($realPath));
+    $content = @file_get_contents(realpath($realPath)) ?: "[NOT FOUND - $path.svg]";
     if ($echo) {
         echo $content;
     }
