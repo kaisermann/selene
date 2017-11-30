@@ -126,6 +126,9 @@ add_filter('body_class', function (array $classes) {
 
     /** String patterns to remove */
     $excludePatterns = [
+        'post-type-archive',            // Removes post-type-archive
+        'page-template-templates',      // Removes page-template-views-$template
+        'page-template-template-blade', // Removes page-template-views-$template
         'page-template-views.*',        // Removes page-template-views-$template
         'page-id-.*',                   // Removes page-id-$id
         'post-template.*',              // Removes post-template-$template
@@ -133,13 +136,11 @@ add_filter('body_class', function (array $classes) {
         'single-format.*',              // Removes single-format-$format
         'category-\d*',                 // Removes category-$id
         'tag-\d*',                      // Removes tag-$id,
-        'post-type-archive',            // Removes post-type-archive
     ];
 
     /** Regex patterns to replace class names */
     $replacePatterns = [
-        '/page-template-template-(.*)-blade/' => 'template-$1', // Simplifies template classes
-        '/page-template(.*)/' => 'template$1',
+        '/page-template-(?:template-)(.*)(?:-blade)?/' => 'template-$1',
         '/post-type-archive-(.*)/' => 'archive-$1', // Simplifies custom-post-type-archive
     ];
 
@@ -204,9 +205,10 @@ add_filter("theme_page_templates", function ($post_templates) {
     )
         ->reduce(function ($acc, $file_path) {
             $template_label = null;
+            $file_name = basename($file_path);
             $template_name = basename(dirname($file_path));
             if (preg_match('|Template Name:(.*)$|mi', file_get_contents($file_path), $template_label)) {
-                $acc[$template_name] = _cleanup_header_comment($template_label[1]);
+                $acc["views/templates/$template_name/$file_name"] = _cleanup_header_comment($template_label[1]);
             }
 
             return $acc;

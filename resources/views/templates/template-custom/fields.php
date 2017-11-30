@@ -25,6 +25,6 @@ $template_custom
 
 /** Field Group location setup */
 $template_custom
-    ->setLocation('page_template', '==', 'template-custom');
+    ->setLocation('page_template', '==', 'views/templates/template-custom/template.blade.php');
 
 return $template_custom;
