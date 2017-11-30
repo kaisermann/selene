@@ -130,7 +130,7 @@
     "browser-sync": "^2.18.13",
     "css-mqpacker": "^6.0.1",
     "cssnano": "^3.10.0",
-    "eslint": "^4.12.0",
+    "eslint": "^4.12.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-compat": "^2.1.0",
     "eslint-plugin-import": "^2.8.0",
@@ -170,7 +170,7 @@
   },
   "dependencies": {
     "nib": "^1.1.2",
-    "rolleiflex": "^6.1.0",
+    "rolleiflex": "^6.1.1",
     "rupture": "^0.7.1"
   }
 }
