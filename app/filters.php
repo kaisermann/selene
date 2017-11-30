@@ -198,6 +198,23 @@ collect([
         add_filter("{$type}_template_hierarchy", __NAMESPACE__ . '\\filter_templates');
     });
 
+add_filter("theme_page_templates", function ($post_templates) {
+    $template_files = collect(
+        glob(SELENE_TEMPLATES_DIR.'/*/template*.php')
+    )
+        ->reduce(function ($acc, $file_path) {
+            $template_label = null;
+            $template_name = basename(dirname($file_path));
+            if (preg_match('|Template Name:(.*)$|mi', file_get_contents($file_path), $template_label)) {
+                $acc[$template_name] = _cleanup_header_comment($template_label[1]);
+            }
+
+            return $acc;
+        }, [])
+        ;
+
+    return array_merge($post_templates, $template_files);
+});
 
 /**
  * Render page using Blade

@@ -16,6 +16,7 @@ const plugins = [
   rollUpAlias({
     '@Components': crius.config.paths.components,
     '@Scripts': join(crius.config.paths.source, 'scripts'),
+    '@Templates': crius.config.paths.templates,
   }),
   /** Allow to import node builtin modules such as path, url, querystring, etc */
   rollUpNodebuiltins(),

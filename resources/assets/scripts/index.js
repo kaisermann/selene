@@ -1,9 +1,11 @@
 import Router from './utils/Router.js'
 import common from './routes/common.js'
+import blog from '@Templates/home/route.js'
 
 // Modify the 'routes' object to include or remove other routes
 const routes = {
   common,
+  blog,
 }
 
 // Usually, you won't need to modify anything below this line.

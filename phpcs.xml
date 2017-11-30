@@ -7,9 +7,7 @@
   <file>resources/functions.php</file>
   <file>resources/index.php</file>
   <file>resources/views</file>
-  <file>resources/components</file>
-  <exclude-pattern>resources/components/**/*.js</exclude-pattern>
-  <exclude-pattern>resources/components/**/*.js</exclude-pattern>
+  <exclude-pattern>resources/views/**/*.js</exclude-pattern>
 
   <!-- Show colors in console -->
   <arg value="-colors"/>
@@ -25,61 +23,51 @@
   <!-- Allow php files without any PHP in them -->
   <rule ref="Internal.NoCodeFound">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Allow braces on same line for named functions -->
   <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Allow closing braces to be on the same line -->
   <rule ref="Squiz.WhiteSpace.ScopeClosingBrace">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Disable newline after opening brace -->
   <rule ref="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Allow multiple PHP statements in the same line -->
   <rule ref="Generic.Formatting.DisallowMultipleStatements.SameLine">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Disable PSR-2 indentation rules that are buggy with 2 spaces -->
   <rule ref="PSR2.ControlStructures.SwitchDeclaration.BreakIndent">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Don't require a blank line after the last `use` -->
   <rule ref="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Allow long lines -->
   <rule ref="Generic.Files.LineLength.TooLong">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Ignore indentation rules -->
   <rule ref="Generic.WhiteSpace.ScopeIndent">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Allow PHP closing tags -->
   <rule ref="PSR2.Files.ClosingTag.NotAllowed">
     <exclude-pattern>resources/views</exclude-pattern>
-    <exclude-pattern>resources/components</exclude-pattern>
   </rule>
 
   <!-- Allow snake case on class methods -->

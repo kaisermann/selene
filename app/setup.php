@@ -8,6 +8,10 @@ use Roots\Sage\Template\Blade;
 use Roots\Sage\Template\BladeProvider;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 
+define('SELENE_TEMPLATES_DIR', get_theme_file_path().'/views/templates');
+define('SELENE_COMPONENTS_DIR', get_theme_file_path().'/views/components');
+define('SELENE_FIELDS_DIR', __DIR__ . '/fields');
+
 /**
  * Theme assets
  */
@@ -163,20 +167,27 @@ add_action('after_setup_theme', function () {
 /**
  * ACF Builder initialization and fields loading
  */
-define('ACF_FIELDS_DIR', __DIR__ . '/fields');
-if (is_dir(ACF_FIELDS_DIR) && function_exists('acf_add_local_field_group')) {
+
+if (function_exists('acf_add_local_field_group')) {
     add_action('init', function () {
-        foreach (glob(ACF_FIELDS_DIR . '/*.php') as $file_path) {
-            if (($fields = require_once($file_path)) !== true) {
-                if (is_array($fields)) {
-                    foreach ($fields as $field) {
-                        if ($field instanceof FieldsBuilder) {
-                            acf_add_local_field_group($field->build());
+        $acf_field_globs = [
+            SELENE_FIELDS_DIR . '/*.php',
+            SELENE_TEMPLATES_DIR . '/*/fields.php'
+        ];
+
+        foreach($acf_field_globs as $glob) {
+            foreach (glob($glob) as $file_path) {
+                if (($fields = require_once($file_path)) !== true) {
+                    if (is_array($fields)) {
+                        foreach ($fields as $field) {
+                            if ($field instanceof FieldsBuilder) {
+                                acf_add_local_field_group($field->build());
+                            }
                         }
-                    }
-                } else {
-                    if ($fields instanceof FieldsBuilder) {
-                        acf_add_local_field_group($fields->build());
+                    } else {
+                        if ($fields instanceof FieldsBuilder) {
+                            acf_add_local_field_group($fields->build());
+                        }
                     }
                 }
             }

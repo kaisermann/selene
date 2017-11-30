@@ -19,8 +19,14 @@ crius.config.paths = {
 }
 crius.config.paths.components = join(
   crius.config.paths.root,
-  'resources/components'
+  'resources/views/components'
 )
+
+crius.config.paths.templates = join(
+  crius.config.paths.root,
+  'resources/views/templates'
+)
+
 crius.config.paths.distToRoot = relative(
   join(crius.config.paths.dist, 'resource'),
   crius.config.paths.root

@@ -117,6 +117,10 @@ function filter_templates($templates)
             return collect($paths)
                 ->flatMap(function ($path) use ($template) {
                     return [
+                        "{$path}/templates/{$template}/template.blade.php",
+                        "{$path}/templates/{$template}/template.php",
+                        "{$path}/templates/{$template}/{$template}.blade.php",
+                        "{$path}/templates/{$template}/{$template}.php",
                         "{$path}/{$template}.blade.php",
                         "{$path}/{$template}.php"
                     ];
@@ -163,7 +167,7 @@ function render_template($templatePath, $data = [])
 function render_component($componentName, $data = [])
 {
     echo template(
-        config('theme')['dir'] . "/resources/components/{$componentName}/{$componentName}.blade.php",
+        config('theme')['dir'] . "/resources/views/components/{$componentName}/{$componentName}.blade.php",
         $data
     );
 }

@@ -75,7 +75,7 @@ msgstr ""
 msgid "Not Found"
 msgstr ""
 
-#: resources/components/SearchForm/SearchForm.blade.php:4
+#: resources/views/components/SearchForm/SearchForm.blade.php:4
 msgid "Search"
 msgstr ""
 
