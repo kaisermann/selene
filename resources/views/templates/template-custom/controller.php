@@ -9,7 +9,4 @@ use Sober\Controller\Controller;
 
 class TemplateCustom extends Controller
 {
-    public function teste() {
-        return 'testeeeeeee';
-    }
 }
