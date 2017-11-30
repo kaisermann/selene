@@ -138,8 +138,7 @@ add_filter('body_class', function (array $classes) {
 
     /** Regex patterns to replace class names */
     $replacePatterns = [
-        '/page-template-template-(.*)-blade/' => 'template-$1', // Simplifies template classes
-        '/page-template(.*)/' => 'template$1',
+        '/page-template-(.*)(?:-blade)?/' => 'template-$1',
         '/post-type-archive-(.*)/' => 'archive-$1', // Simplifies custom-post-type-archive
     ];
 
