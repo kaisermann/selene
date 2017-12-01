@@ -2,6 +2,9 @@
 
 namespace App;
 
+/** Display svg correctly on the dashboard */
+\PressBits\MediaLibrary\ScalableVectorGraphicsDisplay::enable();
+
 /**
  * Enqueue 'admin.css' and 'login.css' on login page and dashboard
  */

@@ -35,7 +35,8 @@
     "soberwp/controller": "~9.0.0-beta.4",
     "johnbillion/extended-cpts": "^4",
     "StoutLogic/acf-builder": "^1.5",
-    "rarst/wps": "^1.1"
+    "rarst/wps": "^1.1",
+    "press-bits/media-library-svg-display": "^0.1.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

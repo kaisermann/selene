@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d960c7090e2ac7524e04847af79f0997",
+    "content-hash": "c3f0fa5a0aa9549c2694f9dc88495690",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -898,6 +898,46 @@
                 "dependency injection"
             ],
             "time": "2017-07-23T07:32:15+00:00"
+        },
+        {
+            "name": "press-bits/media-library-svg-display",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/press-bits/media-library-svg-display.git",
+                "reference": "32f71c0bcd5de17f6b1b2769e342259298a32cec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/press-bits/media-library-svg-display/zipball/32f71c0bcd5de17f6b1b2769e342259298a32cec",
+                "reference": "32f71c0bcd5de17f6b1b2769e342259298a32cec",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PressBits\\MediaLibrary\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Dylan Kuhn",
+                    "email": "dylan@cyberhobo.net"
+                },
+                {
+                    "name": "Sterling Hamilton",
+                    "homepage": "http://www.sterlinghamilton.com"
+                }
+            ],
+            "description": "Enable display of Scalable Vector Graphics (SVG) in the WordPress media library.",
+            "time": "2016-12-20T22:48:48+00:00"
         },
         {
             "name": "psr/container",
