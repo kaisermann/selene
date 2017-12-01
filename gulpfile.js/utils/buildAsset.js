@@ -6,8 +6,11 @@ const nodeModulesRegEx = /^(\.|\.\/)?(~|node_modules)/
 
 module.exports = (outputName, baseObj, directory) => {
   let assetObj
-  if (typeof baseObj === 'string') {
-    assetObj = { files: [baseObj] }
+
+  if (baseObj.constructor !== Object) {
+    assetObj = {
+      files: Array.isArray(baseObj) ? baseObj : [baseObj],
+    }
   } else {
     assetObj = baseObj
     if (!assetObj.files) assetObj.files = []
