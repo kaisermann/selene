@@ -9,6 +9,7 @@ const plumber = require('gulp-plumber')
 const errorHandler = require('./utils/errorHandler')
 const isDir = require('./utils/isDir')
 const sizereport = require('./utils/sizereport')
+const buildAsset = require('./utils/buildAsset')
 
 const crius = require('./manifest')
 const params = require('./params')
@@ -18,45 +19,20 @@ const resMods = requireDir(module, './tasks/resources')
 for (const resourceType of Object.keys(crius.resources)) {
   /** Default resource module properties */
   resMods[resourceType] = {
-    ...{ tasks: {}, pipelines: {} },
+    tasks: {},
+    pipelines: {},
     ...resMods[resourceType],
   }
 }
 
-/** RegEx to detect node_modules related paths */
-const nodeModulesRegEx = /^(\.|\.\/)?(~|node_modules)/
-
-/** Build the asset object */
-const buildAsset = (outputName, baseObj, directory) => {
-  let assetObj
-  if (typeof baseObj === 'string') {
-    assetObj = { files: [baseObj] }
-  } else {
-    assetObj = baseObj
-    if (!assetObj.files) assetObj.files = []
-    else if (!Array.isArray(assetObj.files)) {
-      assetObj.files = [assetObj.files]
-    }
-  }
-  assetObj.autoload = baseObj.autoload || []
-  assetObj.outputName = outputName
-  assetObj.globs = assetObj.files.map(
-    path =>
-      nodeModulesRegEx.test(path)
-        ? path.replace(nodeModulesRegEx, './node_modules')
-        : join(crius.config.paths.source, directory, path)
-  )
-  return assetObj
-}
-
 /** Get a valide resource pipeline or a noop */
-const resourcePipeline = (pipeline, resourceType, ...args) =>
+const getResourcePipeline = (pipeline, resourceType, ...args) =>
   typeof resMods[resourceType].pipelines[pipeline] === 'function'
     ? resMods[resourceType].pipelines[pipeline](...args)()
     : noop()
 
 /** Resource sub-task creator */
-const resourceSubtask = (resourceType, resourceInfo) => {
+const getResourceSubtask = (resourceType, resourceInfo) => {
   const innerTaskFn = done => {
     /** Merged object to use on resourceModule.pipelines.merged */
     const merged = merge()
@@ -76,7 +52,7 @@ const resourceSubtask = (resourceType, resourceInfo) => {
         gulp
           .src(asset.globs)
           .pipe(plumber({ errorHandler }))
-          .pipe(resourcePipeline('each', resourceType, asset))
+          .pipe(getResourcePipeline('each', resourceType, asset))
           .pipe(gulp.dest(output))
           .pipe(
             crius.browserSyncInstance
@@ -89,7 +65,7 @@ const resourceSubtask = (resourceType, resourceInfo) => {
     }
 
     merged
-      .pipe(resourcePipeline('merged', resourceType, resourceInfo))
+      .pipe(getResourcePipeline('merged', resourceType, resourceInfo))
       .on('end', done)
       .on('error', done)
       .resume()
@@ -104,10 +80,11 @@ const resourceSubtask = (resourceType, resourceInfo) => {
 const shouldReportSizes = params.report && process.argv.includes('watch')
 for (const [resourceType, resourceInfo] of Object.entries(crius.resources)) {
   /** Pushes the resource task and its dependencies  */
+  const resourceTasks = resMods[resourceType].tasks
   const taskQueue = []
-    .concat(resMods[resourceType].tasks['before'] || [])
-    .concat(resourceSubtask(resourceType, resourceInfo))
-    .concat(resMods[resourceType].tasks['after'] || [])
+    .concat(resourceTasks.before || [])
+    .concat(getResourceSubtask(resourceType, resourceInfo))
+    .concat(resourceTasks.after || [])
     .concat(
       shouldReportSizes || process.argv.includes(resourceType)
         ? sizereport(resourceInfo.pattern)
