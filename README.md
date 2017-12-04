@@ -3,6 +3,9 @@
 > Opinionated Wordpress theme based on [Sage 9](https://github.com/roots/sage/)
 > and [Crius](https://github.com/kaisermann/crius).
 
+This project is being constantly modified (I promise to fix the commit mess
+someday).
+
 ## Informations
 
 * Write CSS with Stylus
@@ -104,8 +107,8 @@ Directives can be defined on
   * Provides
     [John Billion's libraries](https://github.com/johnbillion/extended-cpts)
     which make painless to create custom post types and taxonomies.
-  * Uses ACF Builder to build ACF fields in the theme's source code instead of
-    the website's database.
+  * Uses [ACF Builder](https://github.com/StoutLogic/acf-builder) to build ACF
+    fields in the theme's source code instead of the website's database.
   * Uses [Whoops](https://github.com/filp/whoops) error handler for... handling
     errors.
 
