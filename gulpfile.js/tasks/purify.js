@@ -7,6 +7,7 @@ const size = require('gulp-size')
 const purifyCSS = require('gulp-purifycss')
 
 const crius = require('../manifest')
+const params = require('../params')
 const pathExists = require('../utils/doesPathExist')
 const errorHandler = require('../utils/errorHandler')
 
@@ -46,7 +47,7 @@ gulp.task('purify', done => {
     .pipe(auxSizeReport('Before purifyCSS:'))
     .pipe(
       purifyCSS(globsToParse, {
-        minify: !crius.params.debug,
+        minify: !params.debug,
         whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
       })
     )
