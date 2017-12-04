@@ -46,6 +46,7 @@ gulp.task('purify', done => {
     .pipe(auxSizeReport('Before purifyCSS:'))
     .pipe(
       purifyCSS(globsToParse, {
+        minify: !crius.params.debug,
         whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
       })
     )
