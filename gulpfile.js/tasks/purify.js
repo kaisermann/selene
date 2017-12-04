@@ -33,6 +33,13 @@ gulp.task('purify', done => {
     .filter(([name, asset]) => asset.purify)
     .map(([name, asset]) => join(stylesDir, revManifest[name] || name))
 
+  if (!cssPaths.length) {
+    console.log(
+      "No css files found with 'purify': true. Define it on the 'crius.json'"
+    )
+    return done()
+  }
+
   const rootDir = process.cwd()
   const globsToParse = [
     join(distPath, 'scripts', '**', '*.js'),
