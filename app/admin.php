@@ -81,7 +81,9 @@ add_action('admin_menu', function () {
 /**
  * Set login page logo redirecting to home url
  */
-add_filter('login_headerurl', function () { return get_home_url(); });
+add_filter('login_headerurl', function () {
+    return get_home_url();
+});
 
 /**
  * Edit the admin left footer text
@@ -104,23 +106,23 @@ add_filter('update_footer', function ($wp_version) {
 /*
  * If WP_ENV is set, append the environment name to the admin bar for current environment clarity.
  */
-if(WP_ENV) {
-    add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
+if (WP_ENV) {
+    add_action('admin_bar_menu', function ($wp_admin_bar) {
         $env = strtolower(WP_ENV);
         $wp_admin_bar->add_node([
             'id'    => 'current_env',
-            'title' => __( 'Environment', 'selene' ) . ': '. ucfirst($env),
+            'title' => __('Environment', 'selene') . ': '. ucfirst($env),
             'meta'  => ['class' => 'admin-bar__current-env is-'.$env],
             'parent' => 'top-secondary',
         ]);
-    }, 999 );
+    }, 999);
 
-    if(!is_admin() && is_user_logged_in()) {
-        $adminbarCustomStylFn = function () {
-            echo '<style>#wpadminbar .admin-bar__current-env .ab-item{color:#fff!important;background-color: #90250b!important}#wpadminbar .admin-bar__current-env[class*="is-staging"] .ab-item{background-color: #ae7100!important}#wpadminbar .admin-bar__current-env[class*="is-dev"] .ab-item{background-color: #307253!important}</style>';
-        };
+    $adminbarCustomStylFn = function () {
+        echo '<style>#wpadminbar .admin-bar__current-env .ab-item{color:#fff!important;background-color: #90250b!important}#wpadminbar .admin-bar__current-env[class*="is-staging"] .ab-item{background-color: #ae7100!important}#wpadminbar .admin-bar__current-env[class*="is-dev"] .ab-item{background-color: #307253!important}</style>';
+    };
 
+    add_action('admin_head', $adminbarCustomStylFn);
+    if (!is_admin() && is_user_logged_in()) {
         add_action('wp_head', $adminbarCustomStylFn);
-        add_action('admin_head', $adminbarCustomStylFn);
     }
 }
