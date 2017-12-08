@@ -37,7 +37,7 @@ font-face($font-name, $file-path, $weight = 'normal', $style = 'normal')
  */
 fluid($prop, $fluidVal, $min, $max = false, $fallback = false)
   $responsive-unit = unit($fluidVal)
-  $responsive-unitless = $responsive / ($fluidVal - $fluidVal + 1)
+  $responsive-unitless = remove-unit($fluidVal)
   $min-bp = $min / $responsive-unitless * 100
   $max-bp = ($max != false) ? $max / $responsive-unitless * 100 : 0
 
