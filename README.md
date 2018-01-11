@@ -29,8 +29,7 @@ someday).
 * [PHP](http://php.net/manual/en/install.php) >= 7
 * [Composer](https://getcomposer.org/download/)
 * [Node.js](http://nodejs.org/) >= 8.6.0
-* [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >=
-  4.x.x
+* [Gulp](https://github.com/gulpjs/gulp#installation) >= 4.x.x
 
 ### Recommended
 
