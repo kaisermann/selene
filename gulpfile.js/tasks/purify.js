@@ -7,6 +7,7 @@ const size = require('gulp-size')
 const purifyCSS = require('gulp-purifycss')
 
 const crius = require('../manifest')
+const params = require('../params')
 const pathExists = require('../utils/doesPathExist')
 const errorHandler = require('../utils/errorHandler')
 
@@ -32,6 +33,13 @@ gulp.task('purify', done => {
     .filter(([name, asset]) => asset.purify)
     .map(([name, asset]) => join(stylesDir, revManifest[name] || name))
 
+  if (!cssPaths.length) {
+    console.log(
+      "No css files found with 'purify': true. Define it on the 'crius.json'"
+    )
+    return done()
+  }
+
   const rootDir = process.cwd()
   const globsToParse = [
     join(distPath, 'scripts', '**', '*.js'),
@@ -46,6 +54,7 @@ gulp.task('purify', done => {
     .pipe(auxSizeReport('Before purifyCSS:'))
     .pipe(
       purifyCSS(globsToParse, {
+        minify: !params.debug,
         whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
       })
     )
