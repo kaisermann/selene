@@ -4,18 +4,18 @@
 
 With crius you can:
 
-- Write CSS with Stylus
-  - Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
-  - Use simplified media queries with rupture (stylus)
-  - Responsive font-size and [other useful mixins](https://github.com/kaisermann/crius/blob/master/assets/styles/config/mixins.styl)
-- Write modern Javascript
-- See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
-- Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
+* Write CSS with Stylus
+  * Build your website's grid with the RolleiFLEX declarative flex helper framework. (stylus)
+  * Use simplified media queries with rupture (stylus)
+  * Responsive font-size and [other useful mixins](https://github.com/kaisermann/crius/blob/master/assets/styles/config/mixins.styl)
+* Write modern Javascript
+* See live changes (CSS/JS/HTML) on your project with [browserSync](https://www.browsersync.io/)
+* Need to manage a new type of resource, like, let's say... sounds? Just define it in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json) and let the magic happen!
 
 ## Requirements
 
-- [Node.js](http://nodejs.org/) >= 8.6.0
-- [Gulp](https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/) >= 4.x.x
+* [Node.js](http://nodejs.org/) >= 8.6.0
+* [Gulp](https://github.com/gulpjs/gulp#installation) >= 4.x.x
 
 ## Installation
 
@@ -24,8 +24,8 @@ With crius you can:
 
 ## Usage samples
 
-- [Selene](https://github.com/kaisermann/selene) - Wordpress theme based on [Sage](https://github.com/roots/sage) and Crius.
-- [Hyperion](https://github.com/kaisermann/hyperion) - A static web-app workflow based on Crius.
+* [Selene](https://github.com/kaisermann/selene) - Wordpress theme based on [Sage](https://github.com/roots/sage) and Crius.
+* [Hyperion](https://github.com/kaisermann/hyperion) - A static web-app workflow based on Crius.
 
 ## Theme Development
 
@@ -33,26 +33,26 @@ With crius you can:
 
 Pretty much every task needed is covered by the `package.json` scripts:
 
-- `npm run watch|start` - Run browsersync and watch file changes;
-- `npm run build` - Build minified assets;
-- `npm run build:dev` - Build unminified assets;
-- `npm run build:production` - Build the assets, append a hash to the name;
-- `npm run clean` - Remove the `dist` folder;
-- `npm run lint` - Lint all `styl` and `js` files;
-- `npm run lint:styles` - Lint all `styl` files;
-- `npm run lint:scripts` - Lint all `js` files.
+* `npm run watch|start` - Run browsersync and watch file changes;
+* `npm run build` - Build minified assets;
+* `npm run build:dev` - Build unminified assets;
+* `npm run build:production` - Build the assets, append a hash to the name;
+* `npm run clean` - Remove the `dist` folder;
+* `npm run lint` - Lint all `styl` and `js` files;
+* `npm run lint:styles` - Lint all `styl` files;
+* `npm run lint:scripts` - Lint all `js` files.
 
 ### Gulp
 
-- `gulp` / `gulp build` - Erases distribution directory and builds all assets
-- `gulp compile` - Same as `gulp build` - without deleting distribution directory
-- `gulp clean` - Deletes the distribution directory
-- `gulp watch` - Starts watching the asset files
-- `gulp sizereport` - Displays the size and gzipped size of your project
-- `gulp scripts|styles|fonts|images` - Build the specified resource assets;
-- `gulp lint` - Lint all `styl` and `js` files;
-- `gulp lint:styles` - Lint all `styl` files;
-- `gulp lint:scripts` - Lint all `js` files.
+* `gulp` / `gulp build` - Erases distribution directory and builds all assets
+* `gulp compile` - Same as `gulp build` - without deleting distribution directory
+* `gulp clean` - Deletes the distribution directory
+* `gulp watch` - Starts watching the asset files
+* `gulp sizereport` - Displays the size and gzipped size of your project
+* `gulp scripts|styles|fonts|images` - Build the specified resource assets;
+* `gulp lint` - Lint all `styl` and `js` files;
+* `gulp lint:styles` - Lint all `styl` files;
+* `gulp lint:scripts` - Lint all `js` files.
 
 #### Creating new tasks
 
@@ -62,12 +62,12 @@ To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`,
 
 You can also pass the following parameters to gulp:
 
-- `--sync` Starts browserSync. Use only with `gulp watch`
-- `--report` or `-r` Report mode
-  - If used with `watch`, it will display the assets sizes of the current resource being edited
-- `--maps` Allows sourcemaps to be created
-- `-d` Asset debug mode. It won't minify the files
-- `-p` Production mode. File names will be appended with a hash of its content for cache-busting
+* `--sync` Starts browserSync. Use only with `gulp watch`
+* `--report` or `-r` Report mode
+  * If used with `watch`, it will display the assets sizes of the current resource being edited
+* `--maps` Allows sourcemaps to be created
+* `-d` Asset debug mode. It won't minify the files
+* `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
 The available parameters can be extended at [`gulpfile.js/params.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/params.js).
 
@@ -83,7 +83,7 @@ The [`config.paths`](https://github.com/kaisermann/crius/blob/master/crius.json#
 
 Defaults to `"assets.json"`
 
---------------------------------------------------------------------------------
+---
 
 The `config` object MUST have a `browserSync` **object** if it's planned to use browserSync.
 
@@ -94,11 +94,8 @@ The `config` object MUST have a `browserSync` **object** if it's planned to use 
       "mode": "proxy",
       "baseDir": "./",
       "index": "index.html",
-      "devUrl":"localhost/crius",
-      "watch": [
-        "{lib,templates}/**/*.{php,html}",
-        "*.{php,html}"
-      ],
+      "devUrl": "localhost/crius",
+      "watch": ["{lib,templates}/**/*.{php,html}", "*.{php,html}"],
       "whitelist": [],
       "blacklist": []
     }
@@ -112,21 +109,21 @@ The `config` object MUST have a `browserSync` **object** if it's planned to use 
 
 `mode` is a **optional** `string` that defines in which mode should browserSync be initialized.
 
-- In `server` mode, it creates a temporary server for your project.
+* In `server` mode, it creates a temporary server for your project.
 
-- In `proxy` mode (default), it just proxies the `devUrl` to an already existing server.
+* In `proxy` mode (default), it just proxies the `devUrl` to an already existing server.
 
 With `mode: "proxy"`
 
-- `devUrl` is a **mandatory** `string` that specifies your projects development proxy url.
+* `devUrl` is a **mandatory** `string` that specifies your projects development proxy url.
 
 With `mode: "server"`
 
-- `baseDir` is a **optional** `string` that defines the root directory for the browserSync server (defaults to the gulpfile directory).
+* `baseDir` is a **optional** `string` that defines the root directory for the browserSync server (defaults to the gulpfile directory).
 
-- `index` is a **optional** `string`that defines the entry file for the browserSync server (defaults to `index.html`)
+* `index` is a **optional** `string`that defines the entry file for the browserSync server (defaults to `index.html`)
 
---------------------------------------------------------------------------------
+---
 
 ### The `resources` object
 
@@ -146,7 +143,7 @@ With `mode: "server"`
 }
 ```
 
---------------------------------------------------------------------------------
+---
 
 Each resource type MAY have a **directory** `string` attribute, defining where the assets are inside [`config.paths.src`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) and where the built ones will be inside [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5). If not specified, the resource type name will be used.
 
@@ -167,7 +164,7 @@ The value can be either a `string`, an array of `strings` or an `object` with a 
 
 If a path begins with `~`, `crius` references the `node_modules` directory. If not, the path is relative to the `resource directory`.
 
---------------------------------------------------------------------------------
+---
 
 `crius` **automatically** creates a gulp task for each resource. All of a resource assets will be moved from the [`config.paths.source`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) to [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5) without you doing anything besides defining the resource in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json).
 
@@ -182,7 +179,7 @@ module.exports = {
   // Names of tasks to be ran before/after the resource task
   tasks: {
     before: ['nameOftaskToRunBEFOREThisOne'],
-    after: ['nameOftaskToRunAFTERThisOne']
+    after: ['nameOftaskToRunAFTERThisOne'],
   },
   pipelines: {
     // Pipeline attached to each asset stream
@@ -202,11 +199,11 @@ You can see other real examples by looking at the [`gulpfile.js/tasks/resources`
 
 ## External links
 
-- [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
-- [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
-- [Sage documentation](https://github.com/roots/sage/) (Sage 9 uses webpack, please refer to the **8.*.*** documentation.)
+* [RolleiFLEX grid documentation](http://kaisermann.github.io/rolleiflex/)
+* [Ruputure: Media Queries with Stylus documentation](http://jescalan.github.io/rupture/)
+* [Sage documentation](https://github.com/roots/sage/) (Sage 9 uses webpack, please refer to the **8._._** documentation.)
 
 ## Credits and Inspirations
 
-- [Asset builder](https://github.com/austinpray/asset-builder)
-- [Sage Starter Theme](https://github.com/roots/sage/)
+* [Asset builder](https://github.com/austinpray/asset-builder)
+* [Sage Starter Theme](https://github.com/roots/sage/)
