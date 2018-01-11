@@ -30,6 +30,20 @@
     "lint:styles": "gulp lint:styles",
     "lint:scripts": "gulp lint:scripts"
   },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "modules": false,
+          "loose": true,
+          "debug": false
+        }
+      ]
+    ],
+    "plugins": []
+  },
   "eslintConfig": {
     "root": true,
     "extends": "standard",
@@ -126,6 +140,8 @@
     "zIndexNormalize": false
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.37",
+    "@babel/preset-env": "^7.0.0-beta.37",
     "autoprefixer": "^7.1.6",
     "browser-sync": "^2.18.13",
     "css-mqpacker": "^6.0.1",
@@ -160,7 +176,7 @@
     "require-directory": "^2.1.1",
     "rimraf": "^2.6.2",
     "rollup": "^0.52.0",
-    "rollup-plugin-buble": "^0.18.0",
+    "rollup-plugin-babel": "^4.0.0-beta.0",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
