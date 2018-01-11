@@ -12,7 +12,12 @@
   "engines": {
     "node": ">= 8.6.0"
   },
-  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
+  "browserslist": [
+    "last 2 versions",
+    "opera 12",
+    "IE 11",
+    "Safari >= 8"
+  ],
   "scripts": {
     "watch": "gulp watch -d --sync --report --maps",
     "start": "npm run -s watch",
@@ -27,6 +32,20 @@
     "lint:styles": "gulp lint:styles",
     "lint:scripts": "gulp lint:scripts",
     "pot": "mkdir -p ./resources/lang && find ./resources ./app -iname '*.php' | xargs xgettext --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -o resources/lang/selene.pot && find ./resources -iname '*.blade.php' | xargs xgettext --language=Python --force-po --from-code=UTF-8 --default-domain=selene -k__ -k_e -k_n:1,2 -k_x:1,2c -k_ex:1,2c -k_nx:4c,12 -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c -kesc_html__ -kesc_html_e -kesc_html_x:1,2c -k_n_noop:1,2 -k_nx_noop:3c,1,2, -k__ngettext_noop:1,2 -j -o resources/lang/selene.pot"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "modules": false,
+          "loose": true,
+          "debug": false
+        }
+      ]
+    ],
+    "plugins": []
   },
   "eslintConfig": {
     "root": true,
@@ -52,7 +71,10 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
-    "plugins": ["import", "compat"],
+    "plugins": [
+      "import",
+      "compat"
+    ],
     "settings": {
       "import/core-modules": [],
       "import/ignore": [
@@ -122,6 +144,8 @@
     "zIndexNormalize": false
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.37",
+    "@babel/preset-env": "^7.0.0-beta.37",
     "autoprefixer": "^7.1.6",
     "browser-sync": "^2.18.13",
     "css-mqpacker": "^6.0.1",
@@ -158,7 +182,7 @@
     "rimraf": "^2.6.2",
     "rollup": "^0.52.0",
     "rollup-plugin-alias": "^1.4.0",
-    "rollup-plugin-buble": "^0.18.0",
+    "rollup-plugin-babel": "^4.0.0-beta.0",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",

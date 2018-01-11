@@ -1,7 +1,7 @@
 const { join } = require('path')
 
+const rollUpBabel = require('rollup-plugin-babel')
 const rollUpAlias = require('rollup-plugin-alias')
-const rollUpBuble = require('rollup-plugin-buble')
 const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
 const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
@@ -31,11 +31,8 @@ const plugins = [
   /** Transforms CommonJS modules into ES6 modules for RollUp */
   rollUpCommonjs(),
   /** Transpiles the code, ignoring coniguration from the `node_modules` */
-  rollUpBuble({
-    transforms: {
-      arrow: true,
-      dangerousForOf: true,
-    },
+  rollUpBabel({
+    exclude: 'node_modules/**',
   }),
 ]
 
