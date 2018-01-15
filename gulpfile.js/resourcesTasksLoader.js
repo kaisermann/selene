@@ -26,10 +26,12 @@ for (const resourceType of Object.keys(crius.resources)) {
 }
 
 /** Get a valide resource pipeline or a noop */
-const getResourcePipeline = (pipeline, resourceType, ...args) =>
+const getResourcePipeline = pipeline => (resourceType, ...args) =>
   typeof resMods[resourceType].pipelines[pipeline] === 'function'
     ? resMods[resourceType].pipelines[pipeline](...args)()
     : noop()
+const getEachPipeline = getResourcePipeline('each')
+const getMergedPipeline = getResourcePipeline('merged')
 
 /** Resource sub-task creator */
 const getResourceSubtask = (resourceType, resourceInfo) => {
@@ -52,7 +54,7 @@ const getResourceSubtask = (resourceType, resourceInfo) => {
         gulp
           .src(asset.globs)
           .pipe(plumber({ errorHandler }))
-          .pipe(getResourcePipeline('each', resourceType, asset))
+          .pipe(getEachPipeline(resourceType, asset))
           .pipe(gulp.dest(output))
           .pipe(
             crius.browserSyncInstance
@@ -65,7 +67,7 @@ const getResourceSubtask = (resourceType, resourceInfo) => {
     }
 
     merged
-      .pipe(getResourcePipeline('merged', resourceType, resourceInfo))
+      .pipe(getMergedPipeline(resourceType, resourceInfo))
       .on('end', done)
       .on('error', done)
       .resume()
