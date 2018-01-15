@@ -166,20 +166,15 @@ add_action('after_setup_theme', function () {
 define('ACF_FIELDS_DIR', __DIR__ . '/fields');
 if (is_dir(ACF_FIELDS_DIR) && function_exists('acf_add_local_field_group')) {
     add_action('init', function () {
-        foreach (glob(ACF_FIELDS_DIR . '/*.php') as $file_path) {
-            if (($fields = require_once($file_path)) !== true) {
-                if (is_array($fields)) {
-                    foreach ($fields as $field) {
-                        if ($field instanceof FieldsBuilder) {
-                            acf_add_local_field_group($field->build());
-                        }
-                    }
-                } else {
-                    if ($fields instanceof FieldsBuilder) {
-                        acf_add_local_field_group($fields->build());
-                    }
+        collect(glob(ACF_FIELDS_DIR . '/*.php'))
+            ->map(function ($field) {
+                return require_once($field);
+            })
+            ->flatten()
+            ->map(function ($field) {
+                if ($field instanceof FieldsBuilder) {
+                    acf_add_local_field_group($field->build());
                 }
-            }
-        }
+            });
     });
 }
