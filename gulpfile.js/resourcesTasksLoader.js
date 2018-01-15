@@ -16,14 +16,15 @@ const params = require('./params')
 
 /** Load resource sub-task modules */
 const resMods = requireDir(module, './tasks/resources')
-for (const resourceType of Object.keys(crius.resources)) {
-  /** Default resource module properties */
+
+/** Default resource module properties */
+Object.keys(crius.resources).forEach(resourceType => {
   resMods[resourceType] = {
     tasks: {},
     pipelines: {},
     ...resMods[resourceType],
   }
-}
+})
 
 /** Get a valide resource pipeline or a noop */
 const getResourcePipeline = pipeline => (resourceType, ...args) =>
@@ -38,10 +39,9 @@ const getResourceSubtask = (resourceType, resourceInfo) => {
   const innerTaskFn = done => {
     /** Merged object to use on resourceModule.pipelines.merged */
     const merged = merge()
-    const assets = crius.resources[resourceType].assets
 
     /** For each asset on the current resource */
-    for (const [outputName, assetObj] of Object.entries(assets)) {
+    for (const [outputName, assetObj] of Object.entries(resourceInfo.assets)) {
       /** Reads each resource asset and parses its 'files' property */
       const asset = buildAsset(outputName, assetObj, resourceInfo.directory)
       const output = join(

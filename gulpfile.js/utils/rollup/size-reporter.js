@@ -13,7 +13,7 @@ module.exports = details => {
   args.totals.sort((a, b) => b.size - a.size)
   console.log('\n' + divisor)
   console.log(
-    colors.blue.bold('  Module "%s":'),
+    colors.bold(colors.blue('  Module "%s":')),
     relative(crius.config.paths.root, args.input)
   )
   console.log(divisor)
