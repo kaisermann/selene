@@ -69,7 +69,7 @@ You can also pass the following parameters to gulp:
 * `-d` Asset debug mode. It won't minify the files
 * `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
-The available parameters can be extended at [`gulpfile.js/params.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/params.js).
+The available parameters can be extended at [`gulpfile.js/Flags.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/Flags.js).
 
 ### Supported browsers
 
