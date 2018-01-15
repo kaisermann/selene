@@ -3,13 +3,13 @@ const requireDir = require('require-directory')
 const merge = require('merge-stream')
 
 const gulp = require('gulp')
-const { noop } = require('gulp-util')
 const plumber = require('gulp-plumber')
 
 const errorHandler = require('./utils/errorHandler')
 const isDir = require('./utils/isDir')
 const sizereport = require('./utils/sizereport')
 const buildAsset = require('./utils/buildAsset')
+const noop = require('./utils/noop')
 
 const crius = require('./manifest')
 const params = require('./params')

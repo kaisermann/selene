@@ -1,7 +1,8 @@
 const { join } = require('path')
 const { unlinkSync } = require('fs')
+const PluginError = require('plugin-error')
+const colors = require('ansi-colors')
 const gulp = require('gulp')
-const util = require('gulp-util')
 
 const pathExists = require('../utils/doesPathExist')
 const params = require('../params')
@@ -44,9 +45,9 @@ gulp.task('watch', done => {
       }
       crius.browserSyncInstance.init(browserSyncOptions)
     } else {
-      throw new util.PluginError(
+      throw new PluginError(
         'watch',
-        util.colors.red(
+        colors.red(
           'Passed "--sync" but no browser-sync configuration was found on "crius.json"'
         )
       )
