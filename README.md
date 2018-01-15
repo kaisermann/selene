@@ -56,7 +56,7 @@ Pretty much every task needed is covered by the `package.json` scripts:
 
 #### Creating new tasks
 
-To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself. However, if you need a task as a dependency for a resource task, which are loaded later, create the task inside the [`before-resources` directory](https://github.com/kaisermann/crius/blob/master/gulpfile.js/tasks/before-resources).
+To create new generic gulp tasks, just create a file inside `gulpfile.js/tasks`, import `gulp` and create a task as if it was inside the gulpfile itself.
 
 #### Gulp Parameters
 
@@ -69,7 +69,7 @@ You can also pass the following parameters to gulp:
 * `-d` Asset debug mode. It won't minify the files
 * `-p` Production mode. File names will be appended with a hash of its content for cache-busting
 
-The available parameters can be extended at [`gulpfile.js/params.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/params.js).
+The available parameters can be extended at [`gulpfile.js/Flags.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/Flags.js).
 
 ### Supported browsers
 

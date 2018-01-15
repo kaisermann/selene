@@ -5,7 +5,7 @@ const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
 const rollUpSizes = require('rollup-plugin-sizes')
 const rollUpSizeReporter = require('./size-reporter')
 
-const params = require('../../params')
+const Flags = require('../../Flags')
 
 /** List of Rollup plugins to be used */
 const plugins = [
@@ -28,7 +28,7 @@ const plugins = [
   }),
 ]
 
-if (params.report) {
+if (Flags.report) {
   plugins.push(rollUpSizes({ report: rollUpSizeReporter }))
 }
 

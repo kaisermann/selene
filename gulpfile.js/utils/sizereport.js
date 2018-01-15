@@ -1,13 +1,13 @@
 const gulp = require('gulp')
-const crius = require('../manifest')
+const Manifest = require('../Manifest')
 const sizereport = require('gulp-sizereport')
 
 module.exports = function (fileGlob = '') {
   const fn = function (done) {
     gulp
       .src([
-        `${crius.config.paths.dist}/**/${fileGlob}`,
-        `!${crius.config.paths.dist}/**/*.map`,
+        `${Manifest.config.paths.dist}/**/${fileGlob}`,
+        `!${Manifest.config.paths.dist}/**/*.map`,
       ])
       .pipe(sizereport({ gzip: true }))
       .on('end', done)
