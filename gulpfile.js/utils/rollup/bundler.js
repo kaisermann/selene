@@ -2,7 +2,7 @@ const { relative, basename } = require('path')
 const through2 = require('through2')
 const rollup = require('rollup')
 
-const { PluginError } = require('gulp-util')
+const PluginError = require('plugin-error')
 
 const params = require('../../params')
 const crius = require('../../manifest')
@@ -17,11 +17,13 @@ const rollupCache = new Map()
 module.exports = () =>
   through2.obj(async (file, enc, next) => {
     const opts = {
-      cache: rollupCache.get(file.path),
-      input: file.path,
-      sourcemap: params.maps,
-      format: 'iife',
       plugins,
+      cache: rollupCache.get(file.path),
+      sourcemap: params.maps,
+      input: file.path,
+      output: {
+        format: 'iife',
+      },
     }
 
     try {

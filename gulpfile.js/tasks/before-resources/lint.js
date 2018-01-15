@@ -1,12 +1,12 @@
 const { join } = require('path')
 
 const gulp = require('gulp')
-const { noop } = require('gulp-util')
 const stylint = require('gulp-stylint')
 const eslint = require('gulp-eslint')
 
 const crius = require('../../manifest')
 const params = require('../../params')
+const noop = require('../../utils/noop')
 
 gulp.task('lint:styles', done => {
   const stylesDir = join(crius.config.paths.source, 'styles')

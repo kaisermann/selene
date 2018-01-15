@@ -1,5 +1,5 @@
 const { relative } = require('path')
-const { colors } = require('gulp-util')
+const colors = require('ansi-colors')
 const filesize = require('filesize')
 
 const crius = require('../../manifest')
