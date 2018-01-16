@@ -4,35 +4,36 @@ const gulp = require('gulp')
 const stylint = require('gulp-stylint')
 const eslint = require('gulp-eslint')
 
-const crius = require('../../manifest')
-const params = require('../../params')
-const noop = require('../../utils/noop')
+const Manifest = require('../Manifest')
+const Flags = require('../Flags')
+
+const noop = require('../utils/noop')
 
 gulp.task('lint:styles', done => {
-  const stylesDir = join(crius.config.paths.source, 'styles')
-  const lintGlobs = [stylesDir, crius.config.paths.components]
+  const stylesDir = join(Manifest.config.paths.source, 'styles')
+  const lintGlobs = [stylesDir, Manifest.config.paths.components]
 
   return gulp
     .src(lintGlobs.map(path => join(path, '**/*.styl')))
     .pipe(
       stylint({
-        reporter: crius.pkg.stylintrc.reporter,
-        reporterOptions: crius.pkg.stylintrc.reporterOptions,
-        rules: crius.pkg.stylintrc,
+        reporter: Manifest.pkg.stylintrc.reporter,
+        reporterOptions: Manifest.pkg.stylintrc.reporterOptions,
+        rules: Manifest.pkg.stylintrc,
       })
     )
     .pipe(stylint.reporter())
-    .pipe(params.production ? stylint.reporter('fail') : noop())
+    .pipe(Flags.production ? stylint.reporter('fail') : noop())
     .on('end', done)
     .on('error', done)
 })
 
 gulp.task('lint:scripts', done => {
-  const scriptsDir = join(crius.config.paths.source, 'scripts')
+  const scriptsDir = join(Manifest.config.paths.source, 'scripts')
   const lintGlobs = [
     scriptsDir,
     `!${join(scriptsDir, 'autoload')}`,
-    crius.config.paths.components,
+    Manifest.config.paths.components,
   ]
 
   return gulp
@@ -41,7 +42,7 @@ gulp.task('lint:scripts', done => {
     )
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(params.production ? eslint.failAfterError() : noop())
+    .pipe(Flags.production ? eslint.failAfterError() : noop())
     .on('end', done)
     .on('error', done)
 })

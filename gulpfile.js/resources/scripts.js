@@ -5,11 +5,11 @@ const uglify = require('gulp-uglify')
 const sourcemaps = require('gulp-sourcemaps')
 const rev = require('gulp-rev')
 
-const crius = require('../../manifest')
-const params = require('../../params')
+const Manifest = require('../Manifest')
+const Flags = require('../Flags')
 
-const bundler = require('../../utils/rollup/bundler')
-const writeToManifest = require('../../utils/writeToManifest')
+const bundler = require('../utils/rollup/bundler')
+const writeToManifest = require('../utils/writeToManifest')
 
 module.exports = {
   tasks: {
@@ -20,7 +20,7 @@ module.exports = {
       let lazy = lazypipe()
 
       /** Initialize sourcemaps */
-      if (params.maps) {
+      if (Flags.maps) {
         lazy = lazy.pipe(sourcemaps.init)
       }
 
@@ -36,19 +36,19 @@ module.exports = {
       lazy = lazy.pipe(concat, asset.outputName)
 
       /** Uglify if not debugging (-d) */
-      if (!params.debug) {
+      if (!Flags.debug) {
         lazy = lazy.pipe(uglify)
       }
 
       /** Write the sourcemaps */
-      if (params.maps) {
+      if (Flags.maps) {
         lazy = lazy.pipe(sourcemaps.write, '.', {
-          sourceRoot: crius.config.paths.distToRoot,
+          sourceRoot: Manifest.config.paths.distToRoot,
         })
       }
 
       /** If production, create cache-busting files */
-      if (params.production) {
+      if (Flags.production) {
         lazy = lazy.pipe(rev)
       }
 

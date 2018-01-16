@@ -40,8 +40,7 @@ someday).
 * A component javascript modules can be imported by using the alias
   `@Components/...pathToComponent`
   * Example: `import Header from '@Components/Header/Header.js'`
-  * Example 2: `import SubHeader from
-    '@Components/Header/SubHeder/SubHeader.js'`
+  * Example 2: `import SubHeader from '@Components/Header/SubHeder/SubHeader.js'`
   * There's also an alias for the 'scripts' directory available: `@Scripts/...`
 * A component `.styl` file is imported automatically by the
   [`index.styl`](https://github.com/kaisermann/selene/blob/master/resources/assets/styles/index.styl).
@@ -85,8 +84,7 @@ Directives can be defined on
   * Cleans up your `<head>`;
   * Scripts load with `defer`;
   * Rewrites the search url `.com/?s=term` with `.com/search/term`;
-  * Wraps all `oembed` inside `the_content()` around a `<div
-    class="oembed-container">`;
+  * Wraps all `oembed` inside `the_content()` around a `<div class="oembed-container">`;
   * Removes all protocols (`http`,`https`) from urls;
   * [Dashboard and login page](<(https://github.com/kaisermann/selene/blob/master/resources/assets/styles/wordpress/dashboard-login/config.styl)>)
     CSS customization;

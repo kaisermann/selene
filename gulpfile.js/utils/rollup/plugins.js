@@ -8,14 +8,14 @@ const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
 const rollUpSizes = require('rollup-plugin-sizes')
 const rollUpSizeReporter = require('./size-reporter')
 
-const crius = require('../../manifest')
-const params = require('../../params')
+const Manifest = require('../../manifest')
+const Flags = require('../../Flags')
 
 /** List of Rollup plugins to be used */
 const plugins = [
   rollUpAlias({
-    '@Components': crius.config.paths.components,
-    '@Scripts': join(crius.config.paths.source, 'scripts'),
+    '@Components': Manifest.config.paths.components,
+    '@Scripts': join(Manifest.config.paths.source, 'scripts'),
   }),
   /** Allow to import node builtin modules such as path, url, querystring, etc */
   rollUpNodebuiltins(),
@@ -36,7 +36,7 @@ const plugins = [
   }),
 ]
 
-if (params.report) {
+if (Flags.report) {
   plugins.push(rollUpSizes({ report: rollUpSizeReporter }))
 }
 

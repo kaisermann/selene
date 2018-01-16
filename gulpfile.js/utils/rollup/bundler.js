@@ -4,8 +4,8 @@ const rollup = require('rollup')
 
 const PluginError = require('plugin-error')
 
-const params = require('../../params')
-const crius = require('../../manifest')
+const Flags = require('../../Flags')
+const Manifest = require('../../Manifest')
 
 const plugins = require('./plugins')
 
@@ -19,7 +19,7 @@ module.exports = () =>
     const opts = {
       plugins,
       cache: rollupCache.get(file.path),
-      sourcemap: params.maps,
+      sourcemap: Flags.maps,
       input: file.path,
       output: {
         format: 'iife',
@@ -32,7 +32,7 @@ module.exports = () =>
       rollupCache.set(file.path, bundle)
 
       if (map) {
-        map.file = relative(crius.config.paths.root, file.path)
+        map.file = relative(Manifest.config.paths.root, file.path)
         map.sources = map.sources.map(
           source =>
             source === file.path
