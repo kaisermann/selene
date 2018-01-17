@@ -2,11 +2,11 @@ const { relative } = require('path')
 const colors = require('ansi-colors')
 const filesize = require('filesize')
 
-const Manifest = require('../../Manifest')
+const Manifest = require('../Manifest')
 
 /** Custom reporter for rollup-plugin-sizes */
+const divisor = '---------------------------------------'
 module.exports = details => {
-  const divisor = '---------------------------------------'
   const args = { ...details }
 
   // Sort

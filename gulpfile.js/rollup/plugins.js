@@ -6,10 +6,10 @@ const rollUpCommonjs = require('rollup-plugin-commonjs')
 const rollUpNodeResolve = require('rollup-plugin-node-resolve')
 const rollUpNodebuiltins = require('rollup-plugin-node-builtins')
 const rollUpSizes = require('rollup-plugin-sizes')
-const rollUpSizeReporter = require('./size-reporter')
 
-const Manifest = require('../../manifest')
-const Flags = require('../../Flags')
+const Manifest = require('../manifest')
+const Flags = require('../Flags')
+const rollUpSizeReporter = require('./size-reporter')
 
 /** List of Rollup plugins to be used */
 const plugins = [

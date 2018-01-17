@@ -8,7 +8,7 @@ const rev = require('gulp-rev')
 const Manifest = require('../Manifest')
 const Flags = require('../Flags')
 
-const bundler = require('../utils/rollup/bundler')
+const bundler = require('../rollup/bundler')
 const writeToManifest = require('../utils/writeToManifest')
 
 module.exports = {

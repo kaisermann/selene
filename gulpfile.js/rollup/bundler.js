@@ -4,8 +4,8 @@ const rollup = require('rollup')
 
 const PluginError = require('plugin-error')
 
-const Flags = require('../../Flags')
-const Manifest = require('../../Manifest')
+const Flags = require('../Flags')
+const Manifest = require('../Manifest')
 
 const plugins = require('./plugins')
 
