@@ -68,8 +68,9 @@ const Resource = {
           resourceInfo.directory
         )
 
-        const output = Resource.getDistDirectory(
-          resourceType,
+        const output = join(
+          Manifest.config.paths.dist,
+          resourceInfo.directory,
           isDir(outputName) ? outputName : ''
         )
 
