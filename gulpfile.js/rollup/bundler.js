@@ -32,7 +32,7 @@ module.exports = () =>
       rollupCache.set(file.path, bundle)
 
       if (map) {
-        map.file = relative(Manifest.config.paths.root, file.path)
+        map.file = relative(Manifest.paths.root, file.path)
         map.sources = map.sources.map(
           source =>
             source === file.path

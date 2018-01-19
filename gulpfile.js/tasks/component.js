@@ -51,7 +51,7 @@ gulp.task('component', done => {
   componentsToManage.forEach(tmpComponentName => {
     const realComponentName = capitalizeStr(tmpComponentName)
     const fileName = semiCamelize(realComponentName)
-    const componentPath = join(Manifest.config.paths.components, fileName)
+    const componentPath = join(Manifest.paths.components, fileName)
 
     if (!args[0]) throw new Error('Missing first parameter')
 

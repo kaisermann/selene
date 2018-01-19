@@ -1,6 +1,6 @@
 {
   "name": "selene",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0",
   "author": "Christian Kaisermann <christian@kaisermann.me>",
   "homepage": "https://github.com/kaisermann/selene",
   "private": true,
@@ -12,12 +12,7 @@
   "engines": {
     "node": ">= 8.6.0"
   },
-  "browserslist": [
-    "last 2 versions",
-    "opera 12",
-    "IE 11",
-    "Safari >= 8"
-  ],
+  "browserslist": ["last 2 versions", "opera 12", "IE 11", "Safari >= 8"],
   "scripts": {
     "watch": "gulp watch -d --sync --report --maps",
     "start": "npm run -s watch",
@@ -71,10 +66,7 @@
       "ecmaVersion": 2017,
       "sourceType": "module"
     },
-    "plugins": [
-      "import",
-      "compat"
-    ],
+    "plugins": ["import", "compat"],
     "settings": {
       "import/core-modules": [],
       "import/ignore": [

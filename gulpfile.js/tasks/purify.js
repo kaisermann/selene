@@ -19,10 +19,7 @@ gulp.task('purify', done => {
     throw new Error('Styles distribution directory not found.')
   }
 
-  const revManifestPath = join(
-    Manifest.config.paths.dist,
-    Manifest.config.paths.manifest
-  )
+  const revManifestPath = join(Manifest.paths.dist, Manifest.paths.manifest)
   const revManifest = pathExists(revManifestPath)
     ? JSON.parse(readFileSync(revManifestPath, 'utf-8'))
     : {}
@@ -41,9 +38,9 @@ gulp.task('purify', done => {
 
   const globsToParse = [
     Manifest.getDistDir('scripts', '**', '*.js'),
-    join(Manifest.config.paths.root, 'app', '**', '*.php'),
-    join(Manifest.config.paths.root, '.blade.cache', '**', '*.php'),
-    join(Manifest.config.paths.root, 'resources', '**', '*.php'),
+    join(Manifest.paths.root, 'app', '**', '*.php'),
+    join(Manifest.paths.root, '.blade.cache', '**', '*.php'),
+    join(Manifest.paths.root, 'resources', '**', '*.php'),
   ]
 
   return gulp

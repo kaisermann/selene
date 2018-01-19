@@ -14,7 +14,7 @@ module.exports = details => {
   console.log('\n' + divisor)
   console.log(
     colors.bold(colors.blue('  Module "%s":')),
-    relative(Manifest.config.paths.root, args.input)
+    relative(Manifest.paths.root, args.input)
   )
   console.log(divisor)
 

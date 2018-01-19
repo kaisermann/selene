@@ -8,35 +8,19 @@ const browserSync = require('browser-sync')
 const Manifest = JSON.parse(readFileSync('./crius.json', 'utf8'))
 
 /** Default path values */
-Manifest.config.paths = {
+Manifest.paths = {
   source: 'app/',
   dist: 'dist/',
   manifest: 'assets.json',
   root: process.cwd(),
-  ...Manifest.config.paths,
+  ...Manifest.paths,
 }
-Manifest.config.paths.components = join(
-  Manifest.config.paths.root,
-  'resources/components'
-)
+Manifest.paths.components = join(Manifest.paths.root, 'resources/components')
 
-Manifest.config.paths.distToRoot = relative(
-  join(Manifest.config.paths.dist, 'resource'),
-  Manifest.config.paths.root
+Manifest.paths.distToRoot = relative(
+  join(Manifest.paths.dist, 'resource'),
+  Manifest.paths.root
 )
-
-/** Default browserSync configuration */
-if (Manifest.config.browserSync) {
-  Manifest.config.browserSync = {
-    mode: 'proxy',
-    index: 'index.html',
-    baseDir: './',
-    watchFiles: [],
-    whitelist: [],
-    blacklist: [],
-    ...Manifest.config.browserSync,
-  }
-}
 
 /** Default values for each 'resource' entry */
 for (const [resourceType, resourceInfo] of Object.entries(Manifest.resources)) {
@@ -48,6 +32,16 @@ for (const [resourceType, resourceInfo] of Object.entries(Manifest.resources)) {
 
 /** Create a browsersync instance if '--sync' was passed */
 if (Flags.sync) {
+  /** Default browserSync configuration */
+  Manifest.browserSync = {
+    mode: 'proxy',
+    index: 'index.html',
+    baseDir: './',
+    watchFiles: [],
+    whitelist: [],
+    blacklist: [],
+    ...Manifest.browserSync,
+  }
   Manifest.browserSyncInstance = browserSync.create()
 }
 
@@ -57,14 +51,14 @@ module.exports = {
   },
   getSourceDir (resourceType, ...args) {
     return join(
-      Manifest.config.paths.source,
+      Manifest.paths.source,
       this.getDirectoryName(resourceType),
       ...args
     )
   },
   getDistDir (resourceType, ...args) {
     return join(
-      Manifest.config.paths.dist,
+      Manifest.paths.dist,
       this.getDirectoryName(resourceType),
       ...args
     )

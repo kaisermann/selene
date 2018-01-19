@@ -10,12 +10,11 @@ const Flags = require('../Flags')
 const noop = require('../utils/noop')
 
 /** Project's package.json content (used for getting stylint config) */
-const stylintrc = require(join(Manifest.config.paths.root, 'package.json'))
-  .stylintrc
+const stylintrc = require(join(Manifest.paths.root, 'package.json')).stylintrc
 
 gulp.task('lint:styles', done => {
   const stylesDir = Manifest.getSourceDir('styles')
-  const lintGlobs = [stylesDir, Manifest.config.paths.components].map(path =>
+  const lintGlobs = [stylesDir, Manifest.paths.components].map(path =>
     join(path, '**/*.styl')
   )
 
@@ -39,7 +38,7 @@ gulp.task('lint:scripts', done => {
   const lintGlobs = [
     scriptsDir,
     `!${join(scriptsDir, 'autoload')}`,
-    Manifest.config.paths.components,
+    Manifest.paths.components,
   ]
 
     .map(path => join(path, '**/*.js'))

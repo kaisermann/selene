@@ -14,8 +14,8 @@ const rollUpSizeReporter = require('./size-reporter')
 /** List of Rollup plugins to be used */
 const plugins = [
   rollUpAlias({
-    '@Components': Manifest.config.paths.components,
-    '@Scripts': join(Manifest.config.paths.source, 'scripts'),
+    '@Components': Manifest.paths.components,
+    '@Scripts': join(Manifest.paths.source, 'scripts'),
   }),
   /** Allow to import node builtin modules such as path, url, querystring, etc */
   rollUpNodebuiltins(),
