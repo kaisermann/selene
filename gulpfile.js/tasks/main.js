@@ -3,7 +3,7 @@ const gulp = require('gulp')
 const Manifest = require('../Manifest')
 const sizereport = require('../utils/sizereport')
 
-gulp.task('clean', done => rimraf(Manifest.config.paths.dist, done))
+gulp.task('clean', done => rimraf(Manifest.paths.dist, done))
 
 gulp.task('sizereport', sizereport('*'))
 

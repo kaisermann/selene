@@ -9,13 +9,10 @@ const Flags = require('../Flags')
 const Manifest = require('../Manifest')
 
 gulp.task('watch', done => {
-  const bsConf = Manifest.config.browserSync
+  const bsConf = Manifest.browserSync
 
-  if (Manifest.config.paths.manifest !== undefined) {
-    const manifestPath = join(
-      Manifest.config.paths.dist,
-      Manifest.config.paths.manifest
-    )
+  if (Manifest.paths.manifest !== undefined) {
+    const manifestPath = join(Manifest.paths.dist, Manifest.paths.manifest)
 
     if (pathExists(manifestPath)) {
       unlinkSync(manifestPath)
@@ -37,7 +34,7 @@ gulp.task('watch', done => {
       if (bsConf.mode === 'server') {
         browserSyncOptions.server = {
           /** Absolute path just for showing a complete path on the terminal */
-          baseDir: join(Manifest.config.paths.root, bsConf.baseDir),
+          baseDir: join(Manifest.paths.root, bsConf.baseDir),
           index: bsConf.index,
         }
       } else {

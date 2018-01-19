@@ -6,8 +6,8 @@ module.exports = function (fileGlob = '') {
   const fn = function (done) {
     gulp
       .src([
-        `${Manifest.config.paths.dist}/**/${fileGlob}`,
-        `!${Manifest.config.paths.dist}/**/*.map`,
+        `${Manifest.paths.dist}/**/${fileGlob}`,
+        `!${Manifest.paths.dist}/**/*.map`,
       ])
       .pipe(sizereport({ gzip: true }))
       .on('end', done)

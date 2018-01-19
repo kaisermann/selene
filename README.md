@@ -77,28 +77,26 @@ The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be c
 
 ## Manifest (`crius.json`) Documentation
 
-### The `config` object
+### The `paths` object
 
-The [`config.paths`](https://github.com/kaisermann/crius/blob/master/crius.json#L3) object MAY have a `manifest` **string** attribute that defines the revision manifest's file name on production distributions.
+The [`paths`](https://github.com/kaisermann/crius/blob/master/crius.json#L3) object MAY have a `manifest` **string** attribute that defines the revision manifest's file name on production distributions.
 
 Defaults to `"assets.json"`
 
 ---
 
-The `config` object MUST have a `browserSync` **object** if it's planned to use browserSync.
+The `crius.jon` object MAY have a `browserSync` **object** if it's planned to use browserSync.
 
 ```json
 {
-  "config": {
-    "browserSync": {
-      "mode": "proxy",
-      "baseDir": "./",
-      "index": "index.html",
-      "devUrl": "localhost/crius",
-      "watch": ["{lib,templates}/**/*.{php,html}", "*.{php,html}"],
-      "whitelist": [],
-      "blacklist": []
-    }
+  "browserSync": {
+    "mode": "proxy",
+    "baseDir": "./",
+    "index": "index.html",
+    "devUrl": "localhost/crius",
+    "watch": ["{lib,templates}/**/*.{php,html}", "*.{php,html}"],
+    "whitelist": [],
+    "blacklist": []
   }
 }
 ```
@@ -145,7 +143,7 @@ With `mode: "server"`
 
 ---
 
-Each resource type MAY have a **directory** `string` attribute, defining where the assets are inside [`config.paths.src`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) and where the built ones will be inside [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5). If not specified, the resource type name will be used.
+Each resource type MAY have a **directory** `string` attribute, defining where the assets are inside [`paths.src`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) and where the built ones will be inside [`paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5). If not specified, the resource type name will be used.
 
 Each resource type MUST have a **assets** `object`, defining which assets are to be generated. The generated file output name is represented by the key:
 
@@ -166,7 +164,7 @@ If a path begins with `~`, `crius` references the `node_modules` directory. If n
 
 ---
 
-`crius` **automatically** creates a gulp task for each resource. All of a resource assets will be moved from the [`config.paths.source`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) to [`config.paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5) without you doing anything besides defining the resource in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json).
+`crius` **automatically** creates a gulp task for each resource. All of a resource assets will be moved from the [`paths.source`](https://github.com/kaisermann/crius/blob/master/crius.json#L4) to [`paths.dist`](https://github.com/kaisermann/crius/blob/master/crius.json#L5) without you doing anything besides defining the resource in the [`crius.json`](https://github.com/kaisermann/crius/blob/master/crius.json).
 
 If a resource assets need any type of processing, a drop-in module can be created at [`gulpfile.js/tasks/resources/${resourceName}.js`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/resources/) to modify the stream with a [lazypipe](https://github.com/OverZealous/lazypipe). The file name must match the resource name.
 

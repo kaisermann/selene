@@ -10,8 +10,7 @@ const Flags = require('../Flags')
 const noop = require('../utils/noop')
 
 /** Project's package.json content (used for getting stylint config) */
-const stylintrc = require(join(Manifest.config.paths.root, 'package.json'))
-  .stylintrc
+const stylintrc = require(join(Manifest.paths.root, 'package.json')).stylintrc
 
 gulp.task('lint:styles', done => {
   const stylesDir = Manifest.getSourceDir('styles')

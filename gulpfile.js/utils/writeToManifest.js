@@ -8,13 +8,9 @@ const Manifest = require('../Manifest.js')
 /** Writes production asset to a json manifest */
 module.exports = () => {
   return lazypipe()
-    .pipe(
-      rev.manifest,
-      join(Manifest.config.paths.dist, Manifest.config.paths.manifest),
-      {
-        base: Manifest.config.paths.dist,
-        merge: true,
-      }
-    )
-    .pipe(gulp.dest, Manifest.config.paths.dist)
+    .pipe(rev.manifest, join(Manifest.paths.dist, Manifest.paths.manifest), {
+      base: Manifest.paths.dist,
+      merge: true,
+    })
+    .pipe(gulp.dest, Manifest.paths.dist)
 }

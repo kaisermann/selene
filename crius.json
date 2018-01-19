@@ -1,14 +1,12 @@
 {
-  "config": {
-    "paths": {
-      "source": "assets/",
-      "dist": "dist/"
-    },
-    "browserSync": {
-      "mode": "server",
-      "watch": ["**/*.{php,html}"],
-      "devUrl": "localhost/web/root"
-    }
+  "paths": {
+    "source": "assets/",
+    "dist": "dist/"
+  },
+  "browserSync": {
+    "mode": "server",
+    "watch": ["**/*.{php,html}"],
+    "devUrl": "localhost/web/root"
   },
   "resources": {
     "scripts": {

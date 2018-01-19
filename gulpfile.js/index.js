@@ -11,7 +11,7 @@ if (!process.env.NODE_ENV) {
 }
 
 /** Load all but the 'main' gulp tasks */
-const tasksPath = join(Manifest.config.paths.root, 'gulpfile.js', 'tasks')
+const tasksPath = join(Manifest.paths.root, 'gulpfile.js', 'tasks')
 readdirSync(tasksPath).forEach(fileName => {
   if (fileName !== 'main.js') {
     require(join(tasksPath, fileName))
