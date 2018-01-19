@@ -12,19 +12,17 @@ const errorHandler = require('../utils/errorHandler')
 const Manifest = require('../Manifest')
 const Flags = require('../Flags')
 
-const auxSizeReport = msg =>
-  size({ showFiles: true, showTotal: false, title: msg })
-
-const distPath = Manifest.config.paths.dist
-
 gulp.task('purify', done => {
-  const stylesDir = join(distPath, 'styles')
+  const stylesDir = Manifest.getDistDir('styles')
 
   if (!pathExists(stylesDir)) {
     throw new Error('Styles distribution directory not found.')
   }
 
-  const revManifestPath = join(distPath, Manifest.config.paths.manifest)
+  const revManifestPath = join(
+    Manifest.config.paths.dist,
+    Manifest.config.paths.manifest
+  )
   const revManifest = pathExists(revManifestPath)
     ? JSON.parse(readFileSync(revManifestPath, 'utf-8'))
     : {}
@@ -41,25 +39,28 @@ gulp.task('purify', done => {
     return done()
   }
 
-  const rootDir = process.cwd()
   const globsToParse = [
-    join(distPath, 'scripts', '**', '*.js'),
-    join(rootDir, 'app', '**', '*.php'),
-    join(rootDir, '.blade.cache', '**', '*.php'),
-    join(rootDir, 'resources', '**', '*.php'),
+    Manifest.getDistDir('scripts', '**', '*.js'),
+    join(Manifest.config.paths.root, 'app', '**', '*.php'),
+    join(Manifest.config.paths.root, '.blade.cache', '**', '*.php'),
+    join(Manifest.config.paths.root, 'resources', '**', '*.php'),
   ]
 
   return gulp
     .src(cssPaths, { base: './' })
     .pipe(plumber({ errorHandler }))
-    .pipe(auxSizeReport('Before purifyCSS:'))
+    .pipe(
+      size({ showFiles: true, showTotal: false, title: 'Before purifyCSS:' })
+    )
     .pipe(
       purifyCSS(globsToParse, {
         minify: !Flags.debug,
         whitelist: ['js-*', 'wp-*', 'is-*', 'align-*', 'admin-bar*'],
       })
     )
-    .pipe(auxSizeReport('After purifyCSS:'))
+    .pipe(
+      size({ showFiles: true, showTotal: false, title: 'After purifyCSS:' })
+    )
     .pipe(gulp.dest('./'))
     .on('end', done)
     .on('error', done)
