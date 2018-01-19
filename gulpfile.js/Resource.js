@@ -40,11 +40,17 @@ const Resource = {
       }
     })
   },
+  getDirectoryName (resourceType) {
+    return Manifest.resources[resourceType].directory
+  },
   getSourceDirectory (resourceType, ...args) {
-    return join(Manifest.config.paths.src, resourceType, ...args)
+    return join(
+      Manifest.config.paths.source,
+      this.getDirectoryName(resourceType)
+    )
   },
   getDistDirectory (resourceType, ...args) {
-    return join(Manifest.config.paths.dist, resourceType, ...args)
+    return join(Manifest.config.paths.dist, this.getDirectoryName(resourceType))
   },
   getTasks (resourceType, resourceInfo) {
     return []

@@ -19,9 +19,9 @@ module.exports = () =>
     const opts = {
       plugins,
       cache: rollupCache.get(file.path),
-      sourcemap: Flags.maps,
       input: file.path,
       output: {
+        sourcemap: Flags.maps,
         format: 'iife',
       },
     }

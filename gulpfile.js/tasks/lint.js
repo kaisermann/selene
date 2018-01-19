@@ -5,13 +5,13 @@ const stylint = require('gulp-stylint')
 const eslint = require('gulp-eslint')
 
 const Manifest = require('../Manifest')
+const Resource = require('../Resource')
 const Flags = require('../Flags')
 
 const noop = require('../utils/noop')
 
 gulp.task('lint:styles', done => {
-  const stylesDir = join(Manifest.config.paths.source, 'styles')
-  const lintGlobs = [stylesDir]
+  const lintGlobs = [Resource.getSourceDirectory('styles')]
 
   return gulp
     .src(lintGlobs.map(path => join(path, '**/*.styl')))
@@ -29,7 +29,7 @@ gulp.task('lint:styles', done => {
 })
 
 gulp.task('lint:scripts', done => {
-  const scriptsDir = join(Manifest.config.paths.source, 'scripts')
+  const scriptsDir = Resource.getSourceDirectory('scripts')
   const lintGlobs = [scriptsDir, `!${join(scriptsDir, 'autoload')}`]
 
   return gulp
