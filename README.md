@@ -135,8 +135,11 @@ Pretty much every task needed is covered by the `package.json` scripts:
 * `npm run lint:scripts` - Lint all `js` files.
 
 <<<<<<< HEAD
+
 ## Extra Gulp tasks (others listed [here](https://github.com/kaisermann/crius))
+
 ||||||| merged common ancestors
+
 ### Gulp
 
 * `gulp` / `gulp build` - Erases distribution directory and builds all assets
@@ -202,8 +205,8 @@ The `config` object MUST have a `browserSync` **object** if it's planned to use 
 
 `whitelist` and `blacklist` are each one an **optional** **array** or a `string` of supposed watched files allowed/not allowed to be watched. Defaults to `[]`.
 
-`mode` is a **optional** `string` that defines in which mode should browserSync be initialized.
-=======
+# `mode` is a **optional** `string` that defines in which mode should browserSync be initialized.
+
 ### Gulp
 
 * `gulp` / `gulp build` - Erases distribution directory and builds all assets
@@ -268,12 +271,14 @@ The `crius.jon` object MAY have a `browserSync` **object** if it's planned to us
 `whitelist` and `blacklist` are each one an **optional** **array** or a `string` of supposed watched files allowed/not allowed to be watched. Defaults to `[]`.
 
 `mode` is a **optional** `string` that defines in which mode should browserSync be initialized.
->>>>>>> a1c9206988b8b7c615aa37a43d12714f19d87c8a
+
+> > > > > > > a1c9206988b8b7c615aa37a43d12714f19d87c8a
 
 <<<<<<< HEAD
+
 * `gulp purify` - Reads `.blade.php` and `.js` files and removes unused css
   definitions.
-||||||| merged common ancestors
+  ||||||| merged common ancestors
 * In `server` mode, it creates a temporary server for your project.
 
 * In `proxy` mode (default), it just proxies the `devUrl` to an already existing server.
@@ -360,8 +365,8 @@ module.exports = {
 }
 ```
 
-You can see other real examples by looking at the [`gulpfile.js/tasks/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/tasks/resources/) directory.
-=======
+# You can see other real examples by looking at the [`gulpfile.js/tasks/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/tasks/resources/) directory.
+
 * In `server` mode, it creates a temporary server for your project.
 
 * In `proxy` mode (default), it just proxies the `devUrl` to an already existing server.
@@ -449,7 +454,8 @@ module.exports = {
 ```
 
 You can see other real examples by looking at the [`gulpfile.js/tasks/resources`](https://github.com/kaisermann/crius/blob/master/gulpfile.js/tasks/resources/) directory.
->>>>>>> a1c9206988b8b7c615aa37a43d12714f19d87c8a
+
+> > > > > > > a1c9206988b8b7c615aa37a43d12714f19d87c8a
 
 ## External links
 
