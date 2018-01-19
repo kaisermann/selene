@@ -4,7 +4,6 @@ const PluginError = require('plugin-error')
 const colors = require('ansi-colors')
 const gulp = require('gulp')
 
-const sizereport = require('../utils/sizereport')
 const pathExists = require('../utils/doesPathExist')
 const Flags = require('../Flags')
 const Manifest = require('../Manifest')
@@ -59,19 +58,15 @@ gulp.task('watch', done => {
   for (const [resourceType, resourceInfo] of Object.entries(
     Manifest.resources
   )) {
-    const filesToWatch = []
+    const filesToWatch = [
+      Manifest.getSourceDir(resourceType, '**', resourceInfo.pattern),
+    ]
       .concat(
         join(Manifest.config.paths.components, '**', resourceInfo.pattern)
       )
-      .concat(Manifest.getSourceDir(resourceType, '**', resourceInfo.pattern))
       /** watches extra files */
       .concat(resourceInfo.watch || [])
-
-    const watchTask = Flags.report
-      ? gulp.series(resourceType, sizereport(resourceInfo.pattern))
-      : gulp.task(resourceType)
-
-    gulp.watch(filesToWatch, watchTask)
+    gulp.watch(filesToWatch, gulp.task(resourceType))
   }
   done()
 })
