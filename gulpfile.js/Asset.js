@@ -1,11 +1,10 @@
 /** Returns a asset object */
-const { join } = require('path')
 const Manifest = require('./Manifest')
 
 const nodeModulesRegEx = /^(\.|\.\/)?(~|node_modules)/
 
 module.exports = {
-  buildObj (outputName, baseObj, directory) {
+  buildObj (outputName, baseObj, resourceType) {
     let assetObj =
       baseObj.constructor === Object
         ? { ...baseObj, files: [].concat(baseObj.files || []) }
@@ -14,12 +13,12 @@ module.exports = {
     return {
       ...assetObj,
       outputName,
-      autoload: baseObj.autoload || [],
+      autoload: [].concat(baseObj.autoload || []),
       globs: assetObj.files.map(
         path =>
           nodeModulesRegEx.test(path)
             ? path.replace(nodeModulesRegEx, './node_modules')
-            : join(Manifest.config.paths.source, directory, path)
+            : Manifest.getSourceDir(resourceType, path)
       ),
     }
   },

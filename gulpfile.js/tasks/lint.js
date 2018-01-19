@@ -9,17 +9,23 @@ const Flags = require('../Flags')
 
 const noop = require('../utils/noop')
 
+/** Project's package.json content (used for getting stylint config) */
+const stylintrc = require(join(Manifest.config.paths.root, 'package.json'))
+  .stylintrc
+
 gulp.task('lint:styles', done => {
-  const stylesDir = join(Manifest.config.paths.source, 'styles')
-  const lintGlobs = [stylesDir, Manifest.config.paths.components]
+  const stylesDir = Manifest.getSourceDir('styles')
+  const lintGlobs = [stylesDir, Manifest.config.paths.components].map(path =>
+    join(path, '**/*.styl')
+  )
 
   return gulp
-    .src(lintGlobs.map(path => join(path, '**/*.styl')))
+    .src(lintGlobs)
     .pipe(
       stylint({
-        reporter: Manifest.pkg.stylintrc.reporter,
-        reporterOptions: Manifest.pkg.stylintrc.reporterOptions,
-        rules: Manifest.pkg.stylintrc,
+        reporter: stylintrc.reporter,
+        reporterOptions: stylintrc.reporterOptions,
+        rules: stylintrc,
       })
     )
     .pipe(stylint.reporter())
@@ -29,17 +35,18 @@ gulp.task('lint:styles', done => {
 })
 
 gulp.task('lint:scripts', done => {
-  const scriptsDir = join(Manifest.config.paths.source, 'scripts')
+  const scriptsDir = Manifest.getSourceDir('scripts')
   const lintGlobs = [
     scriptsDir,
     `!${join(scriptsDir, 'autoload')}`,
     Manifest.config.paths.components,
   ]
 
+    .map(path => join(path, '**/*.js'))
+    .concat('gulpfile.js/**/*.js')
+
   return gulp
-    .src(
-      lintGlobs.map(path => join(path, '**/*.js')).concat('gulpfile.js/**/*.js')
-    )
+    .src(lintGlobs)
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(Flags.production ? eslint.failAfterError() : noop())

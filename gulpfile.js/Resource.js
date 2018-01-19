@@ -1,11 +1,12 @@
-const { join } = require('path')
 const gulp = require('gulp')
 const merge = require('merge-stream')
 const plumber = require('gulp-plumber')
 
 const Manifest = require('./Manifest')
 const Asset = require('./Asset')
+const Flags = require('./Flags')
 
+const sizereport = require('./utils/sizereport')
 const errorHandler = require('./utils/errorHandler')
 const isDir = require('./utils/isDir')
 const noop = require('./utils/noop')
@@ -25,26 +26,33 @@ const getMergedPipeline = getResourcePipeline('merged')
 const Resource = {
   loadModules () {
     /** Default resource module properties */
-    Object.keys(Manifest.resources).forEach(resourceType => {
-      let resourceModule
-      try {
-        resourceModule = require(`./resources/${resourceType}.js`)
-      } catch (e) {
-        resourceModule = {}
-      }
+    Object.entries(Manifest.resources).forEach(
+      ([resourceType, resourceInfo]) => {
+        let resourceModule
 
-      resourcesModules[resourceType] = {
-        tasks: {},
-        pipelines: {},
-        ...resourceModule,
+        /** Try to load the resource module */
+        try {
+          resourceModule = require(`./resources/${resourceType}.js`)
+        } catch (e) {
+          resourceModule = {}
+        }
+
+        resourceModule = {
+          tasks: {},
+          pipelines: {},
+          ...resourceModule,
+        }
+
+        /** If task was called by the CLI and -r or --report is true, report sizes. */
+        if (Flags.report) {
+          resourceModule.tasks.after = []
+            .concat(resourceModule.tasks.after || [])
+            .concat(sizereport(resourceInfo.pattern))
+        }
+
+        resourcesModules[resourceType] = resourceModule
       }
-    })
-  },
-  getSourceDirectory (resourceType, ...args) {
-    return join(Manifest.config.paths.src, resourceType, ...args)
-  },
-  getDistDirectory (resourceType, ...args) {
-    return join(Manifest.config.paths.dist, resourceType, ...args)
+    )
   },
   getTasks (resourceType, resourceInfo) {
     return []
@@ -62,15 +70,10 @@ const Resource = {
         resourceInfo.assets
       )) {
         /** Reads each resource asset and parses its 'files' property */
-        const asset = Asset.buildObj(
-          outputName,
-          assetObj,
-          resourceInfo.directory
-        )
+        const asset = Asset.buildObj(outputName, assetObj, resourceType)
 
-        const output = join(
-          Manifest.config.paths.dist,
-          resourceInfo.directory,
+        const output = Manifest.getDistDir(
+          resourceType,
           isDir(outputName) ? outputName : ''
         )
 
