@@ -21,9 +21,6 @@ Manifest.config.paths.distToRoot = relative(
   Manifest.config.paths.root
 )
 
-/** Project's package.json content (used for getting stylint config) */
-Manifest.pkg = require(join(Manifest.config.paths.root, 'package.json'))
-
 /** Default browserSync configuration */
 if (Manifest.config.browserSync) {
   Manifest.config.browserSync = {
@@ -50,4 +47,23 @@ if (Flags.sync) {
   Manifest.browserSyncInstance = browserSync.create()
 }
 
-module.exports = Manifest
+module.exports = {
+  getDirectoryName (resourceType) {
+    return Manifest.resources[resourceType].directory
+  },
+  getSourceDir (resourceType, ...args) {
+    return join(
+      Manifest.config.paths.source,
+      this.getDirectoryName(resourceType),
+      ...args
+    )
+  },
+  getDistDir (resourceType, ...args) {
+    return join(
+      Manifest.config.paths.dist,
+      this.getDirectoryName(resourceType),
+      ...args
+    )
+  },
+  ...Manifest,
+}
