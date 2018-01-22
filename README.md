@@ -26,7 +26,7 @@ someday).
 ## Requirements
 
 * [WordPress](https://wordpress.org/) >= 4.7
-* [PHP](http://php.net/manual/en/install.php) >= 7
+* [PHP](http://php.net/manual/en/install.php) >= 7 (with php-mbstring enabled)
 * [Composer](https://getcomposer.org/download/)
 * [Node.js](http://nodejs.org/) >= 8.6.0
 * [Gulp](https://github.com/gulpjs/gulp#installation) >= 4.x.x
