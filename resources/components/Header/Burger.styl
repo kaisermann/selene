@@ -3,52 +3,39 @@ $burger = {
   height: 20px
   stripeHeight: 4px
   extraClickArea: 15px
+  regularColor: colors.black
+  activeColor: colors.white
 }
 $burger.stripePadding = (($burger.height - $burger.stripeHeight * 3) / 2)
 
 .burger
-  z-index: layers.burger
   position: fixed
-  cursor: pointer
+  z-index: layers.burger
   padding: $burger.extraClickArea
-  -webkit-appearance: none
   border: none
   background: none
-
-  body.is-header-overlay-active &
-    span
-      background: none
-
-      &::before
-      &::after
-        background-color: colors.white
-        transition-delay: .3s, .3s, 0s
-
-      &::before
-        top: 0
-        transform: rotate(45deg)
-
-      &::after
-        bottom: 0
-        transform: rotate(-45deg)
+  appearance: none
+  cursor: pointer
 
 .burger__slices
   position: relative
   display: block
-  transition: transform .3s ease
-  will-change: transform
   size($burger.width, $burger.height)
-  text-indent: -9999px
   font-size: 0
+  text-indent: -9999px
+  transition: transform .3s ease
 
   span
-    display: block
     position: absolute
-    size(100%, $burger.stripeHeight)
-    top: ($burger.height / 2 - $burger.stripeHeight / 2)
     left: 0
-    background: colors.black
+    top: ($burger.height / 2 - $burger.stripeHeight / 2)
+    display: block
+    size(100%, $burger.stripeHeight)
+    background-color: $burger.regularColor
     transition: background-color .3s ease
+
+    body.is-header-overlay-active &
+      background: none
 
     &::before
     &::after
@@ -57,14 +44,26 @@ $burger.stripePadding = (($burger.height - $burger.stripeHeight * 3) / 2)
       position: absolute
       left: 0
       size(100%, $burger.stripeHeight)
-      background-color: colors.black
+      background-color: $burger.regularColor
       transition-duration: .3s, .3s, .3s
       transition-delay: 0s, .3s, .3s
+      
+      body.is-header-overlay-active &
+        background-color: $burger.activeColor
+        transition-delay: .3s, .3s, 0s
 
     &::before
       top: -($burger.stripeHeight + $burger.stripePadding)
       transition-property: background-color, transform, top
+      
+      body.is-header-overlay-active &
+        top: 0
+        transform: rotate(45deg)
 
     &::after
       bottom: -($burger.stripeHeight + $burger.stripePadding)
       transition-property: background-color, transform, bottom
+
+      body.is-header-overlay-active &
+        bottom: 0
+        transform: rotate(-45deg)
