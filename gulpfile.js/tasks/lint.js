@@ -1,4 +1,5 @@
 const { join } = require('path')
+const { readFileSync } = require('fs')
 
 const gulp = require('gulp')
 const stylint = require('gulp-stylint')
@@ -10,7 +11,9 @@ const Flags = require('../Flags')
 const noop = require('../utils/noop')
 
 /** Project's package.json content (used for getting stylint config) */
-const stylintrc = require(join(Manifest.paths.root, 'package.json')).stylintrc
+const stylintrc = JSON.parse(
+  readFileSync(join(Manifest.paths.root, '.stylintrc'))
+)
 
 gulp.task('lint:styles', done => {
   const stylesDir = Manifest.getSourceDir('styles')
