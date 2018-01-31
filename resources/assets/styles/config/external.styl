@@ -1,58 +1,32 @@
-/** Grid configuration */
+/** Rolleiflex configuration */
 rolleiflex.baseFontSize = app.base.fontSize
 rolleiflex.autoBorderBox = false
 rolleiflex.use.em = false
-
 rolleiflex.spaces = {
   gutter: 24px
   containerPadding: 12px
 }
-
 rolleiflex.build = {
   container: true
-  grid: true
-  helpers: true
+  grid:      true
+  helpers:   true
 }
-
-rolleiflex.breakpoints = {
-  xs: {
-    minWidth: 0
-    container: 100%
-  }
-
-  sm: {
-    minWidth: 768px
-    container: 740px
-  }
-
-  md: {
-    minWidth: 992px
-    container: 960px
-  }
-
-  lg: {
-    minWidth: 1201px
-    container: 1170px
-  }
-}
-
-/** No need to modify anything below this line */
+rolleiflex.breakpoints = app.breakpoints
 
 /** Get list of breakpoints */
-$_bps = rolleiflex.breakpoints
-$_bpsList = ()
-for scaleName, scaleOpts in $_bps
-  push($_bpsList, max(scaleOpts.minWidth - 1, 0))
+$scalesList = ()
+for scaleName, scaleOpts in app.breakpoints
+  push($scalesList, max(scaleOpts.minWidth - 1, 0))
 
-/** Configure rupture to work with rolleiflex breakpoints */
+/** Ruputure configuration */
 rupture = merge(rupture, {
   base-font-size:        app.base.fontSize
-  scale:                 $_bpsList
-  scale-names:           keys($_bps)
+  scale:                 $scalesList
+  scale-names:           keys(app.breakpoints)
   anti-overlap:          true
   enable-em-breakpoints: rolleiflex.use.em
-  mobile-cutoff:         $_bps.sm.minWidth - 1
-  tablet-cutoff:         $_bps.md.minWidth - 1
-  desktop-cutoff:        $_bps.md.minWidth - 1
-  hd-cutoff:             $_bps.lg.minWidth - 1
+  mobile-cutoff:         app.breakpoints.sm.minWidth - 1
+  tablet-cutoff:         app.breakpoints.md.minWidth - 1
+  desktop-cutoff:        app.breakpoints.md.minWidth - 1
+  hd-cutoff:             app.breakpoints.lg.minWidth - 1
 })
