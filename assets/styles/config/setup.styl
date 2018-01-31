@@ -3,6 +3,29 @@
  * Used for reboot.styl, rolleiflex and rupture.
  */
 app = {
+  /** Website's breakpoints. Used by rolleiflex and rupture */
+  breakpoints: {
+    xs: {
+      minWidth: 0
+      container: 100%
+    }
+
+    sm: {
+      minWidth: 768px
+      container: 740px
+    }
+
+    md: {
+      minWidth: 992px
+      container: 960px
+    }
+
+    lg: {
+      minWidth: 1201px
+      container: 1170px
+    }
+  }
+
   /** Website base font configuration */
   base: {
     fontSize: 16px
