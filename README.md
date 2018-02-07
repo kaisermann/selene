@@ -8,6 +8,7 @@ someday).
 
 ## Informations
 
+* [Blade](https://laravel.com/docs/5.5/blade) as a templating engine
 * Write CSS with Stylus
   * Build your website's grid with the RolleiFLEX declarative flex helper
     framework. (stylus)

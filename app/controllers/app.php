@@ -3,7 +3,7 @@
  * Controllers documentation: https://github.com/soberwp/controller
  */
 
-namespace App;
+namespace App\Controllers;
 
 use Sober\Controller\Controller;
 
