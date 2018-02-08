@@ -79,6 +79,16 @@ The supported browsers for CSS autoprefixing, eslint-compat plugin, etc can be c
 
 ### The `paths` object
 
+```json
+{
+  "paths": {
+    "source": "app/",
+    "dist": "dist/",
+    "manifest": "assets.json"
+  }
+}
+```
+
 The [`paths`](https://github.com/kaisermann/crius/blob/master/crius.json#L3) object MAY have a `manifest` **string** attribute that defines the revision manifest's file name on production distributions.
 
 Defaults to `"assets.json"`
