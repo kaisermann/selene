@@ -44,7 +44,11 @@ const Resource = {
         }
 
         /** If task was called by the CLI and -r or --report is true, report sizes. */
-        if (Flags.report) {
+        if (
+          Flags.report &&
+          (process.argv.includes(resourceType) ||
+            process.argv.includes('watch'))
+        ) {
           resourceModule.tasks.after = []
             .concat(resourceModule.tasks.after || [])
             .concat(sizereport(resourceInfo.pattern))
