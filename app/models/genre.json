@@ -1,0 +1,25 @@
+{
+  "active": true,
+  "type": "taxonomy",
+  "name": "genre",
+  "links": ["post", "book"],
+  "labels": {
+    "has_one": "Genre",
+    "has_many": "Genres",
+    "text_domain": "selene",
+    "overrides": {
+      "name": "Genres",
+      "singular_name": "Genre"
+    }
+  },
+  "config": {
+    "meta_box": "radio",
+    "public": true,
+    "publicly_queryable": true,
+    "show_admin_column": true,
+    "hierarchical": true,
+    "rewrite": {
+      "slug": "genre"
+    }
+  }
+}

@@ -26,6 +26,9 @@ add_action('wp_enqueue_scripts', function () {
         );
     }
 
+    /*
+    * Creates the 'selene' javascript object with useful URLs.
+    */
     wp_localize_script(
         'selene/main.js#defer',
         'selene',

@@ -1,0 +1,24 @@
+{
+  "active": true,
+  "type": "post-type",
+  "name": "book",
+  "supports": ["title", "editor", "thumbnail"],
+  "labels": {
+    "has_one": "Book",
+    "has_many": "Books",
+    "text_domain": "selene",
+    "overrides": {
+      "name": "Books",
+      "singular_name": "Book"
+    }
+  },
+  "config": {
+    "public": true,
+    "publicly_queryable": true,
+    "capability_type": "post",
+    "rewrite": {
+      "slug": "book",
+      "with_front": true
+    }
+  }
+}
