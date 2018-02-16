@@ -8,8 +8,10 @@ module.exports = {
     each: asset => {
       let lazy = lazypipe()
 
+      /** Pass only modified font files to the pipeline */
       lazy = lazy.pipe(newer, Manifest.getDistDir('fonts'))
 
+      /** Flatten the font files to a same directory */
       lazy = lazy.pipe(flatten)
 
       return lazy

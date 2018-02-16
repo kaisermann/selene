@@ -8,8 +8,10 @@ module.exports = {
     each: asset => {
       let lazy = lazypipe()
 
+      /** Pass only modified image files to the pipeline */
       lazy = lazy.pipe(newer, Manifest.getDistDir('images'))
 
+      /** Optimize the files */
       lazy = lazy.pipe(imagemin, [
         imagemin.gifsicle({ interlaced: true }),
         imagemin.jpegtran({ progressive: true }),
