@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "type": "taxonomy",
   "name": "genre",
   "links": ["post", "book"],
