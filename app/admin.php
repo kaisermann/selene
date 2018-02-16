@@ -106,7 +106,7 @@ add_filter('update_footer', function ($wp_version) {
 /*
  * If WP_ENV is set, append the environment name to the admin bar for current environment clarity.
  */
-if (defined(WP_ENV)) {
+if (defined('WP_ENV')) {
     add_action('admin_bar_menu', function ($wp_admin_bar) {
         $env = strtolower(WP_ENV);
         $wp_admin_bar->add_node([
