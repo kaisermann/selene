@@ -17,7 +17,7 @@ add_filter('template_redirect', function () {
         !strpos($_SERVER['REQUEST_URI'], '&')
     ) {
         wp_redirect(get_search_link());
-        exit();
+        exit;
     }
 });
 
@@ -235,4 +235,11 @@ add_filter('comments_template', function ($comments_template) {
         locate_template([ "views/{$comments_template}", $comments_template ])
         ?: $comments_template
     );
+});
+
+/**
+ * Models path
+ */
+add_filter('sober/models/path', function () {
+    return dirname(get_template_directory()) . '/app/Models';
 });

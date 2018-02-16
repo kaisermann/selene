@@ -142,7 +142,7 @@ add_action('after_setup_theme', function () {
 /**
  * ACF Builder initialization and fields loading
  */
-define('ACF_FIELDS_DIR', __DIR__ . '/fields');
+define('ACF_FIELDS_DIR', __DIR__ . '/Fields');
 if (is_dir(ACF_FIELDS_DIR) && function_exists('acf_add_local_field_group')) {
     add_action('init', function () {
         collect(glob(ACF_FIELDS_DIR . '/*.php'))
