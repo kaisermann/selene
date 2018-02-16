@@ -39,7 +39,7 @@ class App extends Controller
             return wp_nav_menu(
                 [
                     'theme_location' => 'primary_navigation',
-                    'walker' => new \BEM\MenuWalker,
+                    'walker' => new \App\Lib\MenuWalker,
                     'block' => 'header__menu',
                     'menu_class' => 'header__menu',
                     'container' => 'nav',

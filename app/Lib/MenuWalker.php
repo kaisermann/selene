@@ -1,6 +1,6 @@
 <?php
 
-namespace BEM;
+namespace App\Lib;
 
 // Better BEM classes for wp_nav_menu https://codepad.co/snippet/xzEkTh25
 class MenuWalker extends \Walker_Nav_Menu

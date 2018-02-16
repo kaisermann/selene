@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "585c473ef3b8b4030f3986277e45db8a",
+    "content-hash": "d878d1054770e99586f38e7ca7323dac",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -363,7 +363,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v5.6.0",
+            "version": "v5.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -407,7 +407,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.6.0",
+            "version": "v5.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -451,7 +451,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.6.0",
+            "version": "v5.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -495,7 +495,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v5.6.0",
+            "version": "v5.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -540,7 +540,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v5.6.0",
+            "version": "v5.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -590,7 +590,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.6.0",
+            "version": "v5.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -647,7 +647,7 @@
         },
         {
             "name": "illuminate/view",
-            "version": "v5.6.0",
+            "version": "v5.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
@@ -841,46 +841,6 @@
                 "dependency injection"
             ],
             "time": "2018-01-21T07:42:36+00:00"
-        },
-        {
-            "name": "press-bits/media-library-svg-display",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/press-bits/media-library-svg-display.git",
-                "reference": "32f71c0bcd5de17f6b1b2769e342259298a32cec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/press-bits/media-library-svg-display/zipball/32f71c0bcd5de17f6b1b2769e342259298a32cec",
-                "reference": "32f71c0bcd5de17f6b1b2769e342259298a32cec",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PressBits\\MediaLibrary\\": "source/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Dylan Kuhn",
-                    "email": "dylan@cyberhobo.net"
-                },
-                {
-                    "name": "Sterling Hamilton",
-                    "homepage": "http://www.sterlinghamilton.com"
-                }
-            ],
-            "description": "Enable display of Scalable Vector Graphics (SVG) in the WordPress media library.",
-            "time": "2016-12-20T22:48:48+00:00"
         },
         {
             "name": "psr/container",

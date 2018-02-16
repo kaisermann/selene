@@ -84,7 +84,7 @@
 
   <!-- Allow snake case on class methods -->
   <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
-    <exclude-pattern>app/lib/BEM</exclude-pattern>
+    <exclude-pattern>app/Lib</exclude-pattern>
   </rule>
 
   <!-- Allow side effects and symbols in app/files.php -->
