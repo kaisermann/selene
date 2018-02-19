@@ -91,9 +91,11 @@ class SVGDisplay
     protected static function get_dimensions($svg_path)
     {
         $width = $height = 0;
-        $svg = simplexml_load_file($svg_path);
-        if ($svg) {
-            list($width, $height) = $svg->attributes();
+        $svg = simplexml_load_file($svg_path, 'SimpleXMLElement', LIBXML_NOWARNING);
+        if($svg) {
+            $attributes = $svg->attributes();
+            $width = (string) $attributes->width;
+            $height = (string) $attributes->height;
         }
         return (object) compact('width', 'height');
     }
