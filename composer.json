@@ -32,10 +32,11 @@
     "illuminate/support": "~5.4",
     "roots/sage-lib": "~9.0.0-beta.4",
     "soberwp/controller": "~2.0.0",
+    "soberwp/models": "^1.0.6-p",
     "johnbillion/extended-cpts": "^4",
     "StoutLogic/acf-builder": "^1.6",
     "rarst/wps": "^1.1",
-    "soberwp/models": "^1.0.6-p"
+    "press-bits/media-library-svg-display": "^0.1.2"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

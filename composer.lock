@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0aa9ea97aeaa5adb3621b30e3128b91e",
+    "content-hash": "8e21c4be91d3d026808b837028ca7443",
     "packages": [
         {
             "name": "brain/hierarchy",
@@ -420,7 +420,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v5.6.3",
+            "version": "v5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -464,7 +464,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.6.3",
+            "version": "v5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -508,16 +508,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.6.3",
+            "version": "v5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "f5d3ca46ec931e78fe961e52940e56fb7a0e6707"
+                "reference": "00a8296c63b6429eb8705d2700c2436ea193c553"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/f5d3ca46ec931e78fe961e52940e56fb7a0e6707",
-                "reference": "f5d3ca46ec931e78fe961e52940e56fb7a0e6707",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/00a8296c63b6429eb8705d2700c2436ea193c553",
+                "reference": "00a8296c63b6429eb8705d2700c2436ea193c553",
                 "shasum": ""
             },
             "require": {
@@ -548,11 +548,11 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2018-01-30T14:30:39+00:00"
+            "time": "2018-02-20T16:46:51+00:00"
         },
         {
             "name": "illuminate/events",
-            "version": "v5.6.3",
+            "version": "v5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -597,7 +597,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v5.6.3",
+            "version": "v5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -647,16 +647,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.6.3",
+            "version": "v5.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "08f8b351a77efebfe3650e069ffa3f21a9a308d7"
+                "reference": "777665c3de5bf4260bd36acfeeeb67887a09a78b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/08f8b351a77efebfe3650e069ffa3f21a9a308d7",
-                "reference": "08f8b351a77efebfe3650e069ffa3f21a9a308d7",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/777665c3de5bf4260bd36acfeeeb67887a09a78b",
+                "reference": "777665c3de5bf4260bd36acfeeeb67887a09a78b",
                 "shasum": ""
             },
             "require": {
@@ -667,7 +667,7 @@
                 "php": "^7.1.3"
             },
             "replace": {
-                "tightenco/collect": "self.version"
+                "tightenco/collect": "<5.5.33"
             },
             "suggest": {
                 "illuminate/filesystem": "Required to use the composer class (5.2.*).",
@@ -700,7 +700,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2018-02-04T20:30:42+00:00"
+            "time": "2018-02-20T21:40:53+00:00"
         },
         {
             "name": "illuminate/view",
@@ -898,6 +898,46 @@
                 "dependency injection"
             ],
             "time": "2018-01-21T07:42:36+00:00"
+        },
+        {
+            "name": "press-bits/media-library-svg-display",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/press-bits/media-library-svg-display.git",
+                "reference": "499841e5798d51b924c59157c5755f2f93122918"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/press-bits/media-library-svg-display/zipball/499841e5798d51b924c59157c5755f2f93122918",
+                "reference": "499841e5798d51b924c59157c5755f2f93122918",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PressBits\\MediaLibrary\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Dylan Kuhn",
+                    "email": "dylan@cyberhobo.net"
+                },
+                {
+                    "name": "Sterling Hamilton",
+                    "homepage": "http://www.sterlinghamilton.com"
+                }
+            ],
+            "description": "Enable display of Scalable Vector Graphics (SVG) in the WordPress media library.",
+            "time": "2018-02-21T14:39:48+00:00"
         },
         {
             "name": "psr/container",
@@ -1579,16 +1619,16 @@
     "packages-dev": [
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.2.2",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1"
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
-                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/4842476c434e375f9d3182ff7b89059583aa8b27",
+                "reference": "4842476c434e375f9d3182ff7b89059583aa8b27",
                 "shasum": ""
             },
             "require": {
@@ -1598,7 +1638,7 @@
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
             },
             "bin": [
                 "bin/phpcs",
@@ -1626,7 +1666,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-12-19T21:44:46+00:00"
+            "time": "2018-02-20T21:35:23+00:00"
         }
     ],
     "aliases": [],
