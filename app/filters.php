@@ -153,7 +153,7 @@ add_filter('embed_oembed_html', function ($cache) {
  * when WP_DEBUG is true or when on the development environment.
  */
 $filter__parse_asset_version = function ($src) {
-    if (WP_DEBUG || strtoupper(WP_ENV) === 'DEVELOPMENT') {
+    if ((defined('WP_DEBUG') && WP_DEBUG) || strtoupper(WP_ENV) === 'DEVELOPMENT') {
         return add_query_arg('ver', 'dev-'.rand(), remove_query_arg('ver', $src));
     }
     return $src;
