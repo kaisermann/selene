@@ -167,13 +167,10 @@ add_filter('script_loader_src', $filter__parse_asset_version);
  * Based on 'https://github.com/ryanjbonnell/Protocol-Relative-Theme-Assets'
  * by Ryan J. Bonnell
  */
-$filter__url_protocol = function ($url) {
-    return preg_replace('(https?://)', '//', $url);
-};
-add_filter('style_loader_src', $filter__url_protocol, 10, 2);
-add_filter('script_loader_src', $filter__url_protocol, 10, 2);
-add_filter('template_directory_uri', $filter__url_protocol, 10, 3);
-add_filter('stylesheet_directory_uri', $filter__url_protocol, 10, 3);
+add_filter('style_loader_src', 'App\get_url_without_protocol', 10, 2);
+add_filter('script_loader_src', 'App\get_url_without_protocol', 10, 2);
+add_filter('template_directory_uri', 'App\get_url_without_protocol', 10, 3);
+add_filter('stylesheet_directory_uri', 'App\get_url_without_protocol', 10, 3);
 
 /**
  * Add, remove and clean <body> classes

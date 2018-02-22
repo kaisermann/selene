@@ -207,3 +207,12 @@ function get_svg($path, $echo = true)
     }
     return $content;
 }
+
+/**
+ * Remove the protocol (http/https) from a specific URL
+ * @param string $url URL to remove the protocol
+ * @return string
+ */
+function get_url_without_protocol ($url) {
+    return preg_replace('(https?://)', '//', $url);
+}
