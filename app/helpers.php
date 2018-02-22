@@ -144,28 +144,43 @@ function locate_template($templates)
  * Render the specified blade template
  * @param string $templatePath The template path. Can use dot notation
  * @param $data
+ * @param bool $echo Should echo or just return?
  * @return null
  */
-function render_template($templatePath, $data = [])
+function render_template($templatePath, $data = [], $echo = true)
 {
     $templatePath = str_replace('.', '/', $templatePath);
-    echo template(
+    $template = template(
         config('theme')['dir'] . "/resources/views/{$templatePath}.blade.php",
         $data
     );
+
+    if ($echo) {
+        echo $template;
+    }
+
+    return $template;
 }
+
 /**
  * Render the specified component.
  * @param string $componentName The component name.
  * @param $data
+ * @param bool $echo Should echo or just return?
  * @return null
  */
-function render_component($componentName, $data = [])
+function render_component($componentName, $data = [], $echo = true)
 {
-    echo template(
+    $template = template(
         config('theme')['dir'] . "/resources/components/{$componentName}/{$componentName}.blade.php",
         $data
     );
+
+    if ($echo) {
+        echo $template;
+    }
+
+    return $template;
 }
 
 /**
@@ -213,6 +228,7 @@ function get_svg($path, $echo = true)
  * @param string $url URL to remove the protocol
  * @return string
  */
-function get_url_without_protocol ($url) {
+function get_url_without_protocol($url)
+{
     return preg_replace('(https?://)', '//', $url);
 }
