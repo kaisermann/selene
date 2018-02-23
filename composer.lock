@@ -420,7 +420,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v5.6.4",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -464,7 +464,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.6.4",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -508,7 +508,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.6.4",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -552,7 +552,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v5.6.4",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -597,7 +597,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v5.6.4",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -647,16 +647,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.6.4",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "777665c3de5bf4260bd36acfeeeb67887a09a78b"
+                "reference": "ada40fd5fba4f51e456d38d8b17c826c519b33c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/777665c3de5bf4260bd36acfeeeb67887a09a78b",
-                "reference": "777665c3de5bf4260bd36acfeeeb67887a09a78b",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/ada40fd5fba4f51e456d38d8b17c826c519b33c7",
+                "reference": "ada40fd5fba4f51e456d38d8b17c826c519b33c7",
                 "shasum": ""
             },
             "require": {
@@ -700,20 +700,20 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2018-02-20T21:40:53+00:00"
+            "time": "2018-02-22T15:02:07+00:00"
         },
         {
             "name": "illuminate/view",
-            "version": "v5.6.3",
+            "version": "v5.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
-                "reference": "65489f31d94931f6ab78ca15e53907acbe590e70"
+                "reference": "05eb3c9bddeac32c8fde83dbc110e63670ae5051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/view/zipball/65489f31d94931f6ab78ca15e53907acbe590e70",
-                "reference": "65489f31d94931f6ab78ca15e53907acbe590e70",
+                "url": "https://api.github.com/repos/illuminate/view/zipball/05eb3c9bddeac32c8fde83dbc110e63670ae5051",
+                "reference": "05eb3c9bddeac32c8fde83dbc110e63670ae5051",
                 "shasum": ""
             },
             "require": {
@@ -748,7 +748,7 @@
             ],
             "description": "The Illuminate View package.",
             "homepage": "https://laravel.com",
-            "time": "2018-01-29T17:29:10+00:00"
+            "time": "2018-02-20T21:40:53+00:00"
         },
         {
             "name": "johnbillion/extended-cpts",
